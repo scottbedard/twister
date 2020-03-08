@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"declaration": true,
+		"declarationDir": "./dist",
+		"module": "es6",
+		"noImplicitAny": true,
+		"outDir": "./dist",
+		"skipLibCheck": true,
+		"target": "es2015",
+		"types": []
+	},
+	"include": [
+		"src/index.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}
