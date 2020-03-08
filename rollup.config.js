@@ -1,6 +1,6 @@
 import pkg from './package.json';
 import typescript from 'rollup-plugin-typescript2';
-import { terser } from "rollup-plugin-terser";
+import { terser } from 'rollup-plugin-terser';
 
 export default {
     input: 'src/index.ts',
@@ -16,8 +16,8 @@ export default {
         {
             file: pkg.browser,
             format: 'iife',
-            name: 'TextSelect'
-        }
+            name: 'Twister'
+        },
     ],
     external: [
         ...Object.keys(pkg.dependencies || {})
