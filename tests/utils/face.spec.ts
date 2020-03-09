@@ -1,4 +1,4 @@
-import { createFace } from '../../src/utils/face';
+import { createFace } from '../../src/index';
 
 describe('face utils', () => {
     describe('createFace', () => {

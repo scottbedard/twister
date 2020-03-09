@@ -1,1 +1,1 @@
-console.log('Twister, coming soon...');
+export { createFace } from './utils/face';
