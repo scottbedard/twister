@@ -25,7 +25,7 @@
     "url": "git+https://github.com/scottbedard/twister.git"
   },
   "scripts": {
-    "build": "rollup -c && tsc",
+    "build": "rollup -c",
     "test": "jest --coverage"
   },
   "version": "0.1.0"
