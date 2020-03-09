@@ -1,4 +1,13 @@
 /**
+ * Face
+ */
+export type Face = {
+    layers: number,
+    sides: number,
+    stickers: Sticker[],
+};
+
+/**
  * Sticker
  */
 export type Sticker = {

@@ -1,15 +1,15 @@
-import { Sticker } from '../types';
+import { Face, Sticker } from '../types';
 import { isOdd } from './number';
 
 /**
- * Create an array of stickers to represent a puzzle face.
+ * Create a turnable puzzle face.
  *
  * @param {number}      sides   number of sides of the polygon
  * @param {number}      layers  puzzle layers
  *
- * @return {Sticker[]}
+ * @return {Face}
  */
-export function createFace(sides: number, layers: number): Sticker[] {
+export function createFace(sides: number, layers: number): Face {
     if (!Number.isInteger(sides) || sides < 3) {
         throw new Error('Polygon sides must be an integer of 3 or greater');
     }
@@ -26,13 +26,13 @@ export function createFace(sides: number, layers: number): Sticker[] {
     }
 
     // create outer stickers
-    const face: Sticker[] = [];
+    const stickers: Sticker[] = [];
 
     for (let depth = 0, stop = Math.floor(layers / 2); depth < stop; depth++) {
         const length = (layers - (depth * 2) - 1) * sides;
         
         for (let index = 0; index < length; index++) {
-            face.push({
+            stickers.push({
                 center: false,
                 currentIndex: index,
                 depth,
@@ -44,7 +44,7 @@ export function createFace(sides: number, layers: number): Sticker[] {
 
     // create a center sticker for odd layered puzzles
     if (isOdd(layers)) {
-        face.push({
+        stickers.push({
             center: true,
             currentIndex: 0,
             depth: Math.floor(layers / 2),
@@ -53,5 +53,9 @@ export function createFace(sides: number, layers: number): Sticker[] {
         });
     }
 
-    return face;
+    return {
+        layers,
+        sides,
+        stickers: stickers,
+    };
 }

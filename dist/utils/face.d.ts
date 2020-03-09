@@ -1,10 +1,10 @@
-import { Sticker } from '../types';
+import { Face } from '../types';
 /**
- * Create an array of stickers to represent a puzzle face.
+ * Create a turnable puzzle face.
  *
  * @param {number}      sides   number of sides of the polygon
  * @param {number}      layers  puzzle layers
  *
- * @return {Sticker[]}
+ * @return {Face}
  */
-export declare function createFace(sides: number, layers: number): Sticker[];
+export declare function createFace(sides: number, layers: number): Face;
