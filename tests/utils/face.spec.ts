@@ -1,4 +1,9 @@
-import { createFace } from '../../src/index';
+import {
+    createFace,
+    rotateFace,
+} from '../../src/index';
+
+import { Face } from '../../src/types';
 
 describe('face utils', () => {
     describe('createFace', () => {
@@ -87,6 +92,40 @@ describe('face utils', () => {
                 expect(face.stickers.map(s => s.depth)).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]);
                 expect(face.stickers.map(s => s.currentIndex)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
                 expect(face.stickers.filter(s => s.center).length).toBe(1);
+            });
+        });
+    });
+
+    describe('rotateFace', () => {
+        const square3 = createFace(4, 3);
+        const mapOriginalIndexes = (face: Face) => face.stickers.map(s => s.originalIndex);
+
+        it('throws an error for non-integer rotations', () => {
+            expect(() => rotateFace(square3, 1.5)).toThrow();
+        });
+
+        describe('squares', () => {
+            it('3x3', () => {
+                expect(mapOriginalIndexes(rotateFace(square3, -3)))
+                    .toEqual([ 6, 7, 0, 1, 2, 3, 4, 5, 0]);
+
+                expect(mapOriginalIndexes(rotateFace(square3, -2)))
+                    .toEqual([4, 5, 6, 7, 0, 1, 2, 3, 0]);
+
+                expect(mapOriginalIndexes(rotateFace(square3, -1)))
+                    .toEqual([2, 3, 4, 5, 6, 7, 0, 1, 0]);
+
+                expect(mapOriginalIndexes(rotateFace(square3, 0)))
+                    .toEqual(mapOriginalIndexes(square3));
+
+                expect(mapOriginalIndexes(rotateFace(square3, 1)))
+                    .toEqual([ 6, 7, 0, 1, 2, 3, 4, 5, 0]);
+
+                expect(mapOriginalIndexes(rotateFace(square3, 2)))
+                    .toEqual([4, 5, 6, 7, 0, 1, 2, 3, 0]);
+
+                expect(mapOriginalIndexes(rotateFace(square3, 3)))
+                    .toEqual([2, 3, 4, 5, 6, 7, 0, 1, 0]);
             });
         });
     });

@@ -1,1 +1,1 @@
-export { createFace } from './utils/face';
+export { createFace, rotateFace } from './utils/face';

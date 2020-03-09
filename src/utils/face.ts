@@ -1,11 +1,12 @@
 import { Face, Sticker } from '../types';
 import { isOdd } from './number';
+import { roll } from './array';
 
 /**
  * Create a turnable puzzle face.
  *
- * @param {number}      sides   number of sides of the polygon
- * @param {number}      layers  puzzle layers
+ * @param {number}  sides   number of sides of the polygon
+ * @param {number}  layers  puzzle layers
  *
  * @return {Face}
  */
@@ -58,4 +59,38 @@ export function createFace(sides: number, layers: number): Face {
         sides,
         stickers: stickers,
     };
+}
+
+/**
+ * Create a rotated copy of a face.
+ *
+ * @param {Face}    face
+ * @param {number}  rotation
+ *
+ * @return {Face}
+ */
+export function rotateFace(face: Face, rotation: number): Face {
+    if (!Number.isInteger(rotation)) {
+        throw new Error('Face rotations must be an integer');
+    }
+
+    const stickers: Sticker[] = [];
+
+    for (let i = 0, stop = Math.floor(face.layers / 2); i <= stop; i++) {
+        const arr = face.stickers.filter(sticker => sticker.depth === i);
+
+        rotation = rotation % face.sides;
+        
+        if (arr.length > 1) {
+            const distance = ((face.sides - 1) * -rotation) + rotation;
+
+            if (distance) {
+                roll(arr, distance);
+            }
+        }
+
+        stickers.push(...arr);
+    }
+
+    return { ...face, stickers }
 }
