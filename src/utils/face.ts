@@ -93,11 +93,11 @@ export function rotateFace(face: Face, rotation: number): Face {
 
     const stickers: Sticker[] = [];
 
+    rotation = rotation % face.sides;
+
     for (let i = 0, stop = Math.floor(face.layers / 2); i <= stop; i++) {
         const arr = face.stickers.filter(sticker => sticker.depth === i);
 
-        rotation = rotation % face.sides;
-        
         if (rotation && arr.length > 1) {
             const distance = (arr.length / face.sides) * -rotation;
 
