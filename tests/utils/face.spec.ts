@@ -122,6 +122,14 @@ describe('face utils', () => {
         it('throws an error for negative depth', () => {
             expect(() => extractSlice(square3, -1, 1)).toThrow();
         });
+
+        it('throws an error for non-integer angle', () => {
+            expect(() => extractSlice(square3, 1, 1.5)).toThrow();
+        });
+
+        it('throws an error for negative angle', () => {
+            expect(() => extractSlice(square3, 1, -1)).toThrow();
+        });
     });
 
     //

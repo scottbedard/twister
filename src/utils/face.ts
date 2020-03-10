@@ -75,6 +75,10 @@ export function extractSlice(face: Face, depth: number, angle: number): Sticker[
         throw new Error('Slice depth must be a positive integer');
     }
 
+    if (!Number.isInteger(angle) || angle < 0) {
+        throw new Error('Slice angle must be a positive integer');
+    }
+
     return [];
 }
 
