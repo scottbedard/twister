@@ -97,6 +97,7 @@ describe('face utils', () => {
     });
 
     describe('rotateFace', () => {
+        const square2 = createFace(4, 2);
         const square3 = createFace(4, 3);
         const mapI = (face: Face) => face.stickers.map(s => s.originalIndex);
 
@@ -105,9 +106,32 @@ describe('face utils', () => {
         });
 
         describe('squares', () => {
+            it('2x2', () => {
+                expect(mapI(rotateFace(square2, -3)))
+                    .toEqual([3, 0, 1, 2]);
+
+                expect(mapI(rotateFace(square2, -2)))
+                    .toEqual([2, 3, 0, 1]);
+
+                expect(mapI(rotateFace(square2, -1)))
+                    .toEqual([1, 2, 3, 0]);
+
+                expect(mapI(rotateFace(square2, 0)))
+                    .toEqual(mapI(square2));
+
+                expect(mapI(rotateFace(square2, 1)))
+                    .toEqual([3, 0, 1, 2]);
+
+                expect(mapI(rotateFace(square2, 2)))
+                    .toEqual([2, 3, 0, 1]);
+
+                expect(mapI(rotateFace(square2, 3)))
+                    .toEqual([1, 2, 3, 0]);
+            });
+
             it('3x3', () => {
                 expect(mapI(rotateFace(square3, -3)))
-                    .toEqual([ 6, 7, 0, 1, 2, 3, 4, 5, 0]);
+                    .toEqual([6, 7, 0, 1, 2, 3, 4, 5, 0]);
 
                 expect(mapI(rotateFace(square3, -2)))
                     .toEqual([4, 5, 6, 7, 0, 1, 2, 3, 0]);
