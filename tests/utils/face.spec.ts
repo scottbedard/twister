@@ -104,6 +104,7 @@ describe('face utils', () => {
 
         const kilominx = createFace(5, 2);
         const megaminx = createFace(5, 3);
+        const masterminx = createFace(5, 4);
 
         const mapI = (face: Face) => face.stickers.map(s => s.originalIndex);
 
@@ -262,6 +263,35 @@ describe('face utils', () => {
 
                 expect(mapI(rotateFace(megaminx, 4)))
                     .toEqual([2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 0]);
+            });
+
+            it('masterminx', () => {
+                expect(mapI(rotateFace(masterminx, -4)))
+                    .toEqual([12, 13, 14, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 4, 0, 1, 2, 3]);
+
+                expect(mapI(rotateFace(masterminx, -3)))
+                    .toEqual([9, 10, 11, 12, 13, 14, 0, 1, 2, 3, 4, 5, 6, 7, 8, 3, 4, 0, 1, 2]);
+
+                expect(mapI(rotateFace(masterminx, -2)))
+                    .toEqual([6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 1, 2, 3, 4, 5, 2, 3, 4, 0, 1]);
+
+                expect(mapI(rotateFace(masterminx, -1)))
+                    .toEqual([3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 1, 2, 1, 2, 3, 4, 0]);
+
+                expect(mapI(rotateFace(masterminx, 0)))
+                    .toEqual(mapI(masterminx));
+
+                expect(mapI(rotateFace(masterminx, 1)))
+                    .toEqual([12, 13, 14, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 4, 0, 1, 2, 3]);
+
+                expect(mapI(rotateFace(masterminx, 2)))
+                    .toEqual([9, 10, 11, 12, 13, 14, 0, 1, 2, 3, 4, 5, 6, 7, 8, 3, 4, 0, 1, 2]);
+
+                expect(mapI(rotateFace(masterminx, 3)))
+                    .toEqual([6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 1, 2, 3, 4, 5, 2, 3, 4, 0, 1]);
+
+                expect(mapI(rotateFace(masterminx, 4)))
+                    .toEqual([3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 1, 2, 1, 2, 3, 4, 0]);
             });
         });
     });
