@@ -1,10 +1,9 @@
 /**
- * Rotate an array forwards or backwards. This mutates
- * the original array.
+ * Rotate an array forwards or backwards.
  *
  * @param {any[]}   arr
- * @param {number}  distance
+ * @param {number}  elements
  *
- * @return {void}
+ * @return {any[]}
  */
-export declare function roll(arr: any[], distance: number): void;
+export declare function roll(arr: any[], elements: number): any[];
