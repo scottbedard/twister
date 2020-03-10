@@ -101,10 +101,10 @@ describe('face utils', () => {
         const square3 = createFace(4, 3);
         const square4 = createFace(4, 4);
         const square5 = createFace(4, 5);
-
         const kilominx = createFace(5, 2);
         const megaminx = createFace(5, 3);
         const masterminx = createFace(5, 4);
+        const gigaminx = createFace(5, 5);
 
         const mapI = (face: Face) => face.stickers.map(s => s.originalIndex);
 
@@ -292,6 +292,35 @@ describe('face utils', () => {
 
                 expect(mapI(rotateFace(masterminx, 4)))
                     .toEqual([3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0, 1, 2, 1, 2, 3, 4, 0]);
+            });
+
+            it('gigaminx', () => {
+                expect(mapI(rotateFace(gigaminx, -4)))
+                    .toEqual([16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 0]);
+
+                expect(mapI(rotateFace(gigaminx, -3)))
+                    .toEqual([12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 0]);
+
+                expect(mapI(rotateFace(gigaminx, -2)))
+                    .toEqual([8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 0]);
+
+                expect(mapI(rotateFace(gigaminx, -1)))
+                    .toEqual([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 0]);
+
+                expect(mapI(rotateFace(gigaminx, 0)))
+                    .toEqual(mapI(gigaminx));
+
+                expect(mapI(rotateFace(gigaminx, 1)))
+                    .toEqual([16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 0]);
+
+                expect(mapI(rotateFace(gigaminx, 2)))
+                    .toEqual([12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 0]);
+
+                expect(mapI(rotateFace(gigaminx, 3)))
+                    .toEqual([8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 4, 5, 6, 7, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 0]);
+
+                expect(mapI(rotateFace(gigaminx, 4)))
+                    .toEqual([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 0]);
             });
         });
     });
