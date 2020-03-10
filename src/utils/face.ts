@@ -62,6 +62,23 @@ export function createFace(sides: number, layers: number): Face {
 }
 
 /**
+ * Extract a slice from a face.
+ *
+ * @param {face}    face
+ * @param {number}  depth
+ * @param {number}  angle
+ *
+ * @return {Sticker[]}
+ */
+export function extractSlice(face: Face, depth: number, angle: number): Sticker[] {
+    if (!Number.isInteger(depth) || depth < 0) {
+        throw new Error('Slice depth must be a positive integer');
+    }
+
+    return [];
+}
+
+/**
  * Create a rotated copy of a face.
  *
  * @param {Face}    face

@@ -1,1 +1,5 @@
-export { createFace, rotateFace } from './utils/face';
+export {
+    createFace,
+    extractSlice,
+    rotateFace,
+} from './utils/face';

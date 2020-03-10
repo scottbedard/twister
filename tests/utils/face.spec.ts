@@ -1,11 +1,26 @@
 import {
     createFace,
+    extractSlice,
     rotateFace,
 } from '../../src/index';
 
 import { Face } from '../../src/types';
 
 describe('face utils', () => {
+    const square2 = createFace(4, 2);
+    const square3 = createFace(4, 3);
+    const square4 = createFace(4, 4);
+    const square5 = createFace(4, 5);
+    const kilominx = createFace(5, 2);
+    const megaminx = createFace(5, 3);
+    const masterminx = createFace(5, 4);
+    const gigaminx = createFace(5, 5);
+
+    const mapI = (face: Face) => face.stickers.map(s => s.originalIndex);
+
+    //
+    // createFace
+    //
     describe('createFace', () => {
         it('throws an error for invalid sides', () => {
             expect(() => createFace(4.5, 3)).toThrowError(); // <- must be an integer
@@ -96,18 +111,23 @@ describe('face utils', () => {
         });
     });
 
+    //
+    // extractSlice
+    //
+    describe('extractSlice', () => {
+        it('throws an error for non-integer depth', () => {
+            expect(() => extractSlice(square3, 1.5, 1)).toThrow();
+        });
+
+        it('throws an error for negative depth', () => {
+            expect(() => extractSlice(square3, -1, 1)).toThrow();
+        });
+    });
+
+    //
+    // rotateFace
+    //
     describe('rotateFace', () => {
-        const square2 = createFace(4, 2);
-        const square3 = createFace(4, 3);
-        const square4 = createFace(4, 4);
-        const square5 = createFace(4, 5);
-        const kilominx = createFace(5, 2);
-        const megaminx = createFace(5, 3);
-        const masterminx = createFace(5, 4);
-        const gigaminx = createFace(5, 5);
-
-        const mapI = (face: Face) => face.stickers.map(s => s.originalIndex);
-
         it('throws an error for non-integer rotations', () => {
             expect(() => rotateFace(square3, 1.5)).toThrow();
         });
