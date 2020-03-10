@@ -98,7 +98,7 @@ describe('face utils', () => {
 
     describe('rotateFace', () => {
         const square3 = createFace(4, 3);
-        const mapOriginalIndexes = (face: Face) => face.stickers.map(s => s.originalIndex);
+        const mapI = (face: Face) => face.stickers.map(s => s.originalIndex);
 
         it('throws an error for non-integer rotations', () => {
             expect(() => rotateFace(square3, 1.5)).toThrow();
@@ -106,25 +106,25 @@ describe('face utils', () => {
 
         describe('squares', () => {
             it('3x3', () => {
-                expect(mapOriginalIndexes(rotateFace(square3, -3)))
+                expect(mapI(rotateFace(square3, -3)))
                     .toEqual([ 6, 7, 0, 1, 2, 3, 4, 5, 0]);
 
-                expect(mapOriginalIndexes(rotateFace(square3, -2)))
+                expect(mapI(rotateFace(square3, -2)))
                     .toEqual([4, 5, 6, 7, 0, 1, 2, 3, 0]);
 
-                expect(mapOriginalIndexes(rotateFace(square3, -1)))
+                expect(mapI(rotateFace(square3, -1)))
                     .toEqual([2, 3, 4, 5, 6, 7, 0, 1, 0]);
 
-                expect(mapOriginalIndexes(rotateFace(square3, 0)))
-                    .toEqual(mapOriginalIndexes(square3));
+                expect(mapI(rotateFace(square3, 0)))
+                    .toEqual(mapI(square3));
 
-                expect(mapOriginalIndexes(rotateFace(square3, 1)))
-                    .toEqual([ 6, 7, 0, 1, 2, 3, 4, 5, 0]);
+                expect(mapI(rotateFace(square3, 1)))
+                    .toEqual([6, 7, 0, 1, 2, 3, 4, 5, 0]);
 
-                expect(mapOriginalIndexes(rotateFace(square3, 2)))
+                expect(mapI(rotateFace(square3, 2)))
                     .toEqual([4, 5, 6, 7, 0, 1, 2, 3, 0]);
 
-                expect(mapOriginalIndexes(rotateFace(square3, 3)))
+                expect(mapI(rotateFace(square3, 3)))
                     .toEqual([2, 3, 4, 5, 6, 7, 0, 1, 0]);
             });
         });

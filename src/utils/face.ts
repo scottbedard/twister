@@ -81,15 +81,15 @@ export function rotateFace(face: Face, rotation: number): Face {
 
         rotation = rotation % face.sides;
         
-        if (arr.length > 1) {
-            const distance = ((face.sides - 1) * -rotation) + rotation;
+        if (rotation && arr.length > 1) {
+            const distance = (arr.length / face.sides) * -rotation;
 
             if (distance) {
-                roll(arr, distance);
+                stickers.push(...roll(arr, distance));
             }
+        } else {
+            stickers.push(...arr);
         }
-
-        stickers.push(...arr);
     }
 
     return { ...face, stickers }
