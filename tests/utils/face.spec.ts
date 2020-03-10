@@ -101,6 +101,9 @@ describe('face utils', () => {
         const square3 = createFace(4, 3);
         const square4 = createFace(4, 4);
         const square5 = createFace(4, 5);
+
+        const kilominx = createFace(5, 2);
+
         const mapI = (face: Face) => face.stickers.map(s => s.originalIndex);
 
         it('throws an error for non-integer rotations', () => {
@@ -198,6 +201,37 @@ describe('face utils', () => {
 
                 expect(mapI(rotateFace(square5, 3)))
                     .toEqual([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 2, 3, 4, 5, 6, 7, 0, 1, 0]);
+            });
+        });
+
+        describe('pentagons', () => {
+            it('kilominx', () => {
+                expect(mapI(rotateFace(kilominx, -4)))
+                    .toEqual([4, 0, 1, 2, 3]);
+
+                expect(mapI(rotateFace(kilominx, -3)))
+                    .toEqual([3, 4, 0, 1, 2]);
+
+                expect(mapI(rotateFace(kilominx, -2)))
+                    .toEqual([2, 3, 4, 0, 1]);
+
+                expect(mapI(rotateFace(kilominx, -1)))
+                    .toEqual([1, 2, 3, 4, 0]);
+
+                expect(mapI(rotateFace(kilominx, 0)))
+                    .toEqual(mapI(kilominx));
+
+                expect(mapI(rotateFace(kilominx, 1)))
+                    .toEqual([4, 0, 1, 2, 3]);
+
+                expect(mapI(rotateFace(kilominx, 2)))
+                    .toEqual([3, 4, 0, 1, 2]);
+
+                expect(mapI(rotateFace(kilominx, 3)))
+                    .toEqual([2, 3, 4, 0, 1]);
+
+                expect(mapI(rotateFace(kilominx, 4)))
+                    .toEqual([1, 2, 3, 4, 0]);
             });
         });
     });
