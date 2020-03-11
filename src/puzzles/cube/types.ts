@@ -31,3 +31,13 @@ export type CubeState = {
     B: CubeSticker[],
     D: CubeSticker[],
 }
+
+/**
+ * Cube turn.
+ */
+export type CubeTurn = {
+    depth: number,
+    rotation: number,
+    target: string,
+    wide: boolean,
+};
