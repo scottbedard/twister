@@ -1,15 +1,13 @@
-import { noop } from './function';
-
 /**
  * Make an array of a given size.
  *
- * @param {number}      length 
- * @param {Function}    fn
+ * @param {number}  length
+ * @param {T}       value
  *
  * @return {Array}
  */
-export function makeArray(length: number, fn: Function = noop): any[] {
-    return new Array(length).fill(undefined).map((n, i) => fn(i));
+export function makeArray<T>(length: number, value: T = undefined): T[] {
+    return new Array(length).fill(value);
 }
 
 /**

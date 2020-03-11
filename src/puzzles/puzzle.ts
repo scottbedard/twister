@@ -3,18 +3,18 @@
  */
 export default abstract class Puzzle {
     /**
-     * Face data.
-     *
-     * @type {Face[]}
-     */
-    data: any[];
-
-    /**
      * Puzzle options.
      *
      * @type {Object}
      */
     options: Object;
+
+    /**
+     * Current puzzle state.
+     *
+     * @type {Object}
+     */
+    state: Object;
 
     /**
      * Constructor.

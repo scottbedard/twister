@@ -1,7 +1,27 @@
+import {
+    CubeOptions,
+    CubeState,
+    CubeSticker,
+    CubeStickerValue,
+} from './types';
+
 import Puzzle from '../puzzle';
-import { CubeOptions } from './types';
+import { makeArray } from '../../utils/array';
 
 export default class Cube extends Puzzle {
+    /**
+     * Puzzle options.
+     *
+     * @type {CubeOptions}
+     */
+    options: CubeOptions;
+
+    /**
+     * Current puzzle state.
+     *
+     * @type {CubeState}
+     */
+    state: CubeState;
 
     /**
      * Constructor.
@@ -35,7 +55,27 @@ export default class Cube extends Puzzle {
      * @return {void}
      */
     reset(): void {
-        // ...
+        const { size } = this.options;
+        const length = size ** 2;
+        const centerIndex = Math.floor(length / 2);
+
+        const face = (value: CubeStickerValue) => makeArray(length).map((x, i): CubeSticker => {
+            return {
+                center: centerIndex === i,
+                data: null,
+                originalIndex: i,
+                value,
+            };
+        });
+
+        this.state = {
+            U: face(0),
+            L: face(1),
+            F: face(2),
+            R: face(3),
+            B: face(4),
+            D: face(5),
+        };
     }
 
     /**

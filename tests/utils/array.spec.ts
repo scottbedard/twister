@@ -1,13 +1,9 @@
-import { makeArray, roll as rollArray } from '../../src/utils/array';
+import { makeArray, rollArray } from '../../src/utils/array';
 
 describe('array utils', () => {
     describe('makeArray', () => {
         it('makes an array', () => {
             expect(makeArray(3)).toEqual([undefined, undefined, undefined]);
-        });
-
-        it('accepts a function to populate the array', () => {
-            expect(makeArray(3, (i: number) => i)).toEqual([0, 1, 2]);
         });
     });
 
