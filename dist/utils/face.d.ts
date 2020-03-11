@@ -1,4 +1,4 @@
-import { Face } from '../types';
+import { Face, Sticker } from '../types';
 /**
  * Create a turnable puzzle face.
  *
@@ -8,6 +8,16 @@ import { Face } from '../types';
  * @return {Face}
  */
 export declare function createFace(sides: number, layers: number): Face;
+/**
+ * Extract a slice from a face.
+ *
+ * @param {face}    face
+ * @param {number}  depth
+ * @param {number}  angle
+ *
+ * @return {Sticker[]}
+ */
+export declare function extractSlice(face: Face, depth: number, angle: number): Sticker[];
 /**
  * Create a rotated copy of a face.
  *
