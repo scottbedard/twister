@@ -1,6 +1,6 @@
 import { Face, Sticker } from '../types';
 import { isOdd } from './number';
-import { roll } from './array';
+import { rollArray } from './array';
 
 /**
  * Create a turnable puzzle face.
@@ -106,7 +106,7 @@ export function rotateFace(face: Face, rotation: number): Face {
             const distance = (arr.length / face.sides) * -rotation;
 
             if (distance) {
-                stickers.push(...roll(arr, distance));
+                stickers.push(...rollArray(arr, distance));
             }
         } else {
             stickers.push(...arr);
