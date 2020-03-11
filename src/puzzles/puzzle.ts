@@ -28,6 +28,15 @@ export default abstract class Puzzle {
     }
     
     /**
+     * Apply a turn.
+     *
+     * @param {string}  turn
+     *
+     * @return {void} 
+     */
+    abstract applyTurn(turn: string): void;
+    
+    /**
      * Test if the puzzle is solved.
      *
      * @return {boolean}
@@ -40,13 +49,4 @@ export default abstract class Puzzle {
      * @return {void}
      */
     abstract reset(): void;
-    
-    /**
-     * Apply one or more turns to the puzzle.
-     *
-     * @param {string}  turn
-     *
-     * @return {void} 
-     */
-    abstract turn(turn: string): void;
 };

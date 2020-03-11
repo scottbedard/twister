@@ -1,8 +1,6 @@
 import {
     CubeOptions,
     CubeState,
-    CubeSticker,
-    CubeStickerValue,
 } from './types';
 
 import {
@@ -12,6 +10,7 @@ import {
 import Puzzle from '../puzzle';
 
 export default class Cube extends Puzzle {
+
     /**
      * Puzzle options.
      *
@@ -44,6 +43,17 @@ export default class Cube extends Puzzle {
     }
 
     /**
+     * Apply a turn.
+     *
+     * @param {string}  turn
+     *
+     * @return {void} 
+     */
+    applyTurn(turn: string): void {
+        // ...
+    }
+
+    /**
      * Test if the puzzle is solved.
      *
      * @return {boolean}
@@ -68,16 +78,5 @@ export default class Cube extends Puzzle {
             B: createFace(4, length),
             D: createFace(5, length),
         };
-    }
-
-    /**
-     * Apply one or more turns to the puzzle.
-     *
-     * @param {string}  turn
-     *
-     * @return {void} 
-     */
-    turn(turn: string): void {
-        // ...
     }
 }
