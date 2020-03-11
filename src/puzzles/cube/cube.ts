@@ -5,8 +5,11 @@ import {
     CubeStickerValue,
 } from './types';
 
+import {
+    createFace,
+} from './helpers';
+
 import Puzzle from '../puzzle';
-import { makeArray } from '../../utils/array';
 
 export default class Cube extends Puzzle {
     /**
@@ -55,26 +58,15 @@ export default class Cube extends Puzzle {
      * @return {void}
      */
     reset(): void {
-        const { size } = this.options;
-        const length = size ** 2;
-        const centerIndex = Math.floor(length / 2);
-
-        const face = (value: CubeStickerValue) => makeArray(length).map((x, i): CubeSticker => {
-            return {
-                center: centerIndex === i,
-                data: null,
-                originalIndex: i,
-                value,
-            };
-        });
+        const length = this.options.size ** 2;
 
         this.state = {
-            U: face(0),
-            L: face(1),
-            F: face(2),
-            R: face(3),
-            B: face(4),
-            D: face(5),
+            U: createFace(0, length),
+            L: createFace(1, length),
+            F: createFace(2, length),
+            R: createFace(3, length),
+            B: createFace(4, length),
+            D: createFace(5, length),
         };
     }
 
