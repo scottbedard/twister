@@ -1,27 +1,27 @@
 /**
  * Puzzle.
  */
-export default abstract class Puzzle {
+export default abstract class Puzzle<PuzzleOptions, PuzzleState> {
     /**
      * Puzzle options.
      *
      * @type {Object}
      */
-    options: Object;
+    options: PuzzleOptions;
 
     /**
      * Current puzzle state.
      *
      * @type {Object}
      */
-    state: Object;
+    state: PuzzleState;
 
     /**
      * Constructor.
      *
      * @param {Object}  object 
      */
-    constructor(options: Object) {
+    constructor(options: PuzzleOptions) {
         this.options = options;
 
         this.reset();

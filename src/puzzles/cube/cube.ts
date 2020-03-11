@@ -9,7 +9,7 @@ import {
 
 import Puzzle from '../puzzle';
 
-export default class Cube extends Puzzle {
+export default class Cube extends Puzzle<CubeOptions, CubeState> {
 
     /**
      * Puzzle options.
