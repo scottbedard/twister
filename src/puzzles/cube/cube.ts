@@ -1,7 +1,22 @@
 import Puzzle from '../puzzle';
+import { CubeOptions } from './types';
 
 export default class Cube extends Puzzle {
-    constructor(options: Object) {
+
+    /**
+     * Constructor.
+     *
+     * @param {CubeOptions}     options
+     */
+    constructor(options: CubeOptions) {
+        if (!Number.isInteger(options.size)) {
+            throw new Error('Cube size must be an integer');
+        }
+
+        if (options.size < 2) {
+            throw new Error('Cube size must be two or greater');
+        }
+
         super(options);
     }
 
