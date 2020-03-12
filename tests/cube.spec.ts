@@ -39,7 +39,7 @@ describe('cube', () => {
                 expect(() => parseTurn('invalid turn')).toThrow();
             });
 
-            describe('turns', () => {
+            describe('turn parsing', () => {
                 const turns: { [key: string]: CubeTurn } = {
                     // standard
                     'U': { depth: 1, rotation: 1, target: 'U', wide: false },
@@ -58,6 +58,7 @@ describe('cube', () => {
                     'Fw2': { depth: 2, rotation: 2, target: 'F', wide: true },
                     'Fw-': { depth: 2, rotation: -1, target: 'F', wide: true },
                     'Fw\'': { depth: 2, rotation: -1, target: 'F', wide: true },
+                    '3Fw': { depth: 3, rotation: 1, target: 'F', wide: true },
                 };
             
                 Object.keys(turns).forEach((turn) => {
