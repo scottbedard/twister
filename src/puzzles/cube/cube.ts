@@ -9,6 +9,7 @@ import {
     createFace,
     faceIsSolved,
     getFace,
+    getOppositeFace,
     parseTurn,
     rotate,
     turnCubeX,
@@ -80,10 +81,26 @@ export default class Cube extends Puzzle<CubeOptions, CubeState, CubeTurn> {
         else {
             const face = getFace(turn);
 
-            // turn face if necessary
+            // turn outer face if necessary
             if (turn.depth === 1 || turn.wide) {
                 this.state[face] = rotate(this.state[face], turn.rotation);
             }
+
+             // turn the inner face if necessary
+             if (turn.depth >= this.options.size) {
+                let innerRotation = 2;
+
+                // if this isn't a double turn, reverse the direction because
+                // it's being turned from the context of the opposite face
+                if (turn.rotation === 1 || turn.rotation === -1) {
+                    innerRotation = turn.rotation * -1;
+                }
+    
+                const oppositeFace = getOppositeFace(turn);
+
+                this.state[oppositeFace] = rotate(this.state[oppositeFace], innerRotation);
+            }
+
 
             switch (face) {
                 case 'U': turnSliceU(this.state, turn); break;

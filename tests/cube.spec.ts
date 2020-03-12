@@ -1054,6 +1054,18 @@ describe('cube', () => {
                 expect(simplifiedState(cube)).toEqual(turns[turn]);
             });
         });
+
+        it('inner turns effect opposite face', () => {
+            const cube = new Cube({ size: 3 });
+
+            cube.turn('L R 3U');
+
+            expect(faceValues(cube.state.D)).toEqual([
+                4, 4, 4,
+                5, 5, 5,
+                2, 2, 2,
+            ]);
+        });
     });
 
     // scrambles are generated from the following WCA scrambler

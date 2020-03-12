@@ -146,7 +146,9 @@ export function flip<T>(chunks: T[][]): T[][] {
 /**
  * Get the face being turned.
  *
- * @param turn 
+ * @param {CubeTurn}    turn
+ *
+ * @return {CubeFace} 
  */
 export function getFace(turn: CubeTurn): CubeFace {
     const { target } = turn;
@@ -158,6 +160,26 @@ export function getFace(turn: CubeTurn): CubeFace {
         case 'R': return 'R';
         case 'B': return 'B';
         case 'D': return 'D';
+    }
+}
+
+/**
+ * Get the opposite face.
+ *
+ * @param {CubeTurn}    turn
+ *
+ * @return {CubeFace} 
+ */
+export function getOppositeFace(turn: CubeTurn): CubeFace {
+    const { target } = turn;
+
+    switch (target) {
+        case 'U': return 'D';
+        case 'L': return 'R';
+        case 'F': return 'B';
+        case 'R': return 'L';
+        case 'B': return 'F';
+        case 'D': return 'U';
     }
 }
 
