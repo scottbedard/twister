@@ -1,33 +1,33 @@
 /**
  * Puzzle.
  */
-export default abstract class Puzzle {
+export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
     /**
      * Puzzle options.
      *
-     * @type {Object}
+     * @type {PuzzleOptions}
      */
-    options: Object;
+    options: PuzzleOptions;
     /**
      * Current puzzle state.
      *
-     * @type {Object}
+     * @type {PuzzleState}
      */
-    state: Object;
+    state: PuzzleState;
     /**
      * Constructor.
      *
-     * @param {Object}  object
+     * @param {PuzzleOptions}  object
      */
-    constructor(options: Object);
+    constructor(options: PuzzleOptions);
     /**
      * Apply a turn.
      *
-     * @param {string}  turn
+     * @param {PuzzleTurn}  turn
      *
      * @return {void}
      */
-    abstract applyTurn(turn: string): void;
+    abstract applyTurn(turn: PuzzleTurn): void;
     /**
      * Test if the puzzle is solved.
      *
@@ -40,4 +40,20 @@ export default abstract class Puzzle {
      * @return {void}
      */
     abstract reset(): void;
+    /**
+     * Parse a turn.
+     *
+     * @param {string}  turn
+     *
+     * @return {PuzzleTurn}
+     */
+    abstract parseTurn(turn: string): PuzzleTurn;
+    /**
+     * Apply a series of turns.
+     *
+     * @param {string}  algorithm
+     *
+     * @return {void}
+     */
+    turn(algorithm: string): void;
 }
