@@ -1,4 +1,16 @@
 /**
+ * Helper function to slice then shift an array.
+ *
+ * @param  {T[]}        arr
+ * @param  {number?}    begin
+ *
+ * @return {any}
+ */
+export function first<T>(arr: T[], begin?: number): T {
+    return slice(arr, begin).shift();
+}
+
+/**
  * Make an array of a given size.
  *
  * @param {number}  length
