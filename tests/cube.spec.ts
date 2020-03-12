@@ -36,6 +36,16 @@ describe('cube', () => {
         expect(faceValues(D)).toEqual([5, 5, 5, 5, 5, 5, 5, 5, 5]);
     });
 
+    it('isSolved', () => {
+        const cube = new Cube({ size: 2 });
+
+        expect(cube.isSolved()).toBe(true);
+
+        cube.turn('R');
+
+        expect(cube.isSolved()).toBe(false);
+    });
+
     describe('notation', () => {
         it('throws an exception for invalid turns', () => {
             expect(() => parseTurn('invalid turn')).toThrow();

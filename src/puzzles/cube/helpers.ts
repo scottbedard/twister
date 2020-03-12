@@ -72,6 +72,25 @@ export function createFace(value: CubeStickerValue, length: number): CubeSticker
 }
 
 /**
+ * Test if a face is solved.
+ *
+ * @param {CubeSticker[]}   face
+ *
+ * @return {boolean}
+ */
+export function faceIsSolved(stickers: CubeSticker[]): boolean {
+    const value = stickers[0].value;
+
+    for (let i = 1; i < stickers.length; i++) {
+        if (stickers[i].value !== value) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
  * Flatten an array of columns.
  *
  * [                    [

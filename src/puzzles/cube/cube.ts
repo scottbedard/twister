@@ -7,6 +7,7 @@ import {
 
 import {
     createFace,
+    faceIsSolved,
     getFace,
     parseTurn,
     rotate,
@@ -101,7 +102,12 @@ export default class Cube extends Puzzle<CubeOptions, CubeState, CubeTurn> {
      * @return {boolean}
      */
     isSolved(): boolean {
-        return false;
+        return faceIsSolved(this.state.U)
+            && faceIsSolved(this.state.L)
+            && faceIsSolved(this.state.F)
+            && faceIsSolved(this.state.R)
+            && faceIsSolved(this.state.B)
+            && faceIsSolved(this.state.D);
     }
 
     /**
