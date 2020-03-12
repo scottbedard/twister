@@ -1,25 +1,29 @@
+import { identity } from '../utils/function';
+import { trim } from '../utils/string';
+
 /**
  * Puzzle.
  */
-export default abstract class Puzzle<PuzzleOptions, PuzzleState> {
+export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
+
     /**
      * Puzzle options.
      *
-     * @type {Object}
+     * @type {PuzzleOptions}
      */
     options: PuzzleOptions;
 
     /**
      * Current puzzle state.
      *
-     * @type {Object}
+     * @type {PuzzleState}
      */
     state: PuzzleState;
 
     /**
      * Constructor.
      *
-     * @param {Object}  object 
+     * @param {PuzzleOptions}  object 
      */
     constructor(options: PuzzleOptions) {
         this.options = options;
@@ -30,11 +34,11 @@ export default abstract class Puzzle<PuzzleOptions, PuzzleState> {
     /**
      * Apply a turn.
      *
-     * @param {string}  turn
+     * @param {PuzzleTurn}  turn
      *
      * @return {void} 
      */
-    abstract applyTurn(turn: string): void;
+    abstract applyTurn(turn: PuzzleTurn): void;
     
     /**
      * Test if the puzzle is solved.
@@ -49,4 +53,29 @@ export default abstract class Puzzle<PuzzleOptions, PuzzleState> {
      * @return {void}
      */
     abstract reset(): void;
+
+    /**
+     * Parse a turn.
+     *
+     * @param {string}  turn
+     *
+     * @return {PuzzleTurn} 
+     */
+    abstract parseTurn(turn: string): PuzzleTurn;
+
+    /**
+     * Apply a series of turns.
+     *
+     * @param {string}  algorithm
+     *
+     * @return {void} 
+     */
+    turn(algorithm: string): void {
+        algorithm
+            .split(' ')
+            .map(trim)
+            .filter(identity)
+            .map(turn => this.parseTurn(turn))
+            .forEach(turn => this.applyTurn(turn));
+    }
 };

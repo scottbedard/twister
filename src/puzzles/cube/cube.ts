@@ -1,15 +1,21 @@
 import {
+    CubeFace,
     CubeOptions,
     CubeState,
+    CubeTurn,
 } from './types';
 
 import {
     createFace,
+    getFace,
+    isPuzzleRotation,
+    parseTurn,
+    rotateFace,
 } from './helpers';
 
 import Puzzle from '../puzzle';
 
-export default class Cube extends Puzzle<CubeOptions, CubeState> {
+export default class Cube extends Puzzle<CubeOptions, CubeState, CubeTurn> {
 
     /**
      * Puzzle options.
@@ -45,12 +51,22 @@ export default class Cube extends Puzzle<CubeOptions, CubeState> {
     /**
      * Apply a turn.
      *
-     * @param {string}  turn
+     * @param {CubeTurn}  turn
      *
      * @return {void} 
      */
-    applyTurn(turn: string): void {
-        // ...
+    applyTurn(turn: CubeTurn): void {
+        // puzzle rotations
+        if (isPuzzleRotation(turn)) {
+            // ...
+        }
+
+        // turns
+        else {
+            const face = getFace(turn);
+
+            this.state[face] = rotateFace(this.state[face], turn.rotation);
+        }
     }
 
     /**
@@ -60,6 +76,17 @@ export default class Cube extends Puzzle<CubeOptions, CubeState> {
      */
     isSolved(): boolean {
         return false;
+    }
+
+    /**
+     * Parse a turn.
+     *
+     * @param {string}  turn
+     *
+     * @return {CubeTurn} 
+     */
+    parseTurn(turn: string): CubeTurn {
+        return parseTurn(turn);
     }
 
     /**

@@ -1,4 +1,9 @@
 /**
+ * Cube face.
+ */
+export type CubeFace = 'U' | 'L' | 'F' | 'R' | 'B' | 'D';
+
+/**
  * Cube sticker.
  */
 export type CubeSticker = {

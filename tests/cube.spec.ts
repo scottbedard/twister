@@ -3,6 +3,7 @@ import { CubeSticker, CubeTurn } from '../src/puzzles/cube/types';
 import { parseTurn } from '../src/puzzles/cube/helpers';
 
 describe('cube', () => {
+    const faceIndexes = (face: CubeSticker[]) => face.map(s => s.originalIndex);
     const faceValues = (face: CubeSticker[]) => face.map(s => s.value);
 
     it('throws an error if the cube size is not an integer', () => {
@@ -58,6 +59,25 @@ describe('cube', () => {
 
                     it(turn, () => expect(parseTurn(turn)).toEqual(result));
                 });
+            });
+        });
+
+        describe('turning', () => {
+            let cube: Cube;
+
+            beforeEach(() => {
+                cube = new Cube({ size: 3 });
+            });
+
+            it('F', () => {
+                cube.turn('F');
+                expect(faceIndexes(cube.state.F)).toEqual([6, 3, 0, 7, 4, 1, 8, 5, 2]);
+
+                cube.turn('F-');
+                expect(faceIndexes(cube.state.F)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8]);
+
+                cube.turn('F2');
+                expect(faceIndexes(cube.state.F)).toEqual([8, 7, 6, 5, 4, 3, 2, 1, 0]);
             });
         });
     });
