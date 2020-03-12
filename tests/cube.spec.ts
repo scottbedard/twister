@@ -1,8 +1,10 @@
 import { Cube } from '../src/index';
-import { CubeSticker, CubeTurn } from '../src/puzzles/cube/types';
+import { CubeFace, CubeSticker, CubeTurn } from '../src/puzzles/cube/types';
 import { parseTurn } from '../src/puzzles/cube/helpers';
 
 describe('cube', () => {
+    const w = 0, o = 1, g = 2, r = 3, b = 4, y = 5;
+
     const faceValues = (face: CubeSticker[]) => face.map(s => s.value);
 
     const simplifiedState = (cube: Cube) => ({
@@ -35,38 +37,1011 @@ describe('cube', () => {
     });
 
     describe('notation', () => {
-        describe('parseTurn', () => {
-            it('throws an exception for invalid turns', () => {
-                expect(() => parseTurn('invalid turn')).toThrow();
+        it('throws an exception for invalid turns', () => {
+            expect(() => parseTurn('invalid turn')).toThrow();
+        });
+
+        describe('turn parsing', () => {
+            const turns: { [key: string]: CubeTurn } = {
+                // standard
+                'U': { depth: 1, rotation: 1, target: 'U', wide: false },
+                'U2': { depth: 1, rotation: 2, target: 'U', wide: false },
+                'U-': { depth: 1, rotation: -1, target: 'U', wide: false },
+                'U\'': { depth: 1, rotation: -1, target: 'U', wide: false },
+
+                // deep
+                '2L': { depth: 2, rotation: 1, target: 'L', wide: false },
+                '2L2': { depth: 2, rotation: 2, target: 'L', wide: false },
+                '2L-': { depth: 2, rotation: -1, target: 'L', wide: false },
+                '2L\'': { depth: 2, rotation: -1, target: 'L', wide: false },
+
+                // wide
+                'Fw': { depth: 2, rotation: 1, target: 'F', wide: true },
+                'Fw2': { depth: 2, rotation: 2, target: 'F', wide: true },
+                'Fw-': { depth: 2, rotation: -1, target: 'F', wide: true },
+                'Fw\'': { depth: 2, rotation: -1, target: 'F', wide: true },
+                '3Fw': { depth: 3, rotation: 1, target: 'F', wide: true },
+            };
+        
+            Object.keys(turns).forEach((turn) => {
+                const result = turns[turn];
+
+                it(turn, () => expect(parseTurn(turn)).toEqual(result));
             });
+        });
+    });
 
-            describe('turn parsing', () => {
-                const turns: { [key: string]: CubeTurn } = {
-                    // standard
-                    'U': { depth: 1, rotation: 1, target: 'U', wide: false },
-                    'U2': { depth: 1, rotation: 2, target: 'U', wide: false },
-                    'U-': { depth: 1, rotation: -1, target: 'U', wide: false },
-                    'U\'': { depth: 1, rotation: -1, target: 'U', wide: false },
+    describe('turns', () => {
+        const turns: { [turn: string]: { [face: string]: number[] }} = {
+            'U': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    g, g, g,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    r, r, r,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    b, b, b,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    o, o, o,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'U-': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    b, b, b,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    o, o, o,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    g, g, g,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    r, r, r,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'U2': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    r, r, r,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    b, b, b,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    o, o, o,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    g, g, g,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            '3U': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    g, g, g,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    r, r, r,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    b, b, b,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    o, o, o,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            '3U-': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    b, b, b,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    o, o, o,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    g, g, g,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    r, r, r,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            '3U2': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    r, r, r,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    b, b, b,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    o, o, o,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    g, g, g,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'L': {
+                U: [
+                    b, w, w,
+                    b, w, w,
+                    b, w, w,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    w, g, g,
+                    w, g, g,
+                    w, g, g,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    b, b, y,
+                    b, b, y,
+                    b, b, y,
+                ],
+                D: [
+                    g, y, y,
+                    g, y, y,
+                    g, y, y,
+                ],
+            },
+            'L-': {
+                U: [
+                    g, w, w,
+                    g, w, w,
+                    g, w, w,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    y, g, g,
+                    y, g, g,
+                    y, g, g,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    b, b, w,
+                    b, b, w,
+                    b, b, w,
+                ],
+                D: [
+                    b, y, y,
+                    b, y, y,
+                    b, y, y,
+                ],
+            },
+            'L2': {
+                U: [
+                    y, w, w,
+                    y, w, w,
+                    y, w, w,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    b, g, g,
+                    b, g, g,
+                    b, g, g,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    b, b, g,
+                    b, b, g,
+                    b, b, g,
+                ],
+                D: [
+                    w, y, y,
+                    w, y, y,
+                    w, y, y,
+                ],
+            },
+            'F': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    o, o, o,
+                ],
+                L: [
+                    o, o, y,
+                    o, o, y,
+                    o, o, y,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    w, r, r,
+                    w, r, r,
+                    w, r, r,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    r, r, r,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'F-': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    r, r, r,
+                ],
+                L: [
+                    o, o, w,
+                    o, o, w,
+                    o, o, w,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    y, r, r,
+                    y, r, r,
+                    y, r, r,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    o, o, o,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'F2': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    y, y, y,
+                ],
+                L: [
+                    o, o, r,
+                    o, o, r,
+                    o, o, r,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    o, r, r,
+                    o, r, r,
+                    o, r, r,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    w, w, w,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'R': {
+                U: [
+                    w, w, g,
+                    w, w, g,
+                    w, w, g,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    g, g, y,
+                    g, g, y,
+                    g, g, y,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    w, b, b,
+                    w, b, b,
+                    w, b, b,
+                ],
+                D: [
+                    y, y, b,
+                    y, y, b,
+                    y, y, b,
+                ],
+            },
+            'R-': {
+                U: [
+                    w, w, b,
+                    w, w, b,
+                    w, w, b,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    g, g, w,
+                    g, g, w,
+                    g, g, w,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    y, b, b,
+                    y, b, b,
+                    y, b, b,
+                ],
+                D: [
+                    y, y, g,
+                    y, y, g,
+                    y, y, g,
+                ],
+            },
+            'R2': {
+                U: [
+                    w, w, y,
+                    w, w, y,
+                    w, w, y,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    g, g, b,
+                    g, g, b,
+                    g, g, b,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    g, b, b,
+                    g, b, b,
+                    g, b, b,
+                ],
+                D: [
+                    y, y, w,
+                    y, y, w,
+                    y, y, w,
+                ],
+            },
+            'B': {
+                U: [
+                    r, r, r,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    w, o, o,
+                    w, o, o,
+                    w, o, o,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    r, r, y,
+                    r, r, y,
+                    r, r, y,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    o, o, o,
+                ],
+            },
+            'B-': {
+                U: [
+                    o, o, o,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    y, o, o,
+                    y, o, o,
+                    y, o, o,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    r, r, w,
+                    r, r, w,
+                    r, r, w,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    r, r, r,
+                ],
+            },
+            'B2': {
+                U: [
+                    y, y, y,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    r, o, o,
+                    r, o, o,
+                    r, o, o,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    r, r, o,
+                    r, r, o,
+                    r, r, o,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    w, w, w,
+                ],
+            },
+            'D': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    b, b, b,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    o, o, o,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    g, g, g,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    r, r, r,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'D-': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    g, g, g,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    r, r, r,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    b, b, b,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    o, o, o,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'D2': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    r, r, r,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    b, b, b,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    o, o, o,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    g, g, g,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'X': {
+                U: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                D: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+            },
+            'X-': {
+                U: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+                D: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+            },
+            'X2': {
+                U: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+                L: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                F: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                R: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                B: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                D: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+            },
+            'Y': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                F: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                R: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                B: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'Y-': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                F: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                R: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                B: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'Y2': {
+                U: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                L: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                F: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                R: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                B: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                D: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+            },
+            'Z': {
+                U: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                L: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+            },
+            'Z-': {
+                U: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                L: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+            },
+            'Z2': {
+                U: [
+                    y, y, y,
+                    y, y, y,
+                    y, y, y,
+                ],
+                L: [
+                    r, r, r,
+                    r, r, r,
+                    r, r, r,
+                ],
+                F: [
+                    g, g, g,
+                    g, g, g,
+                    g, g, g,
+                ],
+                R: [
+                    o, o, o,
+                    o, o, o,
+                    o, o, o,
+                ],
+                B: [
+                    b, b, b,
+                    b, b, b,
+                    b, b, b,
+                ],
+                D: [
+                    w, w, w,
+                    w, w, w,
+                    w, w, w,
+                ],
+            },
+        };
 
-                    // deep
-                    '2L': { depth: 2, rotation: 1, target: 'L', wide: false },
-                    '2L2': { depth: 2, rotation: 2, target: 'L', wide: false },
-                    '2L-': { depth: 2, rotation: -1, target: 'L', wide: false },
-                    '2L\'': { depth: 2, rotation: -1, target: 'L', wide: false },
+        Object.keys(turns).forEach((turn: string) => {
+            it(turn, () => {
+                const cube = new Cube({ size: 3 });
 
-                    // wide
-                    'Fw': { depth: 2, rotation: 1, target: 'F', wide: true },
-                    'Fw2': { depth: 2, rotation: 2, target: 'F', wide: true },
-                    'Fw-': { depth: 2, rotation: -1, target: 'F', wide: true },
-                    'Fw\'': { depth: 2, rotation: -1, target: 'F', wide: true },
-                    '3Fw': { depth: 3, rotation: 1, target: 'F', wide: true },
-                };
-            
-                Object.keys(turns).forEach((turn) => {
-                    const result = turns[turn];
+                cube.turn(turn);
 
-                    it(turn, () => expect(parseTurn(turn)).toEqual(result));
-                });
+                expect(simplifiedState(cube)).toEqual(turns[turn]);
             });
         });
     });
@@ -74,8 +1049,6 @@ describe('cube', () => {
     // scrambles are generated from the following WCA scrambler
     // https://www.worldcubeassociation.org/regulations/history/files/scrambles/scramble_cube.htm
     describe('scrambles', () => {
-        const w = 0, o = 1, g = 2, r = 3, b = 4, y = 5;
-
         it('2x2', () => {
             const cube = new Cube({ size: 2 });
             
