@@ -147,5 +147,101 @@ describe('cube', () => {
                 ],
             });
         });
+
+        it('4x4', () => {
+            const cube = new Cube({ size: 4 });
+
+            cube.turn(`Rw2 U' B2 Fw D' R2 D2 R' Uw' L2 Fw' L2 B' D' R' F Rw B' L' Rw2 B2 Uw2 L' Fw Uw2 F Uw Fw' F L2`);
+        
+            expect(simplifiedState(cube)).toEqual({
+                U: [
+                    y, o, g, b,
+                    r, g, o, g,
+                    g, b, y, y,
+                    g, b, y, r,
+                ],
+                L: [
+                    b, b, r, r,
+                    r, w, r, r,
+                    b, y, g, y,
+                    b, b, r, y,
+                ],
+                F: [
+                    w, y, o, g,
+                    b, y, b, b,
+                    o, r, r, w,
+                    o, g, y, w,
+                ],
+                R: [
+                    y, b, y, w,
+                    o, g, o, w,
+                    o, g, r, g,
+                    o, g, r, g,
+                ],
+                B: [
+                    r, r, b, o,
+                    o, w, w, w,
+                    w, b, w, w,
+                    o, w, g, r,
+                ],
+                D: [
+                    g, o, r, b,
+                    w, o, y, y,
+                    w, o, b, y,
+                    y, o, g, w,
+                ],
+            });
+        });
+
+        it('5x5', () => {
+            const cube = new Cube({ size: 5 });
+
+            cube.turn(`R' Dw2 L' D' U2 B R2 B2 U' Bw' Lw2 Dw' Rw' U' R Dw' Uw' F Dw' B' L2 Lw' Rw' R2 Bw' Fw2 F R' B' D`);
+        
+            expect(simplifiedState(cube)).toEqual({
+                U: [
+                    g, y, r, b, y,
+                    o, y, w, g, r,
+                    o, b, w, o, g,
+                    b, r, w, r, y,
+                    o, b, o, o, o,
+                ],
+                L: [
+                    r, y, g, w, y,
+                    g, w, r, b, g,
+                    b, y, o, b, r,
+                    b, y, y, g, b,
+                    w, w, b, b, r,
+                ],
+                F: [
+                    g, o, y, y, w,
+                    w, r, y, y, y,
+                    y, b, g, o, w,
+                    w, w, g, g, g,
+                    g, o, w, g, r,
+                ],
+                R: [
+                    b, g, r, w, o,
+                    r, b, w, o, r,
+                    r, r, r, w, o,
+                    w, b, g, w, r,
+                    w, g, g, r, b,
+                ],
+                B: [
+                    b, r, b, b, y,
+                    y, g, r, o, o,
+                    b, b, b, y, y,
+                    w, r, g, y, y,
+                    y, r, o, b, o,
+                ],
+                D: [
+                    w, w, g, o, b,
+                    r, o, r, w, y,
+                    w, g, y, o, y,
+                    o, b, o, o, g,
+                    g, o, w, g, r,
+                ],
+            });
+        });
     });
 });
