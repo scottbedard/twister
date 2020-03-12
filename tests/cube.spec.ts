@@ -1,6 +1,6 @@
 import { Cube } from '../src/index';
 import { CubeFace, CubeSticker, CubeTurn } from '../src/cube/types';
-import { parseTurn } from '../src/cube/helpers';
+import { getOppositeFace, parseTurn } from '../src/cube/helpers';
 
 describe('cube', () => {
     const w = 0, o = 1, g = 2, r = 3, b = 4, y = 5;
@@ -36,14 +36,36 @@ describe('cube', () => {
         expect(faceValues(D)).toEqual([5, 5, 5, 5, 5, 5, 5, 5, 5]);
     });
 
-    it('isSolved', () => {
-        const cube = new Cube({ size: 2 });
+    describe('helpers', () => {
+        it.only('getOppositeFace', () => {
+            const cube = new Cube({ size: 2 });
 
-        expect(cube.isSolved()).toBe(true);
+            const faces = {
+                U: 'D',
+                L: 'R',
+                F: 'B',
+                R: 'L',
+                B: 'F',
+                D: 'U',
+            };
 
-        cube.turn('R');
+            Object.keys(faces).forEach((face: CubeFace) => {
+                const turn = cube.parseTurn(face);
+                expect(getOppositeFace(turn)).toBe(faces[face]);
+            });
+        });
+    });
 
-        expect(cube.isSolved()).toBe(false);
+    describe('methods', () => {
+        it('isSolved', () => {
+            const cube = new Cube({ size: 2 });
+
+            expect(cube.isSolved()).toBe(true);
+
+            cube.turn('R');
+
+            expect(cube.isSolved()).toBe(false);
+        });
     });
 
     describe('notation', () => {
