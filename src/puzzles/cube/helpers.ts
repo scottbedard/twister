@@ -15,11 +15,8 @@ import { makeArray } from '../../utils/array';
  * @return {CubeSticker[]} 
  */
 export function createFace(value: CubeStickerValue, length: number): CubeSticker[] {
-    const centerIndex = Math.floor(length / 2);
-
     return makeArray(length).map((x, i): CubeSticker => {
         return {
-            center: centerIndex === i,
             data: null,
             originalIndex: i,
             value,

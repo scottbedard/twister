@@ -3,6 +3,8 @@ import { CubeSticker, CubeTurn } from '../src/puzzles/cube/types';
 import { parseTurn } from '../src/puzzles/cube/helpers';
 
 describe('cube', () => {
+    const faceValues = (face: CubeSticker[]) => face.map(s => s.value);
+
     it('throws an error if the cube size is not an integer', () => {
         expect(() => new Cube({ size: 3.5 })).toThrow();
     });
@@ -12,18 +14,8 @@ describe('cube', () => {
     });
 
     it('sets the initial state', () => {
-        const faceCenter = (face: CubeSticker[]) => face.map(s => s.center);
-        const faceValues = (face: CubeSticker[]) => face.map(s => s.value);
-
         const cube = new Cube({ size: 3 });
         const { U, L, F, R, B, D } = cube.state;
-        
-        expect(faceCenter(U)).toEqual([false, false, false, false, true, false, false, false, false]);
-        expect(faceCenter(L)).toEqual([false, false, false, false, true, false, false, false, false]);
-        expect(faceCenter(F)).toEqual([false, false, false, false, true, false, false, false, false]);
-        expect(faceCenter(R)).toEqual([false, false, false, false, true, false, false, false, false]);
-        expect(faceCenter(B)).toEqual([false, false, false, false, true, false, false, false, false]);
-        expect(faceCenter(D)).toEqual([false, false, false, false, true, false, false, false, false]);
 
         expect(faceValues(U)).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 0]);
         expect(faceValues(L)).toEqual([1, 1, 1, 1, 1, 1, 1, 1, 1]);

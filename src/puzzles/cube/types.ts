@@ -2,7 +2,6 @@
  * Cube sticker.
  */
 export type CubeSticker = {
-    center: boolean,
     data: any,
     originalIndex: number,
     value: CubeStickerValue,
