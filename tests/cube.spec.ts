@@ -3,8 +3,16 @@ import { CubeSticker, CubeTurn } from '../src/puzzles/cube/types';
 import { parseTurn } from '../src/puzzles/cube/helpers';
 
 describe('cube', () => {
-    const faceIndexes = (face: CubeSticker[]) => face.map(s => s.originalIndex);
     const faceValues = (face: CubeSticker[]) => face.map(s => s.value);
+
+    const simplifiedState = (cube: Cube) => ({
+        U: faceValues(cube.state.U),
+        L: faceValues(cube.state.L),
+        F: faceValues(cube.state.F),
+        R: faceValues(cube.state.R),
+        B: faceValues(cube.state.B),
+        D: faceValues(cube.state.D),
+    });
 
     it('throws an error if the cube size is not an integer', () => {
         expect(() => new Cube({ size: 3.5 })).toThrow();
@@ -59,6 +67,84 @@ describe('cube', () => {
 
                     it(turn, () => expect(parseTurn(turn)).toEqual(result));
                 });
+            });
+        });
+    });
+
+    // scrambles are generated from the following WCA scrambler
+    // https://www.worldcubeassociation.org/regulations/history/files/scrambles/scramble_cube.htm
+    describe('scrambles', () => {
+        const w = 0, o = 1, g = 2, r = 3, b = 4, y = 5;
+
+        it('2x2', () => {
+            const cube = new Cube({ size: 2 });
+            
+            cube.turn(`F2 U2 F2 U' F' R F2 U2 F' U2`);
+    
+            expect(simplifiedState(cube)).toEqual({
+                U: [
+                    w, g,
+                    b, g,
+                ],
+                L: [
+                    g, r,
+                    o, b,
+                ],
+                F: [
+                    y, o,
+                    r, o,
+                ],
+                R: [
+                    y, y,
+                    b, g,
+                ],
+                B: [
+                    r, o,
+                    w, b,
+                ],
+                D: [
+                    w, w,
+                    y, r,
+                ],
+            });
+        });
+
+        it('3x3', () => {
+            const cube = new Cube({ size: 3 });
+            
+            cube.turn(`R U' L' B2 F2 L' R' U2 R D' L R' D' L D B' L B D' B2 F' L R D2 B' R' F2 L B2 D2`);
+    
+            expect(simplifiedState(cube)).toEqual({
+                U: [
+                    o, r, b,
+                    w, w, o,
+                    b, y, g,
+                ],
+                L: [
+                    g, o, o,
+                    y, o, r,
+                    o, b, b,
+                ],
+                F: [
+                    w, g, y,
+                    g, g, r,
+                    y, w, y,
+                ],
+                R: [
+                    r, g, w,
+                    w, r, r,
+                    b, y, g,
+                ],
+                B: [
+                    r, y, y,
+                    b, b, b,
+                    w, w, g,
+                ],
+                D: [
+                    r, b, o,
+                    o, y, o,
+                    w, g, r,
+                ],
             });
         });
     });
