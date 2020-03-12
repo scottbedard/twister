@@ -12,7 +12,7 @@ import {
     reverse,
     slice,
     splice,
-} from '../../utils/array';
+} from '../utils/array';
 
 /**
  * Chunk a face array into columns.

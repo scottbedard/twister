@@ -1,5 +1,5 @@
-import { identity } from '../utils/function';
-import { trim } from '../utils/string';
+import { identity } from './utils/function';
+import { trim } from './utils/string';
 
 /**
  * Puzzle.

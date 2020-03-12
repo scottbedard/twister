@@ -1,6 +1,6 @@
 import { Cube } from '../src/index';
-import { CubeFace, CubeSticker, CubeTurn } from '../src/puzzles/cube/types';
-import { parseTurn } from '../src/puzzles/cube/helpers';
+import { CubeFace, CubeSticker, CubeTurn } from '../src/cube/types';
+import { parseTurn } from '../src/cube/helpers';
 
 describe('cube', () => {
     const w = 0, o = 1, g = 2, r = 3, b = 4, y = 5;

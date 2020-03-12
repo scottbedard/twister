@@ -4,4 +4,4 @@ export {
     rotateFace,
 } from './utils/face';
 
-export { default as Cube } from './puzzles/cube/cube';
+export { default as Cube } from './cube/cube';
