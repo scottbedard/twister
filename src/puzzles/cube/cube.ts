@@ -7,10 +7,10 @@ import {
 
 import {
     createFace,
-    getFace,
-    isPuzzleRotation,
     parseTurn,
-    rotateFace,
+    turnCubeX,
+    turnCubeY,
+    turnCubeZ,
 } from './helpers';
 
 import Puzzle from '../puzzle';
@@ -56,16 +56,26 @@ export default class Cube extends Puzzle<CubeOptions, CubeState, CubeTurn> {
      * @return {void} 
      */
     applyTurn(turn: CubeTurn): void {
-        // puzzle rotations
-        if (isPuzzleRotation(turn)) {
+        const { target } = turn;
+
+        if (target === 'X') {
+            this.state = turnCubeX(this.state, turn);
+        } else if (target === 'Y') {
+            this.state = turnCubeY(this.state, turn);
+        } else if (target === 'Z') {
+            this.state = turnCubeZ(this.state, turn);
+        } else if (target === 'U') {
             // ...
-        }
-
-        // turns
-        else {
-            const face = getFace(turn);
-
-            this.state[face] = rotateFace(this.state[face], turn.rotation);
+        } else if (target === 'L') {
+            // ...
+        } else if (target === 'F') {
+            // ...
+        } else if (target === 'R') {
+            // ...
+        } else if (target === 'B') {
+            // ...
+        } else if (target === 'D') {
+            // ...
         }
     }
 
