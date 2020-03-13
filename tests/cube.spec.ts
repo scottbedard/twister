@@ -37,7 +37,7 @@ describe('cube', () => {
     });
 
     describe('helpers', () => {
-        it.only('getOppositeFace', () => {
+        it('getOppositeFace', () => {
             const cube = new Cube({ size: 2 });
 
             const faces = {
@@ -63,6 +63,14 @@ describe('cube', () => {
             expect(cube.isSolved()).toBe(true);
 
             cube.turn('R');
+
+            expect(cube.isSolved()).toBe(false);
+        });
+
+        it('scramble', () => {
+            const cube = new Cube({ size: 2 });
+
+            cube.scramble();
 
             expect(cube.isSolved()).toBe(false);
         });

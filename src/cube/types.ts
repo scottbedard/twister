@@ -1,6 +1,8 @@
 /**
- * Cube face.
+ * Cube axis and face.
  */
+export type CubeAxis = 'X' | 'Y' | 'Z';
+
 export type CubeFace = 'U' | 'L' | 'F' | 'R' | 'B' | 'D';
 
 /**
@@ -42,6 +44,6 @@ export type CubeState = {
 export type CubeTurn = {
     depth: number,
     rotation: number,
-    target: string,
+    target: CubeFace | CubeAxis,
     wide: boolean,
 };

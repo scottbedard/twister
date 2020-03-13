@@ -1,4 +1,5 @@
 import {
+    CubeAxis,
     CubeFace,
     CubeState,
     CubeSticker,
@@ -214,7 +215,7 @@ export function parseTurn(turn: string): CubeTurn {
     }
 
     const modifier: string = result[4];
-    const target: string = result[2];
+    const target: CubeFace = <CubeFace>result[2];
     const wide: boolean = Boolean(result[3]);
 
     let depth: number = result[1] ? parseInt(result[1], 10) : 1;
@@ -271,6 +272,38 @@ export function sliceCube(state: CubeState) {
         B: { r: chunkRows(state.B), c: chunkCols(state.B) },
         D: { r: chunkRows(state.D), c: chunkCols(state.D) },
     };
+}
+
+/**
+ * Convert a turn object to a string.
+ *
+ * @param {CubeTurn}    turn
+ *
+ * @return {string}
+ */
+export function stringifyTurn(turn: CubeTurn): string {
+    // prefix
+    let prefix: number | string = '';
+
+    if (turn.depth > 1 && !turn.wide) {
+        prefix = 2;
+    } else if (turn.depth > 2) {
+        prefix = turn.depth;
+    }
+
+    // modifier
+    let modifier = turn.wide ? 'w' : '';
+
+    // suffix
+    let suffix: number | string = '';
+    
+    if (turn.rotation === -1) {
+        suffix = '-';
+    } else if (turn.rotation === 2) {
+        suffix = 2;
+    }
+
+    return `${prefix}${turn.target.toUpperCase()}${modifier}${suffix}`;
 }
 
 /**

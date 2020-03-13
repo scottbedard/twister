@@ -12,6 +12,7 @@ import {
     getOppositeFace,
     parseTurn,
     rotate,
+    stringifyTurn,
     turnCubeX,
     turnCubeY,
     turnCubeZ,
@@ -22,6 +23,9 @@ import {
     turnSliceR,
     turnSliceU,
 } from './helpers';
+
+import { makeArray, randomItem, tail } from '../utils/array';
+import { rand } from '../utils/number';
 
 import Puzzle from '../puzzle';
 
@@ -111,6 +115,40 @@ export default class Cube extends Puzzle<CubeOptions, CubeState, CubeTurn> {
                 case 'D': turnSliceD(this.state, turn); break;
             }
         }
+    }
+
+    /**
+     * Generate a scramble.
+     *
+     * @param {number}  length
+     *
+     * @return {void}
+     */
+    generateScramble(length: number = Math.max(20, this.options.size ** 3)): string {
+        const faces: CubeFace[] = ['U', 'L', 'F', 'R', 'B', 'D'];
+        const maxDepth = Math.floor(this.options.size / 2);
+        const turns: CubeFace[] = [];
+
+        const intersections: { [key in CubeFace]: CubeFace[] } = {
+            U: ['L', 'F', 'R', 'B'],
+            L: ['U', 'F', 'D', 'B'],
+            F: ['L', 'U', 'R', 'D'],
+            R: ['U', 'B', 'D', 'F'],
+            B: ['U', 'L', 'D', 'R'],
+            D: ['F', 'R', 'B', 'L'],
+        }
+
+        for (let i = 0, prev = randomItem(faces); i < length; i++) {
+            prev = randomItem(intersections[prev]);
+            turns.push(prev);
+        }
+
+        return turns.map(turn => stringifyTurn({
+            depth: this.options.size > 3 ? rand(0, maxDepth) : 1,
+            rotation: randomItem([-1, 1, 2]),
+            target: turn,
+            wide: this.options.size > 3 && !!rand(0, 1),
+        })).join(' ');
     }
 
     /**
