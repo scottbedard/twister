@@ -21,7 +21,13 @@ All puzzles expose the following methods
 // scramble the puzzle
 puzzle.scramble();
 
-// execute turns
+// scramble the puzzle to a specific depth
+puzzle.scramble(10);
+
+// generate a scramble, but don't execute it
+puzzle.generateScramble();
+
+// execute a series of turns
 puzzle.turn('R U- R-');
 
 // reset the puzzle
