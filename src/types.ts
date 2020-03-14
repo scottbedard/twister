@@ -16,8 +16,7 @@ export type PolygonFace = {
  * Regular polygon sticker.
  */
 export type PolygonSticker = {
-    center: boolean,
-    depth: number,
+    ring: number,
     originalIndex: number,
     value: null | number,
 };

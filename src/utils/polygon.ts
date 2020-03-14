@@ -1,6 +1,6 @@
 import { PolygonFace, PolygonSticker } from '../types';
 
-import { rollArray } from './array';
+import { makeArray, rollArray } from './array';
 import { isOdd } from './number';
 
 /**
@@ -20,30 +20,28 @@ export function createPolygonFace(sides: number, layers: number, value: number =
         throw new Error('Polygon layers must be an integer 5 or greater');
     }
 
-    // create a ring of stickers for each layer
+    // create outer stickers
     const stickers: PolygonSticker[] = [];
 
-    for (let depth = 0, stop = Math.floor(layers / 2); depth < stop; depth++) {
-        const length = (layers - (depth * 2) - 1) * sides;
+    let originalIndex = 0;
+
+    for (let i = 0, stop = Math.ceil(layers / 2); i < stop; i++) {
+        const length = (layers - (i * 2) - 1) * sides;
         
-        for (let index = 0; index < length; index++) {
-            stickers.push({
-                center: false,
-                depth,
-                originalIndex: index,
-                value,
-            });
+        for (let j = 0; j < length; j++) {
+            const ring = i + 1;
+
+            stickers.push({ originalIndex, ring, value });
+
+            originalIndex++;
         }
     }
 
-    // create a center sticker for odd layered puzzles
+    // create a center sticker
     if (isOdd(layers)) {
-        stickers.push({
-            center: true,
-            depth: Math.floor(layers / 2),
-            originalIndex: 0,
-            value,
-        });
+        const ring = Math.ceil(layers / 2);
+
+        stickers.push({ originalIndex, ring, value });
     }
 
     return { layers, sides, stickers };
@@ -67,7 +65,7 @@ export function rotatePolygonFace(face: PolygonFace, rotation: number): PolygonF
     rotation = rotation % face.sides;
 
     for (let i = 0, stop = Math.floor(face.layers / 2); i <= stop; i++) {
-        const arr = face.stickers.filter(sticker => sticker.depth === i);
+        const arr = face.stickers.filter(sticker => sticker.ring === i);
 
         if (rotation && arr.length > 1) {
             const distance = (arr.length / face.sides) * -rotation;
