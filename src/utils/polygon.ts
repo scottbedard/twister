@@ -10,13 +10,13 @@ import { isOdd } from './number';
  *
  * @return {PolygonFace}
  */
-export function createPolygonFace(sides: number, layers: number): PolygonFace {
+export function createPolygonFace(sides: number, layers: number, value: number = null): PolygonFace {
     if (!Number.isInteger(sides) || sides < 5) {
-        throw new Error('Polygon sides must be an integer of 5 or greater');
+        throw new Error('Polygon sides must be an integer 5 or greater');
     }
 
     if (!Number.isInteger(layers) || layers < 2) {
-        throw new Error('Polygon layers must be an integer of 5 or greater');
+        throw new Error('Polygon layers must be an integer 5 or greater');
     }
 
     // create a ring of stickers for each layer
@@ -28,9 +28,9 @@ export function createPolygonFace(sides: number, layers: number): PolygonFace {
         for (let index = 0; index < length; index++) {
             stickers.push({
                 center: false,
-                currentIndex: index,
                 depth,
                 originalIndex: index,
+                value,
             });
         }
     }
@@ -39,11 +39,20 @@ export function createPolygonFace(sides: number, layers: number): PolygonFace {
     if (isOdd(layers)) {
         stickers.push({
             center: true,
-            currentIndex: 0,
             depth: Math.floor(layers / 2),
             originalIndex: 0,
+            value,
         });
     }
 
     return { layers, sides, stickers };
+}
+
+/**
+ * Rotate a regular polygon face.
+ *
+ * 
+ */
+export function rotatePolygonFace() {
+
 }

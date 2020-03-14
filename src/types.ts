@@ -17,7 +17,7 @@ export type PolygonFace = {
  */
 export type PolygonSticker = {
     center: boolean,
-    currentIndex: number,
     depth: number,
     originalIndex: number,
+    value: null | number,
 };
