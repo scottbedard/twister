@@ -2,18 +2,6 @@ import { CubeOptions, CubeState, CubeTurn } from './types';
 import Puzzle from '../puzzle';
 export default class Cube extends Puzzle<CubeOptions, CubeState, CubeTurn> {
     /**
-     * Puzzle options.
-     *
-     * @type {CubeOptions}
-     */
-    options: CubeOptions;
-    /**
-     * Current puzzle state.
-     *
-     * @type {CubeState}
-     */
-    state: CubeState;
-    /**
      * Constructor.
      *
      * @param {CubeOptions}     options
@@ -27,6 +15,14 @@ export default class Cube extends Puzzle<CubeOptions, CubeState, CubeTurn> {
      * @return {void}
      */
     applyTurn(turn: CubeTurn): void;
+    /**
+     * Generate a scramble.
+     *
+     * @param {number}  length
+     *
+     * @return {void}
+     */
+    generateScramble(length?: number): string;
     /**
      * Test if the puzzle is solved.
      *

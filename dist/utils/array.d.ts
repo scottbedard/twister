@@ -17,6 +17,14 @@ export declare function first<T>(arr: T[], begin?: number): T;
  */
 export declare function makeArray<T>(length: number, value?: T): T[];
 /**
+ * Pick a random item from an array.
+ *
+ * @param {T[]} arr
+ *
+ * @return {T}
+ */
+export declare function randomItem<T>(arr: T[]): T;
+/**
  * Returns a reversed array without mutating the source.
  *
  * @param  {T[]} arr,
@@ -54,3 +62,11 @@ export declare function slice<T>(arr: T[], begin?: number, end?: number): T[];
  * @return {T[]}
  */
 export declare function splice<T>(arr: T[], start: number, deleteCount: number, ...items: T[]): T[];
+/**
+ * Return the last item of an array.
+ *
+ * @param {T[]}     arr
+ *
+ * @return {T}
+ */
+export declare function tail<T>(arr: T[]): T;

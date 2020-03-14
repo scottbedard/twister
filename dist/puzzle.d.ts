@@ -29,6 +29,14 @@ export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
      */
     abstract applyTurn(turn: PuzzleTurn): void;
     /**
+     * Generate a scramble.
+     *
+     * @param {number}  length
+     *
+     * @return {void}
+     */
+    abstract generateScramble(length?: number): string;
+    /**
      * Test if the puzzle is solved.
      *
      * @return {boolean}
@@ -48,6 +56,14 @@ export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
      * @return {PuzzleTurn}
      */
     abstract parseTurn(turn: string): PuzzleTurn;
+    /**
+     * Scramble the puzzle.
+     *
+     * @param {number}  length
+     *
+     * @return {void}
+     */
+    scramble(length?: number): void;
     /**
      * Apply a series of turns.
      *

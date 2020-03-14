@@ -37,6 +37,14 @@ export declare function chunkRows<T>(face: T[]): T[][];
  */
 export declare function createFace(value: CubeStickerValue, length: number): CubeSticker[];
 /**
+ * Test if a face is solved.
+ *
+ * @param {CubeSticker[]}   face
+ *
+ * @return {boolean}
+ */
+export declare function faceIsSolved(stickers: CubeSticker[]): boolean;
+/**
  * Flatten an array of columns.
  *
  * [                    [
@@ -83,9 +91,19 @@ export declare function flip<T>(chunks: T[][]): T[][];
 /**
  * Get the face being turned.
  *
- * @param turn
+ * @param {CubeTurn}    turn
+ *
+ * @return {CubeFace}
  */
 export declare function getFace(turn: CubeTurn): CubeFace;
+/**
+ * Get the opposite face.
+ *
+ * @param {CubeTurn}    turn
+ *
+ * @return {CubeFace}
+ */
+export declare function getOppositeFace(turn: CubeTurn): CubeFace;
 /**
  * Itterate over the slices of a turn.
  *
@@ -145,6 +163,14 @@ export declare function sliceCube(state: CubeState): {
         c: CubeSticker[][];
     };
 };
+/**
+ * Convert a turn object to a string.
+ *
+ * @param {CubeTurn}    turn
+ *
+ * @return {string}
+ */
+export declare function stringifyTurn(turn: CubeTurn): string;
 /**
  * Turn a cube along the X axis.
  *
