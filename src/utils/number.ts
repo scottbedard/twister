@@ -6,7 +6,7 @@
  * @return {boolean}
  */
 export function isOdd(n: number) {
-    return n % 2
+    return n % 2;
 }
 
 /**

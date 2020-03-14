@@ -19,6 +19,5 @@ export type PolygonSticker = {
     center: boolean,
     currentIndex: number,
     depth: number,
-    meta: Object,
     originalIndex: number,
 };
