@@ -14,6 +14,14 @@ export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxStat
      * @param {DodecaminxOptions}   options
      */
     constructor(options: DodecaminxOptions) {
+        if (!Number.isInteger(options.size)) {
+            throw new Error('Dodecaminx size must be an integer');
+        }
+
+        if (options.size < 2) {
+            throw new Error('Dodecaminx size must be two or greater');
+        }
+
         super(options);
     }
 
