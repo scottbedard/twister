@@ -1,5 +1,6 @@
 import { PolygonFace, PolygonSticker } from '../types';
 
+import { rollArray } from './array';
 import { isOdd } from './number';
 
 /**
@@ -51,10 +52,33 @@ export function createPolygonFace(sides: number, layers: number, value: number =
 /**
  * Rotate a regular polygon face.
  *
- * 
+ * @param {PolygonFace} face
+ * @param {number}      rotation
+ *
+ * @return {PolygonFace}
  */
-export function rotatePolygonFace(face: PolygonFace, rotation: number) {
+export function rotatePolygonFace(face: PolygonFace, rotation: number): PolygonFace {
     if (!Number.isInteger(rotation)) {
         throw new Error('Polygon face rotation must be an integer');
     }
+
+    const stickers: PolygonSticker[] = [];
+
+    rotation = rotation % face.sides;
+
+    for (let i = 0, stop = Math.floor(face.layers / 2); i <= stop; i++) {
+        const arr = face.stickers.filter(sticker => sticker.depth === i);
+
+        if (rotation && arr.length > 1) {
+            const distance = (arr.length / face.sides) * -rotation;
+
+            if (distance) {
+                stickers.push(...rollArray(arr, distance));
+            }
+        } else {
+            stickers.push(...arr);
+        }
+    }
+
+    return { ...face, stickers }
 }
