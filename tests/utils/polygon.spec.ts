@@ -1,4 +1,4 @@
-import  { createPolygonFace } from '../../src/utils/polygon';
+import  { createPolygonFace, rotatePolygonFace } from '../../src/utils/polygon';
 
 describe('polygon utils', () => {
     describe('createPolygonFace', () => {
@@ -51,5 +51,13 @@ describe('polygon utils', () => {
                 expect(face.stickers.filter(s => s.center).length).toBe(1);
             });
         })
+    });
+
+    describe('rotatePolygonFace', () => {
+        it('throws an error if the rotation is not an integer', () => {
+            const face = createPolygonFace(5, 2);
+
+            expect(() => rotatePolygonFace(face, 1.5)).toThrow();
+        });
     });
 });

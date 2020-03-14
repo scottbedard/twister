@@ -53,6 +53,8 @@ export function createPolygonFace(sides: number, layers: number, value: number =
  *
  * 
  */
-export function rotatePolygonFace() {
-
+export function rotatePolygonFace(face: PolygonFace, rotation: number) {
+    if (!Number.isInteger(rotation)) {
+        throw new Error('Polygon face rotation must be an integer');
+    }
 }
