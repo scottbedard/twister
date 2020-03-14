@@ -32,20 +32,6 @@ import Puzzle from '../puzzle';
 export default class Cube extends Puzzle<CubeOptions, CubeState, CubeTurn> {
 
     /**
-     * Puzzle options.
-     *
-     * @type {CubeOptions}
-     */
-    options: CubeOptions;
-
-    /**
-     * Current puzzle state.
-     *
-     * @type {CubeState}
-     */
-    state: CubeState;
-
-    /**
      * Constructor.
      *
      * @param {CubeOptions}     options
