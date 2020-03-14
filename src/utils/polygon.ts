@@ -9,7 +9,15 @@ import { PolygonFace, PolygonSticker } from '../types';
  * @return {PolygonFace}
  */
 export function createPolygonFace(sides: number, layers: number): PolygonFace {
-    const stickers = [];
+    if (!Number.isInteger(sides) || sides < 5) {
+        throw new Error('Polygon sides must be an integer of 5 or greater');
+    }
+
+    if (!Number.isInteger(layers) || layers < 2) {
+        throw new Error('Polygon layers must be an integer of 5 or greater');
+    }
+
+    const stickers: PolygonSticker[] = [];
 
     return { layers, sides, stickers };
 }
