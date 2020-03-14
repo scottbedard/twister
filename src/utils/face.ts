@@ -1,4 +1,4 @@
-import { Face, Sticker } from '../types';
+import { PolygonFace, PolygonSticker } from '../types';
 import { isOdd } from './number';
 import { rollArray } from './array';
 
@@ -8,9 +8,9 @@ import { rollArray } from './array';
  * @param {number}  sides   number of sides of the polygon
  * @param {number}  layers  puzzle layers
  *
- * @return {Face}
+ * @return {PolygonFace}
  */
-export function createFace(sides: number, layers: number): Face {
+export function createFace(sides: number, layers: number): PolygonFace {
     if (!Number.isInteger(sides) || sides < 3) {
         throw new Error('Polygon sides must be an integer of 3 or greater');
     }
@@ -27,7 +27,7 @@ export function createFace(sides: number, layers: number): Face {
     }
 
     // create outer stickers
-    const stickers: Sticker[] = [];
+    const stickers: PolygonSticker[] = [];
 
     for (let depth = 0, stop = Math.floor(layers / 2); depth < stop; depth++) {
         const length = (layers - (depth * 2) - 1) * sides;
@@ -68,9 +68,9 @@ export function createFace(sides: number, layers: number): Face {
  * @param {number}  depth
  * @param {number}  angle
  *
- * @return {Sticker[]}
+ * @return {PolygonSticker[]}
  */
-export function extractSlice(face: Face, depth: number, angle: number): Sticker[] {
+export function extractSlice(face: PolygonFace, depth: number, angle: number): PolygonSticker[] {
     if (!Number.isInteger(depth) || depth < 0) {
         throw new Error('Slice depth must be a positive integer');
     }
@@ -85,17 +85,17 @@ export function extractSlice(face: Face, depth: number, angle: number): Sticker[
 /**
  * Create a rotated copy of a face.
  *
- * @param {Face}    face
+ * @param {PolygonFace}    face
  * @param {number}  rotation
  *
- * @return {Face}
+ * @return {PolygonFace}
  */
-export function rotateFace(face: Face, rotation: number): Face {
+export function rotateFace(face: PolygonFace, rotation: number): PolygonFace {
     if (!Number.isInteger(rotation)) {
         throw new Error('Face rotations must be an integer');
     }
 
-    const stickers: Sticker[] = [];
+    const stickers: PolygonSticker[] = [];
 
     rotation = rotation % face.sides;
 

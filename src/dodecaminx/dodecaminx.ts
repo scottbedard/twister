@@ -74,5 +74,20 @@ export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxStat
      */
     reset() {
         const length = this.options.size ** 2;
+
+        this.state = {
+            U: [],
+            F: [],
+            R: [],
+            L: [],
+            BR: [],
+            BL: [],
+            D: [],
+            DR: [],
+            DL: [],
+            DBR: [],
+            DBL: [],
+            B: [],
+        }
     }
 }
