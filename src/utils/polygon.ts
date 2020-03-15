@@ -1,6 +1,6 @@
 import { PolygonFace, PolygonSticker } from '../types';
 
-import { makeArray, rollArray } from './array';
+import { rollArray } from './array';
 import { isOdd } from './number';
 
 /**
