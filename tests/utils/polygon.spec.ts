@@ -206,6 +206,16 @@ describe('polygon utils', () => {
                 expect(moi(extractPolygonLayer(kilominx, 1, 3))).toIncludeSameMembers([2, 3]);
                 expect(moi(extractPolygonLayer(kilominx, 1, 4))).toIncludeSameMembers([1, 2]);
             });
+
+            it('3 - megaminx', () => {
+                const megaminx = createPolygonFace(5, 3);
+
+                expect(moi(extractPolygonLayer(megaminx, 1))).toIncludeSameMembers([0, 1, 2]);
+                expect(moi(extractPolygonLayer(megaminx, 1, 1))).toIncludeSameMembers([8, 9, 0]);
+                expect(moi(extractPolygonLayer(megaminx, 1, 2))).toIncludeSameMembers([6, 7, 8]);
+                expect(moi(extractPolygonLayer(megaminx, 1, 3))).toIncludeSameMembers([4, 5, 6]);
+                expect(moi(extractPolygonLayer(megaminx, 1, 4))).toIncludeSameMembers([2, 3, 4]);
+            });
         });
     });
 });
