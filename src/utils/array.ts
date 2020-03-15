@@ -86,14 +86,3 @@ export function slice<T>(arr: T[], begin?: number, end?: number): T[] {
 export function splice<T>(arr: T[], start: number, deleteCount: number, ...items: T[]): T[] {
     return arr.splice(start, deleteCount, ...items);
 }
-
-/**
- * Return the last item of an array.
- *
- * @param {T[]}     arr
- *
- * @return {T}
- */
-export function tail<T>(arr: T[]): T {
-    return arr[arr.length - 1];
-}

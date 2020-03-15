@@ -24,7 +24,7 @@ import {
     turnSliceU,
 } from './helpers';
 
-import { makeArray, randomItem, tail } from '../utils/array';
+import { randomItem } from '../utils/array';
 import { rand } from '../utils/number';
 
 import Puzzle from '../puzzle';
