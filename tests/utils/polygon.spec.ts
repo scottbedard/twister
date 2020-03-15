@@ -232,6 +232,22 @@ describe('polygon utils', () => {
                 expect(moi(extractPolygonLayer(masterminx, 2, 3))).toIncludeSameMembers([5, 17, 18, 10]);
                 expect(moi(extractPolygonLayer(masterminx, 2, 4))).toIncludeSameMembers([2, 16, 17, 7]);
             });
+
+            it('5 - gigaminx', () => {
+                const gigaminx = createPolygonFace(5, 5);
+
+                expect(moi(extractPolygonLayer(gigaminx, 1))).toIncludeSameMembers([0, 1, 2, 3, 4]);
+                expect(moi(extractPolygonLayer(gigaminx, 1, 1))).toIncludeSameMembers([16, 17, 18, 19, 0]);
+                expect(moi(extractPolygonLayer(gigaminx, 1, 2))).toIncludeSameMembers([12, 13, 14, 15, 16]);
+                expect(moi(extractPolygonLayer(gigaminx, 1, 3))).toIncludeSameMembers([8, 9, 10, 11, 12]);
+                expect(moi(extractPolygonLayer(gigaminx, 1, 4))).toIncludeSameMembers([4, 5, 6, 7, 8]);
+
+                expect(moi(extractPolygonLayer(gigaminx, 2))).toIncludeSameMembers([19, 20, 21, 22, 5]);
+                expect(moi(extractPolygonLayer(gigaminx, 2, 1))).toIncludeSameMembers([15, 28, 29, 20, 1]);
+                expect(moi(extractPolygonLayer(gigaminx, 2, 2))).toIncludeSameMembers([11, 26, 27, 28, 17]);
+                expect(moi(extractPolygonLayer(gigaminx, 2, 3))).toIncludeSameMembers([7, 24, 25, 26, 13]);
+                expect(moi(extractPolygonLayer(gigaminx, 2, 4))).toIncludeSameMembers([3, 22, 23, 24, 9]);
+            });
         });
     });
 });
