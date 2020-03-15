@@ -29,17 +29,14 @@ export function createPolygonFace(sides: number, layers: number, value: number =
         const length = (layers - (i * 2) - 1) * sides;
         
         for (let j = 0; j < length; j++) {
-            const ring = i + 1;
-
-            stickers.push({ originalIndex, ring, value });
-
+            stickers.push({ originalIndex, ring: i, value });
             originalIndex++;
         }
     }
 
     // create a center sticker
     if (isOdd(layers)) {
-        const ring = Math.ceil(layers / 2);
+        const ring = Math.floor(layers / 2);
 
         stickers.push({ originalIndex, ring, value });
     }
