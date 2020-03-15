@@ -285,9 +285,7 @@ export function stringifyTurn(turn: CubeTurn): string {
     // prefix
     let prefix: number | string = '';
 
-    if (turn.depth > 1 && !turn.wide) {
-        prefix = 2;
-    } else if (turn.depth > 2) {
+    if ((turn.depth > 1 && !turn.wide) || turn.depth > 2) {
         prefix = turn.depth;
     }
 

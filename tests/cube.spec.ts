@@ -1,6 +1,6 @@
 import { Cube } from '../src/index';
 import { CubeFace, CubeSticker, CubeTurn } from '../src/cube/types';
-import { getOppositeFace, parseTurn } from '../src/cube/helpers';
+import { getOppositeFace, parseTurn, stringifyTurn } from '../src/cube/helpers';
 
 describe('cube', () => {
     const w = 0, o = 1, g = 2, r = 3, b = 4, y = 5;
@@ -53,6 +53,18 @@ describe('cube', () => {
                 const turn = cube.parseTurn(face);
                 expect(getOppositeFace(turn)).toBe(faces[face]);
             });
+        });
+
+        it('stringifyTurn', () => {
+            expect(stringifyTurn(parseTurn('F'))).toBe('F');
+            expect(stringifyTurn(parseTurn('F-'))).toBe('F-');
+            expect(stringifyTurn(parseTurn('F2'))).toBe('F2');
+            expect(stringifyTurn(parseTurn('Fw'))).toBe('Fw');
+            expect(stringifyTurn(parseTurn('2F'))).toBe('2F');
+            expect(stringifyTurn(parseTurn('3F'))).toBe('3F');
+            expect(stringifyTurn(parseTurn('3Fw'))).toBe('3Fw');
+            expect(stringifyTurn(parseTurn('3Fw-'))).toBe('3Fw-');
+            expect(stringifyTurn(parseTurn('3Fw2'))).toBe('3Fw2');
         });
     });
 
