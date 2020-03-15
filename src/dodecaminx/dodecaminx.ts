@@ -6,6 +6,10 @@ import {
     DodecaminxTurn,
 } from './types';
 
+import {
+    createPolygonFace,
+} from '../utils/polygon';
+
 export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, DodecaminxTurn> {
 
     /**
@@ -73,21 +77,19 @@ export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxStat
      * @return {void}
      */
     reset() {
-        const length = this.options.size ** 2;
-
         this.state = {
-            U: [],
-            F: [],
-            R: [],
-            L: [],
-            BR: [],
-            BL: [],
-            D: [],
-            DR: [],
-            DL: [],
-            DBR: [],
-            DBL: [],
-            B: [],
-        }
+            U: createPolygonFace(5, this.options.size, 0),
+            F: createPolygonFace(5, this.options.size, 1),
+            L: createPolygonFace(5, this.options.size, 2),
+            R: createPolygonFace(5, this.options.size, 3),
+            BL: createPolygonFace(5, this.options.size, 4),
+            BR: createPolygonFace(5, this.options.size, 5),
+            DL: createPolygonFace(5, this.options.size, 6),
+            DR: createPolygonFace(5, this.options.size, 7),
+            DBL: createPolygonFace(5, this.options.size, 8),
+            DBR: createPolygonFace(5, this.options.size, 9),
+            B: createPolygonFace(5, this.options.size, 10),
+            D: createPolygonFace(5, this.options.size, 11),
+        };
     }
 }
