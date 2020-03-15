@@ -29,16 +29,16 @@ export function createPolygonFace(sides: number, layers: number, value: number =
         const length = (layers - (i * 2) - 1) * sides;
         
         for (let j = 0; j < length; j++) {
-            stickers.push({ originalIndex, ring: i, value });
+            stickers.push({ originalIndex, depth: i + 1, value });
             originalIndex++;
         }
     }
 
     // create a center sticker
     if (isOdd(layers)) {
-        const ring = Math.floor(layers / 2);
+        const depth = Math.floor(layers / 2) + 1;
 
-        stickers.push({ originalIndex, ring, value });
+        stickers.push({ originalIndex, depth, value });
     }
 
     return { layers, sides, stickers };
@@ -76,8 +76,8 @@ export function rotatePolygonFace(face: PolygonFace, rotation: number): PolygonF
 
     rotation = rotation % face.sides;
 
-    for (let i = 0, stop = Math.floor(face.layers / 2); i <= stop; i++) {
-        const arr = face.stickers.filter(sticker => sticker.ring === i);
+    for (let i = 0, stop = Math.ceil(face.layers / 2); i <= stop; i++) {
+        const arr = face.stickers.filter(sticker => sticker.depth === i);
 
         if (rotation && arr.length > 1) {
             const distance = (arr.length / face.sides) * -rotation;

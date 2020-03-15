@@ -7,7 +7,7 @@ import  {
 } from '../../src/utils/polygon';
 
 // helper function to map sticker values to an array
-const mr = (face: PolygonFace) => face.stickers.map(s => s.ring);
+const md = (face: PolygonFace) => face.stickers.map(s => s.depth);
 const moi = (face: PolygonFace) => face.stickers.map(s => s.originalIndex);
 
 describe('polygon utils', () => {
@@ -33,28 +33,28 @@ describe('polygon utils', () => {
                 const kilominx = createPolygonFace(5, 2);
                 
                 expect(kilominx.stickers.length).toBe(5);
-                expect(mr(kilominx)).toEqual([0, 0, 0, 0, 0]);
+                expect(md(kilominx)).toEqual([1, 1, 1, 1, 1]);
             });
 
             it('3 - megaminx', () => {
                 const megaminx = createPolygonFace(5, 3);
                 
                 expect(megaminx.stickers.length).toBe(11);
-                expect(mr(megaminx)).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
+                expect(md(megaminx)).toEqual([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]);
             });
 
             it('4 - masterminx', () => {
                 const masterminx = createPolygonFace(5, 4);
                 
                 expect(masterminx.stickers.length).toBe(20);
-                expect(mr(masterminx)).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1]);
+                expect(md(masterminx)).toEqual([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2]);
             });
 
             it('5 - gigaminx', () => {
                 const gigaminx = createPolygonFace(5, 5);
                 
                 expect(gigaminx.stickers.length).toBe(31);
-                expect(mr(gigaminx)).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2]);
+                expect(md(gigaminx)).toEqual([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3]);
             });
         });
     });
