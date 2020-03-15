@@ -45,6 +45,21 @@ export function createPolygonFace(sides: number, layers: number, value: number =
 }
 
 /**
+ * Extract slice of stickers from a polygon face.
+ *
+ * @param {PolygonFace} face
+ * @param {number}      number 
+ * @param {number}      rotation
+ *
+ * @return {PolygonFace} 
+ */
+export function extractPolygonSlice(face: PolygonFace, depth: number, rotation: number = 0): PolygonFace {
+    const rotatedFace = rotatePolygonFace(face, rotation);
+
+    return { ...face };
+}
+
+/**
  * Rotate a regular polygon face.
  *
  * @param {PolygonFace} face

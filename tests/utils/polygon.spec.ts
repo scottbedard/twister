@@ -1,6 +1,10 @@
 import { PolygonFace } from '../../src/types';
 
-import  { createPolygonFace, rotatePolygonFace } from '../../src/utils/polygon';
+import  {
+    createPolygonFace,
+    extractPolygonSlice,
+    rotatePolygonFace,
+} from '../../src/utils/polygon';
 
 // helper function to map sticker values to an array
 const mr = (face: PolygonFace) => face.stickers.map(s => s.ring);
@@ -185,6 +189,16 @@ describe('polygon utils', () => {
 
                 expect(moi(rotatePolygonFace(gigaminx, 4)))
                     .toEqual([4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 1, 2, 3, 22, 23, 24, 25, 26, 27, 28, 29, 20, 21, 30]);
+            });
+        });
+    });
+
+    describe('extractPolygonSlice', () => {
+        describe('pentagons', () => {
+            it.skip('2 - kilominx', () => {
+                const kilominx = createPolygonFace(5, 2);
+                
+                extractPolygonSlice(kilominx, 1);
             });
         });
     });
