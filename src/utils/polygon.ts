@@ -45,18 +45,33 @@ export function createPolygonFace(sides: number, layers: number, value: number =
 }
 
 /**
- * Extract slice of stickers from a polygon face.
+ * Extract layer of stickers from a polygon face.
  *
  * @param {PolygonFace} face
- * @param {number}      number 
+ * @param {number}      depth 
  * @param {number}      rotation
  *
- * @return {PolygonFace} 
+ * @return {PolygonSticker[]} 
  */
-export function extractPolygonSlice(face: PolygonFace, depth: number, rotation: number = 0): PolygonFace {
+export function extractPolygonLayer(face: PolygonFace, depth: number, rotation: number = 0): PolygonSticker[] {
     const rotatedFace = rotatePolygonFace(face, rotation);
 
-    return { ...face };
+    // loop from 1 to our desired depth, and add any sticker
+    // that intersects this cut to the stickers array.
+    const stickers: PolygonSticker[] = [];
+
+    for (let i = 1; i <= depth; i++) {
+        const ring = rotatedFace.stickers.filter(s => s.depth === i);
+
+        if (i < depth) {
+            stickers.push(ring[(ring.length / face.sides) + (depth - i)]); // <- leading
+            stickers.push(ring[ring.length - (depth - i)]); // <- trailing
+        } else if (i === depth) {
+            stickers.push(...ring.slice(0, face.layers - ((depth - 1) * 2)));
+        }
+    }
+
+    return stickers;
 }
 
 /**

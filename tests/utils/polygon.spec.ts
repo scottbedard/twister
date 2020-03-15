@@ -1,8 +1,8 @@
-import { PolygonFace } from '../../src/types';
+import { PolygonFace, PolygonSticker } from '../../src/types';
 
 import  {
     createPolygonFace,
-    extractPolygonSlice,
+    extractPolygonLayer,
     rotatePolygonFace,
 } from '../../src/utils/polygon';
 
@@ -193,12 +193,18 @@ describe('polygon utils', () => {
         });
     });
 
-    describe('extractPolygonSlice', () => {
+    describe('extractPolygonLayer', () => {
+        const moi = (stickers: PolygonSticker[]) => stickers.map(s => s.originalIndex);
+
         describe('pentagons', () => {
-            it.skip('2 - kilominx', () => {
+            it('2 - kilominx', () => {
                 const kilominx = createPolygonFace(5, 2);
-                
-                extractPolygonSlice(kilominx, 1);
+
+                expect(moi(extractPolygonLayer(kilominx, 1))).toIncludeSameMembers([0, 1]);
+                expect(moi(extractPolygonLayer(kilominx, 1, 1))).toIncludeSameMembers([4, 0]);
+                expect(moi(extractPolygonLayer(kilominx, 1, 2))).toIncludeSameMembers([3, 4]);
+                expect(moi(extractPolygonLayer(kilominx, 1, 3))).toIncludeSameMembers([2, 3]);
+                expect(moi(extractPolygonLayer(kilominx, 1, 4))).toIncludeSameMembers([1, 2]);
             });
         });
     });
