@@ -276,6 +276,23 @@ describe('polygon utils', () => {
                 expect(mv(splicePolygonLayer(a, 0, b, 3, 1))).toEqual([1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1]);
                 expect(mv(splicePolygonLayer(a, 0, b, 4, 1))).toEqual([1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1]);
             });
+
+            it('4 - masterminx', () => {
+                const a = createPolygonFace(5, 4, 0);
+                const b = createPolygonFace(5, 4, 1);
+
+                expect(mv(splicePolygonLayer(a, 0, b, 0, 1))).toEqual([0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 1, 1))).toEqual([0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 2, 1))).toEqual([1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 3, 1))).toEqual([1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 4, 1))).toEqual([1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+
+                expect(mv(splicePolygonLayer(a, 0, b, 0, 2))).toEqual([1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 1, 2))).toEqual([1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0]);
+                expect(mv(splicePolygonLayer(a, 0, b, 2, 2))).toEqual([1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0]);
+                expect(mv(splicePolygonLayer(a, 0, b, 3, 2))).toEqual([1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 4, 2))).toEqual([1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1]);
+            });
         });
     });
 });
