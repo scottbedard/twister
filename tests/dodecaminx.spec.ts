@@ -1,6 +1,8 @@
 import { PolygonFace, PolygonSticker } from '../src/types';
+import { DodecaminxTurn } from '../src/dodecaminx/types';
 
 import { Dodecaminx } from '../src/index';
+import { parseDodecaminxTurn } from '../src/dodecaminx/helpers';
 
 // helpers to map sticker falues
 const mv = (face: PolygonFace) => face.stickers.map(s => s.value);
@@ -30,5 +32,23 @@ describe('dodecaminx', () => {
         expect(mv(DBR)).toEqual([9, 9, 9, 9, 9]);
         expect(mv(B)).toEqual([10, 10, 10, 10, 10]);
         expect(mv(D)).toEqual([11, 11, 11, 11, 11]);
+    });
+
+    describe('parseDodecaminxTurn', () => {
+        const turns: { [key: string]: DodecaminxTurn } = {
+            'F': { depth: 1, rotation: 1, target: 'F', wide: false },
+            'F2': { depth: 1, rotation: 2, target: 'F', wide: false },
+            'F-': { depth: 1, rotation: -1, target: 'F', wide: false },
+            'F2-': { depth: 1, rotation: -2, target: 'F', wide: false },
+            'Fw': { depth: 2, rotation: 1, target: 'F', wide: true },
+            'Fw-': { depth: 2, rotation: -1, target: 'F', wide: true },
+            '2F': { depth: 2, rotation: 1, target: 'F', wide: false },
+        };
+
+        Object.keys(turns).forEach(turn => {
+            it(turn, () => {
+                expect(parseDodecaminxTurn(turn)).toEqual(turns[turn]);
+            });
+        });
     });
 });
