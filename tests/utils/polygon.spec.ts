@@ -4,11 +4,13 @@ import  {
     createPolygonFace,
     extractPolygonLayer,
     rotatePolygonFace,
+    splicePolygonLayer,
 } from '../../src/utils/polygon';
 
 // helper function to map sticker values to an array
 const md = (face: PolygonFace) => face.stickers.map(s => s.depth);
 const moi = (face: PolygonFace) => face.stickers.map(s => s.originalIndex);
+const mv = (face: PolygonFace) => face.stickers.map(s => s.value);
 
 describe('polygon utils', () => {
     describe('createPolygonFace', () => {
@@ -247,6 +249,32 @@ describe('polygon utils', () => {
                 expect(moi(extractPolygonLayer(gigaminx, 2, 2))).toIncludeSameMembers([11, 26, 27, 28, 17]);
                 expect(moi(extractPolygonLayer(gigaminx, 2, 3))).toIncludeSameMembers([7, 24, 25, 26, 13]);
                 expect(moi(extractPolygonLayer(gigaminx, 2, 4))).toIncludeSameMembers([3, 22, 23, 24, 9]);
+            });
+        });
+    });
+
+    describe('splicePolygonLayer', () => {
+        describe('pentagons', () => {
+            it('2 - kilominx', () => {
+                const a = createPolygonFace(5, 2, 0);
+                const b = createPolygonFace(5, 2, 1);
+
+                expect(mv(splicePolygonLayer(a, 0, b, 0, 1))).toEqual([0, 0, 1, 1, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 1, 1))).toEqual([0, 1, 1, 1, 0]);
+                expect(mv(splicePolygonLayer(a, 0, b, 2, 1))).toEqual([1, 1, 1, 0, 0]);
+                expect(mv(splicePolygonLayer(a, 0, b, 3, 1))).toEqual([1, 1, 0, 0, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 4, 1))).toEqual([1, 0, 0, 1, 1]);
+            });
+
+            it('3 - megaminx', () => {
+                const a = createPolygonFace(5, 3, 0);
+                const b = createPolygonFace(5, 3, 1);
+
+                expect(mv(splicePolygonLayer(a, 0, b, 0, 1))).toEqual([0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 1, 1))).toEqual([0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 2, 1))).toEqual([1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 3, 1))).toEqual([1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1]);
+                expect(mv(splicePolygonLayer(a, 0, b, 4, 1))).toEqual([1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1]);
             });
         });
     });

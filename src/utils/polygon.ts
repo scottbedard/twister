@@ -2,6 +2,7 @@ import { PolygonFace, PolygonSticker } from '../types';
 
 import { rollArray } from './array';
 import { isOdd } from './number';
+import { rotate } from '../cube/helpers';
 
 /**
  * Create a face for a regular polygons.
@@ -67,7 +68,7 @@ export function extractPolygonLayer(face: PolygonFace, depth: number, rotation: 
             stickers.push(ring[(ring.length / face.sides) + (depth - i)]); // <- leading
             stickers.push(ring[ring.length - (depth - i)]); // <- trailing
         } else if (i === depth) {
-            stickers.push(...ring.slice(0, face.layers - ((depth - 1) * 2)));
+            stickers.push(...ring.slice(0, face.layers - ((depth - 1) * 2))); // <- middle
         }
     }
 
@@ -106,4 +107,36 @@ export function rotatePolygonFace(face: PolygonFace, rotation: number): PolygonF
     }
 
     return { ...face, stickers }
+}
+
+/**
+ * Extract a slice from one polygon face, and insert into another.
+ *
+ * @param {PolygonFace} source
+ * @param {number}      sourceAngle
+ * @param {PolygonFace} target
+ * @param {number}      targetAngle
+ * @param {number}      depth
+ * @param {boolean}     wide
+ *
+ * @return {PolygonFace}
+ */
+export function splicePolygonLayer(
+    source: PolygonFace,
+    sourceAngle: number,
+    target: PolygonFace,
+    targetAngle: number,
+    depth: number,
+    wide: boolean = false
+) {
+    source = rotatePolygonFace(source, sourceAngle);
+    target = rotatePolygonFace(target, targetAngle);
+
+    extractPolygonLayer(source, depth).forEach((sticker) => {
+        const index = source.stickers.indexOf(sticker);
+
+        target.stickers[index] = sticker;
+    });
+
+    return rotatePolygonFace(target, -targetAngle);
 }
