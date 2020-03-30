@@ -68,7 +68,12 @@ export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxStat
      * @return {DodecaminxTurn} 
      */
     parseTurn(turn: string): DodecaminxTurn {
-        return {};
+        return {
+            depth: 1,
+            rotation: 1,
+            target: 'F',
+            wide: false,
+        };
     }
 
     /**
