@@ -27,3 +27,16 @@ export declare function extractPolygonLayer(face: PolygonFace, depth: number, ro
  * @return {PolygonFace}
  */
 export declare function rotatePolygonFace(face: PolygonFace, rotation: number): PolygonFace;
+/**
+ * Extract a slice from one polygon face, and insert into another.
+ *
+ * @param {PolygonFace} source
+ * @param {number}      sourceAngle
+ * @param {PolygonFace} target
+ * @param {number}      targetAngle
+ * @param {number}      depth
+ * @param {boolean}     wide
+ *
+ * @return {PolygonFace}
+ */
+export declare function splicePolygonLayer(source: PolygonFace, sourceAngle: number, target: PolygonFace, targetAngle: number, depth: number, wide?: boolean): PolygonFace;

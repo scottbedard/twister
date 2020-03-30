@@ -62,11 +62,3 @@ export declare function slice<T>(arr: T[], begin?: number, end?: number): T[];
  * @return {T[]}
  */
 export declare function splice<T>(arr: T[], start: number, deleteCount: number, ...items: T[]): T[];
-/**
- * Return the last item of an array.
- *
- * @param {T[]}     arr
- *
- * @return {T}
- */
-export declare function tail<T>(arr: T[]): T;
