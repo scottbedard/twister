@@ -1,5 +1,4 @@
 {
-  "browser": "dist/index.bundle.js",
   "bugs": {
     "url": "https://github.com/scottbedard/twister/issues"
   },
