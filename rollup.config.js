@@ -15,7 +15,7 @@ export default {
             format: 'es'
         },
         {
-            file: pkg.browser,
+            file: 'dist/index.bundle.js',
             format: 'iife',
             name: 'Twister'
         },
