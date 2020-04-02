@@ -13,7 +13,17 @@ Twister is a collection of standards and classes useful for modeling [twisty puz
 
 ## Installation
 
-Soon...
+The preferred way to install this library is via NPM. This is preferred because it allows for tree-shaking of unused puzzles.
+
+```bash
+npm install @bedard/twister
+```
+
+Alternatively, you can access this library via a CDN. When using this method, the library will be exposed globally as `Twister`.
+
+```html
+<script src="https://unpkg.com/@bedard/twister"></script>
+```
 
 ## API
 
