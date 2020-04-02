@@ -1,7 +1,7 @@
 {
   "author": "Scott Bedard",
   "browser": {
-    "./dist/index.js": "./dist/index.js",
+    "./dist/index.bundle.js": "./dist/index.bundle.js",
     "./dist/index.esm.js": "./dist/index.esm.js"
   },
   "bugs": {
