@@ -1,5 +1,9 @@
 {
   "author": "Scott Bedard",
+  "browser": {
+    "./dist/index.js": "./dist/index.js",
+    "./dist/index.esm.js": "./dist/index.esm.js"
+  },
   "bugs": {
     "url": "https://github.com/scottbedard/twister/issues"
   },
