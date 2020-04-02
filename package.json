@@ -1,9 +1,5 @@
 {
   "author": "Scott Bedard",
-  "browser": {
-    "./dist/index.bundle.js": "./dist/index.bundle.js",
-    "./dist/index.esm.js": "./dist/index.esm.js"
-  },
   "bugs": {
     "url": "https://github.com/scottbedard/twister/issues"
   },
@@ -32,5 +28,6 @@
     "build": "rollup -c",
     "test": "jest --coverage"
   },
-  "version": "0.1.4"
+  "unpkg": "dist/index.bundle.js",
+  "version": "0.1.2"
 }
