@@ -1,4 +1,4 @@
-import { CubeFace, CubeState, CubeSticker, CubeStickerValue, CubeTurn } from './types';
+import { CubeFace, CubeState, CubeSticker, CubeStickerValue, CubeTurn } from './cube';
 /**
  * Chunk a face array into columns.
  *

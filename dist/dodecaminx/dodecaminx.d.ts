@@ -1,5 +1,45 @@
 import Puzzle from '../puzzle';
-import { DodecaminxOptions, DodecaminxState, DodecaminxTurn } from './types';
+import { PolygonFace } from '../utils/polygon';
+/**
+ * Dodecaminx axis and face.
+ */
+export declare type DodecaminxAxis = 'u' | 'f' | 'l' | 'r' | 'bl' | 'br' | 'dl' | 'dr' | 'dbl' | 'dbr' | 'b' | 'd';
+export declare type DodecaminxFace = 'U' | 'F' | 'L' | 'R' | 'BL' | 'BR' | 'DL' | 'DR' | 'DBL' | 'DBR' | 'B' | 'D';
+/**
+ * Dodecaminx options.
+ */
+export declare type DodecaminxOptions = {
+    size: number;
+};
+/**
+ * Dodecaminx state.
+ */
+export declare type DodecaminxState = {
+    U: PolygonFace;
+    F: PolygonFace;
+    L: PolygonFace;
+    R: PolygonFace;
+    BL: PolygonFace;
+    BR: PolygonFace;
+    DL: PolygonFace;
+    DR: PolygonFace;
+    DBL: PolygonFace;
+    DBR: PolygonFace;
+    B: PolygonFace;
+    D: PolygonFace;
+};
+/**
+ * Dodecaminx turn.
+ */
+export declare type DodecaminxTurn = {
+    depth: number;
+    rotation: number;
+    target: DodecaminxFace | DodecaminxAxis;
+    wide: boolean;
+};
+/**
+ * Dodecaminx.
+ */
 export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, DodecaminxTurn> {
     /**
      * Constructor.

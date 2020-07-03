@@ -1,5 +1,50 @@
-import { CubeOptions, CubeState, CubeTurn } from './types';
 import Puzzle from '../puzzle';
+/**
+ * Cube axis and face.
+ */
+export declare type CubeAxis = 'X' | 'Y' | 'Z';
+export declare type CubeFace = 'U' | 'L' | 'F' | 'R' | 'B' | 'D';
+/**
+ * Cube sticker.
+ */
+export declare type CubeSticker = {
+    data: any;
+    originalIndex: number;
+    value: CubeStickerValue;
+};
+/**
+ * Cube sticker value.
+ */
+export declare type CubeStickerValue = null | 0 | 1 | 2 | 3 | 4 | 5;
+/**
+ * Cube options.
+ */
+export declare type CubeOptions = {
+    size: number;
+};
+/**
+ * Cube state.
+ */
+export declare type CubeState = {
+    U: CubeSticker[];
+    L: CubeSticker[];
+    F: CubeSticker[];
+    R: CubeSticker[];
+    B: CubeSticker[];
+    D: CubeSticker[];
+};
+/**
+ * Cube turn.
+ */
+export declare type CubeTurn = {
+    depth: number;
+    rotation: number;
+    target: CubeFace | CubeAxis;
+    wide: boolean;
+};
+/**
+ * Cube.
+ */
 export default class Cube extends Puzzle<CubeOptions, CubeState, CubeTurn> {
     /**
      * Constructor.
