@@ -1,8 +1,29 @@
-import { PolygonFace, PolygonSticker } from '../types';
-
 import { rollArray } from './array';
 import { isOdd } from './number';
-import { rotate } from '../cube/helpers';
+
+/**
+ * Regular polygon face.
+ * 
+ * Be aware that this should only be used for pentagons
+ * and higher. Since square faces can be turned deeper
+ * than their center row, the utils that deal with this
+ * type do not accomodate them.
+ */
+export type PolygonFace = {
+    layers: number,
+    sides: number,
+    stickers: PolygonSticker[],
+};
+
+/**
+ * Regular polygon sticker.
+ */
+export type PolygonSticker = {
+    depth: number,
+    originalIndex: number,
+    value: null | number,
+};
+
 
 /**
  * Create a face for a regular polygons.

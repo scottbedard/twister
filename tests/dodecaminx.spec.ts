@@ -1,5 +1,5 @@
-import { PolygonFace, PolygonSticker } from '../src/types';
-import { DodecaminxTurn } from '../src/dodecaminx/types';
+import { PolygonFace, PolygonSticker } from '../src/utils/polygon';
+import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
 
 import { Dodecaminx } from '../src/index';
 import { parseDodecaminxTurn } from '../src/dodecaminx/helpers';

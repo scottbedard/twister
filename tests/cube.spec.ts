@@ -1,5 +1,5 @@
 import { Cube } from '../src/index';
-import { CubeFace, CubeSticker, CubeTurn } from '../src/cube/types';
+import { CubeFace, CubeSticker, CubeTurn } from '../src/cube/cube';
 import { getOppositeFace, parseTurn, stringifyTurn } from '../src/cube/helpers';
 
 describe('cube', () => {

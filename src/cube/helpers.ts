@@ -1,11 +1,10 @@
 import {
-    CubeAxis,
     CubeFace,
     CubeState,
     CubeSticker,
     CubeStickerValue,
     CubeTurn,
-} from './types';
+} from './cube';
 
 import {
     first,

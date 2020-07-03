@@ -1,8 +1,8 @@
-import { PolygonFace, PolygonSticker } from '../../src/types';
-
 import  {
     createPolygonFace,
     extractPolygonLayer,
+    PolygonFace,
+    PolygonSticker,
     rotatePolygonFace,
     splicePolygonLayer,
 } from '../../src/utils/polygon';

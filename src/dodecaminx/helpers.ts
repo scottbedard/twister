@@ -1,4 +1,4 @@
-import { DodecaminxAxis, DodecaminxFace, DodecaminxTurn } from './types';
+import { DodecaminxAxis, DodecaminxFace, DodecaminxTurn } from './dodecaminx';
 
 /**
  * Parse a dodecaminx turn.
