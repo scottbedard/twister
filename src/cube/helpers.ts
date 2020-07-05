@@ -64,7 +64,7 @@ export function chunkRows<T>(face: T[]): T[][] {
 export function createFace(value: CubeStickerValue, length: number): CubeSticker[] {
     return makeArray(length).map((x, i): CubeSticker => {
         return {
-            data: null,
+            data: {},
             originalIndex: i,
             value,
         };
@@ -242,7 +242,7 @@ export function parseTurn(turn: string): CubeTurn {
  *
  * @param {CubeSticker[]} 
  */
-export function rotate(arr: CubeSticker[], rotation: number) {
+export function rotate<T>(arr: T[], rotation: number) {
     if (rotation === -1) {
         return flattenRows(reverse(chunkCols(arr)));
     }
@@ -311,7 +311,7 @@ export function stringifyTurn(turn: CubeTurn): string {
  *
  * @return {CubeState}
  */
-export function turnCubeX({ U, L, F, R, B, D }: CubeState, { rotation }: CubeTurn): CubeState {
+export function turnCubeX<T>({ U, L, F, R, B, D }: CubeState<T>, { rotation }: CubeTurn): CubeState<T> {
     if (rotation === -1) {
         return {
             U: reverse(B),
@@ -352,7 +352,7 @@ export function turnCubeX({ U, L, F, R, B, D }: CubeState, { rotation }: CubeTur
  *
  * @return {CubeState}
  */
-export function turnCubeY({ U, L, F, R, B, D }: CubeState, { rotation }: CubeTurn): CubeState {
+export function turnCubeY<T>({ U, L, F, R, B, D }: CubeState<T>, { rotation }: CubeTurn): CubeState<T> {
     if (rotation === -1) {
         return {
             U: rotate(U, -1),
@@ -393,7 +393,7 @@ export function turnCubeY({ U, L, F, R, B, D }: CubeState, { rotation }: CubeTur
  *
  * @return {CubeState}
  */
-export function turnCubeZ({ U, L, F, R, B, D }: CubeState, { rotation }: CubeTurn): CubeState {
+export function turnCubeZ<T>({ U, L, F, R, B, D }: CubeState<T>, { rotation }: CubeTurn): CubeState<T> {
     if (rotation === -1) {
         return {
             U: rotate(R, -1),

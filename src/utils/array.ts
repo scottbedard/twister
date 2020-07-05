@@ -54,7 +54,7 @@ export function reverse<T>(arr: T[]): T[] {
  *
  * @return {any[]} 
  */
-export function rollArray(arr: any[], elements: number) {
+export function rollArray<T>(arr: T[], elements: number) {
     const offset = (((elements % arr.length) + arr.length) % arr.length);
 
     return arr.slice(offset).concat(arr.slice(0, offset));
