@@ -1,11 +1,11 @@
 # twister
 
-[![Build status](https://img.shields.io/circleci/build/github/scottbedard/twister)](https://circleci.com/gh/scottbedard/twister)
+[![Build status](https://img.shields.io/github/workflow/status/scottbedard/twister/Test)](https://github.com/scottbedard/twister/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/scottbedard/twister)](https://codecov.io/gh/scottbedard/twister)
 [![Dependencies](https://img.shields.io/david/scottbedard/twister)](https://david-dm.org/scottbedard/twister)
 [![Dev dependencies](https://img.shields.io/david/dev/scottbedard/twister)](https://david-dm.org/scottbedard/twister?type=dev)
-[![npm](https://img.shields.io/npm/v/@bedard/twister)](https://www.npmjs.com/package/@bedard/twister)
-[![File size](https://img.shields.io/github/size/scottbedard/twister/dist/index.esm.js?color=yellow)](https://github.com/scottbedard/twister/blob/master/dist/index.esm.js)
+[![NPM](https://img.shields.io/npm/v/@bedard/twister)](https://www.npmjs.com/package/@bedard/twister)
+[![Bundle size](https://img.shields.io/bundlephobia/minzip/@bedard/twister)](https://bundlephobia.com/result?p=@bedard/twister)
 [![License](https://img.shields.io/github/license/scottbedard/twister?color=blue)](https://github.com/scottbedard/twister/blob/master/LICENSE)
 
 Twister is a collection of standards and classes useful for modeling [twisty puzzles](https://en.wikipedia.org/wiki/Combination_puzzle).
