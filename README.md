@@ -8,19 +8,19 @@
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/@bedard/twister)](https://bundlephobia.com/result?p=@bedard/twister)
 [![License](https://img.shields.io/github/license/scottbedard/twister?color=blue)](https://github.com/scottbedard/twister/blob/master/LICENSE)
 
-Twister is a collection of standards and classes useful for modeling [twisty puzzles](https://en.wikipedia.org/wiki/Combination_puzzle).
+Twister is a library for modeling the state of twisty puzzles. To see how it works, [check out the sandbox app](https://scottbedard-twister.netlify.app/).
 
 > **Warning:** This is a work in progress, and is not ready for production use. Changes may happen at any time.
 
 ## Installation
 
-The preferred way to install this library is via NPM. This is preferred because it allows for tree-shaking of unused puzzles.
+The recommended way to install is through NPM.
 
 ```bash
 npm install @bedard/twister
 ```
 
-Alternatively, you can access this library via a CDN. When using this method, the library will be exposed globally as `Twister`.
+Alternatively, you can use the CDN. When using the CDN, the library will be exposed globally as `Twister`.
 
 ```html
 <script src="https://unpkg.com/@bedard/twister"></script>
