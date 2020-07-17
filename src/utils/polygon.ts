@@ -75,7 +75,7 @@ export function createPolygonFace(sides: number, layers: number, value: number =
  *
  * @return {PolygonSticker[]} 
  */
-export function extractPolygonLayer(face: PolygonFace, depth: number, rotation: number = 0): PolygonSticker[] {
+export function extractPolygonLayer(face: PolygonFace, depth: number, rotation = 0): PolygonSticker[] {
     const rotatedFace = rotatePolygonFace(face, rotation);
 
     // loop from 1 to our desired depth, and add any sticker
@@ -148,8 +148,8 @@ export function splicePolygonLayer(
     target: PolygonFace,
     targetAngle: number,
     depth: number,
-    wide: boolean = false
-) {
+    // wide: boolean = false
+): PolygonFace {
     source = rotatePolygonFace(source, sourceAngle);
     target = rotatePolygonFace(target, targetAngle);
 

@@ -12,4 +12,5 @@ export function identity<T>(arg: T): T {
  *
  * @return {void}
  */
-export function noop() {}
+/* eslint-disable-next-line @typescript-eslint/no-empty-function */
+export function noop(): void {}

@@ -16,7 +16,7 @@ export function parseDodecaminxTurn(turn: string): DodecaminxTurn {
 
     let depth: number = result[1] ? parseInt(result[1], 10) : 1;
     const target = <DodecaminxAxis | DodecaminxFace> result[2];
-    const wide: boolean = Boolean(result[3]);
+    const wide = Boolean(result[3]);
     let rotation: number = result[4] ? parseInt(result[4], 10) : 1;
     const modifier: string = result[5];
 

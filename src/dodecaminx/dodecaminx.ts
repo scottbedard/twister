@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Puzzle from '../puzzle';
 import { createPolygonFace, PolygonFace } from '../utils/polygon';
 

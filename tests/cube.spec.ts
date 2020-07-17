@@ -2,12 +2,15 @@ import { Cube } from '../src/index';
 import { CubeFace, CubeSticker, CubeTurn } from '../src/cube/cube';
 import { getOppositeFace, parseTurn, stringifyTurn } from '../src/cube/helpers';
 
+type StickerData = {
+}
+
 describe('cube', () => {
     const w = 0, o = 1, g = 2, r = 3, b = 4, y = 5;
 
-    const faceValues = (face: CubeSticker[]) => face.map(s => s.value);
+    const faceValues = (face: CubeSticker<StickerData>[]) => face.map(s => s.value);
 
-    const simplifiedState = (cube: Cube) => ({
+    const simplifiedState = (cube: Cube<StickerData>) => ({
         U: faceValues(cube.state.U),
         L: faceValues(cube.state.L),
         F: faceValues(cube.state.F),

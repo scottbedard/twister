@@ -79,7 +79,7 @@ export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
      *
      * @return {void}
      */
-    scramble(length?: number) {
+    scramble(length?: number): void {
         this.reset();
         this.turn(this.generateScramble(length));
     }
@@ -99,4 +99,4 @@ export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
             .map(turn => this.parseTurn(turn))
             .forEach(turn => this.applyTurn(turn));
     }
-};
+}

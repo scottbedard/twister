@@ -61,8 +61,8 @@ export function chunkRows<T>(face: T[]): T[][] {
  *
  * @return {CubeSticker[]} 
  */
-export function createFace(value: CubeStickerValue, length: number): CubeSticker[] {
-    return makeArray(length).map((x, i): CubeSticker => {
+export function createFace<T>(value: CubeStickerValue, length: number): CubeSticker<T>[] {
+    return makeArray(length).map((x, i): CubeSticker<T> => {
         return {
             data: {},
             originalIndex: i,
@@ -78,7 +78,7 @@ export function createFace(value: CubeStickerValue, length: number): CubeSticker
  *
  * @return {boolean}
  */
-export function faceIsSolved(stickers: CubeSticker[]): boolean {
+export function faceIsSolved<T>(stickers: CubeSticker<T>[]): boolean {
     const value = stickers[0].value;
 
     for (let i = 1; i < stickers.length; i++) {
@@ -191,7 +191,9 @@ export function getOppositeFace(turn: CubeTurn): CubeFace {
  *
  * @return {void}
  */
-export function loopSlices(turn: CubeTurn, fn: Function) {
+type LoopSlicesFn = (a: number, b: number, c: number) => void;
+
+export function loopSlices(turn: CubeTurn, fn: LoopSlicesFn): void {
     const { depth, wide } = turn;
 
     for (let i = depth, end = wide ? 0 : depth - 1; i > end; i--) {
@@ -215,7 +217,7 @@ export function parseTurn(turn: string): CubeTurn {
 
     const modifier: string = result[4];
     const target: CubeFace = <CubeFace>result[2];
-    const wide: boolean = Boolean(result[3]);
+    const wide = Boolean(result[3]);
 
     let depth: number = result[1] ? parseInt(result[1], 10) : 1;
 
@@ -242,7 +244,7 @@ export function parseTurn(turn: string): CubeTurn {
  *
  * @param {CubeSticker[]} 
  */
-export function rotate<T>(arr: T[], rotation: number) {
+export function rotate<T>(arr: T[], rotation: number): T[] {
     if (rotation === -1) {
         return flattenRows(reverse(chunkCols(arr)));
     }
@@ -262,7 +264,21 @@ export function rotate<T>(arr: T[], rotation: number) {
  *
  * @return {object}
  */
-export function sliceCube(state: CubeState) {
+type SlicedFace<T> = {
+    c: CubeSticker<T>[][],
+    r: CubeSticker<T>[][],
+};
+
+type SlicedCube<T> = {
+    U: SlicedFace<T>,
+    L: SlicedFace<T>,
+    F: SlicedFace<T>,
+    R: SlicedFace<T>,
+    B: SlicedFace<T>,
+    D: SlicedFace<T>,
+}
+
+export function sliceCube<T>(state: CubeState<T>): SlicedCube<T> {
     return {
         U: { r: chunkRows(state.U), c: chunkCols(state.U) },
         L: { r: chunkRows(state.L), c: chunkCols(state.L) },
@@ -289,16 +305,10 @@ export function stringifyTurn(turn: CubeTurn): string {
     }
 
     // modifier
-    let modifier = turn.wide ? 'w' : '';
+    const modifier = turn.wide ? 'w' : '';
 
     // suffix
-    let suffix: number | string = '';
-    
-    if (turn.rotation === -1) {
-        suffix = '-';
-    } else if (turn.rotation === 2) {
-        suffix = 2;
-    }
+    const suffix = turn.rotation === -1 ? '-' : turn.rotation === 2 ? '2' : '';
 
     return `${prefix}${turn.target.toUpperCase()}${modifier}${suffix}`;
 }
@@ -431,7 +441,7 @@ export function turnCubeZ<T>({ U, L, F, R, B, D }: CubeState<T>, { rotation }: C
  *
  * @return {CubeState}
  */
-export function turnSliceB(state: CubeState, turn: CubeTurn) {
+export function turnSliceB<T>(state: CubeState<T>, turn: CubeTurn): void {
     const slicedCube = sliceCube(state);
 
     loopSlices(turn, (i: number, negI: number, iSubOne: number) => {
@@ -482,7 +492,7 @@ export function turnSliceB(state: CubeState, turn: CubeTurn) {
  *
  * @return {CubeState}
  */
-export function turnSliceD(state: CubeState, turn: CubeTurn) {
+export function turnSliceD<T>(state: CubeState<T>, turn: CubeTurn): void {
     const slicedCube = sliceCube(state);
 
     loopSlices(turn, (i: number, negI: number) => {
@@ -533,7 +543,7 @@ export function turnSliceD(state: CubeState, turn: CubeTurn) {
  *
  * @return {CubeState}
  */
-export function turnSliceF(state: CubeState, turn: CubeTurn) {
+export function turnSliceF<T>(state: CubeState<T>, turn: CubeTurn): void {
     const slicedCube = sliceCube(state);
 
     loopSlices(turn, (i: number, negI: number, iSubOne: number) => {
@@ -584,7 +594,7 @@ export function turnSliceF(state: CubeState, turn: CubeTurn) {
  *
  * @return {CubeState}
  */
-export function turnSliceL(state: CubeState, turn: CubeTurn) {
+export function turnSliceL<T>(state: CubeState<T>, turn: CubeTurn): void {
     const slicedCube = sliceCube(state);
 
     loopSlices(turn, (i: number, negI: number, iSubOne: number) => {
@@ -635,7 +645,7 @@ export function turnSliceL(state: CubeState, turn: CubeTurn) {
  *
  * @return {CubeState}
  */
-export function turnSliceR(state: CubeState, turn: CubeTurn) {
+export function turnSliceR<T>(state: CubeState<T>, turn: CubeTurn): void {
     const slicedCube = sliceCube(state);
 
     loopSlices(turn, (i: number, negI: number, iSubOne: number) => {
@@ -686,7 +696,7 @@ export function turnSliceR(state: CubeState, turn: CubeTurn) {
  *
  * @return {CubeState}
  */
-export function turnSliceU(state: CubeState, turn: CubeTurn) {
+export function turnSliceU<T>(state: CubeState<T>, turn: CubeTurn): void {
     const slicedCube = sliceCube(state);
 
     loopSlices(turn, (i: number, negI: number, iSubOne: number) => {

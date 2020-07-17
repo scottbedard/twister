@@ -1,4 +1,4 @@
-import { PolygonFace, PolygonSticker } from '../src/utils/polygon';
+import { PolygonFace } from '../src/utils/polygon';
 import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
 
 import { Dodecaminx } from '../src/index';

@@ -32,8 +32,8 @@ export type CubeFace = 'U' | 'L' | 'F' | 'R' | 'B' | 'D';
 /**
  * Cube sticker.
  */
-export type CubeSticker<StickerData = any> = {
-    data: StickerData,
+export type CubeSticker<StickerData> = {
+    data: StickerData | Record<string, unknown>,
     originalIndex: number,
     value: CubeStickerValue,
 };
@@ -53,7 +53,7 @@ export type CubeOptions = {
 /**
  * Cube state.
  */
-export type CubeState<StickerData = any> = {
+export type CubeState<StickerData> = {
     U: CubeSticker<StickerData>[],
     L: CubeSticker<StickerData>[],
     F: CubeSticker<StickerData>[],
@@ -75,7 +75,7 @@ export type CubeTurn = {
 /**
  * Cube.
  */
-export default class Cube<StickerData = any> extends Puzzle<CubeOptions, CubeState<StickerData>, CubeTurn> {
+export default class Cube<StickerData> extends Puzzle<CubeOptions, CubeState<StickerData>, CubeTurn> {
 
     /**
      * Constructor.
