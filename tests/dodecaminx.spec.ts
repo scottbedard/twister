@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { PolygonFace } from '../src/utils/polygon';
 import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
 

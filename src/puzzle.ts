@@ -4,7 +4,11 @@ import { trim } from './utils/string';
 /**
  * Puzzle.
  */
-export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
+export default abstract class Puzzle<
+  PuzzleOptions,
+  PuzzleState,
+  PuzzleTurn
+> {
 
     /**
      * Puzzle options.
@@ -30,7 +34,16 @@ export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
 
       this.reset();
     }
-    
+
+  /**
+   * Apply state.
+   *
+   * @param {T} state
+   *
+   * @return {void}
+   */
+  abstract applyState<T>(state: T): void;
+
     /**
      * Apply a turn.
      *

@@ -6,6 +6,13 @@ export type State<Face extends string, Sticker> = {
 }
 
 /**
+ * Simplified state
+ */
+export type SimplifiedState<Face extends string, Value> = {
+  [K in Face]?: Value[];
+}
+
+/**
  * Sticker
  */
 export type Sticker<Value, Data> = {

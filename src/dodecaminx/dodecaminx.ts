@@ -66,6 +66,10 @@ export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxStat
         super(options);
     }
 
+    applyState() {
+        throw 'not implemented';
+    }
+
     /**
      * Apply a turn.
      *

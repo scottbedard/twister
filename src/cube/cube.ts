@@ -17,7 +17,7 @@ import {
   turnSliceU,
 } from './helpers';
 
-import { State, Sticker } from '../types';
+import { SimplifiedState, State, Sticker } from '../types';
 import { randomItem } from '../utils/array';
 import { rand } from '../utils/number';
 
@@ -42,15 +42,21 @@ export type CubeTurn = {
   depth: number,
   rotation: number,
   target: CubeFace | CubeAxis,
-  wide: boolean,
+  wide: boolean, 
 };
 
 export type CubeValue = null | 0 | 1 | 2 | 3 | 4 | 5;
 
+export type SimplifiedCubeState = SimplifiedState<CubeFace, CubeValue>;
+
 /**
  * Cube.
  */
-export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, CubeTurn> {
+export default class Cube<Data> extends Puzzle<
+  CubeOptions,
+  CubeState<Data>,
+  CubeTurn
+> {
 
   /**
      * Constructor.
@@ -67,6 +73,21 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
     }
 
     super(options);
+  }
+
+  /**
+   * Apply state.
+   *
+   * @param {SimplifiedCubeState} state
+   *
+   * @return {void}
+   */
+  applyState(state: SimplifiedCubeState): void {
+    (Object.keys(state) as Array<keyof typeof state>).forEach(face => {
+      this.state[face].forEach((sticker, index) => {
+        sticker.value = state[face][index];
+      });
+    });
   }
 
   /**

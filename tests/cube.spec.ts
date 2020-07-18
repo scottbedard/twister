@@ -1,5 +1,5 @@
 import { Cube } from '../src/index';
-import { CubeFace, CubeSticker, CubeTurn } from '../src/cube/cube';
+import { CubeFace, CubeSticker, CubeTurn, SimplifiedCubeState } from '../src/cube/cube';
 import { getOppositeFace, parseTurn, stringifyTurn } from '../src/cube/helpers';
 
 type Data = {
@@ -10,7 +10,7 @@ describe('cube', () => {
 
   const faceValues = (face: CubeSticker<Data>[]) => face.map(s => s.value);
 
-  const simplifiedState = (cube: Cube<Data>) => ({
+  const simplifiedState = (cube: Cube<Data>): SimplifiedCubeState => ({
     u: faceValues(cube.state.u),
     l: faceValues(cube.state.l),
     f: faceValues(cube.state.f),
@@ -72,6 +72,26 @@ describe('cube', () => {
   });
 
   describe('methods', () => {
+    it('applyState', () => {
+      const cube = new Cube({ size: 2 });
+
+      cube.applyState({
+        u: [0, 1, 2, 3],
+        l: [1, 2, 3, 4],
+        f: [2, 3, 4, 5],
+        r: [3, 4, 5, 0],
+        b: [4, 5, 0, 1],
+        d: [5, 0, 1, 2],
+      });
+
+      expect(cube.state.u.map(o => o.value)).toEqual([0, 1, 2, 3]);
+      expect(cube.state.l.map(o => o.value)).toEqual([1, 2, 3, 4]);
+      expect(cube.state.f.map(o => o.value)).toEqual([2, 3, 4, 5]);
+      expect(cube.state.r.map(o => o.value)).toEqual([3, 4, 5, 0]);
+      expect(cube.state.b.map(o => o.value)).toEqual([4, 5, 0, 1]);
+      expect(cube.state.d.map(o => o.value)).toEqual([5, 0, 1, 2]);
+    });
+
     it('isSolved', () => {
       const cube = new Cube({ size: 2 });
 
