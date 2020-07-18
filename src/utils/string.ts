@@ -1,7 +1,7 @@
 /**
  * Trim a string.
  *
- * @param {string}  str
+ * @param {string} str
  *
  * @return {string}
  */

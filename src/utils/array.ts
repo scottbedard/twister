@@ -3,10 +3,10 @@ import { rand } from './number';
 /**
  * Helper function to slice then shift an array.
  *
- * @param  {T[]}        arr
- * @param  {number?}    begin
+ * @param {T[]} arr
+ * @param {number?} begin
  *
- * @return {any}
+ * @return {T}
  */
 export function first<T>(arr: T[], begin?: number): T {
   return slice(arr, begin).shift();
@@ -15,8 +15,8 @@ export function first<T>(arr: T[], begin?: number): T {
 /**
  * Make an array of a given size.
  *
- * @param {number}  length
- * @param {T}       value
+ * @param {number} length
+ * @param {T} value
  *
  * @return {Array}
  */
@@ -38,7 +38,7 @@ export function randomItem<T>(arr: T[]): T {
 /**
  * Returns a reversed array without mutating the source.
  *
- * @param  {T[]} arr,
+ * @param {T[]} arr,
  *
  * @return {T[]}
  */
@@ -49,10 +49,10 @@ export function reverse<T>(arr: T[]): T[] {
 /**
  * Rotate an array forwards or backwards.
  *
- * @param {any[]}   arr 
+ * @param {T[]}   arr 
  * @param {number}  elements
  *
- * @return {any[]} 
+ * @return {T[]} 
  */
 export function rollArray<T>(arr: T[], elements: number): T[] {
   const offset = (((elements % arr.length) + arr.length) % arr.length);
@@ -63,9 +63,9 @@ export function rollArray<T>(arr: T[], elements: number): T[] {
 /**
  * Slice an array.
  *
- * @param  {T[]}        arr
- * @param  {number?}    begin
- * @param  {number?}    end
+ * @param {T[]} arr
+ * @param {number?} begin
+ * @param {number?} end
  *
  * @return {T[]}
  */
@@ -76,10 +76,10 @@ export function slice<T>(arr: T[], begin?: number, end?: number): T[] {
 /**
  * Splice an array.
  * 
- * @param {T[]}     arr
- * @param {number}  start
- * @param {number}  deleteCount
- * @param {T[]}     items
+ * @param {T[]} arr
+ * @param {number} start
+ * @param {number} deleteCount
+ * @param {T[]} items
  *
  * @return {T[]}
  */

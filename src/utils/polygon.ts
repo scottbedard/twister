@@ -28,8 +28,8 @@ export type PolygonSticker = {
 /**
  * Create a face for a regular polygons.
  *
- * @param {number}  sides
- * @param {number}  layers
+ * @param {number} sides
+ * @param {number} layers
  *
  * @return {PolygonFace}
  */
@@ -70,8 +70,8 @@ export function createPolygonFace(sides: number, layers: number, value: number =
  * Extract layer of stickers from a polygon face.
  *
  * @param {PolygonFace} face
- * @param {number}      depth 
- * @param {number}      rotation
+ * @param {number} depth 
+ * @param {number} rotation
  *
  * @return {PolygonSticker[]} 
  */
@@ -100,7 +100,7 @@ export function extractPolygonLayer(face: PolygonFace, depth: number, rotation =
  * Rotate a regular polygon face.
  *
  * @param {PolygonFace} face
- * @param {number}      rotation
+ * @param {number} rotation
  *
  * @return {PolygonFace}
  */
@@ -134,11 +134,11 @@ export function rotatePolygonFace(face: PolygonFace, rotation: number): PolygonF
  * Extract a slice from one polygon face, and insert into another.
  *
  * @param {PolygonFace} source
- * @param {number}      sourceAngle
+ * @param {number} sourceAngle
  * @param {PolygonFace} target
- * @param {number}      targetAngle
- * @param {number}      depth
- * @param {boolean}     wide
+ * @param {number} targetAngle
+ * @param {number} depth
+ * @param {boolean} wide
  *
  * @return {PolygonFace}
  */

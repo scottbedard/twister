@@ -59,10 +59,10 @@ export default class Cube<Data> extends Puzzle<
 > {
 
   /**
-     * Constructor.
-     *
-     * @param {CubeOptions}     options
-     */
+   * Constructor.
+   *
+   * @param {CubeOptions} options
+   */
   constructor(options: CubeOptions) {
     if (!Number.isInteger(options.size)) {
       throw new Error('Cube size must be an integer');
@@ -91,12 +91,12 @@ export default class Cube<Data> extends Puzzle<
   }
 
   /**
-     * Apply a turn.
-     *
-     * @param {CubeTurn}  turn
-     *
-     * @return {void} 
-     */
+   * Apply a turn.
+   *
+   * @param {CubeTurn} turn
+   *
+   * @return {void} 
+   */
   applyTurn(turn: CubeTurn): void {
     const { target } = turn;
 
@@ -146,12 +146,12 @@ export default class Cube<Data> extends Puzzle<
   }
 
   /**
-     * Generate a scramble.
-     *
-     * @param {number}  length
-     *
-     * @return {void}
-     */
+   * Generate a scramble.
+   *
+   * @param {number} length
+   *
+   * @return {void}
+   */
   generateScramble(length: number = Math.max(20, this.options.size ** 3)): string {
     const faces: CubeFace[] = ['u', 'l', 'f', 'r', 'b', 'd'];
     const maxDepth = Math.floor(this.options.size / 2);
@@ -180,10 +180,10 @@ export default class Cube<Data> extends Puzzle<
   }
 
   /**
-     * Test if the puzzle is solved.
-     *
-     * @return {boolean}
-     */
+   * Test if the puzzle is solved.
+   *
+   * @return {boolean}
+   */
   isSolved(): boolean {
     return faceIsSolved(this.state.u)
       && faceIsSolved(this.state.l)
@@ -194,21 +194,21 @@ export default class Cube<Data> extends Puzzle<
   }
 
   /**
-     * Parse a turn.
-     *
-     * @param {string}  turn
-     *
-     * @return {CubeTurn} 
-     */
+   * Parse a turn.
+   *
+   * @param {string} turn
+   *
+   * @return {CubeTurn} 
+   */
   parseTurn(turn: string): CubeTurn {
     return parseTurn(turn);
   }
 
   /**
-     * Reset the puzzle state.
-     *
-     * @return {void}
-     */
+   * Reset the puzzle state.
+   *
+   * @return {void}
+   */
   reset(): void {
     const length = this.options.size ** 2;
 

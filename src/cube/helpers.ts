@@ -23,7 +23,7 @@ import {
  *     7, 8, 9,         [3, 6, 9],
  * ]                ]
  *
- * @param  {T[]}    face
+ * @param {T[]} face
  *
  * @return {T[][]}
  */
@@ -40,7 +40,7 @@ export function chunkCols<T>(face: T[]): T[][] {
  *     7, 8, 9,         [7, 8, 9],
  * ]                ]
  *
- * @param  {T[]}    face
+ * @param {T[]} face
  *
  * @return {T[][]}
  */
@@ -56,8 +56,8 @@ export function chunkRows<T>(face: T[]): T[][] {
 /**
  * Create an array of stickers.
  *
- * @param {CubeValue}    value 
- * @param {number}              length
+ * @param {CubeValue} value 
+ * @param {number} length
  *
  * @return {CubeSticker[]} 
  */
@@ -74,7 +74,7 @@ export function createFace<Data>(value: CubeValue, length: number): CubeSticker<
 /**
  * Test if a face is solved.
  *
- * @param {CubeSticker[]}   face
+ * @param {CubeSticker[]} face
  *
  * @return {boolean}
  */
@@ -99,7 +99,7 @@ export function faceIsSolved<T>(stickers: CubeSticker<T>[]): boolean {
  *     [3, 6, 9],           7, 8, 9,
  * ]                    ]
  *
- * @param  {T[][]}  cols
+ * @param {T[][]} cols
  *
  * @return {T[]}
  */
@@ -116,7 +116,7 @@ export function flattenCols<T>(cols: T[][]): T[] {
  *     [7, 8, 9],           7, 8, 9,
  * ]                    ]
  *
- * @param  {T[][]} rows
+ * @param {T[][]} rows
  *
  * @return {T[]}
  */
@@ -135,7 +135,7 @@ export function flattenRows<T>(rows: T[][]): T[] {
  *     [7, 8, 9],           [3, 6, 9],
  * ]                    ]
  *
- * @param  {T[][]}  chunks
+ * @param {T[][]} chunks
  *
  * @return {T[]}
  */
@@ -146,7 +146,7 @@ export function flip<T>(chunks: T[][]): T[][] {
 /**
  * Get the face being turned.
  *
- * @param {CubeTurn}    turn
+ * @param {CubeTurn} turn
  *
  * @return {CubeFace} 
  */
@@ -166,7 +166,7 @@ export function getFace(turn: CubeTurn): CubeFace {
 /**
  * Get the opposite face.
  *
- * @param {CubeTurn}    turn
+ * @param {CubeTurn} turn
  *
  * @return {CubeFace} 
  */
@@ -186,8 +186,8 @@ export function getOppositeFace(turn: CubeTurn): CubeFace {
 /**
  * Itterate over the slices of a turn.
  *
- * @param  {CubeTurn}   turn 
- * @param  {Function}   fn
+ * @param {CubeTurn} turn 
+ * @param {Function} fn
  *
  * @return {void}
  */
@@ -204,7 +204,7 @@ export function loopSlices(turn: CubeTurn, fn: LoopSlicesFn): void {
 /**
  * Parse a turn.
  *
- * @param {string}  turn
+ * @param {string} turn
  *
  * @return {CubeTurn} 
  */
@@ -239,8 +239,8 @@ export function parseTurn(turn: string): CubeTurn {
 /**
  * Rotate a face array.
  *
- * @param {CubeSticker[]}   face
- * @param {number}          rotation
+ * @param {T[]} arr
+ * @param {number} rotation
  *
  * @param {CubeSticker[]} 
  */
@@ -256,14 +256,6 @@ export function rotate<T>(arr: T[], rotation: number): T[] {
   return flattenCols(reverse(chunkRows(arr)));
 }
 
-
-/**
- * Slice a cube into each face's rows and columns.
- *
- * @param  {CubeState}   cube
- *
- * @return {object}
- */
 type SlicedFace<T> = {
     c: CubeSticker<T>[][],
     r: CubeSticker<T>[][],
@@ -278,6 +270,13 @@ type SlicedCube<T> = {
     d: SlicedFace<T>,
 }
 
+/**
+ * Slice a cube into each face's rows and columns.
+ *
+ * @param {CubeState} cube
+ *
+ * @return {object}
+ */
 export function sliceCube<T>(state: CubeState<T>): SlicedCube<T> {
   return {
     u: { r: chunkRows(state.u), c: chunkCols(state.u) },
@@ -292,7 +291,7 @@ export function sliceCube<T>(state: CubeState<T>): SlicedCube<T> {
 /**
  * Convert a turn object to a string.
  *
- * @param {CubeTurn}    turn
+ * @param {CubeTurn} turn
  *
  * @return {string}
  */
@@ -316,8 +315,8 @@ export function stringifyTurn(turn: CubeTurn): string {
 /**
  * Turn a cube along the X axis.
  *
- * @param  {CubeState}  state
- * @param  {CubeTurn}   turn
+ * @param {CubeState} state
+ * @param {CubeTurn} turn
  *
  * @return {CubeState}
  */
@@ -357,8 +356,8 @@ export function turnCubeX<T>({ u, l, f, r, b, d }: CubeState<T>, { rotation }: C
 /**
  * Turn a cube along the Y axis.
  *
- * @param  {CubeState}  state
- * @param  {CubeTurn}   turn
+ * @param {CubeState} state
+ * @param {CubeTurn} turn
  *
  * @return {CubeState}
  */
@@ -398,8 +397,8 @@ export function turnCubeY<T>({ u, l, f, r, b, d }: CubeState<T>, { rotation }: C
 /**
  * Turn a cube along the Z axis.
  *
- * @param  {CubeState}  state
- * @param  {CubeTurn}   turn
+ * @param {CubeState} state
+ * @param {CubeTurn} turn
  *
  * @return {CubeState}
  */
@@ -436,8 +435,8 @@ export function turnCubeZ<T>({ u, l, f, r, b, d }: CubeState<T>, { rotation }: C
 /**
  * Turn slices for a B turn.
  *
- * @param  {CubeState}  state
- * @param  {CubeTurn}   turn
+ * @param {CubeState} state
+ * @param {CubeTurn} turn
  *
  * @return {CubeState}
  */
@@ -487,8 +486,8 @@ export function turnSliceB<T>(state: CubeState<T>, turn: CubeTurn): void {
 /**
  * Turn slices for a D turn.
  *
- * @param  {CubeState}  state
- * @param  {CubeTurn}   turn
+ * @param {CubeState} state
+ * @param {CubeTurn} turn
  *
  * @return {CubeState}
  */
@@ -538,8 +537,8 @@ export function turnSliceD<T>(state: CubeState<T>, turn: CubeTurn): void {
 /**
  * Turn slices for a F turn.
  *
- * @param  {CubeState}  state
- * @param  {CubeTurn}   turn
+ * @param {CubeState} state
+ * @param {CubeTurn} turn
  *
  * @return {CubeState}
  */
@@ -589,8 +588,8 @@ export function turnSliceF<T>(state: CubeState<T>, turn: CubeTurn): void {
 /**
  * Turn slices for a L turn.
  *
- * @param  {CubeState}  state
- * @param  {CubeTurn}   turn
+ * @param {CubeState} state
+ * @param {CubeTurn} turn
  *
  * @return {CubeState}
  */
@@ -640,8 +639,8 @@ export function turnSliceL<T>(state: CubeState<T>, turn: CubeTurn): void {
 /**
  * Turn slices for a R turn.
  *
- * @param  {CubeState}  state
- * @param  {CubeTurn}   turn
+ * @param {CubeState} state
+ * @param {CubeTurn} turn
  *
  * @return {CubeState}
  */
@@ -691,8 +690,8 @@ export function turnSliceR<T>(state: CubeState<T>, turn: CubeTurn): void {
 /**
  * Turn slices for a R turn.
  *
- * @param  {CubeState}  state
- * @param  {CubeTurn}   turn
+ * @param {CubeState} state
+ * @param {CubeTurn} turn
  *
  * @return {CubeState}
  */
