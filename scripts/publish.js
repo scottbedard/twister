@@ -10,7 +10,7 @@ async function cli() {
 
   fs.writeFileSync(indexPath, src);
 
-  exec('npm run rollup');
+  exec('npm run build && npm publish');
 }
 
 if (require.main === module) {
