@@ -29,8 +29,9 @@
     "url": "git+https://github.com/scottbedard/twister.git"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "node ./scripts/build.js",
     "lint": "eslint . --ext .ts",
+    "rollup": "rollup -c",
     "test": "jest --coverage"
   },
   "unpkg": "dist/index.bundle.js",
