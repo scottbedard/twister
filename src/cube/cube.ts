@@ -26,9 +26,9 @@ import Puzzle from '../puzzle';
 /**
  * Cube types
  */
-export type CubeAxis = 'X' | 'Y' | 'Z';
+export type CubeAxis = 'x' | 'y' | 'z';
 
-export type CubeFace = 'U' | 'L' | 'F' | 'R' | 'B' | 'D';
+export type CubeFace = 'u' | 'l' | 'f' | 'r' | 'b' | 'd';
 
 export type CubeOptions = {
   size: number,
@@ -80,11 +80,11 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
     const { target } = turn;
 
     // puzzle rotations
-    if (target === 'X') {
+    if (target === 'x') {
       this.state = turnCubeX(this.state, turn);
-    } else if (target === 'Y') {
+    } else if (target === 'y') {
       this.state = turnCubeY(this.state, turn);
-    } else if (target === 'Z') {
+    } else if (target === 'z') {
       this.state = turnCubeZ(this.state, turn);
     }
         
@@ -114,12 +114,12 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
 
 
       switch (face) {
-      case 'U': turnSliceU(this.state, turn); break;
-      case 'L': turnSliceL(this.state, turn); break;
-      case 'F': turnSliceF(this.state, turn); break;
-      case 'R': turnSliceR(this.state, turn); break;
-      case 'B': turnSliceB(this.state, turn); break;
-      case 'D': turnSliceD(this.state, turn); break;
+      case 'u': turnSliceU(this.state, turn); break;
+      case 'l': turnSliceL(this.state, turn); break;
+      case 'f': turnSliceF(this.state, turn); break;
+      case 'r': turnSliceR(this.state, turn); break;
+      case 'b': turnSliceB(this.state, turn); break;
+      case 'd': turnSliceD(this.state, turn); break;
       }
     }
   }
@@ -132,17 +132,17 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
      * @return {void}
      */
   generateScramble(length: number = Math.max(20, this.options.size ** 3)): string {
-    const faces: CubeFace[] = ['U', 'L', 'F', 'R', 'B', 'D'];
+    const faces: CubeFace[] = ['u', 'l', 'f', 'r', 'b', 'd'];
     const maxDepth = Math.floor(this.options.size / 2);
     const turns: CubeFace[] = [];
 
     const intersections: { [key in CubeFace]: CubeFace[] } = {
-      U: ['L', 'F', 'R', 'B'],
-      L: ['U', 'F', 'D', 'B'],
-      F: ['L', 'U', 'R', 'D'],
-      R: ['U', 'B', 'D', 'F'],
-      B: ['U', 'L', 'D', 'R'],
-      D: ['F', 'R', 'B', 'L'],
+      u: ['l', 'f', 'r', 'b'],
+      l: ['u', 'f', 'd', 'b'],
+      f: ['l', 'u', 'r', 'd'],
+      r: ['u', 'b', 'd', 'f'],
+      b: ['u', 'l', 'd', 'r'],
+      d: ['f', 'r', 'b', 'l'],
     }
 
     for (let i = 0, prev = randomItem(faces); i < length; i++) {
@@ -164,12 +164,12 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
      * @return {boolean}
      */
   isSolved(): boolean {
-    return faceIsSolved(this.state.U)
-      && faceIsSolved(this.state.L)
-      && faceIsSolved(this.state.F)
-      && faceIsSolved(this.state.R)
-      && faceIsSolved(this.state.B)
-      && faceIsSolved(this.state.D);
+    return faceIsSolved(this.state.u)
+      && faceIsSolved(this.state.l)
+      && faceIsSolved(this.state.f)
+      && faceIsSolved(this.state.r)
+      && faceIsSolved(this.state.b)
+      && faceIsSolved(this.state.d);
   }
 
   /**
@@ -192,12 +192,12 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
     const length = this.options.size ** 2;
 
     this.state = {
-      U: createFace(0, length),
-      L: createFace(1, length),
-      F: createFace(2, length),
-      R: createFace(3, length),
-      B: createFace(4, length),
-      D: createFace(5, length),
+      u: createFace(0, length),
+      l: createFace(1, length),
+      f: createFace(2, length),
+      r: createFace(3, length),
+      b: createFace(4, length),
+      d: createFace(5, length),
     };
   }
 }
