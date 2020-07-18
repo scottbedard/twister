@@ -13,4 +13,4 @@ export {
   default as Dodecaminx,
 } from './dodecaminx/dodecaminx';
 
-export const version = '0.1.8';
+export const version = '0.2.0';
