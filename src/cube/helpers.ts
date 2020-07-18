@@ -2,7 +2,7 @@ import {
   CubeFace,
   CubeState,
   CubeSticker,
-  CubeStickerValue,
+  CubeValue,
   CubeTurn,
 } from './cube';
 
@@ -56,13 +56,13 @@ export function chunkRows<T>(face: T[]): T[][] {
 /**
  * Create an array of stickers.
  *
- * @param {CubeStickerValue}    value 
+ * @param {CubeValue}    value 
  * @param {number}              length
  *
  * @return {CubeSticker[]} 
  */
-export function createFace<T>(value: CubeStickerValue, length: number): CubeSticker<T>[] {
-  return makeArray(length).map((x, i): CubeSticker<T> => {
+export function createFace<Data>(value: CubeValue, length: number): CubeSticker<Data>[] {
+  return makeArray(length).map((x, i): CubeSticker<Data> => {
     return {
       data: {},
       originalIndex: i,

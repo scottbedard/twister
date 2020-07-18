@@ -10,6 +10,7 @@
   ],
   "root": true,
   "rules": {
+    "@typescript-eslint/no-explicit-any": 0,
     "indent": ["error", 2]
   }
 }

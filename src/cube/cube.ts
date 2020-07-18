@@ -17,65 +17,40 @@ import {
   turnSliceU,
 } from './helpers';
 
+import { State, Sticker } from '../types';
 import { randomItem } from '../utils/array';
 import { rand } from '../utils/number';
 
 import Puzzle from '../puzzle';
 
 /**
- * Cube axis and face.
+ * Cube types
  */
 export type CubeAxis = 'X' | 'Y' | 'Z';
 
 export type CubeFace = 'U' | 'L' | 'F' | 'R' | 'B' | 'D';
 
-/**
- * Cube sticker.
- */
-export type CubeSticker<StickerData> = {
-    data: StickerData | Record<string, unknown>,
-    originalIndex: number,
-    value: CubeStickerValue,
-};
-
-/**
- * Cube sticker value.
- */
-export type CubeStickerValue = null | 0 | 1 | 2 | 3 | 4 | 5;
-
-/**
- * Cube options.
- */
 export type CubeOptions = {
-    size: number,
+  size: number,
 };
 
-/**
- * Cube state.
- */
-export type CubeState<StickerData> = {
-    U: CubeSticker<StickerData>[],
-    L: CubeSticker<StickerData>[],
-    F: CubeSticker<StickerData>[],
-    R: CubeSticker<StickerData>[],
-    B: CubeSticker<StickerData>[],
-    D: CubeSticker<StickerData>[],
-}
+export type CubeState<Data> = State<CubeFace, CubeSticker<Data>>;
 
-/**
- * Cube turn.
- */
+export type CubeSticker<Data> = Sticker<CubeValue, Data>;
+
 export type CubeTurn = {
-    depth: number,
-    rotation: number,
-    target: CubeFace | CubeAxis,
-    wide: boolean,
+  depth: number,
+  rotation: number,
+  target: CubeFace | CubeAxis,
+  wide: boolean,
 };
+
+export type CubeValue = null | 0 | 1 | 2 | 3 | 4 | 5;
 
 /**
  * Cube.
  */
-export default class Cube<StickerData> extends Puzzle<CubeOptions, CubeState<StickerData>, CubeTurn> {
+export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, CubeTurn> {
 
   /**
      * Constructor.
@@ -190,11 +165,11 @@ export default class Cube<StickerData> extends Puzzle<CubeOptions, CubeState<Sti
      */
   isSolved(): boolean {
     return faceIsSolved(this.state.U)
-            && faceIsSolved(this.state.L)
-            && faceIsSolved(this.state.F)
-            && faceIsSolved(this.state.R)
-            && faceIsSolved(this.state.B)
-            && faceIsSolved(this.state.D);
+      && faceIsSolved(this.state.L)
+      && faceIsSolved(this.state.F)
+      && faceIsSolved(this.state.R)
+      && faceIsSolved(this.state.B)
+      && faceIsSolved(this.state.D);
   }
 
   /**

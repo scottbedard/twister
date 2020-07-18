@@ -5,7 +5,7 @@ export {
   CubeOptions,
   CubeState,
   CubeSticker,
-  CubeStickerValue,
+  CubeValue,
   CubeTurn,
 } from './cube/cube';
 
