@@ -6,5 +6,5 @@
  * @return {string}
  */
 export function trim(str: string): string {
-    return str.trim();
+  return str.trim();
 }

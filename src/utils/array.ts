@@ -9,7 +9,7 @@ import { rand } from './number';
  * @return {any}
  */
 export function first<T>(arr: T[], begin?: number): T {
-    return slice(arr, begin).shift();
+  return slice(arr, begin).shift();
 }
 
 /**
@@ -21,7 +21,7 @@ export function first<T>(arr: T[], begin?: number): T {
  * @return {Array}
  */
 export function makeArray<T>(length: number, value: T = undefined): T[] {
-    return new Array(length).fill(value);
+  return new Array(length).fill(value);
 }
 
 /**
@@ -32,7 +32,7 @@ export function makeArray<T>(length: number, value: T = undefined): T[] {
  * @return {T}
  */
 export function randomItem<T>(arr: T[]): T {
-    return arr[rand(0, arr.length - 1)];
+  return arr[rand(0, arr.length - 1)];
 }
 
 /**
@@ -43,7 +43,7 @@ export function randomItem<T>(arr: T[]): T {
  * @return {T[]}
  */
 export function reverse<T>(arr: T[]): T[] {
-    return slice(arr).reverse();
+  return slice(arr).reverse();
 }
 
 /**
@@ -55,9 +55,9 @@ export function reverse<T>(arr: T[]): T[] {
  * @return {any[]} 
  */
 export function rollArray<T>(arr: T[], elements: number): T[] {
-    const offset = (((elements % arr.length) + arr.length) % arr.length);
+  const offset = (((elements % arr.length) + arr.length) % arr.length);
 
-    return arr.slice(offset).concat(arr.slice(0, offset));
+  return arr.slice(offset).concat(arr.slice(0, offset));
 }
 
 /**
@@ -70,7 +70,7 @@ export function rollArray<T>(arr: T[], elements: number): T[] {
  * @return {T[]}
  */
 export function slice<T>(arr: T[], begin?: number, end?: number): T[] {
-    return arr.slice(begin, end);
+  return arr.slice(begin, end);
 }
 
 /**
@@ -84,5 +84,5 @@ export function slice<T>(arr: T[], begin?: number, end?: number): T[] {
  * @return {T[]}
  */
 export function splice<T>(arr: T[], start: number, deleteCount: number, ...items: T[]): T[] {
-    return arr.splice(start, deleteCount, ...items);
+  return arr.splice(start, deleteCount, ...items);
 }

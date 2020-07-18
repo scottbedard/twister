@@ -5,33 +5,33 @@ import pkg from './package.json';
 import typescript from 'rollup-plugin-typescript2';
 
 export default {
-    input: 'src/index.ts',
-    output: [
-        {
-            file: pkg.main,
-            format: 'cjs'
-        },
-        {
-            file: pkg.module,
-            format: 'es'
-        },
-        {
-            file: pkg.unpkg,
-            format: 'iife',
-            name: 'Twister'
-        },
-    ],
-    external: [
-        ...Object.keys(pkg.dependencies || {})
-    ],
-    plugins: [
-        eslint(),
-        del({
-            targets: 'dist/*',
-        }),
-        typescript({
-            typescript: require('typescript'),
-        }),
-        terser(),
-    ],
+  input: 'src/index.ts',
+  output: [
+    {
+      file: pkg.main,
+      format: 'cjs'
+    },
+    {
+      file: pkg.module,
+      format: 'es'
+    },
+    {
+      file: pkg.unpkg,
+      format: 'iife',
+      name: 'Twister'
+    },
+  ],
+  external: [
+    ...Object.keys(pkg.dependencies || {})
+  ],
+  plugins: [
+    eslint(),
+    del({
+      targets: 'dist/*',
+    }),
+    typescript({
+      typescript: require('typescript'),
+    }),
+    terser(),
+  ],
 };

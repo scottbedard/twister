@@ -26,9 +26,9 @@ export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
      * @param {PuzzleOptions}  object 
      */
     constructor(options: PuzzleOptions) {
-        this.options = options;
+      this.options = options;
 
-        this.reset();
+      this.reset();
     }
     
     /**
@@ -80,8 +80,8 @@ export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
      * @return {void}
      */
     scramble(length?: number): void {
-        this.reset();
-        this.turn(this.generateScramble(length));
+      this.reset();
+      this.turn(this.generateScramble(length));
     }
 
     /**
@@ -92,11 +92,11 @@ export default abstract class Puzzle<PuzzleOptions, PuzzleState, PuzzleTurn> {
      * @return {void} 
      */
     turn(algorithm: string): void {
-        algorithm
-            .split(' ')
-            .map(trim)
-            .filter(identity)
-            .map(turn => this.parseTurn(turn))
-            .forEach(turn => this.applyTurn(turn));
+      algorithm
+        .split(' ')
+        .map(trim)
+        .filter(identity)
+        .map(turn => this.parseTurn(turn))
+        .forEach(turn => this.applyTurn(turn));
     }
 }

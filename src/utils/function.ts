@@ -4,7 +4,7 @@
  * @return {T}
  */
 export function identity<T>(arg: T): T {
-    return arg;
+  return arg;
 }
 
 /**

@@ -6,7 +6,7 @@
  * @return {boolean}
  */
 export function isOdd(n: number): boolean {
-    return n % 2 === 1;
+  return n % 2 === 1;
 }
 
 /**
@@ -18,5 +18,5 @@ export function isOdd(n: number): boolean {
  * @return number
  */
 export function rand(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }

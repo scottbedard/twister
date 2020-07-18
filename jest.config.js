@@ -1,4 +1,4 @@
 module.exports = {
-    preset: 'ts-jest',
-    setupFilesAfterEnv: ['jest-extended'],
+  preset: 'ts-jest',
+  setupFilesAfterEnv: ['jest-extended'],
 };
