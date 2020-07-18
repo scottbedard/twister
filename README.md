@@ -48,6 +48,9 @@ puzzle.reset();
 
 // test if the puzzle is solved
 puzzle.isSolved();
+
+// set puzzle state
+puzzle.applyState(state);
 ```
 
 Use the following properties to access puzzle data
