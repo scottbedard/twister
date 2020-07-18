@@ -44,7 +44,7 @@
         const colors = ['yellow', 'orange', 'blue', 'red', 'green', '#c9c9c9'];
         const getColMap = n => times(n ** 2).map((x, i) => i % n);
         const getRowMap = n => times(n ** 2).map((x, i) => Math.floor(i / n));
-        const faceTransforms = { U: [1, 0], L: [0, 1], F: [1, 1], R: [2, 1], B: [3, 1], D: [1, 2] };
+        const faceTransforms = { u: [1, 0], l: [0, 1], f: [1, 1], r: [2, 1], b: [3, 1], d: [1, 2] };
 
         const colMap = getColMap(cube.options.size);
         const rowMap = getRowMap(cube.options.size);
