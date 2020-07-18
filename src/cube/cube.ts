@@ -17,7 +17,7 @@ import {
   turnSliceU,
 } from './helpers';
 
-import { SimplifiedState, State, Sticker } from '../types';
+import { SimplifiedState, State, Sticker } from '../puzzle';
 import { randomItem } from '../utils/array';
 import { rand } from '../utils/number';
 
