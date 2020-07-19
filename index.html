@@ -17,7 +17,7 @@
       }
     </style>
 
-    <script>
+    <script>;(function () {'use strict';
       const times = n => new Array(n).fill();
 
       if (typeof Twister === 'undefined') {
@@ -27,17 +27,7 @@
       //
       // cube
       //
-      const cube = new Twister.Cube({ size: 3 });
-  
-      cube.options = new Proxy(cube.options, {
-        set(obj, prop, value) {
-          obj[prop] = value;
-          resetCube();
-          updateCubeOptions();
-        },
-      });
-
-      function drawCube() {
+      const drawCube = () => {
         const svg = document.querySelector('#cube-svg');
         svg.innerHTML = '';
 
@@ -73,33 +63,50 @@
         });
       }
 
-      function resetCube() {
-        cube.reset();
-        drawCube();
-        return '';
-      }
+      const cube = new Twister.Cube({
+        size: 3,
+      });
 
-      function scrambleCube() {
-        const scramble = cube.generateScramble();
-        cube.turn(scramble);
-        drawCube();
-        return scramble;
-      }
+      const reset = cube.reset.bind(cube);
+  
+      const turn = cube.turn.bind(cube);
 
-      function turnCube(alg) {
-        cube.turn(alg.trim());
+      const redraw = () => {
         drawCube();
-      }
-
-      function updateCubeOptions() {
         document.querySelector('#cube-options').textContent = JSON.stringify(cube.options, null, 2);
       }
 
-      document.addEventListener('DOMContentLoaded', () => {
-        drawCube();
-        updateCubeOptions();
-      });
-    </script>
+      cube.options = new Proxy(cube.options, {
+        set(obj, prop, value) {
+          obj[prop] = value;
+          reset();
+          redraw();
+        },
+      }); 
+
+      cube.scramble = (...args) => {
+        const scramble = cube.generateScramble(...args);
+        cube.turn(scramble);
+        document.querySelector('[data-cube-scramble]').textContent = scramble;
+        return scramble;
+      }
+
+      cube.turn = (...args) => {
+        const result = turn(...args);
+        redraw();
+        return result;
+      }
+
+      cube.reset = () => {
+        reset();
+        redraw();
+        document.querySelector('[data-cube-scramble]').textContent = 'None';
+      }
+
+      document.addEventListener('DOMContentLoaded', redraw);
+
+      window.cube = cube;
+    })();</script>
   </head>
   <body>
     <div class="container mx-auto p-6" x-data="{ puzzle: 'cube' }">
@@ -121,31 +128,26 @@
       <div x-show="puzzle === 'cube'">
         <div x-data="{ alg: '', parsedTurn: null, scramble: '' }" class="flex flex-wrap">
           <div class="pb-6 w-full md:pb-0 md:pr-3 md:w-1/2">
-            <form class="flex flex-wrap -m-1" @submit.prevent="scramble = turnCube(alg)">
-              <input
-                x-model="alg"
-                class="appearance-none border border-gray-400 h-10 m-1 px-4 rounded w-full hover:border-gray-500 sm:w-auto"
-                placeholder="turns" />
-              <button
-                class="appearance-none bg-gray-200 h-10 m-1 px-4 rounded w-full sm:w-auto hover:bg-gray-300"
-                type="submit">
-                execute
-              </button>
-            </form>
             <div class="flex flex-wrap -m-1 pt-1">
+              <form @submit.prevent="scramble = cube.turn(alg)">
+                <input
+                  x-model="alg"
+                  class="appearance-none border border-gray-400 h-10 m-1 px-4 rounded w-full hover:border-gray-500 sm:w-auto"
+                  placeholder="turns" />
+              </form>
               <button
-                @click="scramble = scrambleCube()"
+                @click="scramble = cube.scramble()"
                 class="appearance-none bg-gray-200 h-10 m-1 px-4 rounded w-full sm:w-auto hover:bg-gray-300">
                 scramble
               </button>
               <button
-                @click="scramble = resetCube()"
+                @click="scramble = cube.reset()"
                 class="appearance-none bg-gray-200 h-10 m-1 px-4 rounded w-full sm:w-auto hover:bg-gray-300">
                 reset
               </button>
             </div>
             <div class="pt-6">
-              <p class="mb-6">
+              <p class="leading-loose mb-6">
                 The puzzle is exposed globally as <a class="bg-gray-200 p-1 hover:bg-gray-300" href="javascript:console.log(cube)">cube</a>.
                 You can resize the puzzle by executing <a class="bg-gray-200 p-1 hover:bg-gray-300" href="javascript:cube.options.size = Math.max((cube.options.size + 1) % 11, 2);">cube.options.size = x</a>.
               </p>
@@ -153,6 +155,7 @@
               <div id="cube-options" class="mb-6"></div>
               <div class="font-bold">Scramble:</div>
               <div
+                data-cube-scramble
                 class="overflow-y-auto"
                 style="max-height: 200px"
                 x-text="scramble || 'None'"></div>
