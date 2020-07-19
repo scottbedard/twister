@@ -5,10 +5,10 @@
 [![Dependencies](https://img.shields.io/david/scottbedard/twister)](https://david-dm.org/scottbedard/twister)
 [![Dev dependencies](https://img.shields.io/david/dev/scottbedard/twister)](https://david-dm.org/scottbedard/twister?type=dev)
 [![NPM](https://img.shields.io/npm/v/@bedard/twister)](https://www.npmjs.com/package/@bedard/twister)
-[![Bundle size](https://img.shields.io/bundlephobia/minzip/@bedard/twister)](https://bundlephobia.com/result?p=@bedard/twister)
+[![Bundle size](https://img.shields.io/bundlephobia/minzip/@bedard/twister?label=gzipped)](https://bundlephobia.com/result?p=@bedard/twister)
 [![License](https://img.shields.io/github/license/scottbedard/twister?color=blue)](https://github.com/scottbedard/twister/blob/master/LICENSE)
 
-Twister is a library for modeling the state of twisty puzzles. To see how it works, [check out the interactive sandbox](https://scottbedard-twister.netlify.app/).
+Twister is a library for modeling the state of twisty puzzles. To get started, [check out the interactive sandbox](https://scottbedard-twister.netlify.app/).
 
 > **Warning:** This is a work in progress, and is not ready for production use. Changes may happen at any time.
 
