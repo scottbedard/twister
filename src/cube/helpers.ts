@@ -263,7 +263,7 @@ export function rotate<T>(arr: T[], rotation: number): T[] {
 /**
  * Simplify a cube face
  */
-export function simplifyFace<T>(face: CubeSticker<T>[]) {
+export function simplifyFace<T>(face: CubeSticker<T>[]): CubeValue[] {
   return face.map(sticker => sticker.value);
 }
 
