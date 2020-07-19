@@ -63,8 +63,6 @@ puzzle.state;
 puzzle.options;
 ```
 
-## Advanced usage
-
 All puzzles store stickers in the following shape `{ data, value }`. The `value` represents the color of that particular sticker, usually as a `number` or `null`. When `null`, the sticker will be considered "solved", regardless of which face it's on. This can be useful when modeling [void puzzles](https://en.wikipedia.org/wiki/Void_Cube) variations. A sticker's `data` object is simply a place to store any additional data with the sticker.
 
 When using with TypeScript, a type argument may be provided to the puzzle constructor to define the shape of this data.
