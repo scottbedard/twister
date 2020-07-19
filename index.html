@@ -113,7 +113,7 @@
     <div class="container mx-auto p-6" x-data="{ puzzle: 'cube' }">
       <div class="flex flex-wrap justify-between mb-6">
         <h1 class="font-bold leading-none mb-2 text-2xl sm:text-4xl">
-          <a class="hover:underline" href="https://github.com/scottbedard/twister">@bedard/twister</a>
+          <a class="hover:underline hover:text-white" href="https://github.com/scottbedard/twister">@bedard/twister</a>
         </h1>
         <!-- <select
           class="appearance-none block cursor-pointer border border-gray-400 h-10 text-gray-700 px-4 rounded w-full sm:w-auto"
@@ -149,14 +149,14 @@
             </div>
             <div class="pt-6">
               <p class="leading-loose mb-6">
-                This cube is exposed globally as <a class="bg-gray-800 px-2 py-1 whitespace-pre hover:bg-gray-700" href="javascript:console.log(window.cube)">window.cube</a>.
-                Use your dev tools or the inputs above to manipulate it. For example, <a class="bg-gray-800 px-2 py-1 whitespace-pre hover:bg-gray-700" href="javascript:cube.options.size = Math.max((cube.options.size + 1) % 11, 2);">cube.options.size = x</a> resizes the cube.
+                This cube is exposed globally as <a class="bg-gray-800 px-2 py-1 rounded whitespace-pre hover:bg-gray-700 hover:text-white" href="javascript:console.log(window.cube)">window.cube</a>.
+                Use your dev tools or the inputs above to manipulate it. For example, <a class="bg-gray-800 px-2 py-1 rounded whitespace-pre hover:bg-gray-700 hover:text-white" href="javascript:cube.options.size = Math.max((cube.options.size + 1) % 11, 2);">cube.options.size = x</a> resizes the cube.
               </p>
               <div class="font-bold">Options:</div>
               <div id="cube-options" class="mb-6 whitespace-pre"></div>
               <div class="font-bold">Scramble:</div>
               <div
-                class="overflow-y-auto"
+                class="overflow-y-auto select-all"
                 id="cube-scramble"
                 style="max-height: 200px"
                 x-text="scramble || 'None'"></div>
