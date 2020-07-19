@@ -70,6 +70,21 @@ All puzzles store stickers in the following shape `{ data, value }`. The `value`
 
 When using with TypeScript, a type argument may be provided to the puzzle constructor to define the shape of this data.
 
+## CLI
+
+The following utilities are available from the command line.
+
+```bash
+# generate a scramble
+$ twister scramble 3x3
+
+# generate a very short scramble
+$ twister scramble 3x3 --turns 3
+
+# test a solution
+$ twister test 3x3 '{ ... }' 'R U R- ...'
+```
+
 ## `Cube`
 
 <img src="https://user-images.githubusercontent.com/7980426/76586921-8a3c3280-649f-11ea-9d9c-31b7a3080e60.png">
