@@ -173,14 +173,16 @@ export function getFace(turn: CubeTurn): CubeFace {
 export function getOppositeFace(turn: CubeTurn): CubeFace {
   const { target } = turn;
 
-  switch (target) {
-  case 'u': return 'd';
-  case 'l': return 'r';
-  case 'f': return 'b';
-  case 'r': return 'l';
-  case 'b': return 'f';
-  case 'd': return 'u';
-  }
+  type Map = { [K in CubeFace]: CubeFace }
+
+  return ({
+    u: 'd',
+    l: 'r',
+    f: 'b',
+    r: 'l',
+    b: 'f',
+    d: 'u',
+  } as Map)[target as CubeFace];
 }
 
 /**
