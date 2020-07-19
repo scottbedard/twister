@@ -87,7 +87,7 @@
       cube.scramble = (...args) => {
         const scramble = cube.generateScramble(...args);
         cube.turn(scramble);
-        document.querySelector('[data-cube-scramble]').textContent = scramble;
+        document.querySelector('#cube-scramble').textContent = scramble;
         return scramble;
       }
 
@@ -100,7 +100,7 @@
       cube.reset = () => {
         reset();
         redraw();
-        document.querySelector('[data-cube-scramble]').textContent = 'None';
+        document.querySelector('#cube-scramble').textContent = 'None';
       }
 
       document.addEventListener('DOMContentLoaded', redraw);
@@ -128,21 +128,21 @@
       <div x-show="puzzle === 'cube'">
         <div x-data="{ alg: '', parsedTurn: null, scramble: '' }" class="flex flex-wrap">
           <div class="pb-6 w-full md:pb-0 md:pr-3 md:w-1/2">
-            <div class="flex flex-wrap -m-1 pt-1">
+            <div class="grid gap-2 sm:grid-cols-3">
               <form @submit.prevent="scramble = cube.turn(alg)">
                 <input
                   x-model="alg"
-                  class="appearance-none border border-gray-400 h-10 m-1 px-4 rounded w-full hover:border-gray-500 sm:w-auto"
-                  placeholder="turns" />
+                  class="appearance-none border border-gray-400 h-10 px-4 rounded w-full hover:border-gray-500"
+                  placeholder="enter turns" />
               </form>
               <button
                 @click="scramble = cube.scramble()"
-                class="appearance-none bg-gray-200 h-10 m-1 px-4 rounded w-full sm:w-auto hover:bg-gray-300">
+                class="appearance-none bg-gray-200 h-10 px-4 rounded w-full sm:w-auto hover:bg-gray-300">
                 scramble
               </button>
               <button
                 @click="scramble = cube.reset()"
-                class="appearance-none bg-gray-200 h-10 m-1 px-4 rounded w-full sm:w-auto hover:bg-gray-300">
+                class="appearance-none bg-gray-200 h-10 px-4 rounded w-full sm:w-auto hover:bg-gray-300">
                 reset
               </button>
             </div>
@@ -152,11 +152,11 @@
                 You can resize the puzzle by executing <a class="bg-gray-200 p-1 hover:bg-gray-300" href="javascript:cube.options.size = Math.max((cube.options.size + 1) % 11, 2);">cube.options.size = x</a>.
               </p>
               <div class="font-bold">Options:</div>
-              <div id="cube-options" class="mb-6"></div>
+              <div id="cube-options" class="mb-6 whitespace-pre"></div>
               <div class="font-bold">Scramble:</div>
               <div
-                data-cube-scramble
                 class="overflow-y-auto"
+                id="cube-scramble"
                 style="max-height: 200px"
                 x-text="scramble || 'None'"></div>
             </div>
