@@ -51,6 +51,9 @@ puzzle.isSolved();
 
 // set puzzle state
 puzzle.applyState(state);
+
+// output puzzle state
+puzzle.toState();
 ```
 
 Use the following properties to access puzzle data
