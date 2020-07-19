@@ -3,6 +3,7 @@ import Puzzle from '../puzzle';
 import { createPolygonFace, PolygonFace } from '../utils/polygon';
 import { isInteger } from '../utils/number';
 import { error } from '../utils/function';
+import { SimplifiedState, State, Sticker } from '../puzzle';
 
 /**
  * Dodecaminx axis and face.
@@ -11,6 +12,7 @@ export type DodecaminxAxis = 'u' | 'f' | 'l' | 'r' | 'bl' | 'br' | 'dl' | 'dr' |
 
 export type DodecaminxFace = 'U' | 'F' | 'L' | 'R' | 'BL' | 'BR' | 'DL' | 'DR' | 'DBL' | 'DBR' | 'B' | 'D';
 
+export type DodecaminxValue = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 /**
  * Dodecaminx options.
  */
@@ -139,5 +141,13 @@ export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxStat
       B: createPolygonFace(5, this.options.size, 10),
       D: createPolygonFace(5, this.options.size, 11),
     };
+  }
+
+  /**
+   * Export puzzle state
+   */
+  toState(): SimplifiedState<DodecaminxFace, DodecaminxValue> {
+    error('not implemented');
+    return;
   }
 }

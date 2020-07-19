@@ -5,6 +5,7 @@ import {
   getOppositeFace,
   parseTurn,
   rotate,
+  simplifyFace,
   stringifyTurn,
   turnCubeX,
   turnCubeY,
@@ -220,6 +221,20 @@ export default class Cube<Data> extends Puzzle<
       r: createFace(3, length),
       b: createFace(4, length),
       d: createFace(5, length),
+    };
+  }
+
+  /**
+   * Export puzzle state
+   */
+  toState(): SimplifiedState<CubeFace, CubeValue> {
+    return {
+      u: simplifyFace(this.state.u),
+      l: simplifyFace(this.state.l),
+      f: simplifyFace(this.state.f),
+      r: simplifyFace(this.state.r),
+      b: simplifyFace(this.state.b),
+      d: simplifyFace(this.state.d),
     };
   }
 }

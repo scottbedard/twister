@@ -260,6 +260,20 @@ export function rotate<T>(arr: T[], rotation: number): T[] {
   return flattenCols(reverse(chunkRows(arr)));
 }
 
+/**
+ * Simplify a cube face
+ */
+export function simplifyFace<T>(face: CubeSticker<T>[]) {
+  return face.map(sticker => sticker.value);
+}
+
+/**
+ * Slice a cube into each face's rows and columns.
+ *
+ * @param {CubeState} cube
+ *
+ * @return {object}
+ */
 type SlicedFace<T> = {
     c: CubeSticker<T>[][],
     r: CubeSticker<T>[][],
@@ -273,14 +287,6 @@ type SlicedCube<T> = {
     b: SlicedFace<T>,
     d: SlicedFace<T>,
 }
-
-/**
- * Slice a cube into each face's rows and columns.
- *
- * @param {CubeState} cube
- *
- * @return {object}
- */
 export function sliceCube<T>(state: CubeState<T>): SlicedCube<T> {
   return {
     u: { r: chunkRows(state.u), c: chunkCols(state.u) },

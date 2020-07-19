@@ -123,6 +123,11 @@ export default abstract class Puzzle<
   }
 
   /**
+   * Export puzzle state.
+   */
+  abstract toState(): Record<string, unknown>;
+
+  /**
    * Apply a series of turns.
    *
    * @param {string}  algorithm
