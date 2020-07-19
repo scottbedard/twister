@@ -2,7 +2,7 @@
 import { PolygonFace } from '../src/utils/polygon';
 import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
 
-import { Dodecaminx } from '../src/index';
+import Dodecaminx from '../src/dodecaminx/dodecaminx';
 import { parseDodecaminxTurn } from '../src/dodecaminx/helpers';
 
 // helpers to map sticker falues
