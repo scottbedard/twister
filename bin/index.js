@@ -37,4 +37,28 @@ program.command('scramble <puzzle>')
     throw 'Invalid puzzle';
   });
 
+//
+// test
+//
+program.command('test <puzzle> <state> <solution>')
+  .description('test if an algorithm solves a puzzle')
+  .action((puzzle, state, solution) => {
+    const cubeSize = parseInt(puzzle, 10);
+
+    // cubes
+    if (Number.isFinite(cubeSize)) {
+      const cube = new Cube({ size: cubeSize });
+      cube.applyState(JSON.parse(state));
+      cube.turn(solution);
+
+      console.log(json({
+        solved: cube.isSolved(),
+      }));
+
+      return;
+    }
+
+    throw 'Invalid puzzle';
+  });
+
 program.parse(process.argv);
