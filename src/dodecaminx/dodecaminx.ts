@@ -1,6 +1,8 @@
 /* eslint-disable */
 import Puzzle from '../puzzle';
 import { createPolygonFace, PolygonFace } from '../utils/polygon';
+import { isInteger } from '../utils/number';
+import { error } from '../utils/function';
 
 /**
  * Dodecaminx axis and face.
@@ -55,19 +57,19 @@ export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxStat
    * @param {DodecaminxOptions} options
    */
   constructor(options: DodecaminxOptions) {
-    if (!Number.isInteger(options.size)) {
-      throw new Error('Dodecaminx size must be an integer');
+    if (!isInteger(options.size)) {
+      error('Dodecaminx size must be an integer');
     }
 
     if (options.size < 2) {
-      throw new Error('Dodecaminx size must be two or greater');
+      error('Dodecaminx size must be two or greater');
     }
 
     super(options);
   }
 
   applyState() {
-    throw 'not implemented';
+    error('not implemented');
   }
 
   /**

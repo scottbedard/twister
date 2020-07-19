@@ -14,6 +14,8 @@ import {
   splice,
 } from '../utils/array';
 
+import { error } from '../utils/function';
+
 /**
  * Chunk a face array into columns.
  *
@@ -214,7 +216,7 @@ export function parseTurn(turn: string): CubeTurn {
   const result = turn.match(/^(\d)*([ulfrbdxyzULFRBDXYZ]){1}(w)*(['-2])*$/);
 
   if (result === null) {
-    throw new Error(`Invalid turn: ${turn}`);
+    error(`Invalid turn: ${turn}`);
   }
 
   const modifier: string = result[4];

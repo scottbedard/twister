@@ -1,4 +1,5 @@
 import { DodecaminxAxis, DodecaminxFace, DodecaminxTurn } from './dodecaminx';
+import { error } from '../utils/function';
 
 /**
  * Parse a dodecaminx turn.
@@ -11,7 +12,7 @@ export function parseDodecaminxTurn(turn: string): DodecaminxTurn {
   const result = turn.match(/^(\d)*(u|f|l|r|bl|br|dl|dr|dbl|dbr|b|d|U|F|L|R|BL|BR|DL|DR|DBL|DBR|B|D){1}(w)?(2)?(['-])?$/);
 
   if (result === null) {
-    throw new Error(`Invalid turn: ${turn}`);
+    error(`Invalid turn: ${turn}`);
   }
 
   let depth: number = result[1] ? parseInt(result[1], 10) : 1;

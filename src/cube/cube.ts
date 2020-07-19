@@ -17,9 +17,10 @@ import {
   turnSliceU,
 } from './helpers';
 
-import { SimplifiedState, State, Sticker } from '../puzzle';
+import { error } from '../utils/function';
+import { isInteger, rand } from '../utils/number';
 import { randomItem } from '../utils/array';
-import { rand } from '../utils/number';
+import { SimplifiedState, State, Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
 
@@ -64,12 +65,12 @@ export default class Cube<Data> extends Puzzle<
    * @param {CubeOptions} options
    */
   constructor(options: CubeOptions) {
-    if (!Number.isInteger(options.size)) {
-      throw new Error('Cube size must be an integer');
+    if (!isInteger(options.size)) {
+      error('Cube size must be an integer');
     }
 
     if (options.size < 2) {
-      throw new Error('Cube size must be two or greater');
+      error('Cube size must be two or greater');
     }
 
     super(options);

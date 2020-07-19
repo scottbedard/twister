@@ -1,5 +1,6 @@
+import { error } from '../utils/function';
+import { isInteger, isOdd } from './number';
 import { rollArray } from './array';
-import { isOdd } from './number';
 
 /**
  * Regular polygon face.
@@ -34,12 +35,12 @@ export type PolygonSticker = {
  * @return {PolygonFace}
  */
 export function createPolygonFace(sides: number, layers: number, value: number = null): PolygonFace {
-  if (!Number.isInteger(sides) || sides < 5) {
-    throw new Error('Polygon sides must be an integer 5 or greater');
+  if (!isInteger(sides) || sides < 5) {
+    error('Polygon sides must be an integer 5 or greater');
   }
 
-  if (!Number.isInteger(layers) || layers < 2) {
-    throw new Error('Polygon layers must be an integer 5 or greater');
+  if (!isInteger(layers) || layers < 2) {
+    error('Polygon layers must be an integer 5 or greater');
   }
 
   // create outer stickers
@@ -105,8 +106,8 @@ export function extractPolygonLayer(face: PolygonFace, depth: number, rotation =
  * @return {PolygonFace}
  */
 export function rotatePolygonFace(face: PolygonFace, rotation: number): PolygonFace {
-  if (!Number.isInteger(rotation)) {
-    throw new Error('Polygon face rotation must be an integer');
+  if (!isInteger(rotation)) {
+    error('Polygon face rotation must be an integer');
   }
 
   const stickers: PolygonSticker[] = [];

@@ -1,4 +1,11 @@
 /**
+ * Number.isInteger wrapper
+ */
+export function isInteger(n: number): boolean {
+  return Number.isInteger(n);
+}
+
+/**
  * Test if a number is odd.
  *
  * @param {number} n
