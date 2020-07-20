@@ -23,28 +23,28 @@
       </svg>
     </a>
 
-    <div>
-      <Cube v-if="isCube" />
-      <div v-else>
-        Unknown puzzle &quot;{{ puzzle }}&quot;
-      </div>
+    <Cube v-if="puzzle === 'cube'" />
+
+    <Dodecaminx v-else-if="puzzle === 'dodecaminx'" />
+
+    <div v-else>
+      Unknown puzzle &quot;{{ puzzle }}&quot;
     </div>
   </div>
 </template>
 
 <script>
 import Cube from './cube/Cube.vue';
+import Dodecaminx from './dodecaminx/Dodecaminx.vue';
 
 export default {
   components: {
     Cube,
+    Dodecaminx,
   },
   computed: {
-    isCube() {
-      return this.puzzle === 'cube';
-    },
     puzzle() {
-      return this.$route.query.puzzle || 'cube';
+      return (this.$route.query.puzzle || 'cube').toLowerCase().trim();
     },
   },
 };

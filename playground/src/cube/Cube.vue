@@ -6,7 +6,7 @@
 
 <template>
   <div>
-    <h2 class="font-bold leading-none mb-6 text-2xl">Cube</h2>
+    <PuzzleHeader>Cube</PuzzleHeader>
 
     <div class="grid gap-6 items-start md:grid-cols-2">
       <div>
@@ -68,6 +68,7 @@ import { times } from 'lodash-es';
 import Button from '@/components/Button.vue';
 import ClickableCode from '@/components/ClickableCode.vue';
 import Input from '@/components/Input.vue';
+import PuzzleHeader from '@/components/PuzzleHeader.vue';
 import { Cube } from '../../../dist/index.esm';
 
 const mapColumns = (n) => times(n ** 2).map((x, i) => i % n);
@@ -89,6 +90,7 @@ export default {
     Button,
     ClickableCode,
     Input,
+    PuzzleHeader,
   },
   computed: {
     colors() {
