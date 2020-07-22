@@ -9,4 +9,8 @@ export {
   CubeTurn,
 } from './cube/cube';
 
+export {
+  default as Dodecaminx,
+} from './dodecaminx/dodecaminx';
+
 export const version = 'x.y.z';

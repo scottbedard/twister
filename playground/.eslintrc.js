@@ -7,6 +7,9 @@ module.exports = {
     'plugin:vue/essential',
     '@vue/airbnb',
   ],
+  ignorePatterns: [
+    '../dist/*.js',
+  ],
   parserOptions: {
     parser: 'babel-eslint',
   },

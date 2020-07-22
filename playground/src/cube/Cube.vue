@@ -20,6 +20,7 @@
           <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.scramble()">Scramble</Button>
           <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.reset()">Reset</Button>
         </div>
+
         <p class="leading-loose mb-6">
           This cube is exposed globally as <ClickableCode @click="log">window.cube</ClickableCode>.
           Use your dev tools or the inputs above to manipulate it. For example, try runnning <ClickableCode @click="resize">cube.options.size = n</ClickableCode>,
