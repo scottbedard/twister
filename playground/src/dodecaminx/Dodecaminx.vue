@@ -17,16 +17,23 @@
       </div>
       <svg
         v-if="face"
-        class="border-2 border-dashed border-gray-700"
+        class="border border-dotted border-gray-800"
         viewBox="0 0 2 2"
         xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(1, 1) rotate(0)">
-          <path
-            v-for="(sticker, index) in face"
-            :d="path(sticker)"
+          <line
+            v-bind="line(l1, l2)"
+            v-for="([l1, l2], index) in lines"
+            stroke-width="0.005"
+            stroke="#4A5568"
+            :key="`l-${index}`" />
+          <!-- <path
+            v-for="(path, index) in paths"
+            :d="d(path)"
             :key="index"
-            stroke-width="0.0025"
-            stroke="red" />
+            fill="transparent"
+            stroke-width="0.005"
+            stroke="red" /> -->
         </g>
       </svg>
     </div>
@@ -40,7 +47,9 @@ import PuzzleHeader from '@/components/PuzzleHeader.vue';
 import { bilerp, intersect, isEven } from '@/utils';
 import { Dodecaminx } from '../../../dist/index.esm';
 
-const toPathCoordinates = arr => arr.map(([x, y]) => [x, -y]);
+const toSvgOrientation = ([x, y]) => [x, -y];
+
+const toPathCoordinates = arr => arr.map(toSvgOrientation);
 
 // origin
 const origin = [0, 0];
@@ -85,7 +94,7 @@ function generateStickers(model) {
     return [
       // [p0, p1, p2, p3, p4],
       ...asterisk,
-      ...perimeter,
+      // ...perimeter,
     ];
   }
 
@@ -168,6 +177,15 @@ export default {
     PuzzleHeader,
   },
   computed: {
+    asteriskLines() {
+      return [
+        [origin, m_p0_p1],
+        [origin, m_p1_p2],
+        [origin, m_p2_p3],
+        [origin, m_p3_p4],
+        [origin, m_p4_p0],
+      ];
+    },
     isEven() {
       return this.size % 2 === 0;
     },
@@ -176,11 +194,72 @@ export default {
 
       return stickers.map(toPathCoordinates);
     },
+    lines() {
+      return [
+        // ...this.asteriskLines,
+        ...this.sliceLines,
+      ];
+    },
+    paths() {
+      return this.model.state.U.stickers.map(sticker => {
+        console.log('sticker', sticker);
+
+        return [
+          [0, 0],
+          [0, 1],
+          [1, 1],
+          [1, 0],
+        ];
+      });
+    },
     puzzleSize() {
       return this.model?.options?.size || 4;
     },
+    sliceLines() {
+      const halfSize = Math.floor(this.model.options.size / 2);
+
+      return times(halfSize + 1).reduce((acc, x, i) => {
+        const cw1 = bilerp(origin, m_p0_p1, i / halfSize);
+        const cw2 = bilerp(m_p4_p0, p0, i / halfSize);
+        const cw3 = bilerp(origin, m_p1_p2, i / halfSize);
+        const cw4 = bilerp(m_p0_p1, p1, i / halfSize);
+        const cw5 = bilerp(origin, m_p2_p3, i / halfSize);
+        const cw6 = bilerp(m_p1_p2, p2, i / halfSize);
+        const cw7 = bilerp(origin, m_p3_p4, i / halfSize);
+        const cw8 = bilerp(m_p2_p3, p3, i / halfSize);
+        const cw9 = bilerp(origin, m_p4_p0, i / halfSize);
+        const cw10 = bilerp(m_p3_p4, p4, i / halfSize);
+        const ccw1 = bilerp(origin, m_p4_p0, i / halfSize);
+        const ccw2 = bilerp(m_p0_p1, p0, i / halfSize);
+        const ccw3 = bilerp(origin, m_p0_p1, i / halfSize);
+        const ccw4 = bilerp(m_p1_p2, p1, i / halfSize);
+        const ccw5 = bilerp(origin, m_p1_p2, i / halfSize);
+        const ccw6 = bilerp(m_p2_p3, p2, i / halfSize);
+        const ccw7 = bilerp(origin, m_p2_p3, i / halfSize);
+        const ccw8 = bilerp(m_p3_p4, p3, i / halfSize);
+        const ccw9 = bilerp(origin, m_p3_p4, i / halfSize);
+        const ccw10 = bilerp(m_p4_p0, p4, i / halfSize);
+
+        return [
+          ...acc,
+          [cw1, cw2],
+          [cw3, cw4],
+          [cw5, cw6],
+          [cw7, cw8],
+          [cw9, cw10],
+          [ccw1, ccw2],
+          [ccw3, ccw4],
+          [ccw5, ccw6],
+          [ccw7, ccw8],
+          [ccw9, ccw10],
+        ];
+      }, []);
+    },
   },
   methods: {
+    d([start, ...points]) {
+      return `M ${start.join(',')} L ${points.map(p => p.join(',')).join(' ')} Z`;
+    },
     fresh() {
       this.model = new Dodecaminx({
         size: this.puzzleSize,
@@ -188,8 +267,10 @@ export default {
 
       window.dodecaminx = this.model;
     },
-    path([ start, ...points ]) {
-      return `M ${start.join(',')} L ${points.map(p => p.join(',')).join(' ')} Z`;
+    line(v1, v2) {
+      const [x1, y1] = toSvgOrientation(v1);
+      const [x2, y2] = toSvgOrientation(v2);
+      return { x1, x2, y1, y2 };
     },
   },
   watch: {
