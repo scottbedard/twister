@@ -1,10 +1,8 @@
-import { makeArray, rollArray } from '../../src/utils/array';
+import { times, rollArray } from '../../src/utils/array';
 
-describe('array utils', () => {
-  describe('makeArray', () => {
-    it('makes an array', () => {
-      expect(makeArray(3)).toEqual([undefined, undefined, undefined]);
-    });
+describe('utils', () => {
+  describe('times', () => {
+    expect(times(3)).toEqual([undefined, undefined, undefined]);
   });
 
   describe('roll', () => {

@@ -8,7 +8,7 @@ import {
 
 import {
   first,
-  makeArray,
+  times,
   reverse,
   slice,
   splice,
@@ -49,7 +49,7 @@ export function chunkCols<T>(face: T[]): T[][] {
 export function chunkRows<T>(face: T[]): T[][] {
   const size = Math.sqrt(face.length);
 
-  return makeArray(size).map((val, i) => {
+  return times(size).map((val, i) => {
     const start = i * size;
     return slice(face, start, start + size);
   });
@@ -64,9 +64,10 @@ export function chunkRows<T>(face: T[]): T[][] {
  * @return {CubeSticker[]} 
  */
 export function createFace<Data>(value: CubeValue, length: number): CubeSticker<Data>[] {
-  return makeArray(length).map((x, i): CubeSticker<Data> => {
+  return times(length).map((x, i): CubeSticker<Data> => {
     return {
       data: {},
+      meta: {},
       originalIndex: i,
       value,
     };

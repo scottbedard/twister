@@ -1,5 +1,16 @@
-import { DodecaminxAxis, DodecaminxFace, DodecaminxTurn } from './dodecaminx';
+import { DodecaminxFace, DodecaminxFaceValues, DodecaminxTurn, DodecaminxValue } from './dodecaminx';
 import { error } from '../utils/function';
+
+/**
+ * Create a face of values
+ */
+export function createFace<Data>(size: number, initialValue: DodecaminxValue = null): DodecaminxFaceValues<Data> {
+  return {
+    center: null,
+    grids: [],
+    middles: [],
+  };
+}
 
 /**
  * Parse a dodecaminx turn.
@@ -16,7 +27,7 @@ export function parseDodecaminxTurn(turn: string): DodecaminxTurn {
   }
 
   let depth: number = result[1] ? parseInt(result[1], 10) : 1;
-  const target = <DodecaminxAxis | DodecaminxFace> result[2];
+  const target = (<DodecaminxFace> result[2].toLowerCase());
   const wide = Boolean(result[3]);
   let rotation: number = result[4] ? parseInt(result[4], 10) : 1;
   const modifier: string = result[5];

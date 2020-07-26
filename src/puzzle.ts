@@ -18,10 +18,13 @@ export type SimplifiedState<Face extends string, Value> = {
 /**
  * Sticker
  */
-export type Sticker<Value, Data> = {
+export type Sticker<Value, Data, Meta = Record<string, unknown>> = {
   data: {
     [K in keyof Data]?: Data[K];
   };
+  meta: {
+    [K in keyof Meta]: Meta[K];
+  },
   originalIndex: number;
   value: Value;
 }

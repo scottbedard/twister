@@ -20,7 +20,7 @@ export function first<T>(arr: T[], begin?: number): T {
  *
  * @return {Array}
  */
-export function makeArray<T>(length: number, value: T = undefined): T[] {
+export function times<T>(length: number, value: T = undefined): T[] {
   return new Array(length).fill(value);
 }
 
@@ -31,7 +31,7 @@ export function makeArray<T>(length: number, value: T = undefined): T[] {
  *
  * @return {T}
  */
-export function randomItem<T>(arr: T[]): T {
+export function sample<T>(arr: T[]): T {
   return arr[rand(0, arr.length - 1)];
 }
 

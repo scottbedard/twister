@@ -20,7 +20,7 @@ import {
 
 import { error } from '../utils/function';
 import { isInteger, rand } from '../utils/number';
-import { randomItem } from '../utils/array';
+import { sample } from '../utils/array';
 import { SimplifiedState, State, Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
@@ -32,13 +32,17 @@ export type CubeAxis = 'x' | 'y' | 'z';
 
 export type CubeFace = 'u' | 'l' | 'f' | 'r' | 'b' | 'd';
 
+export type CubeMeta = {
+  // ...
+};
+
 export type CubeOptions = {
   size: number,
 };
 
 export type CubeState<Data> = State<CubeFace, CubeSticker<Data>>;
 
-export type CubeSticker<Data> = Sticker<CubeValue, Data>;
+export type CubeSticker<Data> = Sticker<CubeValue, Data, CubeMeta>;
 
 export type CubeTurn = {
   depth: number,
@@ -168,14 +172,14 @@ export default class Cube<Data> extends Puzzle<
       d: ['f', 'r', 'b', 'l'],
     }
 
-    for (let i = 0, prev = randomItem(faces); i < length; i++) {
-      prev = randomItem(intersections[prev]);
+    for (let i = 0, prev = sample(faces); i < length; i++) {
+      prev = sample(intersections[prev]);
       turns.push(prev);
     }
 
     return turns.map(turn => stringifyTurn({
       depth: this.options.size > 3 ? rand(0, maxDepth) : 1,
-      rotation: randomItem([-1, 1, 2]),
+      rotation: sample([-1, 1, 2]),
       target: turn,
       wide: this.options.size > 3 && !!rand(0, 1),
     })).join(' ');

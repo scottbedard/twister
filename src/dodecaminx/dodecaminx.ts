@@ -1,57 +1,44 @@
 /* eslint-disable */
 import Puzzle from '../puzzle';
-import { createPolygonFace, PolygonFace } from '../utils/polygon';
 import { isInteger } from '../utils/number';
 import { error } from '../utils/function';
 import { SimplifiedState, State, Sticker } from '../puzzle';
+import { createFace } from './helpers';
 
 /**
  * Dodecaminx axis and face.
  */
-export type DodecaminxAxis = 'u' | 'f' | 'l' | 'r' | 'bl' | 'br' | 'dl' | 'dr' | 'dbl' | 'dbr' | 'b' | 'd';
+type DefaultData = Record<string, unknown>;
 
-export type DodecaminxFace = 'U' | 'F' | 'L' | 'R' | 'BL' | 'BR' | 'DL' | 'DR' | 'DBL' | 'DBR' | 'B' | 'D';
+export type DodecaminxFace = 'u' | 'f' | 'l' | 'r' | 'bl' | 'br' | 'dl' | 'dr' | 'dbl' | 'dbr' | 'b' | 'd';
 
-export type DodecaminxValue = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
-/**
- * Dodecaminx options.
- */
+export type DodecaminxValue = null | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+
+export type DodecaminxSticker<Data> = Sticker<DodecaminxValue, Data>;
+
 export type DodecaminxOptions = {
   size: number,
 };
 
-/**
- * Dodecaminx state.
- */
-export type DodecaminxState = {
-  U: PolygonFace,
-  F: PolygonFace,
-  L: PolygonFace,
-  R: PolygonFace,
-  BL: PolygonFace,
-  BR: PolygonFace,
-  DL: PolygonFace,
-  DR: PolygonFace,
-  DBL: PolygonFace,
-  DBR: PolygonFace,
-  B: PolygonFace,
-  D: PolygonFace,
+export type DodecaminxFaceValues<Data = DefaultData> = {
+  center: DodecaminxSticker<Data> | null,
+  grids: DodecaminxSticker<Data>[][],
+  middles: DodecaminxSticker<Data>[][],
 };
 
-/**
- * Dodecaminx turn.
- */
+export type DodecaminxState<Data = DefaultData> = Record<DodecaminxFace, DodecaminxFaceValues<Data>>;
+
 export type DodecaminxTurn = {
   depth: number,
   rotation: number,
-  target: DodecaminxFace | DodecaminxAxis,
+  target: DodecaminxFace,
   wide: boolean,
 };
 
 /**
  * Dodecaminx.
  */
-export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, DodecaminxTurn> {
+export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<DodecaminxOptions, DodecaminxState<Data>, DodecaminxTurn> {
 
   /**
    * Constructor.
@@ -116,7 +103,7 @@ export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxStat
     return {
       depth: 1,
       rotation: 1,
-      target: 'F',
+      target: 'f',
       wide: false,
     };
   }
@@ -127,19 +114,21 @@ export default class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxStat
    * @return {void}
    */
   reset() {
+    const size = this.options.size;
+
     this.state = {
-      U: createPolygonFace(5, this.options.size, 0),
-      F: createPolygonFace(5, this.options.size, 1),
-      L: createPolygonFace(5, this.options.size, 2),
-      R: createPolygonFace(5, this.options.size, 3),
-      BL: createPolygonFace(5, this.options.size, 4),
-      BR: createPolygonFace(5, this.options.size, 5),
-      DL: createPolygonFace(5, this.options.size, 6),
-      DR: createPolygonFace(5, this.options.size, 7),
-      DBL: createPolygonFace(5, this.options.size, 8),
-      DBR: createPolygonFace(5, this.options.size, 9),
-      B: createPolygonFace(5, this.options.size, 10),
-      D: createPolygonFace(5, this.options.size, 11),
+      u: createFace<Data>(size, 0),
+      f: createFace<Data>(size, 0),
+      l: createFace<Data>(size, 0),
+      r: createFace<Data>(size, 0),
+      bl: createFace<Data>(size, 0),
+      br: createFace<Data>(size, 0),
+      dl: createFace<Data>(size, 0),
+      dr: createFace<Data>(size, 0),
+      dbl: createFace<Data>(size, 0),
+      dbr: createFace<Data>(size, 0),
+      b: createFace<Data>(size, 0),
+      d: createFace<Data>(size, 0),
     };
   }
 
