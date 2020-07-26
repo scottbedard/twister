@@ -1,6 +1,6 @@
 import { error } from '../utils/function';
 import { isInteger, isOdd } from './number';
-import { rollArray } from './array';
+import { roll } from './array';
 
 /**
  * Regular polygon face.
@@ -121,7 +121,7 @@ export function rotatePolygonFace(face: PolygonFace, rotation: number): PolygonF
       const distance = (arr.length / face.sides) * -rotation;
 
       if (distance) {
-        stickers.push(...rollArray(arr, distance));
+        stickers.push(...roll(arr, distance));
       }
     } else {
       stickers.push(...arr);

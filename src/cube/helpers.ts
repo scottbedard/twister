@@ -7,7 +7,10 @@ import {
 } from './cube';
 
 import {
+  chunkCols,
+  chunkRows,
   first,
+  flip,
   times,
   reverse,
   slice,
@@ -15,45 +18,6 @@ import {
 } from '../utils/array';
 
 import { error } from '../utils/function';
-
-/**
- * Chunk a face array into columns.
- *
- * [                [
- *     1, 2, 3,         [1, 4, 7],
- *     4, 5, 6,  ->     [2, 5, 8],
- *     7, 8, 9,         [3, 6, 9],
- * ]                ]
- *
- * @param {T[]} face
- *
- * @return {T[][]}
- */
-export function chunkCols<T>(face: T[]): T[][] {
-  return flip(chunkRows(face));
-}
-
-/**
- * Chunk a face array into rows.
- *
- * [                [
- *     1, 2, 3,         [1, 2, 3],
- *     4, 5, 6,  ->     [4, 5, 6], 
- *     7, 8, 9,         [7, 8, 9],
- * ]                ]
- *
- * @param {T[]} face
- *
- * @return {T[][]}
- */
-export function chunkRows<T>(face: T[]): T[][] {
-  const size = Math.sqrt(face.length);
-
-  return times(size).map((val, i) => {
-    const start = i * size;
-    return slice(face, start, start + size);
-  });
-}
 
 /**
  * Create an array of stickers.
@@ -125,25 +89,6 @@ export function flattenCols<T>(cols: T[][]): T[] {
  */
 export function flattenRows<T>(rows: T[][]): T[] {
   return rows.reduce((acc, row) => acc.concat(row), []);
-}
-
-/**
- * Convert row and column chunks. A good way to visualize
- * this operation is to imagine holding a card by the
- * top-left / bottom-right corners, and flipping it over.
- *
- * [                    [
- *     [1, 2, 3],           [1, 4, 7],
- *     [4, 5, 6],  ->       [2, 5, 8],    
- *     [7, 8, 9],           [3, 6, 9],
- * ]                    ]
- *
- * @param {T[][]} chunks
- *
- * @return {T[]}
- */
-export function flip<T>(chunks: T[][]): T[][] {
-  return chunks[0].map((x, i) => chunks.map(chunk => chunk[i]));
 }
 
 /**

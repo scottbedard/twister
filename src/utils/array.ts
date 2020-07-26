@@ -1,15 +1,56 @@
 import { rand } from './number';
 
 /**
- * Helper function to slice then shift an array.
+ * Chunk a face array into columns.
  *
- * @param {T[]} arr
- * @param {number?} begin
+ * [                [
+ *     1, 2, 3,         [1, 4, 7],
+ *     4, 5, 6,  ->     [2, 5, 8],
+ *     7, 8, 9,         [3, 6, 9],
+ * ]                ]
+ */
+export function chunkCols<T>(arr: T[]): T[][] {
+  return flip(chunkRows(arr));
+}
+
+/**
+ * Chunk a face array into rows.
  *
- * @return {T}
+ * [                [
+ *     1, 2, 3,         [1, 2, 3],
+ *     4, 5, 6,  ->     [4, 5, 6], 
+ *     7, 8, 9,         [7, 8, 9],
+ * ]                ]
+ */
+export function chunkRows<T>(arr: T[]): T[][] {
+  const size = Math.sqrt(arr.length);
+
+  return times(size).map((val, i) => {
+    const start = i * size;
+    return slice(arr, start, start + size);
+  });
+}
+
+/**
+ * Slice then shift an array.
  */
 export function first<T>(arr: T[], begin?: number): T {
   return slice(arr, begin).shift();
+}
+
+/**
+ * Convert row and column chunks. A good way to visualize
+ * this operation is to imagine holding a card by the
+ * top-left / bottom-right corners, and flipping it over.
+ *
+ * [                    [
+ *     [1, 2, 3],           [1, 4, 7],
+ *     [4, 5, 6],  ->       [2, 5, 8],    
+ *     [7, 8, 9],           [3, 6, 9],
+ * ]                    ]
+ */
+export function flip<T>(arr: T[][]): T[][] {
+  return arr[0].map((x, i) => arr.map(chunk => chunk[i]));
 }
 
 /**
@@ -54,7 +95,7 @@ export function reverse<T>(arr: T[]): T[] {
  *
  * @return {T[]} 
  */
-export function rollArray<T>(arr: T[], elements: number): T[] {
+export function roll<T>(arr: T[], elements: number): T[] {
   const offset = (((elements % arr.length) + arr.length) % arr.length);
 
   return arr.slice(offset).concat(arr.slice(0, offset));

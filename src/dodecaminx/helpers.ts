@@ -1,37 +1,64 @@
 import { DodecaminxFace, DodecaminxFaceObject, DodecaminxTurn, DodecaminxValue } from './dodecaminx';
 import { isOdd } from '../utils/number';
 import { error } from '../utils/function';
-import { times } from '../utils/array';
+import { roll, times } from '../utils/array';
 
 /**
  * Create a face of values
  */
 export function createFace<Data>(size: number, initialValue: DodecaminxValue = null): DodecaminxFaceObject<Data> {
   const gridSize = Math.floor(size / 2);
+  const odd = isOdd(size);
 
-  let center = null;
-
-  if (isOdd(size)) {
-    center = {
-      data: {} as Data,
-      value: initialValue,
-    };
-  }
-
+  // grids
   const grids = times(5).map(() => {
-    return times(gridSize ** 2).map((x, i) => {
+    return times(gridSize ** 2).map(() => {
       return {
         data: {} as Data,
         value: initialValue,
       };
     });
   });
+
+  // center
+  const center = odd 
+    ? {
+      data: {} as Data,
+      value: isOdd(size) ? initialValue : null,
+    }
+    : null;
+
+  // middles
+  const middles = odd
+    ? times(5).map(() => {
+      return times(gridSize).map(() => {
+        return {
+          data: {} as Data,
+          value: initialValue,
+        };
+      });
+    })
+    : [];
   
   return {
     center,
     grids,
+    middles,
   };
 }
+
+/**
+ * Extract a layer of values from a face
+ */
+/* eslint-disable */
+export function extractLayer(
+  face: DodecaminxFaceObject,
+  depth: number,
+  angle: number = 0
+): any {
+  return [];
+}
+/* eslint-enable */
 
 /**
  * Parse a dodecaminx turn.
@@ -62,4 +89,15 @@ export function parseDodecaminxTurn(turn: string): DodecaminxTurn {
   }
 
   return { depth, rotation, target, wide };
+}
+
+/**
+ * Rotate a face.
+ */
+export function rotate(face: DodecaminxFaceObject, turns: number): DodecaminxFaceObject {
+  return {
+    center: face.center,
+    grids: roll(face.grids, turns),
+    middles: roll(face.middles, turns),
+  };
 }

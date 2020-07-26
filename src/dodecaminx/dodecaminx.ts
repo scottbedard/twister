@@ -26,6 +26,7 @@ export type DodecaminxOptions = {
 export type DodecaminxFaceObject<Data = DefaultData> = {
   center: DodecaminxSticker<Data> | null,
   grids: DodecaminxSticker<Data>[][],
+  middles: DodecaminxSticker<Data>[][],
 };
 
 export type DodecaminxState<Data = DefaultData> = Record<DodecaminxFace, DodecaminxFaceObject<Data>>;
@@ -101,11 +102,11 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @return {DodecaminxTurn} 
    */
-  parseTurn(turn: string): DodecaminxTurn {
+  parseTurn(target: DodecaminxFace): DodecaminxTurn {
     return {
       depth: 1,
       rotation: 1,
-      target: 'f',
+      target,
       wide: false,
     };
   }
@@ -120,17 +121,17 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
 
     this.state = {
       u: createFace<Data>(size, 0),
-      f: createFace<Data>(size, 0),
-      l: createFace<Data>(size, 0),
-      r: createFace<Data>(size, 0),
-      bl: createFace<Data>(size, 0),
-      br: createFace<Data>(size, 0),
-      dl: createFace<Data>(size, 0),
-      dr: createFace<Data>(size, 0),
-      dbl: createFace<Data>(size, 0),
-      dbr: createFace<Data>(size, 0),
-      b: createFace<Data>(size, 0),
-      d: createFace<Data>(size, 0),
+      f: createFace<Data>(size, 1),
+      l: createFace<Data>(size, 2),
+      r: createFace<Data>(size, 3),
+      bl: createFace<Data>(size, 4),
+      br: createFace<Data>(size, 5),
+      dl: createFace<Data>(size, 6),
+      dr: createFace<Data>(size, 7),
+      dbl: createFace<Data>(size, 8),
+      dbr: createFace<Data>(size, 9),
+      b: createFace<Data>(size, 10),
+      d: createFace<Data>(size, 11),
     };
   }
 

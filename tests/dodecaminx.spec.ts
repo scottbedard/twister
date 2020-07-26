@@ -2,7 +2,11 @@
 import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
 
 import Dodecaminx from '../src/dodecaminx/dodecaminx';
-import { parseDodecaminxTurn } from '../src/dodecaminx/helpers';
+
+import {
+  parseDodecaminxTurn,
+  rotate,
+} from '../src/dodecaminx/helpers';
 
 describe('dodecaminx', () => {
   it('throws an error if the size is not an integer', () => {
@@ -13,12 +17,20 @@ describe('dodecaminx', () => {
     expect(() => new Dodecaminx({ size: 1 })).toThrow();
   });
 
-  it('creates a center sticker for odd sizes', () => {
+  it('creates center for odd sizes', () => {
     const even = new Dodecaminx({ size: 2 });
     const odd = new Dodecaminx({ size: 3 });
 
     expect(even.state.f.center).toBe(null);
     expect(odd.state.f.center).not.toBe(null);
+  });
+
+  it('creates middles for odd sizes', () => {
+    const even = new Dodecaminx({ size: 2 });
+    const odd = new Dodecaminx({ size: 3 });
+
+    expect(even.state.f.middles.length).toBe(0);
+    expect(odd.state.f.middles.length > 0).toBe(true);
   });
 
   describe('parseDodecaminxTurn', () => {
