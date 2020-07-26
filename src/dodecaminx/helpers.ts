@@ -1,14 +1,35 @@
-import { DodecaminxFace, DodecaminxFaceValues, DodecaminxTurn, DodecaminxValue } from './dodecaminx';
+import { DodecaminxFace, DodecaminxFaceObject, DodecaminxTurn, DodecaminxValue } from './dodecaminx';
+import { isOdd } from '../utils/number';
 import { error } from '../utils/function';
+import { times } from '../utils/array';
 
 /**
  * Create a face of values
  */
-export function createFace<Data>(size: number, initialValue: DodecaminxValue = null): DodecaminxFaceValues<Data> {
+export function createFace<Data>(size: number, initialValue: DodecaminxValue = null): DodecaminxFaceObject<Data> {
+  const gridSize = Math.floor(size / 2);
+
+  let center = null;
+
+  if (isOdd(size)) {
+    center = {
+      data: {} as Data,
+      value: initialValue,
+    };
+  }
+
+  const grids = times(5).map(() => {
+    return times(gridSize ** 2).map((x, i) => {
+      return {
+        data: {} as Data,
+        value: initialValue,
+      };
+    });
+  });
+  
   return {
-    center: null,
-    grids: [],
-    middles: [],
+    center,
+    grids,
   };
 }
 

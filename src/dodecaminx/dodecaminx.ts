@@ -14,19 +14,21 @@ export type DodecaminxFace = 'u' | 'f' | 'l' | 'r' | 'bl' | 'br' | 'dl' | 'dr' |
 
 export type DodecaminxValue = null | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 
-export type DodecaminxSticker<Data> = Sticker<DodecaminxValue, Data>;
+export type DodecaminxSticker<Data> = {
+  data: Data,
+  value: DodecaminxValue,
+};
 
 export type DodecaminxOptions = {
   size: number,
 };
 
-export type DodecaminxFaceValues<Data = DefaultData> = {
+export type DodecaminxFaceObject<Data = DefaultData> = {
   center: DodecaminxSticker<Data> | null,
   grids: DodecaminxSticker<Data>[][],
-  middles: DodecaminxSticker<Data>[][],
 };
 
-export type DodecaminxState<Data = DefaultData> = Record<DodecaminxFace, DodecaminxFaceValues<Data>>;
+export type DodecaminxState<Data = DefaultData> = Record<DodecaminxFace, DodecaminxFaceObject<Data>>;
 
 export type DodecaminxTurn = {
   depth: number,
