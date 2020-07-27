@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
+import { DodecaminxFace, DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
 
 import Dodecaminx from '../src/dodecaminx/dodecaminx';
 
@@ -33,21 +33,35 @@ describe('dodecaminx', () => {
     expect(odd.state.f.middles.length > 0).toBe(true);
   });
 
-  describe('parseDodecaminxTurn', () => {
+  //
+  // parsing
+  //
+  describe('turn parsing', () => {
     const turns: { [key: string]: DodecaminxTurn } = {
-      'F': { depth: 1, rotation: 1, target: 'f', wide: false },
-      'F2': { depth: 1, rotation: 2, target: 'f', wide: false },
-      'F-': { depth: 1, rotation: -1, target: 'f', wide: false },
-      'F2-': { depth: 1, rotation: -2, target: 'f', wide: false },
-      'Fw': { depth: 2, rotation: 1, target: 'f', wide: true },
-      'Fw-': { depth: 2, rotation: -1, target: 'f', wide: true },
-      '2F': { depth: 2, rotation: 1, target: 'f', wide: false },
+      'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
+      'F2': { depth: 1, rotation: 2, target: 'f', wide: false, whole: false },
+      'F-': { depth: 1, rotation: -1, target: 'f', wide: false, whole: false },
+      'F2-': { depth: 1, rotation: -2, target: 'f', wide: false, whole: false },
+      'Fw': { depth: 2, rotation: 1, target: 'f', wide: true, whole: false },
+      'Fw-': { depth: 2, rotation: -1, target: 'f', wide: true, whole: false },
+      '2F': { depth: 2, rotation: 1, target: 'f', wide: false, whole: false },
     };
 
     Object.keys(turns).forEach(turn => {
       it(turn, () => {
         expect(parseDodecaminxTurn(turn)).toEqual(turns[turn]);
       });
+    });
+  });
+
+  //
+  // turns
+  //
+  describe('turns', () => {
+    it('R', () => {
+      const minx = new Dodecaminx({ size: 4 });
+      
+      // ...
     });
   });
 });

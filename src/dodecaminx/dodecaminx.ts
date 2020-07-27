@@ -2,8 +2,8 @@
 import Puzzle from '../puzzle';
 import { isInteger } from '../utils/number';
 import { error } from '../utils/function';
-import { SimplifiedState, State, Sticker } from '../puzzle';
-import { createFace } from './helpers';
+import { SimplifiedState } from '../puzzle';
+import { createFace, rotate, parseDodecaminxTurn } from './helpers';
 
 /**
  * Dodecaminx axis and face.
@@ -12,7 +12,7 @@ type DefaultData = Record<string, unknown>;
 
 export type DodecaminxFace = 'u' | 'f' | 'l' | 'r' | 'bl' | 'br' | 'dl' | 'dr' | 'dbl' | 'dbr' | 'b' | 'd';
 
-export type DodecaminxValue = null | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+export type DodecaminxValue = null | number | string;
 
 export type DodecaminxSticker<Data> = {
   data: Data,
@@ -23,9 +23,9 @@ export type DodecaminxOptions = {
   size: number,
 };
 
-export type DodecaminxFaceObject<Data = DefaultData> = {
+export type DodecaminxFaceObject<Data> = {
   center: DodecaminxSticker<Data> | null,
-  grids: DodecaminxSticker<Data>[][],
+  corners: DodecaminxSticker<Data>[][],
   middles: DodecaminxSticker<Data>[][],
 };
 
@@ -36,6 +36,7 @@ export type DodecaminxTurn = {
   rotation: number,
   target: DodecaminxFace,
   wide: boolean,
+  whole: boolean,
 };
 
 /**
@@ -72,7 +73,19 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    * @return {void} 
    */
   applyTurn(turn: DodecaminxTurn) {
-    // ...
+    // turn near face
+    this.state[turn.target] = rotate(this.state[turn.target], turn.rotation);
+
+    
+    // turn whole puzzle
+    if (turn.whole) {
+      // ...
+    }
+    
+    // or turn layers
+    else {
+      // ...
+    }
   }
 
   /**
@@ -102,13 +115,8 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @return {DodecaminxTurn} 
    */
-  parseTurn(target: DodecaminxFace): DodecaminxTurn {
-    return {
-      depth: 1,
-      rotation: 1,
-      target,
-      wide: false,
-    };
+  parseTurn(turn: DodecaminxFace): DodecaminxTurn {
+    return parseDodecaminxTurn(turn);
   }
 
   /**

@@ -9,40 +9,15 @@ import { roll, times } from '../utils/array';
 export function createFace<Data>(size: number, initialValue: DodecaminxValue = null): DodecaminxFaceObject<Data> {
   const gridSize = Math.floor(size / 2);
   const odd = isOdd(size);
+  const val = () => ({ data: {} as Data, value: initialValue });
 
-  // grids
-  const grids = times(5).map(() => {
-    return times(gridSize ** 2).map(() => {
-      return {
-        data: {} as Data,
-        value: initialValue,
-      };
-    });
-  });
-
-  // center
-  const center = odd 
-    ? {
-      data: {} as Data,
-      value: isOdd(size) ? initialValue : null,
-    }
-    : null;
-
-  // middles
-  const middles = odd
-    ? times(5).map(() => {
-      return times(gridSize).map(() => {
-        return {
-          data: {} as Data,
-          value: initialValue,
-        };
-      });
-    })
-    : [];
+  const center = odd ? val() : null;
+  const corners = times(5).map(() => times(gridSize ** 2).map(val));
+  const middles = odd ? times(5).map(() => times(gridSize).map(val)) : [];
   
   return {
     center,
-    grids,
+    corners,
     middles,
   };
 }
@@ -51,8 +26,8 @@ export function createFace<Data>(size: number, initialValue: DodecaminxValue = n
  * Extract a layer of values from a face
  */
 /* eslint-disable */
-export function extractLayer(
-  face: DodecaminxFaceObject,
+export function extractLayer<T>(
+  face: DodecaminxFaceObject<T>,
   depth: number,
   angle: number = 0
 ): any {
@@ -75,7 +50,7 @@ export function parseDodecaminxTurn(turn: string): DodecaminxTurn {
   }
 
   let depth: number = result[1] ? parseInt(result[1], 10) : 1;
-  const target = (<DodecaminxFace> result[2].toLowerCase());
+  const target = result[2];
   const wide = Boolean(result[3]);
   let rotation: number = result[4] ? parseInt(result[4], 10) : 1;
   const modifier: string = result[5];
@@ -88,16 +63,22 @@ export function parseDodecaminxTurn(turn: string): DodecaminxTurn {
     rotation *= -1;
   }
 
-  return { depth, rotation, target, wide };
+  return {
+    depth,
+    rotation,
+    target: target.toLowerCase() as DodecaminxFace,
+    wide,
+    whole: false,
+  };
 }
 
 /**
  * Rotate a face.
  */
-export function rotate(face: DodecaminxFaceObject, turns: number): DodecaminxFaceObject {
+export function rotate<T>(face: DodecaminxFaceObject<T>, rotation: number): DodecaminxFaceObject<T> {
   return {
     center: face.center,
-    grids: roll(face.grids, turns),
-    middles: roll(face.middles, turns),
+    corners: roll(face.corners, -rotation),
+    middles: roll(face.middles, -rotation),
   };
 }
