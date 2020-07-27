@@ -21,6 +21,19 @@
         xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(1, 1) rotate(0)">
           <path
+            v-if="center"
+            fill="transparent"
+            stroke-width="0.005"
+            stroke="red"
+            :d="d(center)" />
+          <path
+            v-for="(path, index) in middles"
+            fill="transparent"
+            stroke-width="0.005"
+            stroke="red"
+            :d="d(path)"
+            :key="index" />
+          <path
             v-for="(path, index) in corners"
             fill="transparent"
             stroke-width="0.005"
@@ -35,7 +48,7 @@
 
 <script>
 /* eslint-disable */
-const defaultSize = 4;
+const defaultSize = 3;
 
 import { map, sortedIndex, times } from 'lodash-es';
 import PuzzleHeader from '@/components/PuzzleHeader.vue';
@@ -91,13 +104,17 @@ export default {
     PuzzleHeader,
   },
   computed: {
-    asteriskLines() {
+    center() {
+      if (this.isEven) {
+        return;
+      }
+
       return [
-        [origin, m_p0_p1],
-        [origin, m_p1_p2],
-        [origin, m_p2_p3],
-        [origin, m_p3_p4],
-        [origin, m_p4_p0],
+        intersect(s4, s0),
+        intersect(s1, s0),
+        intersect(s1, s2),
+        intersect(s2, s3),
+        intersect(s4, s3),
       ];
     },
     corners() {
@@ -130,6 +147,11 @@ export default {
 
       return corners;
     },
+    middles() {
+      return [
+        // ...
+      ];
+    },
     quintants() {
       const [q0, q1, q2, q3, q4] = this.quintantOrigins;
 
@@ -144,13 +166,7 @@ export default {
     quintantOrigins() {
       return this.isEven
         ? [origin, origin, origin, origin, origin]
-        : [
-          intersect(s4, s0),
-          intersect(s1, s0),
-          intersect(s1, s2),
-          intersect(s2, s3),
-          intersect(s4, s3),
-        ];
+        : this.center;
     },
     isEven() {
       return (this?.model?.options?.size || 0) % 2 === 0;
