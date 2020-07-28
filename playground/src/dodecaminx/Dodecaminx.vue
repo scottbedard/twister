@@ -16,28 +16,28 @@
           @click.prevent="model.options.size = n + 1" />
       </div>
       <svg
-        class="border border-dotted border-gray-800"
+        class="text-gray-700"
         viewBox="0 0 2 2"
         xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(1, 1) rotate(0)">
           <path
             v-if="center"
             fill="transparent"
-            stroke-width="0.005"
-            stroke="red"
+            stroke-width="0.01"
+            stroke="currentColor"
             :d="d(center)" />
           <path
             v-for="(path, index) in middles"
             fill="transparent"
-            stroke-width="0.005"
-            stroke="red"
+            stroke-width="0.01"
+            stroke="currentColor"
             :d="d(path)"
             :key="`middle-${index}`" />
           <path
             v-for="(path, index) in corners"
             fill="transparent"
-            stroke-width="0.005"
-            stroke="red"
+            stroke-width="0.01"
+            stroke="currentColor"
             :d="d(path)"
             :key="`corner-${index}`" />
         </g>
@@ -47,18 +47,16 @@
 </template>
 
 <script>
-/* eslint-disable */
-const defaultSize = 3;
-
-import { map, sortedIndex, times } from 'lodash-es';
-import PuzzleHeader from '@/components/PuzzleHeader.vue';
+/* eslint-disable camelcase */
 import { bilerp, intersect, isEven } from '@/utils';
+import { times } from 'lodash-es';
+import PuzzleHeader from '@/components/PuzzleHeader.vue';
 import { Dodecaminx } from '../../../dist/index.esm';
-import { chunkCols, chunkRows } from '~/utils/array';
 
-const toSvgOrientation = ([x, y]) => [x, -y];
+const toPathCoordinates = (arr) => arr.map(([x, y]) => [x, -y]);
 
-const toPathCoordinates = arr => arr.map(toSvgOrientation);
+// default puzzle size
+const defaultSize = 5;
 
 // origin
 const origin = [0, 0];
@@ -106,7 +104,7 @@ export default {
   computed: {
     center() {
       if (this.isEven) {
-        return;
+        return null;
       }
 
       return [
@@ -164,7 +162,7 @@ export default {
       ];
     },
     isEven() {
-      return (this?.model?.options?.size || 0) % 2 === 0;
+      return isEven(this.puzzleSize);
     },
     middleOutlines() {
       if (this.isEven) {
@@ -182,8 +180,6 @@ export default {
       ];
     },
     middles() {
-      const cornerLayers = Math.floor(this.puzzleSize / 2);
-      const layerSize = 1 / (cornerLayers);
       const paths = [];
 
       this.model.state.u.middles.forEach((middle, middleIndex) => {
@@ -194,7 +190,7 @@ export default {
           const l2 = bilerp(mo0, mo2, (stickerIndex + 1) / arr.length);
           const r1 = bilerp(mo1, mo2, stickerIndex / arr.length);
           const r2 = bilerp(mo1, mo2, (stickerIndex + 1) / arr.length);
-          
+
           paths.push([l1, l2, r2, r1]);
         });
       });
@@ -209,7 +205,7 @@ export default {
     d(arr) {
       const [start, ...points] = toPathCoordinates(arr);
 
-      return `M ${start.join(',')} L ${points.map(p => p.join(',')).join(' ')} Z`;
+      return `M ${start.join(',')} L ${points.map((p) => p.join(',')).join(' ')} Z`;
     },
     fresh() {
       console.log('fresh');
@@ -220,14 +216,9 @@ export default {
 
       window.dodecaminx = this.model;
     },
-    line(v1, v2) {
-      const [x1, y1] = toSvgOrientation(v1);
-      const [x2, y2] = toSvgOrientation(v2);
-      return { x1, x2, y1, y2 };
-    },
   },
   watch: {
     'model.options.size': 'fresh',
-  }
+  },
 };
 </script>
