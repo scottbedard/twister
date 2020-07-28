@@ -32,14 +32,14 @@
             stroke-width="0.005"
             stroke="red"
             :d="d(path)"
-            :key="index" />
+            :key="`middle-${index}`" />
           <path
             v-for="(path, index) in corners"
             fill="transparent"
             stroke-width="0.005"
             stroke="red"
             :d="d(path)"
-            :key="index" />
+            :key="`corner-${index}`" />
         </g>
       </svg>
     </div>
@@ -129,7 +129,7 @@ export default {
         corner.forEach((sticker, stickerIndex) => {
           const col = colMap[stickerIndex];
           const row = rowMap[stickerIndex];
-          const quintant = this.quintants[cornerIndex];
+          const quintant = this.cornerOutlines[cornerIndex];
 
           const l1 = bilerp(quintant[0], quintant[3], layerSize * col);
           const l2 = bilerp(quintant[1], quintant[2], layerSize * col);
@@ -147,29 +147,59 @@ export default {
 
       return corners;
     },
-    middles() {
-      return [
-        // ...
-      ];
-    },
-    quintants() {
-      const [q0, q1, q2, q3, q4] = this.quintantOrigins;
-
-      return [
-        [q0, m_p4_p0, p0, m_p0_p1],
-        [q1, m_p0_p1, p1, m_p1_p2],
-        [q2, m_p1_p2, p2, m_p2_p3],
-        [q3, m_p2_p3, p3, m_p3_p4],
-        [q4, m_p3_p4, p4, m_p4_p0],
-      ];
-    },
-    quintantOrigins() {
+    cornerOrigins() {
       return this.isEven
         ? [origin, origin, origin, origin, origin]
         : this.center;
     },
+    cornerOutlines() {
+      const [cp0, cp1, cp2, cp3, cp4] = this.cornerOrigins;
+
+      return [
+        [cp0, m_p4_p0, p0, m_p0_p1],
+        [cp1, m_p0_p1, p1, m_p1_p2],
+        [cp2, m_p1_p2, p2, m_p2_p3],
+        [cp3, m_p2_p3, p3, m_p3_p4],
+        [cp4, m_p3_p4, p4, m_p4_p0],
+      ];
+    },
     isEven() {
       return (this?.model?.options?.size || 0) % 2 === 0;
+    },
+    middleOutlines() {
+      if (this.isEven) {
+        return [];
+      }
+
+      const [cp0, cp1, cp2, cp3, cp4] = this.cornerOrigins;
+
+      return [
+        [cp0, cp1, m_p0_p1],
+        [cp1, cp2, m_p1_p2],
+        [cp2, cp3, m_p2_p3],
+        [cp3, cp4, m_p3_p4],
+        [cp4, cp0, m_p4_p0],
+      ];
+    },
+    middles() {
+      const cornerLayers = Math.floor(this.puzzleSize / 2);
+      const layerSize = 1 / (cornerLayers);
+      const paths = [];
+
+      this.model.state.u.middles.forEach((middle, middleIndex) => {
+        const [mo0, mo1, mo2] = this.middleOutlines[middleIndex];
+
+        middle.forEach((sticker, stickerIndex, arr) => {
+          const l1 = bilerp(mo0, mo2, stickerIndex / arr.length);
+          const l2 = bilerp(mo0, mo2, (stickerIndex + 1) / arr.length);
+          const r1 = bilerp(mo1, mo2, stickerIndex / arr.length);
+          const r2 = bilerp(mo1, mo2, (stickerIndex + 1) / arr.length);
+          
+          paths.push([l1, l2, r2, r1]);
+        });
+      });
+
+      return paths;
     },
     puzzleSize() {
       return this.model?.options?.size || defaultSize;
