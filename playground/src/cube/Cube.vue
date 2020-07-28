@@ -22,7 +22,7 @@
         </div>
 
         <p class="leading-loose mb-6">
-          The cube is exposed as <ClickableCode @click="log">window.cube</ClickableCode>.
+          This puzzle is exposed as <ClickableCode @click="log">window.cube</ClickableCode>.
           Use your dev tools or the inputs above to manipulate it. For example, try running <ClickableCode @click="resize">cube.options.size = n</ClickableCode>,
           or <ClickableCode @click="model.turn('R')">cube.turn('R')</ClickableCode>.
         </p>
