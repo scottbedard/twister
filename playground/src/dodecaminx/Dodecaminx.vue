@@ -16,20 +16,22 @@
           @click.prevent="model.options.size = n + 1" />
       </div>
       <svg
-        class="border-dashed border-4 border-gray-800 text-gray-700"
-        viewBox="0 0 4 4"
+        class="text-gray-700"
+        viewBox="0 0 9.8 4.9"
         xmlns="http://www.w3.org/2000/svg">
-        <g
-          v-for="face in faces"
-          :key="face.key"
-          :transform="face.transform">
-          <path
-            v-for="(path, index) in face.paths"
-            fill="transparent"
-            stroke-width="0.01"
-            stroke="currentColor"
-            :d="d(path)"
-            :key="`corner-${index}`" />
+        <g transform="translate(2.6, 2.2)">
+          <g
+            v-for="face in faces"
+            :key="face.key"
+            :transform="face.transform">
+            <path
+              v-for="(path, index) in face.paths"
+              fill="transparent"
+              stroke-width="0.02"
+              stroke="currentColor"
+              :d="d(path)"
+              :key="`corner-${index}`" />
+          </g>
         </g>
       </svg>
     </div>
@@ -38,8 +40,10 @@
 
 <script>
 /* eslint-disable camelcase */
-import { bilerp, intersect, isEven } from '@/utils';
-import { times } from 'lodash-es';
+import {
+  angleFrom, bilerp, intersect, isEven, measure,
+} from '@/utils';
+import { identity, times } from 'lodash-es';
 import PuzzleHeader from '@/components/PuzzleHeader.vue';
 import { Dodecaminx } from '../../../dist/index.esm';
 
@@ -77,15 +81,33 @@ const [s0, s1, s2, s3, s4] = [
   [m_p3_p4, m_p0_p1],
 ];
 
-const t = ([x, y]) => `translate(${x},${y})`;
+// dodecahedron net
+const innerRadius = measure(origin, m_p0_p1);
+const lOrigin = bilerp(origin, m_p3_p4, 2);
+const fOrigin = bilerp(origin, m_p2_p3, 2);
+const rOrigin = bilerp(origin, m_p1_p2, 2);
+const blOrigin = bilerp(origin, m_p4_p0, 2);
+const brOrigin = bilerp(origin, m_p0_p1, 2);
+const dbrOrigin = angleFrom(rOrigin, 18, innerRadius * 2);
+const dOrigin = angleFrom(dbrOrigin, -18, innerRadius * 2);
+const bOrigin = angleFrom(dOrigin, 90, innerRadius * 2);
+const dblOrigin = angleFrom(dOrigin, -54, innerRadius * 2);
+const drOrigin = angleFrom(dOrigin, 18, innerRadius * 2);
+const dlOrigin = angleFrom(dOrigin, -126, innerRadius * 2);
 
-const height = 0.80901699;
-const uOrigin = [2, 1];
-const fOrigin = bilerp([2, 1], [2, 0], -height * 2);
-
-const faceTransforms = {
-  u: `${t(uOrigin)}`,
-  f: `${t(fOrigin)} rotate(36)`,
+const net = {
+  u: [origin],
+  l: [lOrigin, 36],
+  f: [fOrigin, 36],
+  r: [rOrigin, 36],
+  bl: [blOrigin, 36],
+  br: [brOrigin, 36],
+  dbr: [dbrOrigin],
+  d: [dOrigin, 36],
+  b: [bOrigin],
+  dbl: [dblOrigin],
+  dr: [drOrigin],
+  dl: [dlOrigin],
 };
 
 const mapColumns = (n) => times(n ** 2).map((x, i) => i % n);
@@ -135,8 +157,10 @@ export default {
       ];
     },
     faces() {
-      return Object.entries(faceTransforms).map(([key, transform]) => {
+      return Object.entries(net).map(([key, transform]) => {
         const face = this.model.state[key];
+        const [coordinates, degrees = 0] = transform;
+        const [x, y] = toSvgOrientation(coordinates);
 
         return {
           key,
@@ -144,8 +168,8 @@ export default {
             this.center,
             ...this.corners(face),
             ...this.middles(face),
-          ].filter((x) => x),
-          transform,
+          ].filter(identity),
+          transform: `translate(${x},${y}) rotate(${degrees})`,
         };
       });
     },
