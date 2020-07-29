@@ -7,7 +7,32 @@ Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
 
-new Vue({
+const router = new VueRouter({
+  mode: 'history',
+  routes: [
+    {
+      path: '/',
+      redirect: '/cube',
+    },
+    {
+      component: () => import('@/routes/Cube.vue'),
+      name: 'cube',
+      path: '/cube',
+    },
+    {
+      component: () => import('@/routes/Dodecaminx.vue'),
+      name: 'dodecaminx',
+      path: '/dodecaminx',
+    },
+    {
+      path: '*',
+      component: () => import('@/routes/404.vue'),
+    },
+  ],
+});
+
+// @ts-ignore
+window.app = new Vue({
   render: (h) => h(App),
-  router: new VueRouter({ mode: 'history' }),
+  router,
 }).$mount('#app');

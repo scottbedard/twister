@@ -1,9 +1,15 @@
 <template>
   <div class="p-8">
-    <div class="font-bold leading-none mb-12 text-2xl sm:text-4xl">
+    <div class="font-bold gap-6 grid leading-none mb-12 text-2xl md:text-4xl md:grid-cols-2">
       <a class="hover:underline hover:text-white" href="https://github.com/scottbedard/twister">
         @bedard/twister
       </a>
+      <div class="flex items-center md:justify-end md:pr-12">
+        <Select v-model="route">
+          <option>cube</option>
+          <option>dodecaminx</option>
+        </Select>
+      </div>
     </div>
 
     <a
@@ -12,9 +18,9 @@
       href="https://github.com/scottbedard/twister">
       <svg
         aria-hidden="true"
-        class="absolute border-none text-gray-100 top-0 right-0"
+        class="absolute border-none text-gray-600 top-0 right-0"
         height="80"
-        style="fill: #4A5568"
+        style="fill: #2D3748"
         viewBox="0 0 250 250"
         width="80">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -23,28 +29,27 @@
       </svg>
     </a>
 
-    <Cube v-if="puzzle === 'cube'" />
-
-    <Dodecaminx v-else-if="puzzle === 'dodecaminx'" />
-
-    <div v-else>
-      Unknown puzzle &quot;{{ puzzle }}&quot;
-    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-import Cube from './cube/Cube.vue';
-import Dodecaminx from './dodecaminx/Dodecaminx.vue';
+import Select from '@/components/Select.vue';
 
 export default {
   components: {
-    Cube,
-    Dodecaminx,
+    Select,
   },
   computed: {
-    puzzle() {
-      return (this.$route.query.puzzle || 'cube').toLowerCase().trim();
+    route: {
+      get() {
+        return this.$route.name;
+      },
+      set(name) {
+        if (name !== this.$route.name) {
+          this.$router.push({ name });
+        }
+      },
     },
   },
 };

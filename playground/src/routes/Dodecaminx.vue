@@ -45,7 +45,7 @@ import {
 } from '@/utils';
 import { identity, times } from 'lodash-es';
 import PuzzleHeader from '@/components/PuzzleHeader.vue';
-import { Dodecaminx } from '../../../dist/index.esm';
+import { Dodecaminx } from '~/index.esm';
 
 const toSvgOrientation = ([x, y]) => [x, -y];
 const toPathCoordinates = (arr) => arr.map(toSvgOrientation);

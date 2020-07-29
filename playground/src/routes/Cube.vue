@@ -70,7 +70,7 @@ import Button from '@/components/Button.vue';
 import ClickableCode from '@/components/ClickableCode.vue';
 import Input from '@/components/Input.vue';
 import PuzzleHeader from '@/components/PuzzleHeader.vue';
-import { Cube } from '../../../dist/index.esm';
+import { Cube } from '~/index.esm';
 
 const mapColumns = (n) => times(n ** 2).map((x, i) => i % n);
 
