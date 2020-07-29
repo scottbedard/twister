@@ -1,40 +1,36 @@
 <template>
-  <div>
-    <PuzzleHeader>Dodecaminx</PuzzleHeader>
-
-    <div class="grid gap-6 items-start md:grid-cols-2">
-      <div class="gap-6 grid grid-cols-3 text-center sm:grid-cols-4">
-        <a
-          v-for="n in 24"
-          v-text="n + 1"
-          class="text-xl hover:underline"
-          href="#"
-          :class="{
-            'font-bold text-blue-700': n + 1 === model.options.size
-          }"
-          :key="n"
-          @click.prevent="model.options.size = n + 1" />
-      </div>
-      <svg
-        class="text-gray-700"
-        viewBox="0 0 9.8 4.9"
-        xmlns="http://www.w3.org/2000/svg">
-        <g transform="translate(2.6, 2.2)">
-          <g
-            v-for="face in faces"
-            :key="face.key"
-            :transform="face.transform">
-            <path
-              v-for="(path, index) in face.paths"
-              fill="transparent"
-              stroke-width="0.02"
-              stroke="currentColor"
-              :d="d(path)"
-              :key="`corner-${index}`" />
-          </g>
-        </g>
-      </svg>
+  <div class="grid gap-6 items-start md:grid-cols-2">
+    <div class="gap-6 grid grid-cols-3 text-center sm:grid-cols-4">
+      <a
+        v-for="n in 24"
+        v-text="n + 1"
+        class="text-xl hover:underline"
+        href="#"
+        :class="{
+          'font-bold text-blue-700': n + 1 === model.options.size
+        }"
+        :key="n"
+        @click.prevent="model.options.size = n + 1" />
     </div>
+    <svg
+      class="text-gray-700"
+      viewBox="0 0 9.8 4.9"
+      xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(2.6, 2.2)">
+        <g
+          v-for="face in faces"
+          :key="face.key"
+          :transform="face.transform">
+          <path
+            v-for="(path, index) in face.paths"
+            fill="transparent"
+            stroke-width="0.02"
+            stroke="currentColor"
+            :d="d(path)"
+            :key="`corner-${index}`" />
+        </g>
+      </g>
+    </svg>
   </div>
 </template>
 
@@ -44,7 +40,6 @@ import {
   angleFrom, bilerp, intersect, isEven, measure,
 } from '@/utils';
 import { identity, times } from 'lodash-es';
-import PuzzleHeader from '@/components/PuzzleHeader.vue';
 import { Dodecaminx } from '~/index.esm';
 
 const toSvgOrientation = ([x, y]) => [x, -y];
@@ -122,9 +117,6 @@ export default {
     return {
       model: null,
     };
-  },
-  components: {
-    PuzzleHeader,
   },
   computed: {
     center() {
@@ -232,8 +224,6 @@ export default {
       return `M ${start.join(',')} L ${points.map((p) => p.join(',')).join(' ')} Z`;
     },
     fresh() {
-      console.log('fresh');
-
       this.model = new Dodecaminx({
         size: this.puzzleSize,
       });

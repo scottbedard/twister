@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <select
-      class="appearance-none bg-transparent block cursor-pointer text-xl text-gray-700 tracking-wide outline-none pr-12 w-full sm:w-auto hover:text-gray-600"
+      class="appearance-none bg-transparent block cursor-pointer text-xl text-gray-700 tracking-wide outline-none pr-10 w-full sm:w-auto hover:text-gray-600"
       @change="$emit('input', $event.target.value)"
       :value="value">
       <slot />

@@ -1,66 +1,58 @@
-<style scoped>
-  rect {
-    stroke: theme('colors.gray.900');
-  }
-</style>
-
 <template>
-  <div>
-    <PuzzleHeader>Cube</PuzzleHeader>
-
-    <div class="grid gap-6 items-start md:grid-cols-2">
-      <div>
-        <div class="grid gap-6 grid-cols-6 mb-6">
-          <form class="col-span-6 xl:col-span-2" @submit.prevent="turn">
-            <Input
-              v-model="turns"
-              autofocus
-              placeholder="enter turns" />
-          </form>
-          <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.scramble()">Scramble</Button>
-          <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.reset()">Reset</Button>
-        </div>
-
-        <p class="leading-loose mb-6">
-          This puzzle is exposed as <ClickableCode @click="log">window.cube</ClickableCode>.
-          Use your dev tools or the inputs above to manipulate it. For example, try running <ClickableCode @click="resize">cube.options.size = n</ClickableCode>,
-          or <ClickableCode @click="model.turn('R')">cube.turn('R')</ClickableCode>.
-        </p>
-
-        <div class="font-bold mb-1">Options:</div>
-        <pre v-text="model.options" class="mb-6" />
-
-        <div class="font-bold mb-1">Solved:</div>
-        <div class="mb-6" v-text="model.isSolved()" />
-
-        <div class="font-bold mb-1">Turns:</div>
-        <div
-          v-text="scramble || 'None'"
-          class="overflow-y-auto select-all"
-          style="max-height: 240px" />
+  <div class="grid gap-6 items-start md:grid-cols-2">
+    <div>
+      <div class="grid gap-6 grid-cols-6 mb-6">
+        <form class="col-span-6 xl:col-span-2" @submit.prevent="turn">
+          <Input
+            v-model="turns"
+            autofocus
+            placeholder="enter turns" />
+        </form>
+        <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.scramble()">Scramble</Button>
+        <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.reset()">Reset</Button>
       </div>
 
-      <svg
-        viewBox="0 0 4 3"
-        xmlns="http://www.w3.org/2000/svg">
-        <g
-          v-for="face in Object.keys(model.state)"
-          :key="face"
-          :transform="`translate(${faceTransforms[face][0]}, ${faceTransforms[face][1]})`">
-          <rect
-            v-for="(sticker, index) in model.state[face]"
-            :fill="colors[sticker.value]"
-            :height="stickerSize"
-            :key="index"
-            :rx="stickerSize / 4"
-            :stroke-width="stickerSize / 10"
-            :width="stickerSize"
-            :x="stickerSize * colMap[index]"
-            :y="stickerSize * rowMap[index]"
-          />
-        </g>
-      </svg>
+      <p class="leading-loose mb-6">
+        This puzzle is exposed as <ClickableCode @click="log">window.cube</ClickableCode>.
+        Use your dev tools or the inputs above to manipulate it. For example, try running <ClickableCode @click="resize">cube.options.size = n</ClickableCode>,
+        or <ClickableCode @click="model.turn('R')">cube.turn('R')</ClickableCode>.
+      </p>
+
+      <div class="font-bold mb-1">Options:</div>
+      <pre v-text="model.options" class="mb-6" />
+
+      <div class="font-bold mb-1">Solved:</div>
+      <div class="mb-6" v-text="model.isSolved()" />
+
+      <div class="font-bold mb-1">Turns:</div>
+      <div
+        v-text="scramble || 'None'"
+        class="overflow-y-auto select-all"
+        style="max-height: 240px" />
     </div>
+
+    <svg
+      viewBox="0 0 4 3"
+      xmlns="http://www.w3.org/2000/svg">
+      <g
+        v-for="face in Object.keys(model.state)"
+        :key="face"
+        :transform="`translate(${faceTransforms[face][0]}, ${faceTransforms[face][1]})`">
+        <rect
+          v-for="(sticker, index) in model.state[face]"
+          class="text-gray-900"
+          stroke="currentColor"
+          :fill="colors[sticker.value]"
+          :height="stickerSize"
+          :key="index"
+          :rx="stickerSize / 4"
+          :stroke-width="stickerSize / 10"
+          :width="stickerSize"
+          :x="stickerSize * colMap[index]"
+          :y="stickerSize * rowMap[index]"
+        />
+      </g>
+    </svg>
   </div>
 </template>
 
@@ -69,7 +61,6 @@ import { times } from 'lodash-es';
 import Button from '@/components/Button.vue';
 import ClickableCode from '@/components/ClickableCode.vue';
 import Input from '@/components/Input.vue';
-import PuzzleHeader from '@/components/PuzzleHeader.vue';
 import { Cube } from '~/index.esm';
 
 const mapColumns = (n) => times(n ** 2).map((x, i) => i % n);
@@ -91,7 +82,6 @@ export default {
     Button,
     ClickableCode,
     Input,
-    PuzzleHeader,
   },
   computed: {
     colors() {
