@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <select
-      class="appearance-none bg-transparent block cursor-pointer text-xl text-gray-700 tracking-wide outline-none pr-10 w-full sm:w-auto hover:text-gray-600"
+      class="appearance-none bg-transparent block cursor-pointer text-xl text-gray-400 tracking-wide outline-none pr-10 w-full sm:w-auto hover:text-gray-100"
       @change="$emit('input', $event.target.value)"
       :value="value">
       <slot />
@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 div:after {
-  border: 2px solid theme('colors.gray.700');
+  border: 2px solid theme('colors.gray.500');
   border-top: 0;
   border-left: 0;
   content: '';
@@ -33,6 +33,6 @@ div:after {
 }
 
 div:hover:after {
-  border-color: theme('colors.gray.600');
+  border-color: theme('colors.gray.300');
 }
 </style>

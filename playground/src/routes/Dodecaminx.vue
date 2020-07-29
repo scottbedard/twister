@@ -1,19 +1,12 @@
 <template>
-  <div class="grid gap-6 items-start md:grid-cols-2">
-    <div class="gap-6 grid grid-cols-3 text-center sm:grid-cols-4">
-      <a
-        v-for="n in 24"
-        v-text="n + 1"
-        class="text-xl hover:underline"
-        href="#"
-        :class="{
-          'font-bold text-blue-700': n + 1 === model.options.size
-        }"
-        :key="n"
-        @click.prevent="model.options.size = n + 1" />
+  <div class="grid gap-6 items-start md:grid-cols-12">
+    <div class="md:col-span-4">
+      <p class="leading-loose">
+        <ClickableCode @click="log">window.dodecaminx</ClickableCode>
+      </p>
     </div>
     <svg
-      class="text-gray-700"
+      class="text-gray-900 w-full md:col-span-8"
       viewBox="0 0 9.8 4.9"
       xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(2.6, 2.2)">
@@ -23,8 +16,8 @@
           :transform="face.transform">
           <path
             v-for="(path, index) in face.paths"
-            fill="transparent"
-            stroke-width="0.02"
+            fill="#4A5568"
+            stroke-width="0.05"
             stroke="currentColor"
             :d="d(path)"
             :key="`corner-${index}`" />
@@ -40,6 +33,7 @@ import {
   angleFrom, bilerp, intersect, isEven, measure,
 } from '@/utils';
 import { identity, times } from 'lodash-es';
+import ClickableCode from '@/components/ClickableCode.vue';
 import { Dodecaminx } from '~/index.esm';
 
 const toSvgOrientation = ([x, y]) => [x, -y];
@@ -117,6 +111,9 @@ export default {
     return {
       model: null,
     };
+  },
+  components: {
+    ClickableCode,
   },
   computed: {
     center() {
@@ -228,7 +225,28 @@ export default {
         size: this.puzzleSize,
       });
 
+      const reset = this.model.reset.bind(this.model);
+      const turn = this.model.turn.bind(this.model);
+
+      this.model.reset = () => {
+        this.scramble = null;
+        reset();
+      };
+
+      this.model.scramble = (turns) => {
+        this.scramble = this.model.generateScramble(turns);
+        this.model.turn(this.scramble);
+      };
+
+      this.model.turn = (alg) => {
+        this.scramble = `${this.scramble || ''} ${alg}`.trim();
+        turn(alg);
+      };
+
       window.dodecaminx = this.model;
+    },
+    log() {
+      console.log(window.dodecaminx);
     },
     middles(face) {
       const paths = [];
