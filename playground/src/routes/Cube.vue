@@ -82,6 +82,9 @@ export default {
       turns: '',
     };
   },
+  destroyed() {
+    delete window.cube;
+  },
   components: {
     Button,
     ClickableCode,

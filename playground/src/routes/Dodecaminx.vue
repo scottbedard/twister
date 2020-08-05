@@ -135,6 +135,9 @@ export default {
       model: null,
     };
   },
+  destroyed() {
+    delete window.dodecaminx;
+  },
   components: {
     ClickableCode,
   },
