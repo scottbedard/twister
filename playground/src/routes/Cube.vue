@@ -13,8 +13,8 @@
       </div>
 
       <p class="leading-loose mb-6">
-        This puzzle is exposed as <ClickableCode @click="log">window.cube</ClickableCode>.
-        Use your dev tools or the inputs above to manipulate it. For example, try running <ClickableCode @click="resize">cube.options.size = n</ClickableCode>,
+        This puzzle is exposed globally as <ClickableCode @click="log">window.cube</ClickableCode>.
+        Use your dev tools or the inputs above to manipulate it. For example, try running <ClickableCode @click="resize">cube.options.size = {{ nextSize }}</ClickableCode>,
         or <ClickableCode @click="model.turn('R')">cube.turn('R')</ClickableCode>.
       </p>
 
@@ -45,7 +45,7 @@
           :fill="colors[sticker.value]"
           :height="stickerSize"
           :key="index"
-          :rx="stickerSize / 4"
+          :rx="stickerSize / 10"
           :stroke-width="stickerSize / 10"
           :width="stickerSize"
           :x="stickerSize * colMap[index]"
@@ -66,6 +66,10 @@ import { Cube } from '~/index.esm';
 const mapColumns = (n) => times(n ** 2).map((x, i) => i % n);
 
 const mapRows = (n) => times(n ** 2).map((x, i) => Math.floor(i / n));
+
+// sizes
+const defaultSize = 3;
+const maxSize = 10;
 
 export default {
   created() {
@@ -100,8 +104,18 @@ export default {
         d: [1, 2],
       };
     },
+    nextSize() {
+      return Math.max((this.model.options.size + 1) % (maxSize + 1), 2);
+    },
+    prevSize() {
+      if (this.model.options.size === 2) {
+        return maxSize;
+      }
+
+      return Math.min(maxSize, Math.max(2, this.model.options.size - 1));
+    },
     puzzleSize() {
-      return this.model?.options?.size || 3;
+      return this.model?.options?.size || defaultSize;
     },
     rowMap() {
       return mapRows(this.puzzleSize);
@@ -137,9 +151,10 @@ export default {
     log() {
       console.log(window.cube);
     },
-    resize() {
-      const max = 10;
-      this.model.options.size = Math.max((this.model.options.size + 1) % (max + 1), 2);
+    resize(e) {
+      this.model.options.size = e.ctrlKey || e.metaKey
+        ? this.prevSize
+        : this.nextSize;
     },
     turn() {
       this.model.turn(this.turns);
