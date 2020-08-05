@@ -1,29 +1,34 @@
 <template>
   <div class="grid gap-6 items-start md:grid-cols-12">
     <div class="md:col-span-4">
-      <p class="leading-loose">
-        <ClickableCode @click="log">window.dodecaminx</ClickableCode>
+      <p class="leading-loose mb-6">
+        This puzzle is exposed globally as <ClickableCode @click="log">window.dodecaminx</ClickableCode>.
+        It can be resized by running <ClickableCode @click="resize">dodecaminx.options.size = {{ nextSize }}</ClickableCode>.
       </p>
+      <div class="font-bold mb-1">Options:</div>
+      <pre v-text="model.options" />
     </div>
-    <svg
-      class="text-gray-900 w-full md:col-span-8"
-      viewBox="0 0 9.8 4.9"
-      xmlns="http://www.w3.org/2000/svg">
-      <g transform="translate(2.6, 2.2)">
-        <g
-          v-for="face in faces"
-          :key="face.key"
-          :transform="face.transform">
-          <path
-            v-for="(path, index) in face.paths"
-            stroke-width="0.05"
-            stroke="currentColor"
-            :d="d(path)"
-            :fill="colors[face.key]"
-            :key="`corner-${index}`" />
+    <div class="text-gray-900 relative w-full md:col-span-8">
+      <svg
+        class="absolute right-0"
+        viewBox="0 0 9.8 4.9"
+        xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(2.6, 2.2)">
+          <g
+            v-for="face in faces"
+            :key="face.key"
+            :transform="face.transform">
+            <path
+              v-for="(path, index) in face.paths"
+              stroke="currentColor"
+              stroke-width="0.05"
+              :d="d(path)"
+              :fill="colors[face.key]"
+              :key="`corner-${index}`" />
+          </g>
         </g>
-      </g>
-    </svg>
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -51,13 +56,14 @@ const colors = {
   dl: '#9AE6B4', // light green
   dr: '#E53E3E', // red
   dbr: '#F687B3', // pink
-  b: '#A0AEC0', // gray
+  b: '#718096', // gray
   dbl: '#90CDF4', // light blue
   d: '#FBD38D', // creme
 };
 
-// default puzzle size
-const defaultSize = 5;
+// sizes
+const defaultSize = 3;
+const maxSize = 10;
 
 // origin
 const origin = [0, 0];
@@ -200,6 +206,16 @@ export default {
         [cp4, cp0, m_p4_p0],
       ];
     },
+    nextSize() {
+      return Math.max((this.model.options.size + 1) % (maxSize + 1), 2);
+    },
+    prevSize() {
+      if (this.model.options.size === 2) {
+        return maxSize;
+      }
+
+      return Math.min(maxSize, Math.max(2, this.model.options.size - 1));
+    },
     puzzleSize() {
       return this.model?.options?.size || defaultSize;
     },
@@ -285,6 +301,11 @@ export default {
       });
 
       return paths;
+    },
+    resize(e) {
+      this.model.options.size = e.ctrlKey || e.metaKey
+        ? this.prevSize
+        : this.nextSize;
     },
   },
   watch: {
