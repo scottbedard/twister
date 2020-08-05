@@ -42,18 +42,18 @@ const toPathCoordinates = (arr) => arr.map(toSvgOrientation);
 
 // colors
 const colors = {
-  u: '#F3E400', // brimstone yellow
-  l: '#775CA2', // lavender
-  f: '#E6E9EE', // white
-  r: '#0074BE', // sky blue
-  br: '#68A920', // lime tree green
-  bl: '#FF6B00', // pastel orange
-  dl: '#007B3F', // grass green
-  dr: '#CB0B00', // light red
-  dbr: '#EC84B5', // soft pink
-  b: '#BFC2C0', // gray
-  dbl: '#36A0D4', // ice blue
-  d: '#ECD591', // creme
+  u: '#F6E05E', // yellow
+  l: '#B794F4', // purple
+  f: '#F7FAFC', // white
+  r: '#2B6CB0', // dark blue
+  br: '#2F855A', // dark green
+  bl: '#ED8936', // orange
+  dl: '#9AE6B4', // light green
+  dr: '#E53E3E', // red
+  dbr: '#F687B3', // pink
+  b: '#A0AEC0', // gray
+  dbl: '#90CDF4', // light blue
+  d: '#FBD38D', // creme
 };
 
 // default puzzle size
