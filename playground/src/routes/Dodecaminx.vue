@@ -16,10 +16,10 @@
           :transform="face.transform">
           <path
             v-for="(path, index) in face.paths"
-            fill="#4A5568"
             stroke-width="0.05"
             stroke="currentColor"
             :d="d(path)"
+            :fill="colors[face.key]"
             :key="`corner-${index}`" />
         </g>
       </g>
@@ -37,7 +37,24 @@ import ClickableCode from '@/components/ClickableCode.vue';
 import { Dodecaminx } from '~/index.esm';
 
 const toSvgOrientation = ([x, y]) => [x, -y];
+
 const toPathCoordinates = (arr) => arr.map(toSvgOrientation);
+
+// colors
+const colors = {
+  u: '#F3E400', // brimstone yellow
+  l: '#775CA2', // lavender
+  f: '#E6E9EE', // white
+  r: '#0074BE', // sky blue
+  br: '#68A920', // lime tree green
+  bl: '#FF6B00', // pastel orange
+  dl: '#007B3F', // grass green
+  dr: '#CB0B00', // light red
+  dbr: '#EC84B5', // soft pink
+  b: '#BFC2C0', // gray
+  dbl: '#36A0D4', // ice blue
+  d: '#ECD591', // creme
+};
 
 // default puzzle size
 const defaultSize = 5;
@@ -128,6 +145,9 @@ export default {
         intersect(s2, s3),
         intersect(s4, s3),
       ];
+    },
+    colors() {
+      return colors;
     },
     cornerOrigins() {
       return this.isEven
