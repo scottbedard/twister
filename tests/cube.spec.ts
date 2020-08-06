@@ -1,5 +1,5 @@
 import { Cube } from '../src/index';
-import { CubeFace, CubeSticker, CubeTurn, SimplifiedCubeState } from '../src/cube/cube';
+import { CubeFace, CubeSticker, CubeTurn, CubeStateSimple } from '../src/cube/cube';
 import { getOppositeFace, parseTurn, stringifyTurn } from '../src/cube/helpers';
 
 type Data = {
@@ -10,7 +10,7 @@ describe('cube', () => {
 
   const faceValues = (face: CubeSticker<Data>[]) => face.map(s => s.value);
 
-  const simplifiedState = (cube: Cube<Data>): SimplifiedCubeState => ({
+  const simplifiedState = (cube: Cube<Data>): CubeStateSimple => ({
     u: faceValues(cube.state.u),
     l: faceValues(cube.state.l),
     f: faceValues(cube.state.f),

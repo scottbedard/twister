@@ -26,11 +26,10 @@ import { error } from '../utils/function';
  * @return {CubeSticker[]} 
  */
 export function createFace<Data>(value: CubeValue, length: number): CubeSticker<Data>[] {
-  return times(length).map((x, i): CubeSticker<Data> => {
+  return times(length).map((): CubeSticker<Data> => {
     return {
       data: {},
       meta: {},
-      originalIndex: i,
       value,
     };
   })

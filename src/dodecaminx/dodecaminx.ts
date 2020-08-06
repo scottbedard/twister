@@ -2,8 +2,7 @@
 import Puzzle from '../puzzle';
 import { isInteger } from '../utils/number';
 import { error } from '../utils/function';
-import { SimplifiedState } from '../puzzle';
-import { createFace, rotate, parseDodecaminxTurn } from './helpers';
+import { createFace, parseDodecaminxTurn } from './helpers';
 
 /**
  * Dodecaminx axis and face.
@@ -73,19 +72,7 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    * @return {void} 
    */
   applyTurn(turn: DodecaminxTurn) {
-    // turn near face
-    this.state[turn.target] = rotate(this.state[turn.target], turn.rotation);
-
-    
-    // turn whole puzzle
-    if (turn.whole) {
-      // ...
-    }
-    
-    // or turn layers
-    else {
-      // ...
-    }
+    error('not implemented');
   }
 
   /**
@@ -146,8 +133,7 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
   /**
    * Export puzzle state
    */
-  toState(): SimplifiedState<DodecaminxFace, DodecaminxValue> {
+  toState(): never {
     error('not implemented');
-    return;
   }
 }

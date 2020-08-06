@@ -20,7 +20,7 @@ import { error } from '../utils/function';
 import { isInteger, rand } from '../utils/number';
 import { sample } from '../utils/array';
 import { rotate } from '../utils/matrix';
-import { SimplifiedState, State, Sticker } from '../puzzle';
+import { Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
 
@@ -39,7 +39,7 @@ export type CubeOptions = {
   size: number,
 };
 
-export type CubeState<Data> = State<CubeFace, CubeSticker<Data>>;
+export type CubeState<Data> = Record<CubeFace, CubeSticker<Data>[]>;
 
 export type CubeSticker<Data> = Sticker<CubeValue, Data, CubeMeta>;
 
@@ -52,16 +52,12 @@ export type CubeTurn = {
 
 export type CubeValue = null | 0 | 1 | 2 | 3 | 4 | 5;
 
-export type SimplifiedCubeState = SimplifiedState<CubeFace, CubeValue>;
+export type CubeStateSimple = Record<CubeFace, CubeValue[]>;
 
 /**
  * Cube.
  */
-export default class Cube<Data> extends Puzzle<
-  CubeOptions,
-  CubeState<Data>,
-  CubeTurn
-> {
+export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, CubeTurn> {
 
   /**
    * Constructor.
@@ -83,12 +79,12 @@ export default class Cube<Data> extends Puzzle<
   /**
    * Apply state.
    *
-   * @param {SimplifiedCubeState} state
+   * @param {CubeStateSimple} state
    *
    * @return {void}
    */
-  applyState(state: SimplifiedCubeState): void {
-    (Object.keys(state) as Array<keyof typeof state>).forEach(face => {
+  applyState(state: CubeStateSimple): void {
+    (Object.keys(state) as CubeFace[]).forEach(face => {
       this.state[face].forEach((sticker, index) => {
         sticker.value = state[face][index];
       });
@@ -159,7 +155,7 @@ export default class Cube<Data> extends Puzzle<
     const maxDepth = Math.floor(this.options.size / 2);
     const turns: CubeFace[] = [];
 
-    const intersections: { [key in CubeFace]: CubeFace[] } = {
+    const intersections: Record<CubeFace, CubeFace[]> = {
       u: ['l', 'f', 'r', 'b'],
       l: ['u', 'f', 'd', 'b'],
       f: ['l', 'u', 'r', 'd'],
@@ -187,12 +183,8 @@ export default class Cube<Data> extends Puzzle<
    * @return {boolean}
    */
   isSolved(): boolean {
-    return faceIsSolved(this.state.u)
-      && faceIsSolved(this.state.l)
-      && faceIsSolved(this.state.f)
-      && faceIsSolved(this.state.r)
-      && faceIsSolved(this.state.b)
-      && faceIsSolved(this.state.d);
+    return (Object.keys(this.state) as CubeFace[])
+      .reduce((acc, face) => acc && faceIsSolved(this.state[face]), true);
   }
 
   /**
@@ -227,7 +219,7 @@ export default class Cube<Data> extends Puzzle<
   /**
    * Export puzzle state
    */
-  toState(): SimplifiedState<CubeFace, CubeValue> {
+  toState(): CubeStateSimple {
     return {
       u: simplifyFace(this.state.u),
       l: simplifyFace(this.state.l),

@@ -1,11 +1,10 @@
 /* eslint-disable */
-import { DodecaminxFace, DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
+import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
 
 import Dodecaminx from '../src/dodecaminx/dodecaminx';
 
 import {
   parseDodecaminxTurn,
-  rotate,
 } from '../src/dodecaminx/helpers';
 
 describe('dodecaminx', () => {
@@ -37,7 +36,7 @@ describe('dodecaminx', () => {
   // parsing
   //
   describe('turn parsing', () => {
-    const turns: { [key: string]: DodecaminxTurn } = {
+    const turns: Record<string, DodecaminxTurn> = {
       'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
       'F2': { depth: 1, rotation: 2, target: 'f', wide: false, whole: false },
       'F-': { depth: 1, rotation: -1, target: 'f', wide: false, whole: false },

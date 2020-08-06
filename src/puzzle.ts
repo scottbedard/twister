@@ -2,20 +2,6 @@ import { identity } from './utils/function';
 import { trim } from './utils/string';
 
 /**
- * Puzzle state
- */
-export type State<Face extends string, Sticker> = {
-  [K in Face]: Sticker[];
-}
-
-/**
- * Simplified state
- */
-export type SimplifiedState<Face extends string, Value> = {
-  [K in Face]?: Value[];
-}
-
-/**
  * Sticker
  */
 export type Sticker<Value, Data, Meta = Record<string, unknown>> = {
@@ -25,39 +11,34 @@ export type Sticker<Value, Data, Meta = Record<string, unknown>> = {
   meta: {
     [K in keyof Meta]: Meta[K];
   },
-  originalIndex: number;
   value: Value;
 }
 
 /**
  * Puzzle.
  */
-export default abstract class Puzzle<
-  PuzzleOptions,
-  PuzzleState,
-  PuzzleTurn
-> {
+export default abstract class Puzzle<Options, State, Turn> {
 
   /**
    * Puzzle options.
    *
-   * @type {PuzzleOptions}
+   * @type {Options}
    */
-  options: PuzzleOptions;
+  options: Options;
 
   /**
    * Current puzzle state.
    *
-   * @type {PuzzleState}
+   * @type {State}
    */
-  state: PuzzleState;
+  state: State;
 
   /**
    * Constructor.
    *
-   * @param {PuzzleOptions}  object 
+   * @param {Options}  object 
    */
-  constructor(options: PuzzleOptions) {
+  constructor(options: Options) {
     this.options = options;
 
     this.reset();
@@ -66,20 +47,20 @@ export default abstract class Puzzle<
   /**
    * Apply state.
    *
-   * @param {T} state
+   * @param {unknown} state
    *
    * @return {void}
    */
-  abstract applyState<T>(state: T): void;
+  abstract applyState(state: unknown): void;
 
   /**
    * Apply a turn.
    *
-   * @param {PuzzleTurn}  turn
+   * @param {Turn}  turn
    *
    * @return {void} 
    */
-  abstract applyTurn(turn: PuzzleTurn): void;
+  abstract applyTurn(turn: Turn): void;
 
   /**
    * Generate a scramble.
@@ -109,9 +90,9 @@ export default abstract class Puzzle<
    *
    * @param {string}  turn
    *
-   * @return {PuzzleTurn} 
+   * @return {Turn} 
    */
-  abstract parseTurn(turn: string): PuzzleTurn;
+  abstract parseTurn(turn: string): Turn;
 
   /**
    * Scramble the puzzle.
