@@ -140,8 +140,7 @@ export default {
       };
 
       this.model.scramble = (turns) => {
-        this.scramble = this.model.generateScramble(turns);
-        this.model.turn(this.scramble);
+        this.model.turn(this.model.generateScramble(turns));
       };
 
       this.model.turn = (alg) => {
