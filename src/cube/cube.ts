@@ -4,7 +4,6 @@ import {
   getFace,
   getOppositeFace,
   parseTurn,
-  rotate,
   simplifyFace,
   stringifyTurn,
   turnCubeX,
@@ -21,6 +20,7 @@ import {
 import { error } from '../utils/function';
 import { isInteger, rand } from '../utils/number';
 import { sample } from '../utils/array';
+import { rotate } from '../utils/matrix';
 import { SimplifiedState, State, Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';

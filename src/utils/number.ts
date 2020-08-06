@@ -1,5 +1,9 @@
 /**
- * Number.isInteger wrapper
+ * Test if a number is an integer.
+ *
+ * @param {number} n
+ *
+ * @return {boolean}
  */
 export function isInteger(n: number): boolean {
   return Number.isInteger(n);

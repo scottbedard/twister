@@ -1,19 +1,28 @@
 /**
  * Throw an error.
+ *
+ * @param {string} messsage
+ *
+ * @return {never}
  */
-export function error(message: string): void {
+export function error(message: string): never {
   throw new Error(message);
 }
 
 /**
  * Identity.
+ *
+ * @param {T} val
+ *
+ * @return {T}
  */
-export function identity<T>(arg: T): T {
-  return arg;
+export function identity<T>(val: T): T {
+  return val;
 }
 
 /**
  * No operation.
+ *
+ * @return {void}
  */
-/* eslint-disable-next-line @typescript-eslint/no-empty-function */
 export function noop(): void {}
