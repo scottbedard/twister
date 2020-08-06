@@ -56,26 +56,6 @@ export function faceIsSolved<T>(stickers: CubeSticker<T>[]): boolean {
 }
 
 /**
- * Get the face being turned.
- *
- * @param {CubeTurn} turn
- *
- * @return {CubeFace} 
- */
-export function getFace(turn: CubeTurn): CubeFace {
-  const { target } = turn;
-
-  switch (target) {
-  case 'u': return 'u';
-  case 'l': return 'l';
-  case 'f': return 'f';
-  case 'r': return 'r';
-  case 'b': return 'b';
-  case 'd': return 'd';
-  }
-}
-
-/**
  * Get the opposite face.
  *
  * @param {CubeTurn} turn
@@ -147,7 +127,12 @@ export function parseTurn(turn: string): CubeTurn {
     rotation = 2;
   }
 
-  return { depth, rotation, target, wide };
+  return {
+    depth,
+    rotation: rotation as -1 | 1 | 2,
+    target,
+    wide,
+  };
 }
 
 /**
@@ -165,18 +150,12 @@ export function simplifyFace<T>(face: CubeSticker<T>[]): CubeValue[] {
  * @return {object}
  */
 type SlicedFace<T> = {
-    c: CubeSticker<T>[][],
-    r: CubeSticker<T>[][],
+  c: CubeSticker<T>[][],
+  r: CubeSticker<T>[][],
 };
 
-type SlicedCube<T> = {
-    u: SlicedFace<T>,
-    l: SlicedFace<T>,
-    f: SlicedFace<T>,
-    r: SlicedFace<T>,
-    b: SlicedFace<T>,
-    d: SlicedFace<T>,
-}
+type SlicedCube<T> = Record<CubeFace, SlicedFace<T>>;
+
 export function sliceCube<T>(state: CubeState<T>): SlicedCube<T> {
   return {
     u: { r: rows(state.u), c: cols(state.u) },
@@ -317,7 +296,10 @@ export function turnCubeZ<T>({ u, l, f, r, b, d }: CubeState<T>, { rotation }: C
   if (rotation === 2) {
     return {
       u: reverse(d),
-      l: reverse(r), f: rotate(f, 2), r: reverse(l), b: rotate(b, 2),
+      l: reverse(r),
+      f: rotate(f, 2),
+      r: reverse(l),
+      b: rotate(b, 2),
       d: reverse(u),
     }
   }

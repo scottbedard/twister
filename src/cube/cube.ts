@@ -1,7 +1,6 @@
 import {
   createFace,
   faceIsSolved,
-  getFace,
   getOppositeFace,
   parseTurn,
   simplifyFace,
@@ -46,7 +45,7 @@ export type CubeSticker<Data> = Sticker<CubeValue, Data, CubeMeta>;
 
 export type CubeTurn = {
   depth: number,
-  rotation: number,
+  rotation: -1 | 1 | 2,
   target: CubeFace | CubeAxis,
   wide: boolean, 
 };
@@ -117,21 +116,19 @@ export default class Cube<Data> extends Puzzle<
         
     // turns
     else {
-      const face = getFace(turn);
-
       // turn outer face if necessary
       if (turn.depth === 1 || turn.wide) {
-        this.state[face] = rotate(this.state[face], turn.rotation);
+        this.state[target] = rotate(this.state[target], turn.rotation);
       }
 
       // turn the inner face if necessary
       if (turn.depth >= this.options.size) {
-        let innerRotation = 2;
+        let innerRotation: -1 | 1 | 2 = 2;
 
         // if this isn't a double turn, reverse the direction because
         // it's being turned from the context of the opposite face
         if (turn.rotation === 1 || turn.rotation === -1) {
-          innerRotation = turn.rotation * -1;
+          innerRotation = turn.rotation * -1 as -1 | 1;
         }
     
         const oppositeFace = getOppositeFace(turn);
@@ -139,8 +136,7 @@ export default class Cube<Data> extends Puzzle<
         this.state[oppositeFace] = rotate(this.state[oppositeFace], innerRotation);
       }
 
-
-      switch (face) {
+      switch (target) {
       case 'u': turnSliceU(this.state, turn); break;
       case 'l': turnSliceL(this.state, turn); break;
       case 'f': turnSliceF(this.state, turn); break;
