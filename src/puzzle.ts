@@ -4,20 +4,15 @@ import { trim } from './utils/string';
 /**
  * Sticker
  */
-export type Sticker<Value, Data, Meta = Record<string, unknown>> = {
-  data: {
-    [K in keyof Data]?: Data[K];
-  };
-  meta: {
-    [K in keyof Meta]: Meta[K];
-  },
+export type Sticker<Data, Value> = {
+  data: Data;
   value: Value;
 }
 
 /**
  * Puzzle.
  */
-export default abstract class Puzzle<Options, State, Turn> {
+export default abstract class Puzzle<Options, State, StateSummary, Turn> {
 
   /**
    * Puzzle options.
@@ -45,22 +40,22 @@ export default abstract class Puzzle<Options, State, Turn> {
   }
 
   /**
-   * Apply state.
+   * Apply puzzle state.
    *
-   * @param {unknown} state
+   * @param {StateSummary} state
    *
    * @return {void}
    */
-  abstract applyState(state: unknown): void;
+  abstract apply(state: StateSummary): void;
 
   /**
-   * Apply a turn.
+   * Execute a single turn.
    *
    * @param {Turn}  turn
    *
    * @return {void} 
    */
-  abstract applyTurn(turn: Turn): void;
+  abstract execute(turn: Turn): void;
 
   /**
    * Generate a scramble.
@@ -79,20 +74,27 @@ export default abstract class Puzzle<Options, State, Turn> {
   abstract isSolved(): boolean;
 
   /**
-   * Reset the puzzle state.
+   * Output puzzle state.
    *
-   * @return {void}
+   * @return {StateSummary}
    */
-  abstract reset(): void;
+  abstract output(): StateSummary;
 
   /**
-   * Parse a turn.
+   * Parse a single turn.
    *
    * @param {string}  turn
    *
    * @return {Turn} 
    */
-  abstract parseTurn(turn: string): Turn;
+  abstract parse(turn: string): Turn;
+
+  /**
+   * Reset puzzle state.
+   *
+   * @return {void}
+   */
+  abstract reset(): void;
 
   /**
    * Scramble the puzzle.
@@ -107,12 +109,7 @@ export default abstract class Puzzle<Options, State, Turn> {
   }
 
   /**
-   * Export puzzle state.
-   */
-  abstract toState(): Record<string, unknown>;
-
-  /**
-   * Apply a series of turns.
+   * Execute multiple turns.
    *
    * @param {string}  algorithm
    *
@@ -123,7 +120,7 @@ export default abstract class Puzzle<Options, State, Turn> {
       .split(' ')
       .map(trim)
       .filter(identity)
-      .map(turn => this.parseTurn(turn))
-      .forEach(turn => this.applyTurn(turn));
+      .map(turn => this.parse(turn))
+      .forEach(turn => this.execute(turn));
   }
 }

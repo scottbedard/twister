@@ -24,25 +24,28 @@ import { Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
 
-/**
- * Cube types
- */
-export type CubeAxis = 'x' | 'y' | 'z';
-
-export type CubeFace = 'u' | 'l' | 'f' | 'r' | 'b' | 'd';
-
-export type CubeMeta = {
-  // ...
-};
-
+// options
 export type CubeOptions = {
   size: number,
 };
 
+// axes & faces
+export type CubeAxis = 'x' | 'y' | 'z';
+export type CubeFace = 'u' | 'l' | 'f' | 'r' | 'b' | 'd';
+
+// values
+export type CubeValue = null | number;
+
+// stickers
+export type CubeSticker<Data> = Sticker<Data, CubeValue>;
+
+// state
 export type CubeState<Data> = Record<CubeFace, CubeSticker<Data>[]>;
 
-export type CubeSticker<Data> = Sticker<CubeValue, Data, CubeMeta>;
+// state summary
+export type CubeStateSummary = Record<CubeFace, CubeValue[]>;
 
+// turns
 export type CubeTurn = {
   depth: number,
   rotation: -1 | 1 | 2,
@@ -50,14 +53,10 @@ export type CubeTurn = {
   wide: boolean, 
 };
 
-export type CubeValue = null | 0 | 1 | 2 | 3 | 4 | 5;
-
-export type CubeStateSimple = Record<CubeFace, CubeValue[]>;
-
 /**
  * Cube.
  */
-export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, CubeTurn> {
+export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, CubeStateSummary, CubeTurn> {
 
   /**
    * Constructor.
@@ -77,13 +76,13 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
   }
 
   /**
-   * Apply state.
+   * Apply puzzle state.
    *
-   * @param {CubeStateSimple} state
+   * @param {CubeStateSummary} state
    *
    * @return {void}
    */
-  applyState(state: CubeStateSimple): void {
+  apply(state: CubeStateSummary): void {
     (Object.keys(state) as CubeFace[]).forEach(face => {
       this.state[face].forEach((sticker, index) => {
         sticker.value = state[face][index];
@@ -92,13 +91,13 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
   }
 
   /**
-   * Apply a turn.
+   * Execute a single turn.
    *
    * @param {CubeTurn} turn
    *
    * @return {void} 
    */
-  applyTurn(turn: CubeTurn): void {
+  execute(turn: CubeTurn): void {
     const { target } = turn;
 
     // puzzle rotations
@@ -188,13 +187,29 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
   }
 
   /**
+   * Output puzzle state.
+   *
+   * @return {CubeStateSummary}
+   */
+  output(): CubeStateSummary {
+    return {
+      u: simplifyFace(this.state.u),
+      l: simplifyFace(this.state.l),
+      f: simplifyFace(this.state.f),
+      r: simplifyFace(this.state.r),
+      b: simplifyFace(this.state.b),
+      d: simplifyFace(this.state.d),
+    };
+  }
+
+  /**
    * Parse a turn.
    *
    * @param {string} turn
    *
    * @return {CubeTurn} 
    */
-  parseTurn(turn: string): CubeTurn {
+  parse(turn: string): CubeTurn {
     return parseTurn(turn);
   }
 
@@ -213,20 +228,6 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
       r: createFace(3, length),
       b: createFace(4, length),
       d: createFace(5, length),
-    };
-  }
-
-  /**
-   * Export puzzle state
-   */
-  toState(): CubeStateSimple {
-    return {
-      u: simplifyFace(this.state.u),
-      l: simplifyFace(this.state.l),
-      f: simplifyFace(this.state.f),
-      r: simplifyFace(this.state.r),
-      b: simplifyFace(this.state.b),
-      d: simplifyFace(this.state.d),
     };
   }
 }
