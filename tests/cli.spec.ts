@@ -9,10 +9,10 @@ type Output = {
 }
 
 describe('cli', () => {
-  const cli = (args): Promise<Output> => new Promise(resolve => exec(
+  const cli = (args: string[]): Promise<Output> => new Promise(resolve => exec(
     `node ${path.resolve(__dirname, '../bin/index')} ${args.join(' ')}`,
     {},
-    (error, stdout, stderr) => resolve({
+    (error: any, stdout: string, stderr: string) => resolve({
       code: error && error.code ? error.code : 0,
       error,
       stderr,
