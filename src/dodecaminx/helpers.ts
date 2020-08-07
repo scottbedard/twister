@@ -9,7 +9,7 @@ import {
 
 import { isOdd } from '../utils/number';
 import { error } from '../utils/function';
-import { roll, times } from '../utils/array';
+import { times } from '../utils/array';
 
 /**
  * Create a face of values

@@ -144,7 +144,7 @@ export default class Dodecaminx<Data> extends Puzzle<DodecaminxOptions, Dodecami
    *
    * @return {CubeTurn} 
    */
-  parse(turn: DodecaminxFace): DodecaminxTurn {
+  parse(turn: string): DodecaminxTurn {
     return parseDodecaminxTurn(turn);
   }
 

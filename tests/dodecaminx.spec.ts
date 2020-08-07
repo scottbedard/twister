@@ -2,10 +2,6 @@ import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
 
 import Dodecaminx from '../src/dodecaminx/dodecaminx';
 
-import {
-  parseDodecaminxTurn,
-} from '../src/dodecaminx/helpers';
-
 describe('dodecaminx', () => {
   it('throws an error if the size is not an integer', () => {
     expect(() => new Dodecaminx({ size: 3.5 })).toThrow();
@@ -35,6 +31,8 @@ describe('dodecaminx', () => {
   // parsing
   //
   describe('turn parsing', () => {
+    const minx = new Dodecaminx({ size: 2 });
+
     const turns: Record<string, DodecaminxTurn> = {
       'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
       'F2': { depth: 1, rotation: 2, target: 'f', wide: false, whole: false },
@@ -47,12 +45,12 @@ describe('dodecaminx', () => {
 
     Object.keys(turns).forEach(turn => {
       it(turn, () => {
-        expect(parseDodecaminxTurn(turn)).toEqual(turns[turn]);
+        expect(minx.parse(turn)).toEqual(turns[turn]);
       });
     });
 
     it('invalid', () => {
-      expect(() => parseDodecaminxTurn('invalid')).toThrow();
+      expect(() => minx.parse('invalid')).toThrow();
     });
   });
 
