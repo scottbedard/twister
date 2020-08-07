@@ -28,7 +28,7 @@ program.command('scramble <puzzle>')
         puzzle,
         turns: turns,
         scramble,
-        state: cube.toState(),
+        state: cube.output(),
       }));
 
       return;
@@ -48,7 +48,7 @@ program.command('test <puzzle> <state> <solution>')
     // cubes
     if (Number.isFinite(cubeSize)) {
       const cube = new Cube({ size: cubeSize });
-      cube.applyState(JSON.parse(state));
+      cube.apply(JSON.parse(state));
       cube.turn(solution);
 
       console.log(json({
