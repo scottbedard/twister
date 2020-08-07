@@ -31,19 +31,6 @@ export function createFace<Data>(size: number, initialValue: DodecaminxValue = n
 }
 
 /**
- * Extract a layer of values from a face
- */
-/* eslint-disable */
-export function extractLayer<T>(
-  face: DodecaminxFaceObject<T>,
-  depth: number,
-  angle: number = 0
-): any {
-  return [];
-}
-/* eslint-enable */
-
-/**
  * Parse a dodecaminx turn.
  *
  * @param {string}  turn
@@ -77,17 +64,6 @@ export function parseDodecaminxTurn(turn: string): DodecaminxTurn {
     target: target.toLowerCase() as DodecaminxFace,
     wide,
     whole: false,
-  };
-}
-
-/**
- * Rotate a face.
- */
-export function rotate<T>(face: DodecaminxFaceObject<T>, rotation: number): DodecaminxFaceObject<T> {
-  return {
-    center: face.center,
-    corners: roll(face.corners, -rotation),
-    middles: roll(face.middles, -rotation),
   };
 }
 
