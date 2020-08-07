@@ -1,4 +1,12 @@
-import { DodecaminxFace, DodecaminxFaceObject, DodecaminxTurn, DodecaminxValue } from './dodecaminx';
+import {
+  DodecaminxFace,
+  DodecaminxFaceObject,
+  DodecaminxFaceSimple,
+  DodecaminxSticker,
+  DodecaminxTurn,
+  DodecaminxValue,
+} from './dodecaminx';
+
 import { isOdd } from '../utils/number';
 import { error } from '../utils/function';
 import { roll, times } from '../utils/array';
@@ -81,4 +89,29 @@ export function rotate<T>(face: DodecaminxFaceObject<T>, rotation: number): Dode
     corners: roll(face.corners, -rotation),
     middles: roll(face.middles, -rotation),
   };
+}
+
+/**
+ * Simplify a puzzle face
+ *
+ * @param {DodecaminxFaceObject<T>} face
+ *
+ * 
+ */
+export function simplifyFace<T>(face: DodecaminxFaceObject<T>): DodecaminxFaceSimple {
+  const map = (arr: DodecaminxSticker<T>[]) => arr.map(sticker => sticker.value);
+  
+  const result: DodecaminxFaceSimple = [
+    face.corners.map(map),
+  ];
+
+  if (face.middles.length) {
+    result.push(face.middles.map(map))
+  }
+
+  if (face.center) {
+    result.push(face.center.value);
+  }
+
+  return result;
 }

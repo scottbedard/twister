@@ -1,7 +1,13 @@
-import { createFace, parseDodecaminxTurn } from './helpers';
+import {
+  createFace,
+  parseDodecaminxTurn,
+  simplifyFace,
+} from './helpers';
+
 import { error } from '../utils/function';
 import { isInteger } from '../utils/number';
 import { Sticker } from '../puzzle';
+
 import Puzzle from '../puzzle';
 
 // options
@@ -18,6 +24,12 @@ export type DodecaminxFaceObject<Data> = {
   middles: DodecaminxSticker<Data>[][],
 };
 
+export type DodecaminxFaceSimple = [
+  DodecaminxValue[][], // corners
+  DodecaminxValue[][]?, // middles
+  DodecaminxValue?, // center
+];
+
 // value
 export type DodecaminxValue = null | number;
 
@@ -28,11 +40,7 @@ export type DodecaminxSticker<Data> = Sticker<Data, DodecaminxValue>;
 export type DodecaminxState<Data> = Record<DodecaminxFace, DodecaminxFaceObject<Data>>;
 
 // state summary
-export type DodecaminxStateSummary = Record<DodecaminxFace, [
-  DodecaminxValue[], // corners
-  DodecaminxValue[]?, // middles
-  DodecaminxValue?, // center
-]>;
+export type DodecaminxStateSummary = Record<DodecaminxFace, DodecaminxFaceSimple>;
 
 // turn
 export type DodecaminxTurn = {
@@ -113,7 +121,20 @@ export default class Dodecaminx<Data> extends Puzzle<DodecaminxOptions, Dodecami
    * @return {CubeStateSummary}
    */
   output(): DodecaminxStateSummary {
-    error('not implemented');
+    return {
+      u: simplifyFace(this.state.u),
+      f: simplifyFace(this.state.f),
+      l: simplifyFace(this.state.l),
+      bl: simplifyFace(this.state.bl),
+      br: simplifyFace(this.state.br),
+      r: simplifyFace(this.state.r),
+      b: simplifyFace(this.state.b),
+      d: simplifyFace(this.state.d),
+      dbl: simplifyFace(this.state.dbl),
+      dl: simplifyFace(this.state.dl),
+      dr: simplifyFace(this.state.dr),
+      dbr: simplifyFace(this.state.dbr),
+    }
   }
 
   /**
@@ -139,15 +160,15 @@ export default class Dodecaminx<Data> extends Puzzle<DodecaminxOptions, Dodecami
       u: createFace<Data>(size, 0),
       f: createFace<Data>(size, 1),
       l: createFace<Data>(size, 2),
-      r: createFace<Data>(size, 3),
-      bl: createFace<Data>(size, 4),
-      br: createFace<Data>(size, 5),
-      dl: createFace<Data>(size, 6),
-      dr: createFace<Data>(size, 7),
+      bl: createFace<Data>(size, 3),
+      br: createFace<Data>(size, 4),
+      r: createFace<Data>(size, 5),
+      b: createFace<Data>(size, 6),
+      d: createFace<Data>(size, 7),
       dbl: createFace<Data>(size, 8),
-      dbr: createFace<Data>(size, 9),
-      b: createFace<Data>(size, 10),
-      d: createFace<Data>(size, 11),
+      dl: createFace<Data>(size, 9),
+      dr: createFace<Data>(size, 10),
+      dbr: createFace<Data>(size, 11),
     };
   }
 }
