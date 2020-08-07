@@ -32,6 +32,31 @@ describe('dodecaminx', () => {
   });
 
   //
+  // parsing
+  //
+  describe('turn parsing', () => {
+    const turns: Record<string, DodecaminxTurn> = {
+      'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
+      'F2': { depth: 1, rotation: 2, target: 'f', wide: false, whole: false },
+      'F-': { depth: 1, rotation: -1, target: 'f', wide: false, whole: false },
+      'F2-': { depth: 1, rotation: -2, target: 'f', wide: false, whole: false },
+      'Fw': { depth: 2, rotation: 1, target: 'f', wide: true, whole: false },
+      'Fw-': { depth: 2, rotation: -1, target: 'f', wide: true, whole: false },
+      '2F': { depth: 2, rotation: 1, target: 'f', wide: false, whole: false },
+    };
+
+    Object.keys(turns).forEach(turn => {
+      it(turn, () => {
+        expect(parseDodecaminxTurn(turn)).toEqual(turns[turn]);
+      });
+    });
+
+    it('invalid', () => {
+      expect(() => parseDodecaminxTurn('invalid')).toThrow();
+    });
+  });
+
+  //
   // output
   //
   describe('output', () => {
@@ -252,27 +277,6 @@ describe('dodecaminx', () => {
           [[11, 11], [11, 11], [11, 11], [11, 11], [11, 11]],
           11,
         ],
-      });
-    });
-  });
-
-  //
-  // parsing
-  //
-  describe('turn parsing', () => {
-    const turns: Record<string, DodecaminxTurn> = {
-      'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
-      'F2': { depth: 1, rotation: 2, target: 'f', wide: false, whole: false },
-      'F-': { depth: 1, rotation: -1, target: 'f', wide: false, whole: false },
-      'F2-': { depth: 1, rotation: -2, target: 'f', wide: false, whole: false },
-      'Fw': { depth: 2, rotation: 1, target: 'f', wide: true, whole: false },
-      'Fw-': { depth: 2, rotation: -1, target: 'f', wide: true, whole: false },
-      '2F': { depth: 2, rotation: 1, target: 'f', wide: false, whole: false },
-    };
-
-    Object.keys(turns).forEach(turn => {
-      it(turn, () => {
-        expect(parseDodecaminxTurn(turn)).toEqual(turns[turn]);
       });
     });
   });
