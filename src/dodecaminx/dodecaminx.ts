@@ -1,26 +1,16 @@
-/* eslint-disable */
-import Puzzle from '../puzzle';
-import { isInteger } from '../utils/number';
-import { error } from '../utils/function';
 import { createFace, parseDodecaminxTurn } from './helpers';
+import { error } from '../utils/function';
+import { isInteger } from '../utils/number';
+import { Sticker } from '../puzzle';
+import Puzzle from '../puzzle';
 
-/**
- * Dodecaminx axis and face.
- */
-type DefaultData = Record<string, unknown>;
-
-export type DodecaminxFace = 'u' | 'f' | 'l' | 'r' | 'bl' | 'br' | 'dl' | 'dr' | 'dbl' | 'dbr' | 'b' | 'd';
-
-export type DodecaminxValue = null | number | string;
-
-export type DodecaminxSticker<Data> = {
-  data: Data,
-  value: DodecaminxValue,
-};
-
+// options
 export type DodecaminxOptions = {
   size: number,
 };
+
+// face
+export type DodecaminxFace = 'u' | 'f' | 'l' | 'r' | 'bl' | 'br' | 'dl' | 'dr' | 'dbl' | 'dbr' | 'b' | 'd';
 
 export type DodecaminxFaceObject<Data> = {
   center: DodecaminxSticker<Data> | null,
@@ -28,8 +18,23 @@ export type DodecaminxFaceObject<Data> = {
   middles: DodecaminxSticker<Data>[][],
 };
 
-export type DodecaminxState<Data = DefaultData> = Record<DodecaminxFace, DodecaminxFaceObject<Data>>;
+// value
+export type DodecaminxValue = null | number;
 
+// sticker
+export type DodecaminxSticker<Data> = Sticker<Data, DodecaminxValue>;
+
+// state
+export type DodecaminxState<Data> = Record<DodecaminxFace, DodecaminxFaceObject<Data>>;
+
+// state summary
+export type DodecaminxStateSummary = Record<DodecaminxFace, [
+  DodecaminxValue[], // corners
+  DodecaminxValue[]?, // middles
+  DodecaminxValue?, // center
+]>;
+
+// turn
 export type DodecaminxTurn = {
   depth: number,
   rotation: number,
@@ -41,7 +46,7 @@ export type DodecaminxTurn = {
 /**
  * Dodecaminx.
  */
-export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<DodecaminxOptions, DodecaminxState<Data>, DodecaminxTurn> {
+export default class Dodecaminx<Data> extends Puzzle<DodecaminxOptions, DodecaminxState<Data>, DodecaminxStateSummary, DodecaminxTurn> {
 
   /**
    * Constructor.
@@ -60,18 +65,25 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
     super(options);
   }
 
-  applyState() {
+  /**
+   * Apply puzzle state.
+   *
+   * @param {CubeStateSummary} state
+   *
+   * @return {void}
+   */
+  apply(state: DodecaminxStateSummary): void {
     error('not implemented');
   }
 
   /**
-   * Apply a turn.
+   * Execute a single turn.
    *
-   * @param {DodecaminxTurn} turn
+   * @param {CubeTurn} turn
    *
    * @return {void} 
    */
-  applyTurn(turn: DodecaminxTurn) {
+  execute(turn: DodecaminxTurn): void {
     error('not implemented');
   }
 
@@ -82,8 +94,8 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @return {void}
    */
-  generateScramble(length: number) {
-    return '';
+  generateScramble(length: number): string {
+    error('not implemented');
   }
 
   /**
@@ -91,8 +103,17 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @return {boolean}
    */
-  isSolved() {
+  isSolved(): boolean {
     return false;
+  }
+
+  /**
+   * Output puzzle state.
+   *
+   * @return {CubeStateSummary}
+   */
+  output(): DodecaminxStateSummary {
+    error('not implemented');
   }
 
   /**
@@ -100,9 +121,9 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @param {string} turn
    *
-   * @return {DodecaminxTurn} 
+   * @return {CubeTurn} 
    */
-  parseTurn(turn: DodecaminxFace): DodecaminxTurn {
+  parse(turn: DodecaminxFace): DodecaminxTurn {
     return parseDodecaminxTurn(turn);
   }
 
@@ -111,7 +132,7 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @return {void}
    */
-  reset() {
+  reset(): void {
     const size = this.options.size;
 
     this.state = {
@@ -128,12 +149,5 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
       b: createFace<Data>(size, 10),
       d: createFace<Data>(size, 11),
     };
-  }
-
-  /**
-   * Export puzzle state
-   */
-  toState(): never {
-    error('not implemented');
   }
 }

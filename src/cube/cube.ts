@@ -29,14 +29,14 @@ export type CubeOptions = {
   size: number,
 };
 
-// axes & faces
+// axis & face
 export type CubeAxis = 'x' | 'y' | 'z';
 export type CubeFace = 'u' | 'l' | 'f' | 'r' | 'b' | 'd';
 
-// values
+// value
 export type CubeValue = null | number;
 
-// stickers
+// sticker
 export type CubeSticker<Data> = Sticker<Data, CubeValue>;
 
 // state
@@ -45,7 +45,7 @@ export type CubeState<Data> = Record<CubeFace, CubeSticker<Data>[]>;
 // state summary
 export type CubeStateSummary = Record<CubeFace, CubeValue[]>;
 
-// turns
+// turn
 export type CubeTurn = {
   depth: number,
   rotation: -1 | 1 | 2,

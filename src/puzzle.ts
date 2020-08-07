@@ -5,8 +5,10 @@ import { trim } from './utils/string';
  * Sticker
  */
 export type Sticker<Data, Value> = {
-  data: Data;
-  value: Value;
+  data: {
+    [K in keyof Data]?: Data[K]
+  },
+  value: Value,
 }
 
 /**

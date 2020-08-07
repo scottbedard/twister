@@ -29,7 +29,6 @@ export function createFace<Data>(value: CubeValue, length: number): CubeSticker<
   return times(length).map((): CubeSticker<Data> => {
     return {
       data: {},
-      meta: {},
       value,
     };
   })
