@@ -49,11 +49,11 @@ puzzle.reset();
 // test if the puzzle is solved
 puzzle.isSolved();
 
-// set puzzle state
-puzzle.applyState(state);
+// apply puzzle state
+puzzle.apply(state);
 
 // output puzzle state
-puzzle.toState();
+puzzle.output();
 ```
 
 Use the following properties to access puzzle data
