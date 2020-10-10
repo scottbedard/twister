@@ -56,7 +56,7 @@ export type CubeTurn = {
 /**
  * Cube.
  */
-export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, CubeStateSummary, CubeTurn> {
+export default class Cube<Data = Record<string, unknown>> extends Puzzle<CubeOptions, CubeState<Data>, CubeStateSummary, CubeTurn> {
 
   /**
    * Constructor.
