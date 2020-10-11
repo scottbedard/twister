@@ -130,6 +130,7 @@ export default {
   methods: {
     fresh() {
       this.model = new Cube({ size: this.puzzleSize });
+      this.scramble = null;
 
       const reset = this.model.reset.bind(this.model);
       const turn = this.model.turn.bind(this.model);
