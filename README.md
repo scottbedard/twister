@@ -10,7 +10,7 @@
 
 Twister is a library for modeling the state of twisty puzzles. To get started, [check out the interactive playground](https://bedard-twister.netlify.app/).
 
-> **Warning:** This is a work in progress, and is not ready for production use. Changes may happen at any time.
+> **Warning:** This library is a work in progress, and is not ready for production use. Breaking changes may happen at any time.
 
 ## Installation
 
