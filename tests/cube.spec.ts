@@ -155,6 +155,20 @@ describe('cube', () => {
         ]));
       });
 
+      it('3U', () => {
+        const stickers = cube.getStickersForTurn('3U');
+
+        expect(stickers.length).toBe(21);
+
+        expect(new Set(stickers)).toEqual(new Set([
+          ...cube.state.d,
+          cube.state.b[6], cube.state.b[7], cube.state.b[8], 
+          cube.state.r[6], cube.state.r[7], cube.state.r[8], 
+          cube.state.f[6], cube.state.f[7], cube.state.f[8], 
+          cube.state.l[6], cube.state.l[7], cube.state.l[8],
+        ]));
+      });
+
       it('L', () => {
         const stickers = cube.getStickersForTurn('L');
 
