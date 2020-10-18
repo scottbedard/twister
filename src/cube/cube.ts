@@ -2,6 +2,12 @@ import {
   createFace,
   faceIsSolved,
   getOppositeFace,
+  getSliceB,
+  getSliceD,
+  getSliceF,
+  getSliceL,
+  getSliceR,
+  getSliceU,
   parseTurn,
   simplifyFace,
   stringifyTurn,
@@ -14,6 +20,7 @@ import {
   turnSliceL,
   turnSliceR,
   turnSliceU,
+  turnTargetIsAxis,
 } from './helpers';
 
 import { error } from '../utils/function';
@@ -183,11 +190,11 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
    *
    * @return {Sticker[]}
    */
-  getStickersForTurn(turn: string): CubeSticker<Data>[] {
-    const { depth, rotation, target, wide } = parseTurn(turn);
+  getStickersForTurn(rawTurn: string): CubeSticker<Data>[] {
+    const turn = parseTurn(rawTurn);
 
     // puzzle rotations effect all stickers
-    if (['x', 'y', 'z'].includes(target)) {
+    if (turnTargetIsAxis(turn.target)) {
       return [].concat(
         this.state.u,
         this.state.l,
@@ -199,6 +206,26 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
     }
 
     const stickers: CubeSticker<Data>[] = [];
+
+    // attach outer face if necessary
+    if (turn.depth === 1 || turn.wide) {
+      stickers.push(...this.state[turn.target]);
+    }
+
+    // attach inner face if necessary
+    if (turn.depth >= this.options.size) {
+      stickers.push(...this.state[getOppositeFace(turn)]);
+    }
+
+    // attach slice stickers
+    switch (turn.target) {
+    case 'u': stickers.push(...getSliceU(this.state, turn)); break;
+    case 'l': stickers.push(...getSliceL(this.state, turn)); break;
+    case 'f': stickers.push(...getSliceF(this.state, turn)); break;
+    case 'r': stickers.push(...getSliceR(this.state, turn)); break;
+    case 'b': stickers.push(...getSliceB(this.state, turn)); break;
+    case 'd': stickers.push(...getSliceD(this.state, turn)); break;
+    }
 
     return stickers;
   }

@@ -137,6 +137,93 @@ describe('cube', () => {
       it('Z', () => {
         expect(cube.getStickersForTurn('Z').length).toBe(54);
       });
+
+      // getStickersForTurn does not ensure the order that stickers
+      // are returned. we're using sets to check for element equality
+      // without taking element position into consideration.
+      it('U', () => {
+        const stickers = cube.getStickersForTurn('U');
+
+        expect(stickers.length).toBe(21);
+
+        expect(new Set(stickers)).toEqual(new Set([
+          ...cube.state.u,
+          cube.state.b[0], cube.state.b[1], cube.state.b[2], 
+          cube.state.r[0], cube.state.r[1], cube.state.r[2], 
+          cube.state.f[0], cube.state.f[1], cube.state.f[2], 
+          cube.state.l[0], cube.state.l[1], cube.state.l[2],
+        ]));
+      });
+
+      it('L', () => {
+        const stickers = cube.getStickersForTurn('L');
+
+        expect(stickers.length).toBe(21);
+
+        expect(new Set(stickers)).toEqual(new Set([
+          ...cube.state.l,
+          cube.state.b[2], cube.state.b[5], cube.state.b[8], 
+          cube.state.u[0], cube.state.u[3], cube.state.u[6], 
+          cube.state.f[0], cube.state.f[3], cube.state.f[6], 
+          cube.state.d[0], cube.state.d[3], cube.state.d[6],
+        ]));
+      });
+
+      it('F', () => {
+        const stickers = cube.getStickersForTurn('F');
+
+        expect(stickers.length).toBe(21);
+
+        expect(new Set(stickers)).toEqual(new Set([
+          ...cube.state.f,
+          cube.state.u[6], cube.state.u[7], cube.state.u[8], 
+          cube.state.r[0], cube.state.r[3], cube.state.r[6], 
+          cube.state.d[0], cube.state.d[1], cube.state.d[2], 
+          cube.state.l[2], cube.state.l[5], cube.state.l[8],
+        ]));
+      });
+
+      it('R', () => {
+        const stickers = cube.getStickersForTurn('R');
+
+        expect(stickers.length).toBe(21);
+
+        expect(new Set(stickers)).toEqual(new Set([
+          ...cube.state.r,
+          cube.state.u[2], cube.state.u[5], cube.state.u[8], 
+          cube.state.b[0], cube.state.b[3], cube.state.b[6], 
+          cube.state.d[2], cube.state.d[5], cube.state.d[8], 
+          cube.state.f[2], cube.state.f[5], cube.state.f[8],
+        ]));
+      });
+
+      it('B', () => {
+        const stickers = cube.getStickersForTurn('B');
+
+        expect(stickers.length).toBe(21);
+
+        expect(new Set(stickers)).toEqual(new Set([
+          ...cube.state.b,
+          cube.state.u[0], cube.state.u[1], cube.state.u[2], 
+          cube.state.l[0], cube.state.l[3], cube.state.l[6], 
+          cube.state.d[8], cube.state.d[7], cube.state.d[6], 
+          cube.state.r[2], cube.state.r[5], cube.state.r[8],
+        ]));
+      });
+
+      it('D', () => {
+        const stickers = cube.getStickersForTurn('D');
+
+        expect(stickers.length).toBe(21);
+
+        expect(new Set(stickers)).toEqual(new Set([
+          ...cube.state.d,
+          cube.state.f[6], cube.state.f[7], cube.state.f[8], 
+          cube.state.r[6], cube.state.r[7], cube.state.r[8], 
+          cube.state.b[6], cube.state.b[7], cube.state.b[8], 
+          cube.state.l[6], cube.state.l[7], cube.state.l[8],
+        ]));
+      });
     });
   });
 

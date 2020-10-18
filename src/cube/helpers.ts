@@ -4,6 +4,7 @@ import {
   CubeSticker,
   CubeValue,
   CubeTurn,
+  CubeAxis,
 } from './cube';
 
 import {
@@ -51,6 +52,150 @@ export function faceIsSolved<T>(stickers: CubeSticker<T>[]): boolean {
   }
 
   return true;
+}
+
+/**
+ * Get stickers that are part of an B slice.
+ *
+ * @param {CubeState<T>} state
+ * @param {CubeTurn} turn
+ *
+ * @param {CubeSticker<T>[]} 
+ */
+export function getSliceB<T>(state: CubeState<T>, turn: CubeTurn): CubeSticker<T>[] {
+  const stickers: CubeSticker<T>[] = [];
+  const slicedCube = sliceCube(state);
+
+  loopSlices(turn, (i: number, negI: number, iSubOne: number) => {
+    stickers.push(
+      ...head(slicedCube.u.r, iSubOne),
+      ...head(slicedCube.l.c, iSubOne),
+      ...head(slicedCube.d.r, negI),
+      ...head(slicedCube.r.c, negI),
+    );
+  });
+
+  return stickers;
+}
+
+/**
+ * Get stickers that are part of an D slice.
+ *
+ * @param {CubeState<T>} state
+ * @param {CubeTurn} turn
+ *
+ * @param {CubeSticker<T>[]} 
+ */
+export function getSliceD<T>(state: CubeState<T>, turn: CubeTurn): CubeSticker<T>[] {
+  const stickers: CubeSticker<T>[] = [];
+  const slicedCube = sliceCube(state);
+
+  loopSlices(turn, (i: number, negI: number) => {
+    stickers.push(
+      ...head(slicedCube.f.r, negI),
+      ...head(slicedCube.r.r, negI),
+      ...head(slicedCube.b.r, negI),
+      ...head(slicedCube.l.r, negI),
+    );
+  });
+
+  return stickers;
+}
+
+/**
+ * Get stickers that are part of an F slice.
+ *
+ * @param {CubeState<T>} state
+ * @param {CubeTurn} turn
+ *
+ * @param {CubeSticker<T>[]} 
+ */
+export function getSliceF<T>(state: CubeState<T>, turn: CubeTurn): CubeSticker<T>[] {
+  const stickers: CubeSticker<T>[] = [];
+  const slicedCube = sliceCube(state);
+
+  loopSlices(turn, (i: number, negI: number, iSubOne: number) => {
+    stickers.push(
+      ...head(slicedCube.u.r, negI),
+      ...head(slicedCube.r.c, iSubOne),
+      ...head(slicedCube.d.r, iSubOne),
+      ...head(slicedCube.l.c, negI),
+    );
+  });
+
+  return stickers;
+}
+
+/**
+ * Get stickers that are part of an L slice.
+ *
+ * @param {CubeState<T>} state
+ * @param {CubeTurn} turn
+ *
+ * @param {CubeSticker<T>[]} 
+ */
+export function getSliceL<T>(state: CubeState<T>, turn: CubeTurn): CubeSticker<T>[] {
+  const stickers: CubeSticker<T>[] = [];
+  const slicedCube = sliceCube(state);
+
+  loopSlices(turn, (i: number, negI: number, iSubOne: number) => {
+    stickers.push(
+      ...head(slicedCube.u.c, iSubOne),
+      ...head(slicedCube.f.c, iSubOne),
+      ...head(slicedCube.d.c, iSubOne),
+      ...head(slicedCube.b.c, negI),
+    );
+  });
+
+  return stickers;
+}
+
+/**
+ * Get stickers that are part of an R slice.
+ *
+ * @param {CubeState<T>} state
+ * @param {CubeTurn} turn
+ *
+ * @param {CubeSticker<T>[]} 
+ */
+export function getSliceR<T>(state: CubeState<T>, turn: CubeTurn): CubeSticker<T>[] {
+  const stickers: CubeSticker<T>[] = [];
+  const slicedCube = sliceCube(state);
+
+  loopSlices(turn, (i: number, negI: number, iSubOne: number) => {
+    stickers.push(
+      ...head(slicedCube.u.c, negI),
+      ...head(slicedCube.b.c, iSubOne),
+      ...head(slicedCube.d.c, negI),
+      ...head(slicedCube.f.c, negI),
+    );
+  });
+
+  return stickers;
+}
+
+/**
+ * Get stickers that are part of an U slice.
+ *
+ * @param {CubeState<T>} state
+ * @param {CubeTurn} turn
+ *
+ * @param {CubeSticker<T>[]} 
+ */
+export function getSliceU<T>(state: CubeState<T>, turn: CubeTurn): CubeSticker<T>[] {
+  const stickers: CubeSticker<T>[] = [];
+  const slicedCube = sliceCube(state);
+
+  loopSlices(turn, (i: number, negI: number, iSubOne: number) => {
+    stickers.push(
+      ...head(slicedCube.b.r, iSubOne),
+      ...head(slicedCube.r.r, iSubOne),
+      ...head(slicedCube.f.r, iSubOne),
+      ...head(slicedCube.l.r, iSubOne),
+    );
+  });
+
+  return stickers;
 }
 
 /**
@@ -616,4 +761,15 @@ export function turnSliceU<T>(state: CubeState<T>, turn: CubeTurn): void {
     state.f = flattenRows(slicedCube.f.r);
     state.l = flattenRows(slicedCube.l.r);
   });
+}
+
+/**
+ * Test if a turn target is an axis.
+ *
+ * @param {CubeFace | CubeAxis} target
+ *
+ * @return {boolean}
+ */
+export function turnTargetIsAxis(target: CubeFace | CubeAxis): target is CubeAxis {
+  return ['x', 'y', 'z'].includes(target.toLowerCase());
 }
