@@ -40,5 +40,5 @@
     "test": "jest --coverage"
   },
   "unpkg": "dist/index.bundle.js",
-  "version": "0.4.1"
+  "version": "0.5.0"
 }
