@@ -37,8 +37,11 @@ puzzle.scramble();
 // scramble the puzzle to a specific depth
 puzzle.scramble(10);
 
-// generate a scramble, but don't execute it
+// generate scramble, but don't execute it
 puzzle.generateScramble();
+
+// generate scramble to a specific depth
+puzzle.generateScramble(10);
 
 // get array of stickers effected by a turn
 puzzle.getStickersForTurn('F');
@@ -87,6 +90,24 @@ $ twister scramble 3x3 --turns 3
 # test a solution
 $ twister test 3x3 '{ ... }' 'R U R- ...'
 ```
+
+## Advanced Usage
+
+For applications with advanced scrambling needs, a custom random function can be provided. Below is an example using [Rando.js](https://randojs.com/) to generate cryptographically strong scrambles. The `random` option can be any function that returns a floating point number between `0` and `1`. By default, [`Math.random`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) will be used.
+
+```js
+import { Cube } from '@bedard/twister';
+import { rando } from '@nastyox/rando.js';
+
+const cube = new Cube({
+  size: 3,
+  random: rando,
+});
+
+cube.scramble();
+```
+
+> **Warning:** While this library does it's best to generate strong scrambles, **it should never be used in WCA events**. Always use the official [TNoodle](https://github.com/thewca/tnoodle) library for WCA purposes.
 
 ## `Cube`
 
