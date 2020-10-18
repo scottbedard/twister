@@ -107,7 +107,7 @@ const cube = new Cube({
 cube.scramble();
 ```
 
-> **Warning:** While this library does it's best to generate strong scrambles, **it should never be used in WCA events**. Always use the official [TNoodle](https://github.com/thewca/tnoodle) library for WCA purposes.
+> While this library does it's best to generate strong scrambles, **it should never be used in WCA events**. Always use the official [TNoodle](https://github.com/thewca/tnoodle) library for WCA purposes.
 
 ## `Cube`
 
