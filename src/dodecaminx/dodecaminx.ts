@@ -107,6 +107,17 @@ export default class Dodecaminx<Data> extends Puzzle<DodecaminxOptions, Dodecami
   }
 
   /**
+   * Get stickers effected by a turn.
+   *
+   * @param {string} turn
+   *
+   * @return {Sticker[]}
+   */
+  getStickersForTurn(): DodecaminxSticker<Data>[] {
+    error('not implemented');
+  }
+
+  /**
    * Test if the puzzle is solved.
    *
    * @return {boolean}

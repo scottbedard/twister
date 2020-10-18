@@ -4,7 +4,7 @@ import { trim } from './utils/string';
 /**
  * Sticker
  */
-export type Sticker<Value, Data = Record<string, unknown>> = {
+export type Sticker<Value = unknown, Data = Record<string, unknown>> = {
   data: {
     [K in keyof Data]?: Data[K]
   },
@@ -53,7 +53,7 @@ export default abstract class Puzzle<Options, State, StateSummary, Turn> {
   /**
    * Execute a single turn.
    *
-   * @param {Turn}  turn
+   * @param {Turn} turn
    *
    * @return {void} 
    */
@@ -62,11 +62,20 @@ export default abstract class Puzzle<Options, State, StateSummary, Turn> {
   /**
    * Generate a scramble.
    *
-   * @param {number}  length
+   * @param {number} length
    *
    * @return {void}
    */
   abstract generateScramble(length?: number): string;
+
+  /**
+   * Get stickers effected by a turn.
+   *
+   * @param {string} turn
+   *
+   * @return {Sticker[]}
+   */
+  abstract getStickersForTurn(turn: string): Sticker[];
   
   /**
    * Test if the puzzle is solved.
@@ -85,7 +94,7 @@ export default abstract class Puzzle<Options, State, StateSummary, Turn> {
   /**
    * Parse a single turn.
    *
-   * @param {string}  turn
+   * @param {string} turn
    *
    * @return {Turn} 
    */
@@ -101,7 +110,7 @@ export default abstract class Puzzle<Options, State, StateSummary, Turn> {
   /**
    * Scramble the puzzle.
    *
-   * @param {number}  length
+   * @param {number} length
    *
    * @return {void}
    */
@@ -113,7 +122,7 @@ export default abstract class Puzzle<Options, State, StateSummary, Turn> {
   /**
    * Execute multiple turns.
    *
-   * @param {string}  algorithm
+   * @param {string} algorithm
    *
    * @return {void} 
    */

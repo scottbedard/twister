@@ -177,6 +177,33 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
   }
 
   /**
+   * Get stickers effected by a turn.
+   *
+   * @param {string} turn
+   *
+   * @return {Sticker[]}
+   */
+  getStickersForTurn(turn: string): CubeSticker<Data>[] {
+    const { depth, rotation, target, wide } = parseTurn(turn);
+
+    // puzzle rotations effect all stickers
+    if (['x', 'y', 'z'].includes(target)) {
+      return [].concat(
+        this.state.u,
+        this.state.l,
+        this.state.f,
+        this.state.r,
+        this.state.b,
+        this.state.d,
+      );
+    }
+
+    const stickers: CubeSticker<Data>[] = [];
+
+    return stickers;
+  }
+
+  /**
    * Test if the puzzle is solved.
    *
    * @return {boolean}

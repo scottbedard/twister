@@ -122,6 +122,22 @@ describe('cube', () => {
         d: [ 5, 5, 5, 5 ],
       });
     });
+
+    describe('getStickersForTurn', () => {
+      const cube = new Cube({ size: 3 });
+
+      it('X', () => {
+        expect(cube.getStickersForTurn('X').length).toBe(54);
+      });
+
+      it('Y', () => {
+        expect(cube.getStickersForTurn('Y').length).toBe(54);
+      });
+
+      it('Z', () => {
+        expect(cube.getStickersForTurn('Z').length).toBe(54);
+      });
+    });
   });
 
   describe('notation', () => {
