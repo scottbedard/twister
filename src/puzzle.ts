@@ -4,7 +4,7 @@ import { trim } from './utils/string';
 /**
  * Sticker
  */
-export type Sticker<Data, Value> = {
+export type Sticker<Value, Data = Record<string, unknown>> = {
   data: {
     [K in keyof Data]?: Data[K]
   },

@@ -34,7 +34,7 @@ export type DodecaminxFaceSimple = [
 export type DodecaminxValue = null | number;
 
 // sticker
-export type DodecaminxSticker<Data> = Sticker<Data, DodecaminxValue>;
+export type DodecaminxSticker<Data> = Sticker<DodecaminxValue, Data>;
 
 // state
 export type DodecaminxState<Data> = Record<DodecaminxFace, DodecaminxFaceObject<Data>>;
@@ -54,7 +54,7 @@ export type DodecaminxTurn = {
 /**
  * Dodecaminx.
  */
-export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<DodecaminxOptions, DodecaminxState<Data>, DodecaminxStateSummary, DodecaminxTurn> {
+export default class Dodecaminx<Data> extends Puzzle<DodecaminxOptions, DodecaminxState<Data>, DodecaminxStateSummary, DodecaminxTurn> {
 
   /**
    * Constructor.

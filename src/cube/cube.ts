@@ -37,7 +37,7 @@ export type CubeFace = 'u' | 'l' | 'f' | 'r' | 'b' | 'd';
 export type CubeValue = null | number;
 
 // sticker
-export type CubeSticker<Data> = Sticker<Data, CubeValue>;
+export type CubeSticker<Data> = Sticker<CubeValue, Data>;
 
 // state
 export type CubeState<Data> = Record<CubeFace, CubeSticker<Data>[]>;
@@ -56,7 +56,7 @@ export type CubeTurn = {
 /**
  * Cube.
  */
-export default class Cube<Data = Record<string, unknown>> extends Puzzle<CubeOptions, CubeState<Data>, CubeStateSummary, CubeTurn> {
+export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, CubeStateSummary, CubeTurn> {
 
   /**
    * Constructor.
