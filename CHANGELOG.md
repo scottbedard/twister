@@ -4,8 +4,8 @@
 
 ## 0.5.0
 
-- Add support for generating cryptographically strong scrambles (#4)
-- Add `getStickersForTurn` method (#5)
+- Add support for generating cryptographically strong scrambles ([#4](https://github.com/scottbedard/twister/issues/4))
+- Add `getStickersForTurn` method ([#5](https://github.com/scottbedard/twister/issues/5))
 
 ## 0.4.1
 
@@ -13,14 +13,14 @@
 
 ## 0.4.0
 
-- **Breaking:** Various methods have been renamed, [check the readme for current API](https://github.com/scottbedard/twister#api)
+- **BREAKING:** Various methods have been renamed, [check the readme for current API](https://github.com/scottbedard/twister#api)
 
 ## 0.3.0
 
-- Added command line interface (#3)
+- Added command line interface ([#3](https://github.com/scottbedard/twister/issues/3))
 - Added `toState` method
 
 ## 0.2.0
 
 - Added `applyState` method
-- **Breaking:** `Cube` state now uses lower case keys
+- **BREAKING:** `Cube` state now uses lower case keys
