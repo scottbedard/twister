@@ -40,6 +40,9 @@ puzzle.scramble(10);
 // generate a scramble, but don't execute it
 puzzle.generateScramble();
 
+// get array of stickers effected by a turn
+puzzle.getStickersForTurn('F');
+
 // execute a series of turns
 puzzle.turn('R U- R-');
 
