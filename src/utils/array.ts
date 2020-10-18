@@ -44,8 +44,8 @@ export function roll<T>(arr: T[], n: number): T[] {
  *
  * @return {T}
  */
-export function sample<T>(arr: T[]): T {
-  return arr[rand(0, arr.length - 1)];
+export function sample<T>(arr: T[], random: () => number): T {
+  return arr[rand(0, arr.length - 1, random)];
 }
 
 /**

@@ -33,6 +33,7 @@ import Puzzle from '../puzzle';
 
 // options
 export type CubeOptions = {
+  random?: () => number,
   size: number,
 };
 
@@ -170,16 +171,16 @@ export default class Cube<Data> extends Puzzle<CubeOptions, CubeState<Data>, Cub
       d: ['f', 'r', 'b', 'l'],
     }
 
-    for (let i = 0, prev = sample(faces); i < length; i++) {
-      prev = sample(intersections[prev]);
+    for (let i = 0, prev = sample(faces, this.options.random); i < length; i++) {
+      prev = sample(intersections[prev], this.options.random);
       turns.push(prev);
     }
 
     return turns.map(turn => stringifyTurn({
-      depth: this.options.size > 3 ? rand(0, maxDepth) : 1,
-      rotation: sample([-1, 1, 2]),
+      depth: this.options.size > 3 ? rand(0, maxDepth, this.options.random) : 1,
+      rotation: sample([-1, 1, 2], this.options.random),
       target: turn,
-      wide: this.options.size > 3 && !!rand(0, 1),
+      wide: this.options.size > 3 && !!rand(0, 1, this.options.random),
     })).join(' ');
   }
 

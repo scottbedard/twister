@@ -28,6 +28,6 @@ export function isOdd(n: number): boolean {
  *
  * @return number
  */
-export function rand(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+export function rand(min: number, max: number, random: () => number): number {
+  return Math.floor((random || Math.random)() * (max - min + 1)) + min;
 }

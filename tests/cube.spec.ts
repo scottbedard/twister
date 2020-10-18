@@ -110,6 +110,19 @@ describe('cube', () => {
       expect(cube.isSolved()).toBe(false);
     });
 
+    it('scramble (with custom random fn)', () => {
+      // obviously this isn't random, in reality this would be a function analogous
+      // to Math.random(). we're using this for the sake of an easy assertion.
+      const random = jest.fn(() => 0.5);
+
+      const cube = new Cube({ size: 2, random });
+
+      const scramble = cube.generateScramble(20);
+
+      expect(random).toHaveBeenCalled();
+      expect(scramble).toBe('D B D B D B D B D B D B D B D B D B D B');
+    });
+
     it('output', () => {
       const cube = new Cube({ size: 2 });
       
