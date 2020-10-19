@@ -2,6 +2,10 @@
 
 > **Warning:** This library is a work in progress, and is not ready for production use. Breaking changes may happen at any time.
 
+## 0.5.1
+
+- Fix regression of default type definitions added in v0.4.1
+
 ## 0.5.0
 
 - Add support for generating cryptographically strong scrambles ([#4](https://github.com/scottbedard/twister/issues/4))
