@@ -1,6 +1,7 @@
 import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
 
 import Dodecaminx from '../src/dodecaminx/dodecaminx';
+import { createFace, rotateFace, simplifyFace } from '../src/dodecaminx/helpers';
 
 describe('dodecaminx', () => {
   it('throws an error if the size is not an integer', () => {
@@ -25,6 +26,187 @@ describe('dodecaminx', () => {
 
     expect(even.state.f.middles.length).toBe(0);
     expect(odd.state.f.middles.length > 0).toBe(true);
+  });
+
+  //
+  // helpers
+  //
+  describe('helpers', () => {
+    describe('rotateFace', () => {
+      // convert face stickers to unique values
+      const createTestFace = (size: number) => {
+        const face = createFace(size);
+        const letters = ['a', 'b', 'c', 'd', 'e'];
+
+        face.corners = face.corners
+          .map((matrices, i) => matrices
+            .map((val, j) => ({ data: {}, value: `corner-${letters[i]}-${j}` })));
+
+        face.middles = face.middles
+          .map((arr, i) => arr
+            .map((val, j) => ({ data: {}, value: `edge-${letters[i]}-${j}` })));
+
+        return face;
+      }
+
+      it('kilo', () => {
+        const kilo = createTestFace(2);
+        const rotate_2 = rotateFace(kilo, -2);
+        const rotate_1 = rotateFace(kilo, -1);
+        const rotate0 = rotateFace(kilo, 0);
+        const rotate1 = rotateFace(kilo, 1);
+        const rotate2 = rotateFace(kilo, 2);
+
+        expect(simplifyFace(rotate_2)).toEqual([
+          [
+            ['corner-c-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
+            ['corner-a-0'],
+            ['corner-b-0'],
+          ],
+        ]);
+
+        expect(simplifyFace(rotate_1)).toEqual([
+          [
+            ['corner-b-0'],
+            ['corner-c-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
+            ['corner-a-0'],
+          ],
+        ]);
+
+        expect(simplifyFace(rotate0)).toEqual([
+          [
+            ['corner-a-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
+          ],
+        ]);
+        
+        expect(simplifyFace(rotate1)).toEqual([
+          [
+            ['corner-e-0'],
+            ['corner-a-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
+            ['corner-d-0'],
+          ],
+        ]);
+
+        expect(simplifyFace(rotate2)).toEqual([
+          [
+            ['corner-d-0'],
+            ['corner-e-0'],
+            ['corner-a-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
+          ],
+        ]);
+      });
+
+      it('mega', () => {
+        const mega = createTestFace(3);
+        const rotate_2 = rotateFace(mega, -2);
+        const rotate_1 = rotateFace(mega, -1);
+        const rotate0 = rotateFace(mega, 0);
+        const rotate1 = rotateFace(mega, 1);
+        const rotate2 = rotateFace(mega, 2);
+
+        expect(simplifyFace(rotate_2)).toEqual([
+          [
+            ['corner-c-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
+            ['corner-a-0'],
+            ['corner-b-0'],
+          ],
+          [
+            ['edge-c-0'],
+            ['edge-d-0'],
+            ['edge-e-0'],
+            ['edge-a-0'],
+            ['edge-b-0'],
+          ],
+          null,
+        ]);
+
+        expect(simplifyFace(rotate_1)).toEqual([
+          [
+            ['corner-b-0'],
+            ['corner-c-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
+            ['corner-a-0'],
+          ],
+          [
+            ['edge-b-0'],
+            ['edge-c-0'],
+            ['edge-d-0'],
+            ['edge-e-0'],
+            ['edge-a-0'],
+          ],
+          null,
+        ]);
+
+        expect(simplifyFace(rotate0)).toEqual([
+          [
+            ['corner-a-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
+          ],
+          [
+            ['edge-a-0'],
+            ['edge-b-0'],
+            ['edge-c-0'],
+            ['edge-d-0'],
+            ['edge-e-0'],
+          ],
+          null,
+        ]);
+
+        expect(simplifyFace(rotate1)).toEqual([
+          [
+            ['corner-e-0'],
+            ['corner-a-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
+            ['corner-d-0'],
+          ],
+          [
+            ['edge-e-0'],
+            ['edge-a-0'],
+            ['edge-b-0'],
+            ['edge-c-0'],
+            ['edge-d-0'],
+          ],
+          null,
+        ]);
+
+        expect(simplifyFace(rotate2)).toEqual([
+          [
+            ['corner-d-0'],
+            ['corner-e-0'],
+            ['corner-a-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
+          ],
+          [
+            ['edge-d-0'],
+            ['edge-e-0'],
+            ['edge-a-0'],
+            ['edge-b-0'],
+            ['edge-c-0'],
+          ],
+          null,
+        ]);
+      });
+    });
   });
 
   //

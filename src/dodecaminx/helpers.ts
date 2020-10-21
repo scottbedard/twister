@@ -9,7 +9,7 @@ import {
 
 import { isOdd } from '../utils/number';
 import { error } from '../utils/function';
-import { times } from '../utils/array';
+import { roll, times } from '../utils/array';
 
 /**
  * Create a face of values
@@ -68,11 +68,27 @@ export function parseDodecaminxTurn(turn: string): DodecaminxTurn {
 }
 
 /**
+ * Rotate a face.
+ *
+ * @param {DodecaminxFaceObject<T>} face
+ * @param {number} rotation
+ *
+ * @param {DodecaminxFaceObject<T>}
+ */
+export function rotateFace<T>(face: DodecaminxFaceObject<T>, rotation: number): DodecaminxFaceObject<T> {
+  return {
+    center: face.center,
+    corners: roll(face.corners, -rotation),
+    middles: roll(face.middles, -rotation),
+  };
+}
+
+/**
  * Simplify a puzzle face
  *
  * @param {DodecaminxFaceObject<T>} face
  *
- * 
+ * @return {DodecaminxFaceSimple}
  */
 export function simplifyFace<T>(face: DodecaminxFaceObject<T>): DodecaminxFaceSimple {
   const map = (arr: DodecaminxSticker<T>[]) => arr.map(sticker => sticker.value);

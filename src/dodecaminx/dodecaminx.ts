@@ -31,7 +31,7 @@ export type DodecaminxFaceSimple = [
 ];
 
 // value
-export type DodecaminxValue = null | number;
+export type DodecaminxValue = null | number | string;
 
 // sticker
 export type DodecaminxSticker<Data> = Sticker<DodecaminxValue, Data>;
