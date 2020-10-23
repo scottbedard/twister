@@ -7,9 +7,10 @@ import {
   DodecaminxValue,
 } from './dodecaminx';
 
-import { isOdd } from '../utils/number';
+import { cols, rows } from '../utils/matrix';
 import { error } from '../utils/function';
-import { roll, times } from '../utils/array';
+import { isOdd } from '../utils/number';
+import { roll, slice, times } from '../utils/array';
 
 /**
  * Create a face of values
@@ -27,6 +28,29 @@ export function createFace<Data>(size: number, initialValue: DodecaminxValue = n
     center,
     corners,
     middles,
+  };
+}
+
+/**
+ * Extract a slice of stickers from a face at a given angle.
+ *
+ * @param {DodecaminxFace} face
+ * @param {number} depth
+ * @param {number} angle
+ *
+ * @return {DodecaminxSlice}
+ */
+export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, angle = 0): any {
+  const rotatedFace = rotateFace(face, angle);
+  const leadingRows = rows(rotatedFace.corners[0]);
+  const trailingCols = cols(rotatedFace.corners[1]);
+  
+  return {
+    leading: leadingRows[depth - 1],
+    middles: rotatedFace.middles.length
+      ? slice(rotatedFace.middles[0], depth - 1, depth)
+      : [],
+    trailing: trailingCols[depth - 1],
   };
 }
 

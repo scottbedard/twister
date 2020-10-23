@@ -1,7 +1,12 @@
 import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
 
 import Dodecaminx from '../src/dodecaminx/dodecaminx';
-import { createFace, rotateFace, simplifyFace } from '../src/dodecaminx/helpers';
+import {
+  createFace,
+  extractSlice,
+  rotateFace,
+  simplifyFace,
+} from '../src/dodecaminx/helpers';
 
 describe('dodecaminx', () => {
   it('throws an error if the size is not an integer', () => {
@@ -32,23 +37,114 @@ describe('dodecaminx', () => {
   // helpers
   //
   describe('helpers', () => {
+    // this helper creates faces with a unique values for each
+    // sticker, which is useful for rotate / slice assertions
+    const createTestFace = (size: number) => {
+      const face = createFace(size);
+      const letters = ['a', 'b', 'c', 'd', 'e'];
+
+      face.corners = face.corners
+        .map((matrices, i) => matrices
+          .map((val, j) => ({ data: {}, value: `corner-${letters[i]}-${j}` })));
+
+      face.middles = face.middles
+        .map((arr, i) => arr
+          .map((val, j) => ({ data: {}, value: `edge-${letters[i]}-${j}` })));
+
+      return face;
+    }
+
+    // this helper extracts the values from a slice to make
+    // assertions easier to make
+    const simplifySlice = (slice: any) => {
+      return {
+        leading: slice.leading.map(obj => obj.value),
+        middles: slice.middles.map(obj => obj.value),
+        trailing: slice.trailing.map(obj => obj.value),
+      };
+    }
+
+    describe('extractSlice', () => {
+      it('kilo', () => {
+        const kilo = createTestFace(2);
+        const slice_2 = extractSlice(kilo, 1, -2);
+        const slice_1 = extractSlice(kilo, 1, -1);
+        const slice0 = extractSlice(kilo, 1, 0);
+        const slice1 = extractSlice(kilo, 1, 1);
+        const slice2 = extractSlice(kilo, 1, 2);
+
+        expect(simplifySlice(slice_2)).toEqual({
+          leading: ['corner-c-0'],
+          middles: [],
+          trailing: ['corner-d-0'],
+        });
+
+        expect(simplifySlice(slice_1)).toEqual({
+          leading: ['corner-b-0'],
+          middles: [],
+          trailing: ['corner-c-0'],
+        });
+
+        expect(simplifySlice(slice0)).toEqual({
+          leading: ['corner-a-0'],
+          middles: [],
+          trailing: ['corner-b-0'],
+        });
+
+        expect(simplifySlice(slice1)).toEqual({
+          leading: ['corner-e-0'],
+          middles: [],
+          trailing: ['corner-a-0'],
+        });
+
+        expect(simplifySlice(slice2)).toEqual({
+          leading: ['corner-d-0'],
+          middles: [],
+          trailing: ['corner-e-0'],
+        });
+      });
+
+      it('mega', () => {
+        const mega = createTestFace(3);
+        const slice_2 = extractSlice(mega, 1, -2);
+        const slice_1 = extractSlice(mega, 1, -1);
+        const slice0 = extractSlice(mega, 1, 0);
+        const slice1 = extractSlice(mega, 1, 1);
+        const slice2 = extractSlice(mega, 1, 2);
+
+        expect(simplifySlice(slice_2)).toEqual({
+          leading: ['corner-c-0'],
+          middles: ['edge-c-0'],
+          trailing: ['corner-d-0'],
+        });
+
+        expect(simplifySlice(slice_1)).toEqual({
+          leading: ['corner-b-0'],
+          middles: ['edge-b-0'],
+          trailing: ['corner-c-0'],
+        });
+
+        expect(simplifySlice(slice0)).toEqual({
+          leading: ['corner-a-0'],
+          middles: ['edge-a-0'],
+          trailing: ['corner-b-0'],
+        });
+
+        expect(simplifySlice(slice1)).toEqual({
+          leading: ['corner-e-0'],
+          middles: ['edge-e-0'],
+          trailing: ['corner-a-0'],
+        });
+        
+        expect(simplifySlice(slice2)).toEqual({
+          leading: ['corner-d-0'],
+          middles: ['edge-d-0'],
+          trailing: ['corner-e-0'],
+        });
+      });
+    });
+
     describe('rotateFace', () => {
-      // convert face stickers to unique values
-      const createTestFace = (size: number) => {
-        const face = createFace(size);
-        const letters = ['a', 'b', 'c', 'd', 'e'];
-
-        face.corners = face.corners
-          .map((matrices, i) => matrices
-            .map((val, j) => ({ data: {}, value: `corner-${letters[i]}-${j}` })));
-
-        face.middles = face.middles
-          .map((arr, i) => arr
-            .map((val, j) => ({ data: {}, value: `edge-${letters[i]}-${j}` })));
-
-        return face;
-      }
-
       it('kilo', () => {
         const kilo = createTestFace(2);
         const rotate_2 = rotateFace(kilo, -2);
