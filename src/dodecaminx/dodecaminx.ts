@@ -30,6 +30,12 @@ export type DodecaminxFaceSimple = [
   DodecaminxValue?, // center
 ];
 
+export type DodecaminxSliceObject<Data> = {
+  leading: DodecaminxSticker<Data>[],
+  middle: DodecaminxSticker<Data> | null,
+  trailing: DodecaminxSticker<Data>[],
+}
+
 // value
 export type DodecaminxValue = null | number | string;
 

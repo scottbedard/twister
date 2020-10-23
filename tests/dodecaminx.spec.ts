@@ -1,6 +1,10 @@
-import { DodecaminxTurn } from '../src/dodecaminx/dodecaminx';
+import {
+  DodecaminxSliceObject,
+  DodecaminxTurn,
+} from '../src/dodecaminx/dodecaminx';
 
 import Dodecaminx from '../src/dodecaminx/dodecaminx';
+
 import {
   createFace,
   extractSlice,
@@ -56,10 +60,10 @@ describe('dodecaminx', () => {
 
     // this helper extracts the values from a slice to make
     // assertions easier to make
-    const simplifySlice = (slice: any) => {
+    const simplifySlice = (slice: DodecaminxSliceObject<unknown>) => {
       return {
         leading: slice.leading.map(obj => obj.value),
-        middles: slice.middles.map(obj => obj.value),
+        middle: slice.middle?.value ?? null,
         trailing: slice.trailing.map(obj => obj.value),
       };
     }
@@ -75,31 +79,31 @@ describe('dodecaminx', () => {
 
         expect(simplifySlice(slice_2)).toEqual({
           leading: ['corner-c-0'],
-          middles: [],
+          middle: null,
           trailing: ['corner-d-0'],
         });
 
         expect(simplifySlice(slice_1)).toEqual({
           leading: ['corner-b-0'],
-          middles: [],
+          middle: null,
           trailing: ['corner-c-0'],
         });
 
         expect(simplifySlice(slice0)).toEqual({
           leading: ['corner-a-0'],
-          middles: [],
+          middle: null,
           trailing: ['corner-b-0'],
         });
 
         expect(simplifySlice(slice1)).toEqual({
           leading: ['corner-e-0'],
-          middles: [],
+          middle: null,
           trailing: ['corner-a-0'],
         });
 
         expect(simplifySlice(slice2)).toEqual({
           leading: ['corner-d-0'],
-          middles: [],
+          middle: null,
           trailing: ['corner-e-0'],
         });
       });
@@ -114,31 +118,31 @@ describe('dodecaminx', () => {
 
         expect(simplifySlice(slice_2)).toEqual({
           leading: ['corner-c-0'],
-          middles: ['edge-c-0'],
+          middle: 'edge-c-0',
           trailing: ['corner-d-0'],
         });
 
         expect(simplifySlice(slice_1)).toEqual({
           leading: ['corner-b-0'],
-          middles: ['edge-b-0'],
+          middle: 'edge-b-0',
           trailing: ['corner-c-0'],
         });
 
         expect(simplifySlice(slice0)).toEqual({
           leading: ['corner-a-0'],
-          middles: ['edge-a-0'],
+          middle: 'edge-a-0',
           trailing: ['corner-b-0'],
         });
 
         expect(simplifySlice(slice1)).toEqual({
           leading: ['corner-e-0'],
-          middles: ['edge-e-0'],
+          middle: 'edge-e-0',
           trailing: ['corner-a-0'],
         });
         
         expect(simplifySlice(slice2)).toEqual({
           leading: ['corner-d-0'],
-          middles: ['edge-d-0'],
+          middle: 'edge-d-0',
           trailing: ['corner-e-0'],
         });
       });

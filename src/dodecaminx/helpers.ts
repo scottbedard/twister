@@ -5,12 +5,13 @@ import {
   DodecaminxSticker,
   DodecaminxTurn,
   DodecaminxValue,
+  DodecaminxSliceObject,
 } from './dodecaminx';
 
 import { cols, rows } from '../utils/matrix';
 import { error } from '../utils/function';
 import { isOdd } from '../utils/number';
-import { roll, slice, times } from '../utils/array';
+import { roll, times } from '../utils/array';
 
 /**
  * Create a face of values
@@ -40,16 +41,14 @@ export function createFace<Data>(size: number, initialValue: DodecaminxValue = n
  *
  * @return {DodecaminxSlice}
  */
-export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, angle = 0): any {
+export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, angle = 0): DodecaminxSliceObject<T> {
   const rotatedFace = rotateFace(face, angle);
   const leadingRows = rows(rotatedFace.corners[0]);
   const trailingCols = cols(rotatedFace.corners[1]);
-  
+
   return {
     leading: leadingRows[depth - 1],
-    middles: rotatedFace.middles.length
-      ? slice(rotatedFace.middles[0], depth - 1, depth)
-      : [],
+    middle: rotatedFace.middles?.[0]?.[depth - 1] ?? null,
     trailing: trailingCols[depth - 1],
   };
 }
