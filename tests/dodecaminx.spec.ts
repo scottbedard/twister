@@ -224,6 +224,84 @@ describe('dodecaminx', () => {
           trailing: ['corner-e-1', 'corner-e-3'],
         });
       });
+
+      it('giga [depth: 1]', () => {
+        const giga = createTestFace(5);
+        const slice_2 = extractSlice(giga, 1, -2);
+        const slice_1 = extractSlice(giga, 1, -1);
+        const slice0 = extractSlice(giga, 1, 0);
+        const slice1 = extractSlice(giga, 1, 1);
+        const slice2 = extractSlice(giga, 1, 2);
+
+        expect(simplifySlice(slice_2)).toEqual({
+          leading: ['corner-c-0', 'corner-c-1'],
+          middle: 'edge-c-0',
+          trailing: ['corner-d-0', 'corner-d-2'],
+        });
+
+        expect(simplifySlice(slice_1)).toEqual({
+          leading: ['corner-b-0', 'corner-b-1'],
+          middle: 'edge-b-0',
+          trailing: ['corner-c-0', 'corner-c-2'],
+        });
+
+        expect(simplifySlice(slice0)).toEqual({
+          leading: ['corner-a-0', 'corner-a-1'],
+          middle: 'edge-a-0',
+          trailing: ['corner-b-0', 'corner-b-2'],
+        });
+
+        expect(simplifySlice(slice1)).toEqual({
+          leading: ['corner-e-0', 'corner-e-1'],
+          middle: 'edge-e-0',
+          trailing: ['corner-a-0', 'corner-a-2'],
+        });
+
+        expect(simplifySlice(slice2)).toEqual({
+          leading: ['corner-d-0', 'corner-d-1'],
+          middle: 'edge-d-0',
+          trailing: ['corner-e-0', 'corner-e-2'],
+        });
+      });
+
+      it('giga [depth: 2]', () => {
+        const giga = createTestFace(5);
+        const slice_2 = extractSlice(giga, 2, -2);
+        const slice_1 = extractSlice(giga, 2, -1);
+        const slice0 = extractSlice(giga, 2, 0);
+        const slice1 = extractSlice(giga, 2, 1);
+        const slice2 = extractSlice(giga, 2, 2);
+
+        expect(simplifySlice(slice_2)).toEqual({
+          leading: ['corner-c-2', 'corner-c-3'],
+          middle: 'edge-c-1',
+          trailing: ['corner-d-1', 'corner-d-3'],
+        });
+
+        expect(simplifySlice(slice_1)).toEqual({
+          leading: ['corner-b-2', 'corner-b-3'],
+          middle: 'edge-b-1',
+          trailing: ['corner-c-1', 'corner-c-3'],
+        });
+
+        expect(simplifySlice(slice0)).toEqual({
+          leading: ['corner-a-2', 'corner-a-3'],
+          middle: 'edge-a-1',
+          trailing: ['corner-b-1', 'corner-b-3'],
+        });
+
+        expect(simplifySlice(slice1)).toEqual({
+          leading: ['corner-e-2', 'corner-e-3'],
+          middle: 'edge-e-1',
+          trailing: ['corner-a-1', 'corner-a-3'],
+        });
+
+        expect(simplifySlice(slice2)).toEqual({
+          leading: ['corner-d-2', 'corner-d-3'],
+          middle: 'edge-d-1',
+          trailing: ['corner-e-1', 'corner-e-3'],
+        });
+      });
     });
 
     describe('rotateFace', () => {
