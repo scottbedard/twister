@@ -140,7 +140,7 @@ Our notation is a superset of [WCA notation](https://www.worldcubeassociation.or
 This puzzle represents N-layered face turning dodecahedrons. State for this puzzle is stored as an array of corner matrices and middle values. These arrays start from the faces primary corner, and continue clockwise around the face. The corner matrices are similar to that of the cube face, starting with the corner furthest from the center of the face, and read sequentially towards the center. Middle arrays start with the sticker furthest from the center. Note that for even-layered puzzles, the middle and center values will be an empty array and `null` respectively.
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/7980426/97071250-077e6880-1594-11eb-8739-57a45203eb6a.png" width="480px">
+  <img src="https://user-images.githubusercontent.com/7980426/97093355-f9663180-15ff-11eb-93e4-8783045b8f71.png" width="768px">
 </p>
 
 Notation for this puzzle is similar to that of cubes. The main difference is that whole-puzzle rotations are denoted with a `*` prefix. Here are a few examples to demonstrate various turns around the `R` face.
