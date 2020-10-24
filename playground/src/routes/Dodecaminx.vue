@@ -1,6 +1,6 @@
 <template>
   <div class="grid gap-6 items-start md:grid-cols-12">
-    <div class="md:col-span-4">
+    <div class="md:col-span-5">
       <p class="leading-loose mb-6">
         This puzzle is exposed globally as <ClickableCode @click="log">window.dodecaminx</ClickableCode>.
         It can be resized by running <ClickableCode @click="resize">dodecaminx.options.size = {{ nextSize }}</ClickableCode>.
@@ -8,7 +8,7 @@
       <div class="font-bold mb-1">Options:</div>
       <pre v-text="model.options" />
     </div>
-    <div class="text-gray-900 relative w-full md:col-span-8">
+    <div class="text-gray-900 relative w-full md:col-span-7">
       <svg
         class="absolute right-0"
         viewBox="0 0 9.8 4.9"

@@ -2,12 +2,14 @@ import {
   DodecaminxFace,
   DodecaminxFaceObject,
   DodecaminxFaceSimple,
+  DodecaminxSliceObject,
+  DodecaminxState,
   DodecaminxSticker,
   DodecaminxTurn,
   DodecaminxValue,
-  DodecaminxSliceObject,
 } from './dodecaminx';
 
+import { net } from './constants';
 import { cols, rows } from '../utils/matrix';
 import { error } from '../utils/function';
 import { isOdd } from '../utils/number';
@@ -133,6 +135,23 @@ export function rotateFace<T>(face: DodecaminxFaceObject<T>, rotation: number): 
     corners: roll(face.corners, -rotation),
     middles: roll(face.middles, -rotation),
   };
+}
+
+/**
+ * Rotate slices around a given face.
+ *
+ * @param {DodecaminxState} state
+ * @param {DodecaminxFace} target
+ * @param {number} depth
+ * @param {number} rotation
+ *
+ * @return {void}
+ */
+export function rotateSlices<T>(state: DodecaminxState<T>, target: DodecaminxFace, depth: number, rotation: number) {
+  const adjacentFaces = net[target].map(([face]) => face);
+  const adjacentSlices = net[target].map(([face, angle]) => extractSlice(state[face], depth, angle));
+  
+  console.log({ adjacentFaces, adjacentSlices });
 }
 
 /**

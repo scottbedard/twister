@@ -1,6 +1,8 @@
 import {
   createFace,
   parseDodecaminxTurn,
+  rotateFace,
+  rotateSlices,
   simplifyFace,
 } from './helpers';
 
@@ -98,7 +100,21 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    * @return {void} 
    */
   execute(turn: DodecaminxTurn): void {
-    error('not implemented');
+    // puzzle rotations
+    if (turn.whole) {
+      error('not implemented');
+      return;
+    }
+
+    // rotate outer face if necessary
+    if (turn.depth === 1 || turn.wide) {
+      this.state[turn.target] = rotateFace(this.state[turn.target], turn.rotation);
+    }
+
+    // turn slices
+    for (let i = 1; i <= turn.depth; i++) {
+      rotateSlices(this.state, turn.target, i, turn.rotation);
+    }
   }
 
   /**
