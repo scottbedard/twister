@@ -71,7 +71,10 @@ export function injectSlice<T>(target: DodecaminxFaceObject<T>, source: Dodecami
     splice(matrix, matrix.indexOf(obj), 1, source.leading[i]);
   });
 
-  // @todo: middle
+  if (targetSlice.middle) {
+    const middles = target.middles.find(arr => arr.includes(targetSlice.middle));
+    splice(middles, middles.indexOf(targetSlice.middle), 1, source.middle);
+  }
 
   targetSlice.trailing.forEach((obj, i) => {
     const matrix = target.corners.find(arr => arr.includes(obj));

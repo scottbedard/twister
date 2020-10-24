@@ -370,6 +370,111 @@ describe('dodecaminx', () => {
           ],
         ]);
       });
+
+      it('mega', () => {
+        const slice = extractSlice(createTestFace(3, 'source'), 1, 0);
+        const target_2 = createTestFace(3);
+        const target_1 = createTestFace(3);
+        const target0 = createTestFace(3);
+        const target1 = createTestFace(3);
+        const target2 = createTestFace(3);
+      
+        injectSlice(target_2, slice, 1, -2);
+        injectSlice(target_1, slice, 1, -1);
+        injectSlice(target0, slice, 1, 0);
+        injectSlice(target1, slice, 1, 1);
+        injectSlice(target2, slice, 1, 2);
+
+        expect(simplifyFace(target_2)).toEqual([
+          [
+            ['corner-a-0'],
+            ['corner-b-0'],
+            ['source-corner-a-0'],
+            ['source-corner-b-0'],
+            ['corner-e-0'],
+          ],
+          [
+            ['edge-a-0'],
+            ['edge-b-0'],
+            ['source-edge-a-0'],
+            ['edge-d-0'],
+            ['edge-e-0'],
+          ],
+          null
+        ]);
+
+        expect(simplifyFace(target_1)).toEqual([
+          [
+            ['corner-a-0'],
+            ['source-corner-a-0'],
+            ['source-corner-b-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
+          ],
+          [
+            ['edge-a-0'],
+            ['source-edge-a-0'],
+            ['edge-c-0'],
+            ['edge-d-0'],
+            ['edge-e-0'],
+          ],
+          null
+        ]);
+
+        expect(simplifyFace(target0)).toEqual([
+          [
+            ['source-corner-a-0'],
+            ['source-corner-b-0'],
+            ['corner-c-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
+          ],
+          [
+            ['source-edge-a-0'],
+            ['edge-b-0'],
+            ['edge-c-0'],
+            ['edge-d-0'],
+            ['edge-e-0'],
+          ],
+          null
+        ]);
+
+        expect(simplifyFace(target1)).toEqual([
+          [
+            ['source-corner-b-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
+            ['corner-d-0'],
+            ['source-corner-a-0'],
+          ],
+          [
+            ['edge-a-0'],
+            ['edge-b-0'],
+            ['edge-c-0'],
+            ['edge-d-0'],
+            ['source-edge-a-0'],
+          ],
+          null
+        ]);
+
+        expect(simplifyFace(target2)).toEqual([
+          [
+            ['corner-a-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
+            ['source-corner-a-0'],
+            ['source-corner-b-0'],
+          ],
+          [
+            ['edge-a-0'],
+            ['edge-b-0'],
+            ['edge-c-0'],
+            ['source-edge-a-0'],
+            ['edge-e-0'],
+          ],
+          null
+        ]);
+      });
     });
 
     describe('rotateFace', () => {
