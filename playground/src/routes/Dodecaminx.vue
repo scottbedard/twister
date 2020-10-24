@@ -19,11 +19,11 @@
             :key="face.key"
             :transform="face.transform">
             <path
-              v-for="(path, index) in face.paths"
+              v-for="(sticker, index) in face.stickers"
               stroke="currentColor"
               stroke-width="0.05"
-              :d="d(path)"
-              :fill="colors[face.key]"
+              :d="d(sticker.path)"
+              :fill="colors[sticker.value]"
               :key="`corner-${index}`" />
           </g>
         </g>
@@ -34,6 +34,7 @@
 
 <script>
 /* eslint-disable camelcase */
+/* eslint-disable */
 import {
   angleFrom, bilerp, intersect, isEven, measure,
 } from '@/utils';
@@ -46,20 +47,20 @@ const toSvgOrientation = ([x, y]) => [x, -y];
 const toPathCoordinates = (arr) => arr.map(toSvgOrientation);
 
 // colors
-const colors = {
-  u: '#F6E05E', // yellow
-  l: '#B794F4', // purple
-  f: '#F7FAFC', // white
-  r: '#2B6CB0', // dark blue
-  br: '#2F855A', // dark green
-  bl: '#ED8936', // orange
-  dl: '#9AE6B4', // light green
-  dr: '#E53E3E', // red
-  dbr: '#F687B3', // pink
-  b: '#718096', // gray
-  dbl: '#90CDF4', // light blue
-  d: '#FBD38D', // creme
-};
+const colors = [
+  '#F6E05E', // u: yellow
+  '#B794F4', // l: purple
+  '#F7FAFC', // f: white
+  '#2B6CB0', // r: dark blue
+  '#2F855A', // br: dark green
+  '#ED8936', // bl: orange
+  '#9AE6B4', // dl: light green
+  '#E53E3E', // dr: red
+  '#F687B3', // dbr: pink
+  '#718096', // b: gray
+  '#90CDF4', // dbl: light blue
+  '#FBD38D', // d: creme
+];
 
 // sizes
 const defaultSize = 3;
@@ -142,11 +143,7 @@ export default {
     ClickableCode,
   },
   computed: {
-    center() {
-      if (this.isEven) {
-        return null;
-      }
-
+    centerPath() {
       return [
         intersect(s4, s0),
         intersect(s1, s0),
@@ -161,7 +158,7 @@ export default {
     cornerOrigins() {
       return this.isEven
         ? [origin, origin, origin, origin, origin]
-        : this.center;
+        : this.centerPath;
     },
     cornerOutlines() {
       const [cp0, cp1, cp2, cp3, cp4] = this.cornerOrigins;
@@ -182,8 +179,8 @@ export default {
 
         return {
           key,
-          paths: [
-            this.center,
+          stickers: [
+            this.center(face),
             ...this.corners(face),
             ...this.middles(face),
           ].filter(identity),
@@ -224,13 +221,23 @@ export default {
     },
   },
   methods: {
+    center(face) {
+      if (this.isEven) {
+        return null;
+      }
+
+      return {
+        path: this.centerPath,
+        value: face.center.value,
+      };
+    },
     corners(face) {
-      const paths = [];
+      const stickers = [];
 
       const cornerLayers = Math.floor(this.puzzleSize / 2);
       const colMap = mapColumns(cornerLayers);
       const rowMap = mapRows(cornerLayers);
-      const layerSize = 1 / (cornerLayers);
+      const layerSize = 1 / cornerLayers;
 
       face.corners.forEach((corner, cornerIndex) => {
         corner.forEach((sticker, stickerIndex) => {
@@ -248,11 +255,14 @@ export default {
           const c3 = bilerp(r1, r2, 1 - (layerSize * (row + 1)));
           const c4 = bilerp(r1, r2, 1 - (layerSize * row));
 
-          paths.push([c1, c2, c3, c4]);
+          stickers.push({
+            path: [c1, c2, c3, c4],
+            value: sticker.value,
+          });
         });
       });
 
-      return paths;
+      return stickers;
     },
     d(arr) {
       const [start, ...points] = toPathCoordinates(arr);
@@ -288,7 +298,7 @@ export default {
       console.log(window.dodecaminx);
     },
     middles(face) {
-      const paths = [];
+      const stickers = [];
 
       face.middles.forEach((middle, middleIndex) => {
         const [mo0, mo1, mo2] = this.middleOutlines[middleIndex];
@@ -299,11 +309,14 @@ export default {
           const r1 = bilerp(mo1, mo2, stickerIndex / arr.length);
           const r2 = bilerp(mo1, mo2, (stickerIndex + 1) / arr.length);
 
-          paths.push([l1, l2, r2, r1]);
+          stickers.push({
+            path: [l1, l2, r2, r1],
+            value: sticker.value,
+          });
         });
       });
 
-      return paths;
+      return stickers;
     },
     resize(e) {
       this.model.options.size = e.ctrlKey || e.metaKey
