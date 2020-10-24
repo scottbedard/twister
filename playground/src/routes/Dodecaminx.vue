@@ -167,11 +167,11 @@ export default {
       const [cp0, cp1, cp2, cp3, cp4] = this.cornerOrigins;
 
       return [
-        [cp0, m_p4_p0, p0, m_p0_p1],
-        [cp1, m_p0_p1, p1, m_p1_p2],
-        [cp2, m_p1_p2, p2, m_p2_p3],
-        [cp3, m_p2_p3, p3, m_p3_p4],
-        [cp4, m_p3_p4, p4, m_p4_p0],
+        [p0, m_p0_p1, cp0, m_p4_p0],
+        [p1, m_p1_p2, cp1, m_p0_p1],
+        [p2, m_p2_p3, cp2, m_p1_p2],
+        [p3, m_p3_p4, cp3, m_p2_p3],
+        [p4, m_p4_p0, cp4, m_p3_p4],
       ];
     },
     faces() {
@@ -238,10 +238,10 @@ export default {
           const row = rowMap[stickerIndex];
           const quintant = this.cornerOutlines[cornerIndex];
 
-          const l1 = bilerp(quintant[0], quintant[3], layerSize * col);
-          const l2 = bilerp(quintant[1], quintant[2], layerSize * col);
-          const r1 = bilerp(quintant[0], quintant[3], layerSize * (col + 1));
-          const r2 = bilerp(quintant[1], quintant[2], layerSize * (col + 1));
+          const l1 = bilerp(quintant[3], quintant[2], layerSize * col);
+          const l2 = bilerp(quintant[0], quintant[1], layerSize * col);
+          const r1 = bilerp(quintant[3], quintant[2], layerSize * (col + 1));
+          const r2 = bilerp(quintant[0], quintant[1], layerSize * (col + 1));
 
           const c1 = bilerp(l1, l2, 1 - (layerSize * row));
           const c2 = bilerp(l1, l2, 1 - (layerSize * (row + 1)));
