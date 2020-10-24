@@ -11,7 +11,7 @@ import {
 import { cols, rows } from '../utils/matrix';
 import { error } from '../utils/function';
 import { isOdd } from '../utils/number';
-import { roll, times } from '../utils/array';
+import { roll, splice, times } from '../utils/array';
 
 /**
  * Create a face of values
@@ -35,13 +35,13 @@ export function createFace<Data>(size: number, initialValue: DodecaminxValue = n
 /**
  * Extract a slice of stickers from a face at a given angle.
  *
- * @param {DodecaminxFace} face
+ * @param {DodecaminxFaceObject} face
  * @param {number} depth
  * @param {number} angle
  *
  * @return {DodecaminxSlice}
  */
-export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, angle = 0): DodecaminxSliceObject<T> {
+export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, angle: number): DodecaminxSliceObject<T> {
   const rotatedFace = rotateFace(face, angle);
   const leadingRows = rows(rotatedFace.corners[0]);
   const trailingCols = cols(rotatedFace.corners[1]);
@@ -51,6 +51,30 @@ export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, an
     middle: rotatedFace.middles?.[0]?.[depth - 1] ?? null,
     trailing: trailingCols[depth - 1],
   };
+}
+
+/**
+ * Inject a slice into a face object.
+ *
+ * @param {DodecaminxFaceObject} face
+ * @param {DodecaminxSliceObject} slice
+ * @param {number} depth
+ * @param {number} angle
+ *
+ * @return {void}
+ */
+export function injectSlice<T>(target: DodecaminxFaceObject<T>, source: DodecaminxSliceObject<T>, depth: number, angle: number): void {
+  source.leading.forEach((obj) => {
+    const i = (angle + 5) % 5;
+    splice(target.corners[i], target.corners[i].indexOf(obj), 1, obj);
+  });
+
+  // @todo: middle
+
+  source.trailing.forEach((obj) => {
+    const i = ((angle + 6) % 5);
+    splice(target.corners[i], target.corners[i].indexOf(obj), 1, obj);
+  });
 }
 
 /**

@@ -8,6 +8,7 @@ import Dodecaminx from '../src/dodecaminx/dodecaminx';
 import {
   createFace,
   extractSlice,
+  injectSlice,
   rotateFace,
   simplifyFace,
 } from '../src/dodecaminx/helpers';
@@ -43,17 +44,17 @@ describe('dodecaminx', () => {
   describe('helpers', () => {
     // this helper creates faces with a unique values for each
     // sticker, which is useful for rotate / slice assertions
-    const createTestFace = (size: number) => {
+    const createTestFace = (size: number, prefix = '') => {
       const face = createFace(size);
       const letters = ['a', 'b', 'c', 'd', 'e'];
 
       face.corners = face.corners
         .map((matrices, i) => matrices
-          .map((val, j) => ({ data: {}, value: `corner-${letters[i]}-${j}` })));
+          .map((val, j) => ({ data: {}, value: `${prefix ? `${prefix}-` : ''}corner-${letters[i]}-${j}` })));
 
       face.middles = face.middles
         .map((arr, i) => arr
-          .map((val, j) => ({ data: {}, value: `edge-${letters[i]}-${j}` })));
+          .map((val, j) => ({ data: {}, value: `${prefix ? `${prefix}-` : ''}edge-${letters[i]}-${j}` })));
 
       return face;
     }
@@ -301,6 +302,74 @@ describe('dodecaminx', () => {
           middle: 'edge-d-1',
           trailing: ['corner-e-1', 'corner-e-3'],
         });
+      });
+    });
+
+    describe('injectSlice', () => {
+      it('kilo', () => {
+        const source = createTestFace(2, 'source');
+        const slice = extractSlice(source, 1, 0);
+        const target_2 = createTestFace(2);
+        const target_1 = createTestFace(2);
+        const target0 = createTestFace(2);
+        const target1 = createTestFace(2);
+        const target2 = createTestFace(2);
+      
+        injectSlice(target_2, slice, 1, -2);
+        injectSlice(target_1, slice, 1, -1);
+        injectSlice(target0, slice, 1, 0);
+        injectSlice(target1, slice, 1, 1);
+        injectSlice(target2, slice, 1, 2);
+
+        expect(simplifyFace(target_2)).toEqual([
+          [
+            ['corner-a-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
+            ['source-corner-a-0'],
+            ['source-corner-b-0'],
+          ],
+        ]);
+
+        expect(simplifyFace(target_1)).toEqual([
+          [
+            ['source-corner-b-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
+            ['corner-d-0'],
+            ['source-corner-a-0'],
+          ],
+        ]);
+        
+        expect(simplifyFace(target0)).toEqual([
+          [
+            ['source-corner-a-0'],
+            ['source-corner-b-0'],
+            ['corner-c-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
+          ],
+        ]);
+
+        expect(simplifyFace(target1)).toEqual([
+          [
+            ['corner-a-0'],
+            ['source-corner-a-0'],
+            ['source-corner-b-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
+          ],
+        ]);
+
+        expect(simplifyFace(target2)).toEqual([
+          [
+            ['corner-a-0'],
+            ['corner-b-0'],
+            ['source-corner-a-0'],
+            ['source-corner-b-0'],
+            ['corner-e-0'],
+          ],
+        ]);
       });
     });
 
