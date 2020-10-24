@@ -307,8 +307,7 @@ describe('dodecaminx', () => {
 
     describe('injectSlice', () => {
       it('kilo', () => {
-        const source = createTestFace(2, 'source');
-        const slice = extractSlice(source, 1, 0);
+        const slice = extractSlice(createTestFace(2, 'source'), 1, 0);
         const target_2 = createTestFace(2);
         const target_1 = createTestFace(2);
         const target0 = createTestFace(2);
@@ -325,19 +324,19 @@ describe('dodecaminx', () => {
           [
             ['corner-a-0'],
             ['corner-b-0'],
-            ['corner-c-0'],
             ['source-corner-a-0'],
             ['source-corner-b-0'],
+            ['corner-e-0'],
           ],
         ]);
 
         expect(simplifyFace(target_1)).toEqual([
           [
-            ['source-corner-b-0'],
-            ['corner-b-0'],
-            ['corner-c-0'],
-            ['corner-d-0'],
+            ['corner-a-0'],
             ['source-corner-a-0'],
+            ['source-corner-b-0'],
+            ['corner-d-0'],
+            ['corner-e-0'],
           ],
         ]);
         
@@ -353,11 +352,11 @@ describe('dodecaminx', () => {
 
         expect(simplifyFace(target1)).toEqual([
           [
-            ['corner-a-0'],
-            ['source-corner-a-0'],
             ['source-corner-b-0'],
+            ['corner-b-0'],
+            ['corner-c-0'],
             ['corner-d-0'],
-            ['corner-e-0'],
+            ['source-corner-a-0'],
           ],
         ]);
 
@@ -365,9 +364,9 @@ describe('dodecaminx', () => {
           [
             ['corner-a-0'],
             ['corner-b-0'],
+            ['corner-c-0'],
             ['source-corner-a-0'],
             ['source-corner-b-0'],
-            ['corner-e-0'],
           ],
         ]);
       });

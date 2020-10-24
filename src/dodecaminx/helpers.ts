@@ -64,16 +64,18 @@ export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, an
  * @return {void}
  */
 export function injectSlice<T>(target: DodecaminxFaceObject<T>, source: DodecaminxSliceObject<T>, depth: number, angle: number): void {
-  source.leading.forEach((obj) => {
-    const i = (angle + 5) % 5;
-    splice(target.corners[i], target.corners[i].indexOf(obj), 1, obj);
+  const targetSlice = extractSlice(target, depth, angle);
+
+  targetSlice.leading.forEach((obj, i) => {
+    const matrix = target.corners.find(arr => arr.includes(obj));
+    splice(matrix, matrix.indexOf(obj), 1, source.leading[i]);
   });
 
   // @todo: middle
 
-  source.trailing.forEach((obj) => {
-    const i = ((angle + 6) % 5);
-    splice(target.corners[i], target.corners[i].indexOf(obj), 1, obj);
+  targetSlice.trailing.forEach((obj, i) => {
+    const matrix = target.corners.find(arr => arr.includes(obj));
+    splice(matrix, matrix.indexOf(obj), 1, source.trailing[i]);
   });
 }
 
