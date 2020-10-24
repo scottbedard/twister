@@ -8,7 +8,7 @@ import { DodecaminxFace } from './dodecaminx';
  * primary corner. A face's primary corner represents the starting
  * position of corner matrices and middle arrays.
  * 
- * See: https://www.desmos.com/geometry/aathgjuqvj
+ * See: https://www.desmos.com/geometry/o8kuskawcb
  */
 export const net: Record<DodecaminxFace, [DodecaminxFace, number][]> = {
   u: [
