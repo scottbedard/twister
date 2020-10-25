@@ -64,11 +64,11 @@ const toPathCoordinates = (arr) => arr.map(toSvgOrientation);
 const colors = {
   b: '#718096', // gray
   bl: '#ED8936', // orange
-  br: '#2F855A', // dark green
+  dl: '#2F855A', // dark green
   d: '#FBD38D', // creme
   dbl: '#90CDF4', // light blue
   dbr: '#F687B3', // pink
-  dl: '#9AE6B4', // light green
+  br: '#9AE6B4', // light green
   dr: '#E53E3E', // red
   f: '#F7FAFC', // white
   l: '#B794F4', // purple
