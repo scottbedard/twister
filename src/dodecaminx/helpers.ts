@@ -12,14 +12,14 @@ import {
 import { dodecaminxNet } from './constants';
 import { cols, rows } from '../utils/matrix';
 import { error } from '../utils/function';
-import { isOdd } from '../utils/number';
+import { floor, isOdd } from '../utils/number';
 import { roll, splice, times } from '../utils/array';
 
 /**
  * Create a face of values
  */
 export function createFace<Data>(size: number, initialValue: DodecaminxValue = null): DodecaminxFaceObject<Data> {
-  const gridSize = Math.floor(size / 2);
+  const gridSize = floor(size / 2);
   const odd = isOdd(size);
   const val = () => ({ data: {} as Data, value: initialValue });
 
