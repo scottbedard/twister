@@ -16,7 +16,7 @@ export const defaultValues: Record<DodecaminxFace, DodecaminxValue> = {
   l: 9,
   r: 10,
   u: 11,
-}
+};
 
 /**
  * Dodecaminx net
@@ -87,8 +87,20 @@ export const net: Record<DodecaminxFace, AdjacentFace[]> = {
     ['r', 1],
     ['dbr', 2],
   ],
-  dbl: [],
-  dbr: [],
+  dbl: [
+    ['bl', -2],
+    ['l', -2],
+    ['dl', 0],
+    ['d', 0],
+    ['b', 1],
+  ],
+  dbr: [
+    ['b', -2],
+    ['d', -2],
+    ['dr', -1],
+    ['r', 0],
+    ['br', 0],
+  ],
   b: [
     ['dbl', -2],
     ['dl', -1],
@@ -103,4 +115,4 @@ export const net: Record<DodecaminxFace, AdjacentFace[]> = {
     ['dbr', 1],
     ['b', 2],
   ],
-}
+};
