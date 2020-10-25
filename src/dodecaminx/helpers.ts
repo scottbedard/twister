@@ -93,15 +93,17 @@ export function injectSlice<T>(target: DodecaminxFaceObject<T>, source: Dodecami
  * @return {DodecaminxTurn}
  */
 export function parseDodecaminxTurn(turn: string, maxDepth: number): DodecaminxTurn {
-  const result = turn.match(/^(\d)*(u|f|l|r|bl|br|dl|dr|dbl|dbr|b|d|U|F|L|R|BL|BR|DL|DR|DBL|DBR|B|D){1}(w)?(2)?(['-])?$/);
+  const result = turn.match(/^(?:\*?|(\d)*)(u|f|l|r|bl|br|dl|dr|dbl|dbr|b|d|U|F|L|R|BL|BR|DL|DR|DBL|DBR|B|D){1}(w)?(2)?(['-])?$/);
 
   if (result === null) {
     error(`Invalid turn: ${turn}`);
   }
 
-  let depth: number = result[1] ? parseInt(result[1], 10) : 1;
+  const whole = turn.startsWith('*');
+
+  let depth: number = !whole && result[1] ? parseInt(result[1], 10) : 1;
   const target = result[2];
-  const wide = Boolean(result[3]);
+  const wide = !whole && Boolean(result[3]);
   let rotation: number = result[4] ? parseInt(result[4], 10) : 1;
   const modifier: string = result[5];
 
@@ -122,8 +124,26 @@ export function parseDodecaminxTurn(turn: string, maxDepth: number): DodecaminxT
     rotation,
     target: target.toLowerCase() as DodecaminxFace,
     wide,
-    whole: false,
+    whole,
   };
+}
+
+/**
+ * Stringify dodecaminx turn.
+ *
+ * @param {DodecaminxTurn} turn
+ *
+ * @return {string}
+ */
+export function stringifyTurn(turn: DodecaminxTurn): string {
+  const depth = !turn.whole && turn.depth > 1 && !(turn.depth === 2 && turn.wide) ? turn.depth : '';
+  const rotationAmount = turn.rotation === 2 || turn.rotation === -2 ? '2' : '';
+  const rotationDirection = turn.rotation < 0 ? '-' : '';
+  const target = turn.target.toUpperCase();
+  const whole = turn.whole ? '*' : '';
+  const wide = !turn.whole && turn.wide ? 'w' : '';
+
+  return `${whole}${depth}${target}${wide}${rotationAmount}${rotationDirection}`;
 }
 
 /**

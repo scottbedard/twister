@@ -11,6 +11,7 @@ import {
   injectSlice,
   rotateFace,
   simplifyFace,
+  stringifyTurn,
 } from '../src/dodecaminx/helpers';
 
 // the abilty to set custom values was added after many of these
@@ -691,39 +692,65 @@ describe('dodecaminx', () => {
   });
 
   //
-  // parsing
+  // notation
   //
-  describe('turn parsing', () => {
-    const giga = new Dodecaminx({ size: 5 });
+  describe('notation', () => {
+    describe('parse', () => {
+      const giga = new Dodecaminx({ size: 5 });
 
-    const turns: Record<string, DodecaminxTurn> = {
-      'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
-      'F2': { depth: 1, rotation: 2, target: 'f', wide: false, whole: false },
-      'F-': { depth: 1, rotation: -1, target: 'f', wide: false, whole: false },
-      'F2-': { depth: 1, rotation: -2, target: 'f', wide: false, whole: false },
-      'Fw': { depth: 2, rotation: 1, target: 'f', wide: true, whole: false },
-      'Fw-': { depth: 2, rotation: -1, target: 'f', wide: true, whole: false },
-      '2F': { depth: 2, rotation: 1, target: 'f', wide: false, whole: false },
-    };
+      const turns: Record<string, DodecaminxTurn> = {
+        'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
+        'F2': { depth: 1, rotation: 2, target: 'f', wide: false, whole: false },
+        'F-': { depth: 1, rotation: -1, target: 'f', wide: false, whole: false },
+        'F2-': { depth: 1, rotation: -2, target: 'f', wide: false, whole: false },
+        'Fw': { depth: 2, rotation: 1, target: 'f', wide: true, whole: false },
+        'Fw-': { depth: 2, rotation: -1, target: 'f', wide: true, whole: false },
+        '2Fw-': { depth: 2, rotation: -1, target: 'f', wide: true, whole: false },
+        'Fw2-': { depth: 2, rotation: -2, target: 'f', wide: true, whole: false },
+        '2F': { depth: 2, rotation: 1, target: 'f', wide: false, whole: false },
+        '*F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: true },
+      };
 
-    Object.keys(turns).forEach(turn => {
-      it(turn, () => {
-        expect(giga.parse(turn)).toEqual(turns[turn]);
+      it('throws error when turn is invalid', () => {
+        expect(() => giga.parse('invalid')).toThrow();
+      });
+
+      it('throws error when depth exceeds available layers', () => {
+        const mega = new Dodecaminx({ size: 3 });
+        const master = new Dodecaminx({ size: 4 });
+
+        expect(() => mega.parse('2R')).toThrow();
+        expect(() => mega.parse('Rw')).toThrow();
+        expect(() => master.parse('2R')).not.toThrow();
+        expect(() => master.parse('3R')).toThrow();
+      });
+
+      Object.keys(turns).forEach(turn => {
+        it(turn, () => {
+          expect(giga.parse(turn)).toEqual(turns[turn]);
+        });
       });
     });
 
-    it('invalid', () => {
-      expect(() => giga.parse('invalid')).toThrow();
-    });
+    describe('stringify', () => {
+      const turns: Record<string, DodecaminxTurn> = {
+        'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
+        'F2': { depth: 1, rotation: 2, target: 'f', wide: false, whole: false },
+        'F-': { depth: 1, rotation: -1, target: 'f', wide: false, whole: false },
+        'F2-': { depth: 1, rotation: -2, target: 'f', wide: false, whole: false },
+        'Fw': { depth: 2, rotation: 1, target: 'f', wide: true, whole: false },
+        'Fw-': { depth: 2, rotation: -1, target: 'f', wide: true, whole: false },
+        'Fw2-': { depth: 2, rotation: -2, target: 'f', wide: true, whole: false },
+        '2F': { depth: 2, rotation: 1, target: 'f', wide: false, whole: false },
+        '*F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: true },
+      };
 
-    it('too deep', () => {
-      const mega = new Dodecaminx({ size: 3 });
-      const master = new Dodecaminx({ size: 4 });
-
-      expect(() => mega.parse('2R')).toThrow();
-      expect(() => mega.parse('Rw')).toThrow();
-      expect(() => master.parse('2R')).not.toThrow();
-      expect(() => master.parse('3R')).toThrow();
+      Object.keys(turns).forEach(turn => {
+        it(turn, () => {
+          const obj = turns[turn];
+          expect(stringifyTurn(obj)).toEqual(turn);
+        });
+      });
     });
   });
 
@@ -949,17 +976,6 @@ describe('dodecaminx', () => {
           11,
         ],
       });
-    });
-  });
-
-  //
-  // turns
-  //
-  describe.skip('turns', () => {
-    it('R', () => {
-      const minx = new Dodecaminx({ size: 4 });
-      
-      // ...
     });
   });
 });
