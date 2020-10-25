@@ -978,4 +978,13 @@ describe('dodecaminx', () => {
       });
     });
   });
+
+  //
+  // generateScramble
+  //
+  it('generateScramble', () => {
+    const kilo = new Dodecaminx({ size: 2 });
+
+    expect(kilo.generateScramble(10).split(' ').length).toBe(10);
+  });
 });

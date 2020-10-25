@@ -1,7 +1,24 @@
 import { DodecaminxFace, DodecaminxValue } from './dodecaminx';
 
-type AdjacentFace = [DodecaminxFace, -2 | -1 | 0 | 1 | 2];
-type FaceRelationships = [AdjacentFace, AdjacentFace, AdjacentFace, AdjacentFace, AdjacentFace];
+type AdjacentFace<T> = Exclude<DodecaminxFace, T>;
+
+export type AdjacentRelationship<T> = [AdjacentFace<T>, -2 | -1 | 0 | 1 | 2];
+
+type IntersectingFaces<T extends DodecaminxFace> = [
+  AdjacentFace<T>,
+  AdjacentFace<T>,
+  AdjacentFace<T>,
+  AdjacentFace<T>,
+  AdjacentFace<T>,
+];
+
+type RelatedFaces<T extends DodecaminxFace> = [
+  AdjacentRelationship<T>,
+  AdjacentRelationship<T>,
+  AdjacentRelationship<T>,
+  AdjacentRelationship<T>,
+  AdjacentRelationship<T>,
+];
 
 /**
  * Default sticker values
@@ -31,7 +48,9 @@ export const defaultValues: Record<DodecaminxFace, DodecaminxValue> = {
  * 
  * See: https://www.desmos.com/geometry/o8kuskawcb
  */
-export const dodecaminxNet: Record<DodecaminxFace, FaceRelationships> = {
+export const dodecaminxNet: {
+  [K in DodecaminxFace]: RelatedFaces<K>
+} = {
   u: [
     ['br', 2],
     ['r', -2],
@@ -107,7 +126,7 @@ export const dodecaminxNet: Record<DodecaminxFace, FaceRelationships> = {
     ['dl', -1],
     ['dr', 0],
     ['dbr', 1],
-    ['b', 2],
+    ['d', 2],
   ],
   d: [
     ['dbl', -2],
@@ -116,4 +135,24 @@ export const dodecaminxNet: Record<DodecaminxFace, FaceRelationships> = {
     ['dbr', 1],
     ['b', 2],
   ],
+};
+
+/**
+ * Map of faces and their intersecting adjacent faces.
+ */
+export const dodecaminxIntersections: {
+  [K in DodecaminxFace]: IntersectingFaces<K>
+} = {
+  u: ['br', 'r', 'f', 'l', 'bl'],
+  f: ['r', 'dr', 'dl', 'l', 'u'],
+  l: ['u', 'f', 'dl', 'dbl', 'bl'],
+  r: ['dbr', 'dr', 'f', 'u', 'br'],
+  bl: ['br', 'u', 'l', 'dbl', 'b'],
+  br: ['dbr', 'r', 'u', 'bl', 'b'],
+  dl: ['dbl', 'l', 'f', 'dr', 'd'],
+  dr: ['d', 'dl', 'f', 'r', 'dbr'],
+  dbl: ['bl', 'l', 'dl', 'd', 'b'],
+  dbr: ['b', 'd', 'dr', 'r', 'br'],
+  b: ['dbl', 'dl', 'dr', 'dbr', 'd'],
+  d: ['dbl', 'dl', 'dr', 'dbr', 'b'],
 };

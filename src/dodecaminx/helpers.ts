@@ -9,7 +9,7 @@ import {
   DodecaminxValue,
 } from './dodecaminx';
 
-import { dodecaminxNet } from './constants';
+import { AdjacentRelationship, dodecaminxNet } from './constants';
 import { cols, rows } from '../utils/matrix';
 import { error } from '../utils/function';
 import { floor, isOdd } from '../utils/number';
@@ -53,6 +53,39 @@ export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, an
     middle: rotatedFace.middles?.[0]?.[depth - 1] ?? null,
     trailing: trailingCols[depth - 1],
   };
+}
+
+/**
+ * Test if a face is solved.
+ *
+ * @param {DodecaminxFaceObject} face
+ *
+ * @return {boolean}
+ */
+export function faceIsSolved<T>(face: DodecaminxFaceObject<T>): boolean {
+  const value = face.center?.value ?? face.corners[0][0].value;
+
+  for (let i = 0; i < 5; i++) {
+    const corner = face.corners[i];
+
+    for (let j = 0; j < corner.length; j++) {
+      if (corner[j].value !== null && corner[j].value !== value) {
+        return false;
+      }
+    }
+
+    if (face.middles.length > 0) {
+      const middle = face.middles[i];
+
+      for (let j = 0; j < middle.length; j++) {
+        if (middle[j].value !== null && middle[j].value !== value) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
 }
 
 /**
@@ -174,9 +207,9 @@ export function rotateFace<T>(face: DodecaminxFaceObject<T>, rotation: number): 
  */
 export function rotateSlices<T>(state: DodecaminxState<T>, target: DodecaminxFace, depth: number, rotation: number): void {
   const adjacentFaces = dodecaminxNet[target];
-  const adjacentSlices = roll(dodecaminxNet[target].map(([face, angle]) => extractSlice(state[face], depth, -angle)), -rotation);
+  const adjacentSlices = roll((dodecaminxNet[target] as AdjacentRelationship<keyof DodecaminxFace>[]).map(([face, angle]) => extractSlice(state[face], depth, -angle)), -rotation);
 
-  adjacentFaces.forEach(([face, angle], i) => {
+  (adjacentFaces as AdjacentRelationship<keyof DodecaminxFace>[]).forEach(([face, angle], i) => {
     injectSlice(state[face], adjacentSlices[i], depth, -angle);
   });
 }

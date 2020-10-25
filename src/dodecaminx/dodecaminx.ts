@@ -1,21 +1,28 @@
-import { defaultValues } from './constants';
+import {
+  defaultValues,
+  dodecaminxIntersections,
+} from './constants';
 
 import {
   createFace,
+  faceIsSolved,
   parseDodecaminxTurn,
   rotateFace,
   rotateSlices,
   simplifyFace,
+  stringifyTurn,
 } from './helpers';
 
+import { sample } from '../utils/array';
 import { error } from '../utils/function';
-import { floor, isInteger } from '../utils/number';
+import { floor, isInteger, rand } from '../utils/number';
 import { Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
 
 // options
 export type DodecaminxOptions = {
+  random?: () => number,
   size: number,
   values?: Record<DodecaminxFace, DodecaminxValue>,
 };
@@ -132,7 +139,21 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    * @return {void}
    */
   generateScramble(length: number): string {
-    error('not implemented');
+    const big = this.options.size > 3;
+    const maxDepth = floor(this.options.size / 2);
+    const turns: string[] = [];
+    const whole = false;
+
+    for (let i = 0, target = sample(Object.keys(this.state) as DodecaminxFace[], this.options.random); i < length; i++) {
+      target = sample(dodecaminxIntersections[target], this.options.random);
+      const depth = big ? rand(0, maxDepth, this.options.random) : 1;
+      const rotation = sample([-2, -1, 1, 2], this.options.random);
+      const wide = depth > 1 && sample([true, false], this.options.random);
+
+      turns.push(stringifyTurn({ depth, rotation, target, whole, wide }));
+    }
+    
+    return turns.join(' ');
   }
 
   /**
@@ -152,7 +173,8 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    * @return {boolean}
    */
   isSolved(): boolean {
-    return false;
+    return (Object.keys(this.state) as DodecaminxFace[])
+      .reduce((acc, face) => acc && faceIsSolved(this.state[face]), true);
   }
 
   /**
