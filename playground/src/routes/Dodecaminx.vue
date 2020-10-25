@@ -219,11 +219,11 @@ export default {
       const [cp0, cp1, cp2, cp3, cp4] = this.cornerOrigins;
 
       return [
-        [cp0, cp1, m_p0_p1],
-        [cp1, cp2, m_p1_p2],
-        [cp2, cp3, m_p2_p3],
-        [cp3, cp4, m_p3_p4],
-        [cp4, cp0, m_p4_p0],
+        [m_p0_p1, cp1, cp0],
+        [m_p1_p2, cp2, cp1],
+        [m_p2_p3, cp3, cp2],
+        [m_p3_p4, cp4, cp3],
+        [m_p4_p0, cp0, cp4],
       ];
     },
     nextSize() {
@@ -346,13 +346,13 @@ export default {
         const [mo0, mo1, mo2] = this.middleOutlines[middleIndex];
 
         middle.forEach((sticker, stickerIndex, arr) => {
-          const l1 = bilerp(mo0, mo2, stickerIndex / arr.length);
-          const l2 = bilerp(mo0, mo2, (stickerIndex + 1) / arr.length);
-          const r1 = bilerp(mo1, mo2, stickerIndex / arr.length);
-          const r2 = bilerp(mo1, mo2, (stickerIndex + 1) / arr.length);
+          const mp0 = bilerp(mo0, mo1, stickerIndex / arr.length);
+          const mp1 = bilerp(mo0, mo1, (stickerIndex + 1) / arr.length);
+          const mp2 = bilerp(mo0, mo2, (stickerIndex + 1) / arr.length);
+          const mp3 = bilerp(mo0, mo2, stickerIndex / arr.length);
 
           stickers.push({
-            path: [l1, l2, r2, r1],
+            path: [mp0, mp1, mp2, mp3],
             sticker,
           });
         });
