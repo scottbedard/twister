@@ -8,13 +8,13 @@
             autofocus
             placeholder="enter turns" />
         </form>
-        <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.scramble()">Scramble</Button>
+        <Button class="col-span-6 sm:col-span-3 xl:col-span-2" disabled @click="model.scramble()">Scramble</Button>
         <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.reset()">Reset</Button>
       </div>
       <p class="leading-loose mb-6">
         This puzzle is exposed globally as <ClickableCode @click="log">window.dodecaminx</ClickableCode>.
         It can be resized by running <ClickableCode @click="resize">dodecaminx.options.size = {{ nextSize }}</ClickableCode>.
-        To execute a turn, use the controls above or run commands like <ClickableCode @click="turn('U')">dodecaminx.turn('U')</ClickableCode>.
+        To execute turns, use the controls above or run commands like <ClickableCode @click="turn('U')">dodecaminx.turn('U')</ClickableCode>.
       </p>
       <div class="font-bold mb-1">Options:</div>
       <pre v-text="model.options" />
