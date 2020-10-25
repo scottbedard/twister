@@ -47,20 +47,23 @@ const toSvgOrientation = ([x, y]) => [x, -y];
 const toPathCoordinates = (arr) => arr.map(toSvgOrientation);
 
 // colors
-const colors = [
-  '#F6E05E', // u: yellow
-  '#B794F4', // l: purple
-  '#F7FAFC', // f: white
-  '#2B6CB0', // r: dark blue
-  '#2F855A', // br: dark green
-  '#ED8936', // bl: orange
-  '#9AE6B4', // dl: light green
-  '#E53E3E', // dr: red
-  '#F687B3', // dbr: pink
-  '#718096', // b: gray
-  '#90CDF4', // dbl: light blue
-  '#FBD38D', // d: creme
-];
+const colors = {
+  b: '#718096', // gray
+  bl: '#ED8936', // orange
+  br: '#2F855A', // dark green
+  d: '#FBD38D', // creme
+  dbl: '#90CDF4', // light blue
+  dbr: '#F687B3', // pink
+  dl: '#9AE6B4', // light green
+  dr: '#E53E3E', // red
+  f: '#F7FAFC', // white
+  l: '#B794F4', // purple
+  r: '#2B6CB0', // dark blue
+  u: '#F6E05E', // yellow
+};
+
+// custom initial values to map colors to faces
+const initialValues = Object.keys(colors).reduce((acc, face) => Object.assign(acc, { [face]: face }), {});
 
 // sizes
 const defaultSize = 3;
@@ -272,6 +275,7 @@ export default {
     fresh() {
       this.model = new Dodecaminx({
         size: this.puzzleSize,
+        values: initialValues,
       });
 
       const reset = this.model.reset.bind(this.model);
