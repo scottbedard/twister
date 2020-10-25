@@ -23,12 +23,14 @@ export const defaultValues: Record<DodecaminxFace, DodecaminxValue> = {
  * 
  * This constant defines how faces are related to one another. Think of
  * it as an "unfolded" dodecahedron, with each face having a designated
- * primary corner. A face's primary corner represents the starting
- * position of corner matrices and middle arrays.
+ * primary corner. A face's primary corner represents the orientation
+ * of that face, and is used to determine the offset to adjacent faces.
  * 
  * See: https://www.desmos.com/geometry/o8kuskawcb
  */
-export const net: Record<DodecaminxFace, [DodecaminxFace, number][]> = {
+type AdjacentFace = [DodecaminxFace, -2 | -1 | 0 | 1 | 2];
+
+export const net: Record<DodecaminxFace, AdjacentFace[]> = {
   u: [
     ['br', 2],
     ['r', -2],
@@ -71,11 +73,29 @@ export const net: Record<DodecaminxFace, [DodecaminxFace, number][]> = {
     ['bl', 0],
     ['b', -1],
   ],
-  dl: [],
-  dr: [],
+  dl: [
+    ['dbl', 2],
+    ['l', 2],
+    ['f', 2],
+    ['dr', 1],
+    ['d', 1],
+  ],
+  dr: [
+    ['d', 2],
+    ['dl', -2],
+    ['f', 1],
+    ['r', 1],
+    ['dbr', 2],
+  ],
   dbl: [],
   dbr: [],
-  b: [],
+  b: [
+    ['dbl', -2],
+    ['dl', -1],
+    ['dr', 0],
+    ['dbr', 1],
+    ['b', 2],
+  ],
   d: [
     ['dbl', -2],
     ['dl', -1],
