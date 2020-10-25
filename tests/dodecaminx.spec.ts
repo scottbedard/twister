@@ -987,4 +987,17 @@ describe('dodecaminx', () => {
 
     expect(kilo.generateScramble(10).split(' ').length).toBe(10);
   });
+
+  //
+  // isSolved
+  //
+  it('isSolved', () => {
+    const kilo = new Dodecaminx({ size: 2 });
+
+    kilo.turn('U');
+    expect(kilo.isSolved()).toBe(false);
+
+    kilo.turn('U-');
+    expect(kilo.isSolved()).toBe(true);
+  })
 });
