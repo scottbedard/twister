@@ -87,11 +87,12 @@ export function injectSlice<T>(target: DodecaminxFaceObject<T>, source: Dodecami
 /**
  * Parse a dodecaminx turn.
  *
- * @param {string}  turn
+ * @param {string} turn
+ * @param {number} maxDepth
  *
  * @return {DodecaminxTurn}
  */
-export function parseDodecaminxTurn(turn: string): DodecaminxTurn {
+export function parseDodecaminxTurn(turn: string, maxDepth: number): DodecaminxTurn {
   const result = turn.match(/^(\d)*(u|f|l|r|bl|br|dl|dr|dbl|dbr|b|d|U|F|L|R|BL|BR|DL|DR|DBL|DBR|B|D){1}(w)?(2)?(['-])?$/);
 
   if (result === null) {
@@ -106,6 +107,10 @@ export function parseDodecaminxTurn(turn: string): DodecaminxTurn {
 
   if (wide && !result[1]) {
     depth = 2;
+  }
+
+  if (depth > maxDepth) {
+    error('Turn depth cannot exceed available layers');
   }
 
   if (modifier === '-' || modifier === '\'') {

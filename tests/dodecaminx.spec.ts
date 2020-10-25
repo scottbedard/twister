@@ -694,7 +694,7 @@ describe('dodecaminx', () => {
   // parsing
   //
   describe('turn parsing', () => {
-    const minx = new Dodecaminx({ size: 2 });
+    const giga = new Dodecaminx({ size: 5 });
 
     const turns: Record<string, DodecaminxTurn> = {
       'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
@@ -708,12 +708,22 @@ describe('dodecaminx', () => {
 
     Object.keys(turns).forEach(turn => {
       it(turn, () => {
-        expect(minx.parse(turn)).toEqual(turns[turn]);
+        expect(giga.parse(turn)).toEqual(turns[turn]);
       });
     });
 
     it('invalid', () => {
-      expect(() => minx.parse('invalid')).toThrow();
+      expect(() => giga.parse('invalid')).toThrow();
+    });
+
+    it('too deep', () => {
+      const mega = new Dodecaminx({ size: 3 });
+      const master = new Dodecaminx({ size: 4 });
+
+      expect(() => mega.parse('2R')).toThrow();
+      expect(() => mega.parse('Rw')).toThrow();
+      expect(() => master.parse('2R')).not.toThrow();
+      expect(() => master.parse('3R')).toThrow();
     });
   });
 

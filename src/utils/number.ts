@@ -1,4 +1,15 @@
 /**
+ * Returns the greatest integer less than or equal to its numeric argument.
+ *
+ * @param {number} n
+ *
+ * @return {number}
+ */
+export function floor(n: number): number {
+  return Math.floor(n);
+}
+
+/**
  * Test if a number is an integer.
  *
  * @param {number} n

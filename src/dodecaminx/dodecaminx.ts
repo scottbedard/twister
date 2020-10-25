@@ -9,7 +9,7 @@ import {
 } from './helpers';
 
 import { error } from '../utils/function';
-import { isInteger } from '../utils/number';
+import { floor, isInteger } from '../utils/number';
 import { Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
@@ -185,7 +185,9 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    * @return {CubeTurn} 
    */
   parse(turn: string): DodecaminxTurn {
-    return parseDodecaminxTurn(turn);
+    const maxDepth = floor(this.options.size / 2);
+
+    return parseDodecaminxTurn(turn, maxDepth);
   }
 
   /**
