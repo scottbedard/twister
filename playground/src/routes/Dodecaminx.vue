@@ -121,9 +121,9 @@ const brOrigin = bilerp(origin, m_p0_p1, 2);
 const dbrOrigin = angleFrom(rOrigin, 18, innerRadius * 2);
 const dOrigin = angleFrom(dbrOrigin, -18, innerRadius * 2);
 const bOrigin = angleFrom(dOrigin, 90, innerRadius * 2);
-const dblOrigin = angleFrom(dOrigin, -54, innerRadius * 2);
-const drOrigin = angleFrom(dOrigin, 18, innerRadius * 2);
-const dlOrigin = angleFrom(dOrigin, -126, innerRadius * 2);
+const dlOrigin = angleFrom(dOrigin, -54, innerRadius * 2);
+const dblOrigin = angleFrom(dOrigin, 18, innerRadius * 2);
+const drOrigin = angleFrom(dOrigin, -126, innerRadius * 2);
 
 const net = {
   u: [origin],
