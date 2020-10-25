@@ -15,7 +15,7 @@ import {
 
 import { sample } from '../utils/array';
 import { error } from '../utils/function';
-import { floor, isInteger, rand } from '../utils/number';
+import { floor, isInteger, max, rand } from '../utils/number';
 import { Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
@@ -138,7 +138,7 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @return {void}
    */
-  generateScramble(length: number): string {
+  generateScramble(length: number = max(20, this.options.size ** 3)): string {
     const big = this.options.size > 3;
     const maxDepth = floor(this.options.size / 2);
     const turns: string[] = [];

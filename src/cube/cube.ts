@@ -24,7 +24,7 @@ import {
 } from './helpers';
 
 import { error } from '../utils/function';
-import { floor, isInteger, rand } from '../utils/number';
+import { floor, isInteger, max, rand } from '../utils/number';
 import { sample } from '../utils/array';
 import { rotate } from '../utils/matrix';
 import { Sticker } from '../puzzle';
@@ -157,7 +157,7 @@ export default class Cube<Data = Record<string, unknown>> extends Puzzle<CubeOpt
    *
    * @return {void}
    */
-  generateScramble(length: number = Math.max(20, this.options.size ** 3)): string {
+  generateScramble(length: number = max(20, this.options.size ** 3)): string {
     const faces: CubeFace[] = ['u', 'l', 'f', 'r', 'b', 'd'];
     const maxDepth = floor(this.options.size / 2);
     const turns: CubeFace[] = [];

@@ -15,6 +15,7 @@ import {
   splice,
 } from '../utils/array';
 
+import { max } from '../utils/number';
 import { cols, flattenCols, flattenRows, rotate, rows } from '../utils/matrix';
 import { error } from '../utils/function';
 
@@ -259,7 +260,7 @@ export function parseTurn(turn: string): CubeTurn {
   let depth: number = result[1] ? parseInt(result[1], 10) : 1;
 
   if (wide) {
-    depth = Math.max(2, depth);
+    depth = max(2, depth);
   }
 
   let rotation = 1;

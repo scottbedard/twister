@@ -980,15 +980,6 @@ describe('dodecaminx', () => {
   });
 
   //
-  // generateScramble
-  //
-  it('generateScramble', () => {
-    const kilo = new Dodecaminx({ size: 2 });
-
-    expect(kilo.generateScramble(10).split(' ').length).toBe(10);
-  });
-
-  //
   // isSolved
   //
   it('isSolved', () => {
@@ -999,5 +990,25 @@ describe('dodecaminx', () => {
 
     kilo.turn('U-');
     expect(kilo.isSolved()).toBe(true);
-  })
+  });
+
+  //
+  // generateScramble
+  //
+  it('generateScramble', () => {
+    const kilo = new Dodecaminx({ size: 2 });
+
+    expect(kilo.generateScramble(10).split(' ').length).toBe(10);
+  });
+
+  //
+  // scramble
+  //
+  it('scramble', () => {
+    const kilo = new Dodecaminx({ size: 2 });
+    expect(kilo.isSolved()).toBe(true);
+
+    kilo.scramble();
+    expect(kilo.isSolved()).toBe(false);
+  });
 });

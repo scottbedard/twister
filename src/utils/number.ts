@@ -32,6 +32,17 @@ export function isOdd(n: number): boolean {
 }
 
 /**
+ * Returns the larger of a set of supplied numeric expressions.
+ *
+ * @param {...number[]} values
+ *
+ * @return {number} 
+ */
+export function max(...values: number[]): number {
+  return Math.max(...values);
+}
+
+/**
  * Generate random integer.
  *
  * @param {number} min

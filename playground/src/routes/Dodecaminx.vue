@@ -8,7 +8,7 @@
             autofocus
             placeholder="enter turns" />
         </form>
-        <Button class="col-span-6 sm:col-span-3 xl:col-span-2" disabled @click="model.scramble()">Scramble</Button>
+        <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.scramble()">Scramble</Button>
         <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.reset()">Reset</Button>
       </div>
       <p class="leading-loose mb-6">
