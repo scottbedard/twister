@@ -1,4 +1,22 @@
-import { DodecaminxFace } from './dodecaminx';
+import { DodecaminxFace, DodecaminxValue } from './dodecaminx';
+
+/**
+ * Default sticker values
+ */
+export const defaultValues: Record<DodecaminxFace, DodecaminxValue> = {
+  b: 0,
+  bl: 1,
+  br: 2,
+  d: 3,
+  dbl: 4,
+  dbr: 5,
+  dl: 6,
+  dr: 7,
+  f: 8,
+  l: 9,
+  r: 10,
+  u: 11,
+}
 
 /**
  * Dodecaminx net

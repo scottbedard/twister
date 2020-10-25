@@ -1,3 +1,5 @@
+import { defaultValues } from './constants';
+
 import {
   createFace,
   parseDodecaminxTurn,
@@ -15,6 +17,7 @@ import Puzzle from '../puzzle';
 // options
 export type DodecaminxOptions = {
   size: number,
+  values?: Record<DodecaminxFace, DodecaminxValue>,
 };
 
 // face
@@ -155,18 +158,18 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    */
   output(): DodecaminxStateSummary {
     return {
-      u: simplifyFace(this.state.u),
-      f: simplifyFace(this.state.f),
-      l: simplifyFace(this.state.l),
+      b: simplifyFace(this.state.b),
       bl: simplifyFace(this.state.bl),
       br: simplifyFace(this.state.br),
-      r: simplifyFace(this.state.r),
       d: simplifyFace(this.state.d),
-      b: simplifyFace(this.state.b),
       dbl: simplifyFace(this.state.dbl),
+      dbr: simplifyFace(this.state.dbr),
       dl: simplifyFace(this.state.dl),
       dr: simplifyFace(this.state.dr),
-      dbr: simplifyFace(this.state.dbr),
+      f: simplifyFace(this.state.f),
+      l: simplifyFace(this.state.l),
+      r: simplifyFace(this.state.r),
+      u: simplifyFace(this.state.u),
     }
   }
 
@@ -188,20 +191,21 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    */
   reset(): void {
     const size = this.options.size;
+    const values = this.options.values || defaultValues;
 
     this.state = {
-      u: createFace<Data>(size, 0),
-      f: createFace<Data>(size, 1),
-      l: createFace<Data>(size, 2),
-      bl: createFace<Data>(size, 3),
-      br: createFace<Data>(size, 4),
-      r: createFace<Data>(size, 5),
-      d: createFace<Data>(size, 6),
-      b: createFace<Data>(size, 7),
-      dbl: createFace<Data>(size, 8),
-      dl: createFace<Data>(size, 9),
-      dr: createFace<Data>(size, 10),
-      dbr: createFace<Data>(size, 11),
+      b: createFace<Data>(size, values.b),
+      bl: createFace<Data>(size, values.bl),
+      br: createFace<Data>(size, values.br),
+      d: createFace<Data>(size, values.d),
+      dbl: createFace<Data>(size, values.dbl),
+      dbr: createFace<Data>(size, values.dbr),
+      dl: createFace<Data>(size, values.dl),
+      dr: createFace<Data>(size, values.dr),
+      f: createFace<Data>(size, values.f),
+      l: createFace<Data>(size, values.l),
+      r: createFace<Data>(size, values.r),
+      u: createFace<Data>(size, values.u),
     };
   }
 }

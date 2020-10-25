@@ -13,6 +13,25 @@ import {
   simplifyFace,
 } from '../src/dodecaminx/helpers';
 
+// the abilty to set custom values was added after many of these
+// assertions were made. faces are not ordered alphabetically,
+// which broke all of the existing tests. to avoid re-writing a
+// bunch of long assertions, we'll just shim in the original values
+const testValues = {
+  b: 7,
+  bl: 3,
+  br: 4,
+  d: 6,
+  dbl: 8,
+  dbr: 11,
+  dl: 9,
+  dr: 10,
+  f: 1,
+  l: 2,
+  r: 5,
+  u: 0,
+};
+
 describe('dodecaminx', () => {
   it('throws an error if the size is not an integer', () => {
     expect(() => new Dodecaminx({ size: 3.5 })).toThrow();
@@ -36,6 +55,39 @@ describe('dodecaminx', () => {
 
     expect(even.state.f.middles.length).toBe(0);
     expect(odd.state.f.middles.length > 0).toBe(true);
+  });
+
+  it('accepts custom initial values', () => {
+    const kilo = new Dodecaminx({
+      size: 2,
+      values: {
+        b: 'b',
+        bl: 'bl',
+        br: 'br',
+        d: 'd',
+        dbl: 'dbl',
+        dbr: 'dbr',
+        dl: 'dl',
+        dr: 'dr',
+        f: 'f',
+        l: 'l',
+        r: 'r',
+        u: 'u',
+      },
+    });
+
+    expect(simplifyFace(kilo.state.b)).toEqual([[['b'], ['b'], ['b'], ['b'], ['b']]]);
+    expect(simplifyFace(kilo.state.bl)).toEqual([[['bl'], ['bl'], ['bl'], ['bl'], ['bl']]]);
+    expect(simplifyFace(kilo.state.br)).toEqual([[['br'], ['br'], ['br'], ['br'], ['br']]]);
+    expect(simplifyFace(kilo.state.d)).toEqual([[['d'], ['d'], ['d'], ['d'], ['d']]]);
+    expect(simplifyFace(kilo.state.dbl)).toEqual([[['dbl'], ['dbl'], ['dbl'], ['dbl'], ['dbl']]]);
+    expect(simplifyFace(kilo.state.dbr)).toEqual([[['dbr'], ['dbr'], ['dbr'], ['dbr'], ['dbr']]]);
+    expect(simplifyFace(kilo.state.dl)).toEqual([[['dl'], ['dl'], ['dl'], ['dl'], ['dl']]]);
+    expect(simplifyFace(kilo.state.dr)).toEqual([[['dr'], ['dr'], ['dr'], ['dr'], ['dr']]]);
+    expect(simplifyFace(kilo.state.f)).toEqual([[['f'], ['f'], ['f'], ['f'], ['f']]]);
+    expect(simplifyFace(kilo.state.l)).toEqual([[['l'], ['l'], ['l'], ['l'], ['l']]]);
+    expect(simplifyFace(kilo.state.r)).toEqual([[['r'], ['r'], ['r'], ['r'], ['r']]]);
+    expect(simplifyFace(kilo.state.u)).toEqual([[['u'], ['u'], ['u'], ['u'], ['u']]]);
   });
 
   //
@@ -670,7 +722,7 @@ describe('dodecaminx', () => {
   //
   describe('output', () => {
     it('2', () => {
-      const minx = new Dodecaminx({ size: 2 });
+      const minx = new Dodecaminx({ size: 2, values: testValues });
 
       expect(minx.output()).toEqual({
         u: [
@@ -713,7 +765,7 @@ describe('dodecaminx', () => {
     });
 
     it('3', () => {
-      const minx = new Dodecaminx({ size: 3 });
+      const minx = new Dodecaminx({ size: 3, values: testValues });
 
       expect(minx.output()).toEqual({
         u: [
@@ -780,7 +832,7 @@ describe('dodecaminx', () => {
     });
 
     it('4', () => {
-      const minx = new Dodecaminx({ size: 4 });
+      const minx = new Dodecaminx({ size: 4, values: testValues });
 
       expect(minx.output()).toEqual({
         u: [
@@ -823,7 +875,7 @@ describe('dodecaminx', () => {
     });
 
     it('5', () => {
-      const minx = new Dodecaminx({ size: 5 });
+      const minx = new Dodecaminx({ size: 5, values: testValues });
 
       expect(minx.output()).toEqual({
         u: [
