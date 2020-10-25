@@ -1,9 +1,20 @@
 <template>
   <div class="grid gap-6 items-start md:grid-cols-12">
     <div class="md:col-span-5">
+      <div class="grid gap-6 grid-cols-6 mb-6">
+        <form class="col-span-6 xl:col-span-2" @submit.prevent="turn(turns)">
+          <Input
+            v-model="turns"
+            autofocus
+            placeholder="enter turns" />
+        </form>
+        <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.scramble()">Scramble</Button>
+        <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.reset()">Reset</Button>
+      </div>
       <p class="leading-loose mb-6">
         This puzzle is exposed globally as <ClickableCode @click="log">window.dodecaminx</ClickableCode>.
         It can be resized by running <ClickableCode @click="resize">dodecaminx.options.size = {{ nextSize }}</ClickableCode>.
+        To execute a turn, use the controls above or run commands like <ClickableCode @click="turn('U')">dodecaminx.turn('U')</ClickableCode>.
       </p>
       <div class="font-bold mb-1">Options:</div>
       <pre v-text="model.options" />
@@ -35,12 +46,14 @@
 
 <script>
 /* eslint-disable camelcase */
-/* eslint-disable */
+/* eslint-disable no-param-reassign */
 import {
   angleFrom, bilerp, intersect, isEven, measure,
 } from '@/utils';
 import { identity, times } from 'lodash-es';
+import Button from '@/components/Button.vue';
 import ClickableCode from '@/components/ClickableCode.vue';
+import Input from '@/components/Input.vue';
 import { Dodecaminx } from '~/index.esm';
 
 const toSvgOrientation = ([x, y]) => [x, -y];
@@ -138,13 +151,16 @@ export default {
   data() {
     return {
       model: null,
+      turns: '',
     };
   },
   destroyed() {
     delete window.dodecaminx;
   },
   components: {
+    Button,
     ClickableCode,
+    Input,
   },
   computed: {
     centerPath() {
@@ -280,7 +296,7 @@ export default {
       });
 
       // tag each sticker with a unique id for easier debugging
-      Object.keys(this.model.state).forEach(key => {
+      Object.keys(this.model.state).forEach((key) => {
         const face = this.model.state[key];
 
         if (face.center) {
@@ -288,11 +304,15 @@ export default {
         }
 
         face.corners.forEach((corners, i) => {
-          corners.forEach((obj, j) => { obj.data.id = `${key}-corner-${'abcde'[i]}-${j}` });
+          corners.forEach((obj, j) => {
+            obj.data.id = `${key}-corner-${'abcde'[i]}-${j}`;
+          });
         });
 
         face.middles.forEach((middles, i) => {
-          middles.forEach((obj, j) => { obj.data.id = `${key}-middle-${'abcde'[i]}-${j}` });
+          middles.forEach((obj, j) => {
+            obj.data.id = `${key}-middle-${'abcde'[i]}-${j}`;
+          });
         });
       });
 
@@ -344,6 +364,9 @@ export default {
       this.model.options.size = e.ctrlKey || e.metaKey
         ? this.prevSize
         : this.nextSize;
+    },
+    turn(alg) {
+      this.model.turn(alg);
     },
   },
   watch: {
