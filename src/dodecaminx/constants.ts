@@ -1,5 +1,8 @@
 import { DodecaminxFace, DodecaminxValue } from './dodecaminx';
 
+type AdjacentFace = [DodecaminxFace, -2 | -1 | 0 | 1 | 2];
+type FaceRelationships = [AdjacentFace, AdjacentFace, AdjacentFace, AdjacentFace, AdjacentFace];
+
 /**
  * Default sticker values
  */
@@ -28,9 +31,7 @@ export const defaultValues: Record<DodecaminxFace, DodecaminxValue> = {
  * 
  * See: https://www.desmos.com/geometry/o8kuskawcb
  */
-type AdjacentFace = [DodecaminxFace, -2 | -1 | 0 | 1 | 2];
-
-export const net: Record<DodecaminxFace, AdjacentFace[]> = {
+export const dodecaminxNet: Record<DodecaminxFace, FaceRelationships> = {
   u: [
     ['br', 2],
     ['r', -2],

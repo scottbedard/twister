@@ -9,7 +9,7 @@ import {
   DodecaminxValue,
 } from './dodecaminx';
 
-import { net } from './constants';
+import { dodecaminxNet } from './constants';
 import { cols, rows } from '../utils/matrix';
 import { error } from '../utils/function';
 import { isOdd } from '../utils/number';
@@ -148,8 +148,8 @@ export function rotateFace<T>(face: DodecaminxFaceObject<T>, rotation: number): 
  * @return {void}
  */
 export function rotateSlices<T>(state: DodecaminxState<T>, target: DodecaminxFace, depth: number, rotation: number): void {
-  const adjacentFaces = net[target];
-  const adjacentSlices = roll(net[target].map(([face, angle]) => extractSlice(state[face], depth, -angle)), -rotation);
+  const adjacentFaces = dodecaminxNet[target];
+  const adjacentSlices = roll(dodecaminxNet[target].map(([face, angle]) => extractSlice(state[face], depth, -angle)), -rotation);
 
   adjacentFaces.forEach(([face, angle], i) => {
     injectSlice(state[face], adjacentSlices[i], depth, -angle);
