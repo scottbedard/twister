@@ -76,5 +76,11 @@ export const net: Record<DodecaminxFace, [DodecaminxFace, number][]> = {
   dbl: [],
   dbr: [],
   b: [],
-  d: [],
+  d: [
+    ['dbl', -2],
+    ['dl', -1],
+    ['dr', 0],
+    ['dbr', 1],
+    ['b', 2],
+  ],
 }
