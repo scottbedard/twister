@@ -19,11 +19,12 @@
             :key="face.key"
             :transform="face.transform">
             <path
-              v-for="(sticker, index) in face.stickers"
+              v-for="(obj, index) in face.stickers"
               stroke="currentColor"
               stroke-width="0.05"
-              :d="d(sticker.path)"
-              :fill="colors[sticker.value]"
+              :d="d(obj.path)"
+              :data-id="obj.sticker.data.id"
+              :fill="colors[obj.sticker.value]"
               :key="`corner-${index}`" />
           </g>
         </g>
@@ -231,7 +232,7 @@ export default {
 
       return {
         path: this.centerPath,
-        value: face.center.value,
+        sticker: face.center,
       };
     },
     corners(face) {
@@ -260,7 +261,7 @@ export default {
 
           stickers.push({
             path: [c1, c2, c3, c4],
-            value: sticker.value,
+            sticker,
           });
         });
       });
@@ -276,6 +277,23 @@ export default {
       this.model = new Dodecaminx({
         size: this.puzzleSize,
         values: initialValues,
+      });
+
+      // tag each sticker with a unique id for easier debugging
+      Object.keys(this.model.state).forEach(key => {
+        const face = this.model.state[key];
+
+        if (face.center) {
+          face.center.data.id = `center-${key}`;
+        }
+
+        face.corners.forEach((corners, i) => {
+          corners.forEach((obj, j) => { obj.data.id = `${key}-corner-${'abcde'[i]}-${j}` });
+        });
+
+        face.middles.forEach((middles, i) => {
+          middles.forEach((obj, j) => { obj.data.id = `${key}-middle-${'abcde'[i]}-${j}` });
+        });
       });
 
       const reset = this.model.reset.bind(this.model);
@@ -315,7 +333,7 @@ export default {
 
           stickers.push({
             path: [l1, l2, r2, r1],
-            value: sticker.value,
+            sticker,
           });
         });
       });

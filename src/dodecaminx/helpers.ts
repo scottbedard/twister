@@ -147,11 +147,13 @@ export function rotateFace<T>(face: DodecaminxFaceObject<T>, rotation: number): 
  *
  * @return {void}
  */
-export function rotateSlices<T>(state: DodecaminxState<T>, target: DodecaminxFace, depth: number, rotation: number) {
-  const adjacentFaces = net[target].map(([face]) => face);
-  const adjacentSlices = net[target].map(([face, angle]) => extractSlice(state[face], depth, angle));
-  
-  console.log({ adjacentFaces, adjacentSlices });
+export function rotateSlices<T>(state: DodecaminxState<T>, target: DodecaminxFace, depth: number, rotation: number): void {
+  const adjacentFaces = net[target];
+  const adjacentSlices = roll(net[target].map(([face, angle]) => extractSlice(state[face], depth, -angle)), -rotation);
+
+  adjacentFaces.forEach(([face, angle], i) => {
+    injectSlice(state[face], adjacentSlices[i], depth, -angle);
+  });
 }
 
 /**

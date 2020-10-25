@@ -115,8 +115,12 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
     }
 
     // turn slices
-    for (let i = 1; i <= turn.depth; i++) {
+    for (let i = turn.depth; i > 0; i--) {
       rotateSlices(this.state, turn.target, i, turn.rotation);
+
+      if (!turn.wide) {
+        break;
+      }
     }
   }
 
