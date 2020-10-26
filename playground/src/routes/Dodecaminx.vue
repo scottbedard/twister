@@ -304,9 +304,8 @@ export default {
       return `M ${start.join(',')} L ${points.map((p) => p.join(',')).join(' ')} Z`;
     },
     fresh() {
-      this.model = new Dodecaminx({
-        size: this.puzzleSize,
-      });
+      this.model = new Dodecaminx({ size: this.puzzleSize });
+      this.scramble = null;
 
       const reset = this.model.reset.bind(this.model);
       const turn = this.model.turn.bind(this.model);
@@ -317,8 +316,7 @@ export default {
       };
 
       this.model.scramble = (turns) => {
-        this.scramble = this.model.generateScramble(turns);
-        this.model.turn(this.scramble);
+        this.model.turn(this.model.generateScramble(turns));
       };
 
       this.model.turn = (alg) => {
