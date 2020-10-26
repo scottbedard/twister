@@ -11,27 +11,33 @@
         <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.scramble()">Scramble</Button>
         <Button class="col-span-6 sm:col-span-3 xl:col-span-2" @click="model.reset()">Reset</Button>
       </div>
+
       <p class="leading-loose mb-6">
         This puzzle is exposed globally as <ClickableCode @click="log">window.dodecaminx</ClickableCode>.
         It can be resized by running <ClickableCode @click="resize">dodecaminx.options.size = {{ nextSize }}</ClickableCode>.
         To execute turns, use the controls above or run commands like <ClickableCode @click="turn('U')">dodecaminx.turn('U')</ClickableCode>.
       </p>
 
-      <div class="font-bold mb-1">Options:</div>
-      <pre class="mb-6" v-text="model.options" />
-
-      <div class="font-bold mb-1">Solved:</div>
-      <div class="mb-6" v-text="model.isSolved()" />
-
-      <div class="font-bold mb-1">Turns:</div>
-      <div
-        v-text="scramble || 'None'"
-        class="overflow-y-auto select-all"
-        style="max-height: 240px" />
+      <div class="gap-6 grid grid-cols-2">
+        <div>
+          <div class="font-bold mb-1">Options:</div>
+          <pre v-text="model.options" />
+        </div>
+        <div>
+          <div class="font-bold mb-1">Solved:</div>
+          <pre v-text="model.isSolved()" />
+        </div>
+        <div class="col-span-2">
+          <div class="font-bold mb-1">Turns:</div>
+          <div
+            v-text="scramble || 'None'"
+            class="overflow-y-auto select-all"
+            style="max-height: 240px" />
+        </div>
+      </div>
     </div>
     <div class="text-gray-900 relative w-full md:col-span-7">
       <svg
-        class="absolute right-0"
         viewBox="0 0 9.8 4.9"
         xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(2.6, 2.2)">

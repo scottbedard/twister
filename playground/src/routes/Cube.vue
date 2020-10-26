@@ -18,17 +18,23 @@
         or <ClickableCode @click="model.turn('R')">cube.turn('R')</ClickableCode>.
       </p>
 
-      <div class="font-bold mb-1">Options:</div>
-      <pre v-text="model.options" class="mb-6" />
-
-      <div class="font-bold mb-1">Solved:</div>
-      <div class="mb-6" v-text="model.isSolved()" />
-
-      <div class="font-bold mb-1">Turns:</div>
-      <div
-        v-text="scramble || 'None'"
-        class="overflow-y-auto select-all"
-        style="max-height: 240px" />
+      <div class="gap-6 grid grid-cols-2">
+        <div>
+          <div class="font-bold mb-1">Options:</div>
+          <pre v-text="model.options" />
+        </div>
+        <div>
+          <div class="font-bold mb-1">Solved:</div>
+          <pre v-text="model.isSolved()" />
+        </div>
+        <div class="col-span-2">
+          <div class="font-bold mb-1">Turns:</div>
+          <div
+            v-text="scramble || 'None'"
+            class="overflow-y-auto select-all"
+            style="max-height: 240px" />
+        </div>
+      </div>
     </div>
 
     <svg
