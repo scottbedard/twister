@@ -8,7 +8,7 @@
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/@bedard/twister?label=gzipped)](https://bundlephobia.com/result?p=@bedard/twister)
 [![License](https://img.shields.io/github/license/scottbedard/twister?color=blue)](https://github.com/scottbedard/twister/blob/master/LICENSE)
 
-Twister is a library for modeling the state of twisty puzzles. To get started, [check out the interactive playground](https://bedard-twister.netlify.app/).
+Twister is a library for modeling the state of twisty puzzles. To get started, [check out the interactive playground](https://twister.speedcube.site/).
 
 > **Warning:** This library is a work in progress, and is not ready for production use. Breaking changes may happen at any time.
 
