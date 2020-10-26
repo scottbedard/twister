@@ -8,6 +8,7 @@ import {
   faceIsSolved,
   parseDodecaminxTurn,
   rotateFace,
+  rotatePuzzle,
   rotateSlices,
   simplifyFace,
   stringifyTurn,
@@ -110,24 +111,23 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    * @return {void} 
    */
   execute(turn: DodecaminxTurn): void {
-    // puzzle rotations
     if (turn.whole) {
-      error('not implemented');
-      return;
-    }
-
-    // rotate outer face if necessary
-    if (turn.depth === 1 || turn.wide) {
-      this.state[turn.target] = rotateFace(this.state[turn.target], turn.rotation);
-    }
-
-    // turn slices
-    for (let i = turn.depth; i > 0; i--) {
-      rotateSlices(this.state, turn.target, i, turn.rotation);
-
-      if (!turn.wide) {
-        break;
+      // rotate entire puzzle
+      rotatePuzzle(this.state, turn);
+    } else {
+      // rotate outer face if necessary
+      if (turn.depth === 1 || turn.wide) {
+        this.state[turn.target] = rotateFace(this.state[turn.target], turn.rotation);
       }
+
+      // turn slices
+      for (let i = turn.depth; i > 0; i--) {
+        rotateSlices(this.state, turn.target, i, turn.rotation);
+
+        if (!turn.wide) {
+          break;
+        }
+      } 
     }
   }
 

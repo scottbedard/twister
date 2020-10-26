@@ -9,7 +9,12 @@ import {
   DodecaminxValue,
 } from './dodecaminx';
 
-import { AdjacentRelationship, dodecaminxNet } from './constants';
+import {
+  AdjacentRelationship,
+  dodecaminxNet,
+  dodecaminxOpposites,
+} from './constants';
+
 import { cols, rows } from '../utils/matrix';
 import { error } from '../utils/function';
 import { floor, isOdd } from '../utils/number';
@@ -159,6 +164,24 @@ export function parseDodecaminxTurn(turn: string, maxDepth: number): DodecaminxT
     wide,
     whole,
   };
+}
+
+/**
+ * Rotate the entire puzzle
+ *
+ * @param {DodecaminxState} state
+ * @param {DodecaminxTurn} turn
+ *
+ * @return {void}
+ */
+export function rotatePuzzle<T>(state: DodecaminxState<T>, turn: DodecaminxTurn): void {
+  // rotate target face
+  state[turn.target] = rotateFace(state[turn.target], turn.rotation);
+
+  // @todo: rotate equatorial faces
+
+  // rotate opposite face
+  state[dodecaminxOpposites[turn.target]] = rotateFace(state[dodecaminxOpposites[turn.target]], -turn.rotation);
 }
 
 /**

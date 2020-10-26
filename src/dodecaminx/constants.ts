@@ -143,16 +143,36 @@ export const dodecaminxNet: {
 export const dodecaminxIntersections: {
   [K in DodecaminxFace]: IntersectingFaces<K>
 } = {
-  u: ['br', 'r', 'f', 'l', 'bl'],
+  b: ['dbl', 'dl', 'dr', 'dbr', 'd'],
+  bl: ['br', 'u', 'l', 'dbl', 'b'],
+  br: ['dbr', 'r', 'u', 'bl', 'b'],
+  d: ['dbl', 'dl', 'dr', 'dbr', 'b'],
+  dbl: ['bl', 'l', 'dl', 'd', 'b'],
+  dbr: ['b', 'd', 'dr', 'r', 'br'],
+  dl: ['dbl', 'l', 'f', 'dr', 'd'],
+  dr: ['d', 'dl', 'f', 'r', 'dbr'],
   f: ['r', 'dr', 'dl', 'l', 'u'],
   l: ['u', 'f', 'dl', 'dbl', 'bl'],
   r: ['dbr', 'dr', 'f', 'u', 'br'],
-  bl: ['br', 'u', 'l', 'dbl', 'b'],
-  br: ['dbr', 'r', 'u', 'bl', 'b'],
-  dl: ['dbl', 'l', 'f', 'dr', 'd'],
-  dr: ['d', 'dl', 'f', 'r', 'dbr'],
-  dbl: ['bl', 'l', 'dl', 'd', 'b'],
-  dbr: ['b', 'd', 'dr', 'r', 'br'],
-  b: ['dbl', 'dl', 'dr', 'dbr', 'd'],
-  d: ['dbl', 'dl', 'dr', 'dbr', 'b'],
+  u: ['br', 'r', 'f', 'l', 'bl'],
+};
+
+/**
+ * Map of opposite faces.
+ */
+export const dodecaminxOpposites: {
+  [K in DodecaminxFace]: Exclude<DodecaminxFace, K>
+} = {
+  b: 'f',
+  bl: 'dr',
+  br: 'dl',
+  d: 'u',
+  dbl: 'r',
+  dbr: 'l',
+  dl: 'dbr',
+  dr: 'bl',
+  f: 'b',
+  l: 'dbr',
+  r: 'dbl',
+  u: 'd',
 };
