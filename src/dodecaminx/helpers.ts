@@ -176,22 +176,28 @@ export function parseDodecaminxTurn(turn: string, maxDepth: number): DodecaminxT
  */
 export function rotatePuzzle<T>(state: DodecaminxState<T>, turn: DodecaminxTurn): void {
   const { rotation, target } = turn;
+  const direction = Math.sign(rotation);
+
   // rotate target face
   state[turn.target] = rotateFace(state[turn.target], turn.rotation);
 
-  // rotate faces north of the rotation plane
-  const direction = Math.sign(rotation);
+  // rotate faces north of plane
   const northRelations = dodecaminxNet[target] as AdjacentRelationship<keyof DodecaminxFace>[];
+  const southRelations = dodecaminxNet[dodecaminxOpposites[target]] as AdjacentRelationship<keyof DodecaminxFace>[];
 
   for (let i = 0, end = Math.abs(rotation); i < end; i++) {
     const northFaces = northRelations.map(([face]) => state[face]);
+    const southFaces = southRelations.map(([face]) => state[face]);
 
     roll(northRelations, direction).forEach(([face, sliceRotation, positiveRotation, negativeRotation], j) => {
       state[face] = rotateFace(northFaces[j], direction > 0 ? positiveRotation : negativeRotation);
     });
+  
+    roll(southRelations, -direction).forEach(([face, sliceRotation, positiveRotation, negativeRotation], j) => {
+      state[face] = rotateFace(southFaces[j], -direction > 0 ? positiveRotation : negativeRotation);
+    });
   }
   
-
   // rotate opposite face
   state[dodecaminxOpposites[turn.target]] = rotateFace(state[dodecaminxOpposites[turn.target]], -rotation);
 }
