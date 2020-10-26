@@ -16,8 +16,18 @@
         It can be resized by running <ClickableCode @click="resize">dodecaminx.options.size = {{ nextSize }}</ClickableCode>.
         To execute turns, use the controls above or run commands like <ClickableCode @click="turn('U')">dodecaminx.turn('U')</ClickableCode>.
       </p>
+
       <div class="font-bold mb-1">Options:</div>
-      <pre v-text="model.options" />
+      <pre class="mb-6" v-text="model.options" />
+
+      <div class="font-bold mb-1">Solved:</div>
+      <div class="mb-6" v-text="model.isSolved()" />
+
+      <div class="font-bold mb-1">Turns:</div>
+      <div
+        v-text="scramble || 'None'"
+        class="overflow-y-auto select-all"
+        style="max-height: 240px" />
     </div>
     <div class="text-gray-900 relative w-full md:col-span-7">
       <svg
@@ -33,7 +43,6 @@
               v-for="(obj, index) in face.stickers"
               stroke="currentColor"
               :d="d(obj.path)"
-              :data-id="obj.sticker.data.id"
               :fill="colors[obj.sticker.value]"
               :key="`corner-${index}`"
               :stroke-width="strokeWidth" />
@@ -61,23 +70,20 @@ const toSvgOrientation = ([x, y]) => [x, -y];
 const toPathCoordinates = (arr) => arr.map(toSvgOrientation);
 
 // colors
-const colors = {
-  b: '#718096', // gray
-  bl: '#ED8936', // orange
-  dl: '#2F855A', // dark green
-  d: '#FBD38D', // creme
-  dbl: '#90CDF4', // light blue
-  dbr: '#F687B3', // pink
-  br: '#9AE6B4', // light green
-  dr: '#E53E3E', // red
-  f: '#F7FAFC', // white
-  l: '#B794F4', // purple
-  r: '#2B6CB0', // dark blue
-  u: '#F6E05E', // yellow
-};
-
-// custom initial values to map colors to faces
-const initialValues = Object.keys(colors).reduce((acc, face) => Object.assign(acc, { [face]: face }), {});
+const colors = [
+  '#718096', // b: gray
+  '#ED8936', // bl: orange
+  '#9AE6B4', // br: light green
+  '#FBD38D', // d: creme
+  '#90CDF4', // dbl: light blue
+  '#F687B3', // dbr: pink
+  '#2F855A', // dl: dark green
+  '#E53E3E', // dr: red
+  '#F7FAFC', // f: white
+  '#9F7AEA', // l: purple
+  '#2B6CB0', // r: dark blue
+  '#F6E05E', // u: yellow
+];
 
 // sizes
 const defaultSize = 3;
@@ -151,6 +157,7 @@ export default {
   data() {
     return {
       model: null,
+      scramble: null,
       turns: '',
     };
   },
@@ -299,28 +306,6 @@ export default {
     fresh() {
       this.model = new Dodecaminx({
         size: this.puzzleSize,
-        values: initialValues,
-      });
-
-      // tag each sticker with a unique id for easier debugging
-      Object.keys(this.model.state).forEach((key) => {
-        const face = this.model.state[key];
-
-        if (face.center) {
-          face.center.data.id = `center-${key}`;
-        }
-
-        face.corners.forEach((corners, i) => {
-          corners.forEach((obj, j) => {
-            obj.data.id = `${key}-corner-${'abcde'[i]}-${j}`;
-          });
-        });
-
-        face.middles.forEach((middles, i) => {
-          middles.forEach((obj, j) => {
-            obj.data.id = `${key}-middle-${'abcde'[i]}-${j}`;
-          });
-        });
       });
 
       const reset = this.model.reset.bind(this.model);
