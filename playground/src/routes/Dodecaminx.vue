@@ -32,11 +32,11 @@
             <path
               v-for="(obj, index) in face.stickers"
               stroke="currentColor"
-              stroke-width="0.05"
               :d="d(obj.path)"
               :data-id="obj.sticker.data.id"
               :fill="colors[obj.sticker.value]"
-              :key="`corner-${index}`" />
+              :key="`corner-${index}`"
+              :stroke-width="strokeWidth" />
           </g>
         </g>
       </svg>
@@ -238,6 +238,13 @@ export default {
     },
     puzzleSize() {
       return this.model?.options?.size || defaultSize;
+    },
+    strokeWidth() {
+      if (this.puzzleSize > 10) {
+        return 0.01;
+      }
+
+      return Math.max(0.02, (7 - this.puzzleSize) / 100);
     },
   },
   methods: {
