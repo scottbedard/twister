@@ -326,8 +326,10 @@ export default {
       };
 
       this.model.turn = (alg) => {
-        this.scramble = `${this.scramble || ''} ${alg}`.trim();
-        turn(alg);
+        alg.split(' ').forEach((t) => {
+          turn(t);
+          this.scramble = `${this.scramble || ''} ${t}`.trim();
+        });
       };
 
       window.dodecaminx = this.model;
