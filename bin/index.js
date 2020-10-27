@@ -1,9 +1,23 @@
 /* eslint-disable no-undef */
-const { Cube } = require('../dist/index');
+const { Cube, Dodecaminx } = require('../dist/index');
 const { program } = require('commander');
 const pkg = require('../package.json');
 
 const json = output => JSON.stringify(output);
+const isCube = str => /^(\d+)x(\1)$/.test(str);
+const isDodecaminx = str => /^dodecaminx(\d+)$/.test(str);
+
+const createModel = (type) => {
+  if (isCube(type)) {
+    return new Cube({ size: parseInt(type, 10) });
+  }
+  
+  if (isDodecaminx(type)) {
+    return new Dodecaminx({ size: parseInt(type.slice(10), 10) });
+  }
+
+  throw 'Invalid puzzle';
+}
 
 program.version(pkg.version);
 
@@ -14,27 +28,18 @@ program.command('scramble <puzzle>')
   .description('scramble puzzle to a given depth')
   .option('-t, --turns [value]', 'Turns')
   .action((puzzle, options) => {
-    const cubeSize = parseInt(puzzle, 10);
+    const model = createModel(puzzle);    
+    const turns = options.turns && parseInt(options.turns.replace(/[^\d]/g, ''), 10);
+    const scramble = model.generateScramble(turns);
 
-    // cubes
-    if (Number.isFinite(cubeSize)) {
-      const cube = new Cube({ size: cubeSize });
-      const turns = options.turns && parseInt(options.turns.replace(/[^\d]/g, ''), 10);
-      const scramble = cube.generateScramble(turns);
+    model.turn(scramble);
 
-      cube.turn(scramble);
-
-      console.log(json({
-        puzzle,
-        turns: turns,
-        scramble,
-        state: cube.output(),
-      }));
-
-      return;
-    }
-
-    throw 'Invalid puzzle';
+    console.log(json({
+      puzzle,
+      turns: turns,
+      scramble,
+      state: model.output(),
+    }));
   });
 
 //
@@ -43,22 +48,14 @@ program.command('scramble <puzzle>')
 program.command('test <puzzle> <state> <solution>')
   .description('test if an algorithm solves a puzzle')
   .action((puzzle, state, solution) => {
-    const cubeSize = parseInt(puzzle, 10);
+    const model = createModel(puzzle);
 
-    // cubes
-    if (Number.isFinite(cubeSize)) {
-      const cube = new Cube({ size: cubeSize });
-      cube.apply(JSON.parse(state));
-      cube.turn(solution);
+    model.apply(JSON.parse(state));
+    model.turn(solution);
 
-      console.log(json({
-        solved: cube.isSolved(),
-      }));
-
-      return;
-    }
-
-    throw 'Invalid puzzle';
+    console.log(json({
+      solved: model.isSolved(),
+    }));
   });
 
 program.parse(process.argv);
