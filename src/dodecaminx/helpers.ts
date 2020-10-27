@@ -68,29 +68,10 @@ export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, an
  * @return {boolean}
  */
 export function faceIsSolved<T>(face: DodecaminxFaceObject<T>): boolean {
-  const value = face.center?.value ?? face.corners[0][0].value;
+  const stickers = getFaceStickers(face);
+  const value = stickers.find(obj => obj.value !== null)?.value ?? null;
 
-  for (let i = 0; i < 5; i++) {
-    const corner = face.corners[i];
-
-    for (let j = 0; j < corner.length; j++) {
-      if (corner[j].value !== null && corner[j].value !== value) {
-        return false;
-      }
-    }
-
-    if (face.middles.length > 0) {
-      const middle = face.middles[i];
-
-      for (let j = 0; j < middle.length; j++) {
-        if (middle[j].value !== null && middle[j].value !== value) {
-          return false;
-        }
-      }
-    }
-  }
-
-  return true;
+  return stickers.reduce((acc, obj) => acc && obj.value === value, true);
 }
 
 /**

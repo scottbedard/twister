@@ -985,15 +985,47 @@ describe('dodecaminx', () => {
   //
   // isSolved
   //
-  it('isSolved', () => {
-    const kilo = new Dodecaminx({ size: 2 });
+  describe('isSolved', () => {
+    it('standard faces', () => {
+      const kilo = new Dodecaminx({ size: 2 });
 
-    kilo.turn('U');
-    expect(kilo.isSolved()).toBe(false);
+      kilo.turn('U');
+      expect(kilo.isSolved()).toBe(false);
 
-    kilo.turn('U-');
-    expect(kilo.isSolved()).toBe(true);
-  });
+      kilo.turn('U-');
+      expect(kilo.isSolved()).toBe(true);
+    });
+
+    it('void stickers', () => {
+      // nullify all faces in the upper hemisphere except U
+      const kilo = new Dodecaminx({
+        size: 2,
+        values: {
+          b: 0,
+          bl: null,
+          br: null,
+          d: 3,
+          dbl: 4,
+          dbr: 5,
+          dl: 6,
+          dr: 7,
+          f: null,
+          l: null,
+          r: null,
+          u: 11,
+        },
+      });
+
+      kilo.turn('U');
+      expect(kilo.isSolved()).toBe(true);
+
+      kilo.turn('F');
+      expect(kilo.isSolved()).toBe(false);
+
+      kilo.turn('F-');
+      expect(kilo.isSolved()).toBe(true);
+    });
+  })
 
   //
   // getStickersForTurn

@@ -185,7 +185,7 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
       if (!parsedTurn.wide) {
         break;
       }
-    } 
+    }
 
     return stickers;
   }
