@@ -2,7 +2,7 @@
   <div class="p-8">
     <div class="font-bold gap-6 grid leading-none mb-12 text-2xl md:text-4xl md:grid-cols-2">
       <a class="hover:underline hover:text-white" href="https://github.com/scottbedard/twister">
-        @bedard/twister
+        Twister
       </a>
       <div class="flex items-center md:justify-end">
         <Select v-model="route">
