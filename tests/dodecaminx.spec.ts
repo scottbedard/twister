@@ -21,6 +21,21 @@ import { identity } from '../src/utils/function';
 // assertions were made. faces are not ordered alphabetically,
 // which broke all of the existing tests. to avoid re-writing a
 // bunch of long assertions, we'll just shim in the original values
+const alphaValues = {
+  b: 'b',
+  bl: 'bl',
+  br: 'br',
+  d: 'd',
+  dbl: 'dbl',
+  dbr: 'dbr',
+  dl: 'dl',
+  dr: 'dr',
+  f: 'f',
+  l: 'l',
+  r: 'r',
+  u: 'u',
+};
+
 const testValues = {
   b: 7,
   bl: 3,
@@ -844,6 +859,55 @@ describe('dodecaminx', () => {
 
     kilo.scramble();
     expect(kilo.isSolved()).toBe(false);
+  });
+
+  //
+  // turns
+  //
+  describe('turns', () => {
+    it('*U', () => {
+      const kilo = new Dodecaminx({ size: 2, values: alphaValues });
+      kilo.turn('*U');
+
+      expect(kilo.output()).toEqual({
+        u: [
+          [['u'], ['u'], ['u'], ['u'], ['u']],
+        ],
+        f: [
+          [['r'], ['r'], ['r'], ['r'], ['r']],
+        ],
+        l: [
+          [['f'], ['f'], ['f'], ['f'], ['f']],
+        ],
+        bl: [
+          [['l'], ['l'], ['l'], ['l'], ['l']],
+        ],
+        br: [
+          [['bl'], ['bl'], ['bl'], ['bl'], ['bl']],
+        ],
+        r: [
+          [['br'], ['br'], ['br'], ['br'], ['br']],
+        ],
+        d: [
+          [['d'], ['d'], ['d'], ['d'], ['d']],
+        ],
+        b: [
+          [['dbl'], ['dbl'], ['dbl'], ['dbl'], ['dbl']],
+        ],
+        dbl: [
+          [['dl'], ['dl'], ['dl'], ['dl'], ['dl']],
+        ],
+        dl: [
+          [['dr'], ['dr'], ['dr'], ['dr'], ['dr']],
+        ],
+        dr: [
+          [['dbr'], ['dbr'], ['dbr'], ['dbr'], ['dbr']],
+        ],
+        dbr: [
+          [['b'], ['b'], ['b'], ['b'], ['b']],
+        ],
+      });
+    });
   });
 
   //
