@@ -17,7 +17,7 @@ import {
 
 import { sample } from '../utils/array';
 import { error } from '../utils/function';
-import { floor, isInteger } from '../utils/number';
+import { floor, isInteger, rand } from '../utils/number';
 import { Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
@@ -151,11 +151,15 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
       // pochmann scrambling
       if (turn.target === 'r') {
         this.state.l = rotateFace(this.state.l, turn.rotation);
-        rotateSlices(this.state, 'l', 1, turn.rotation);
+        walkSlices(turn.depth, true, (i) => {
+          rotateSlices(this.state, 'l', i, turn.rotation);
+        });
         rotatePuzzle(this.state, 'dbr', turn.rotation);
       } else {
         this.state.u = rotateFace(this.state.u, turn.rotation);
-        rotateSlices(this.state, 'u', 1, turn.rotation);
+        walkSlices(turn.depth, true, (i) => {
+          rotateSlices(this.state, 'u', i, turn.rotation);
+        });
         rotatePuzzle(this.state, 'd', turn.rotation);
       }
     } else if (turn.whole) {
@@ -181,10 +185,13 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @return {void}
    */
-  generateScramble(length: number = this.options.size * 15): string {
+  generateScramble(length: number = this.options.size * 25): string {
     const turns = [];
+    const maxDepth = floor(this.options.size / 2);
 
     for (let i = 0, turn = sample(['R', 'D'], this.options.random); i < length; i++) {
+      const depth = rand(1, maxDepth, this.options.random);
+
       turn = sample(
         (i + 1) % 10 === 0
           ? ['U', 'U-']
@@ -192,7 +199,7 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
         this.options.random,
       );
 
-      turns.push(turn);
+      turns.push(`${depth > 1 ? depth : ''}${turn}`);
     }
     
     return turns.join(' ');

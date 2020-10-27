@@ -17,7 +17,7 @@ import {
 
 import { cols, rows } from '../utils/matrix';
 import { error, identity } from '../utils/function';
-import { floor, isOdd } from '../utils/number';
+import { floor, isInteger, isOdd } from '../utils/number';
 import { roll, splice, times } from '../utils/array';
 
 /**
@@ -148,9 +148,11 @@ export function injectSlice<T>(target: DodecaminxFaceObject<T>, source: Dodecami
  * @return {DodecaminxTurn}
  */
 export function parseDodecaminxTurn(turn: string, maxDepth: number): DodecaminxTurn {
-  if (['R++', 'R--', 'D++', 'D--'].includes(turn)) {
+  if (/^(\d*)(R|D)(\+\+|--)$/.test(turn)) {
+    const depth = parseInt(turn, 10);
+
     return {
-      depth: 1,
+      depth: isInteger(depth) ? depth : 1,
       pochmann: true,
       rotation: turn.endsWith('--') ? -2 : 2,
       target: turn.slice(0, 1).toLowerCase() as DodecaminxFace,
