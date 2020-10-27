@@ -2,11 +2,13 @@ import { DodecaminxFace, DodecaminxValue } from './dodecaminx';
 
 type AdjacentFace<T> = Exclude<DodecaminxFace, T>;
 
+type RotationAmount = -2 | -1 | 0 | 1 | 2;
+
 export type AdjacentRelationship<T> = [
   AdjacentFace<T>,
-  -2 | -1 | 0 | 1 | 2, // slice relationship
-  -2 | -1 | 0 | 1 | 2, // clockwise face relationship
-  -2 | -1 | 0 | 1 | 2, // counter-clockwise face relationship
+  RotationAmount, // slice relationship
+  RotationAmount, // clockwise face relationship
+  RotationAmount, // counter-clockwise face relationship
 ];
 
 type IntersectingFaces<T extends DodecaminxFace> = [

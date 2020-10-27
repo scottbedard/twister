@@ -181,7 +181,7 @@ export function rotatePuzzle<T>(state: DodecaminxState<T>, turn: DodecaminxTurn)
   // rotate target face
   state[turn.target] = rotateFace(state[turn.target], turn.rotation);
 
-  // rotate faces north of plane
+  // rotate faces that touch the turn equator
   const northRelations = dodecaminxNet[target] as AdjacentRelationship<keyof DodecaminxFace>[];
   const southRelations = dodecaminxNet[dodecaminxOpposites[target]] as AdjacentRelationship<keyof DodecaminxFace>[];
 
@@ -189,11 +189,11 @@ export function rotatePuzzle<T>(state: DodecaminxState<T>, turn: DodecaminxTurn)
     const northFaces = northRelations.map(([face]) => state[face]);
     const southFaces = southRelations.map(([face]) => state[face]);
 
-    roll(northRelations, direction).forEach(([face, sliceRotation, positiveRotation, negativeRotation], j) => {
+    roll(northRelations, direction).forEach(([face,, positiveRotation, negativeRotation], j) => {
       state[face] = rotateFace(northFaces[j], direction > 0 ? positiveRotation : negativeRotation);
     });
   
-    roll(southRelations, -direction).forEach(([face, sliceRotation, positiveRotation, negativeRotation], j) => {
+    roll(southRelations, -direction).forEach(([face,, positiveRotation, negativeRotation], j) => {
       state[face] = rotateFace(southFaces[j], -direction > 0 ? positiveRotation : negativeRotation);
     });
   }
