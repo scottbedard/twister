@@ -758,6 +758,95 @@ describe('dodecaminx', () => {
   });
 
   //
+  // isSolved
+  //
+  describe('isSolved', () => {
+    it('standard faces', () => {
+      const kilo = new Dodecaminx({ size: 2 });
+
+      kilo.turn('U');
+      expect(kilo.isSolved()).toBe(false);
+
+      kilo.turn('U-');
+      expect(kilo.isSolved()).toBe(true);
+    });
+
+    it('void stickers', () => {
+      // nullify all faces in the upper hemisphere except U
+      const kilo = new Dodecaminx({
+        size: 2,
+        values: {
+          b: 0,
+          bl: null,
+          br: null,
+          d: 3,
+          dbl: 4,
+          dbr: 5,
+          dl: 6,
+          dr: 7,
+          f: null,
+          l: null,
+          r: null,
+          u: 11,
+        },
+      });
+
+      kilo.turn('U');
+      expect(kilo.isSolved()).toBe(true);
+
+      kilo.turn('F');
+      expect(kilo.isSolved()).toBe(false);
+
+      kilo.turn('F-');
+      expect(kilo.isSolved()).toBe(true);
+    });
+  })
+
+  //
+  // getStickersForTurn
+  //
+  describe('getStickersForTurn', () => {
+    const mega = new Dodecaminx({ size: 3 });
+    const giga = new Dodecaminx({ size: 5 });
+
+    it('*U', () => {
+      const allStickers = (Object.keys(mega.state) as DodecaminxFace[]).reduce((acc, face) => {
+        mega.state[face].corners.forEach((arr) => acc.push(...arr));
+        mega.state[face].middles.forEach((arr) => acc.push(...arr));
+        return acc.concat(mega.state[face].center);
+      }, []).filter(identity);
+
+      expect(new Set(mega.getStickersForTurn('*U'))).toEqual(new Set(allStickers));
+    });
+
+    it('U, 2U, Uw', () => {
+      expect(giga.getStickersForTurn('U').length).toBe((5 * 5) + 31); // face and first layer
+      expect(giga.getStickersForTurn('2U').length).toBe((5 * 5)); // second layer only
+      expect(giga.getStickersForTurn('Uw').length).toBe((5 * 5) + (5 * 5) + 31); // face and both layers
+    });
+  });
+
+  //
+  // generateScramble
+  //
+  it('generateScramble', () => {
+    const kilo = new Dodecaminx({ size: 2 });
+
+    expect(kilo.generateScramble(10).split(' ').length).toBe(10);
+  });
+
+  //
+  // scramble
+  //
+  it('scramble', () => {
+    const kilo = new Dodecaminx({ size: 2 });
+    expect(kilo.isSolved()).toBe(true);
+
+    kilo.scramble();
+    expect(kilo.isSolved()).toBe(false);
+  });
+
+  //
   // output
   //
   describe('output', () => {
@@ -980,94 +1069,5 @@ describe('dodecaminx', () => {
         ],
       });
     });
-  });
-
-  //
-  // isSolved
-  //
-  describe('isSolved', () => {
-    it('standard faces', () => {
-      const kilo = new Dodecaminx({ size: 2 });
-
-      kilo.turn('U');
-      expect(kilo.isSolved()).toBe(false);
-
-      kilo.turn('U-');
-      expect(kilo.isSolved()).toBe(true);
-    });
-
-    it('void stickers', () => {
-      // nullify all faces in the upper hemisphere except U
-      const kilo = new Dodecaminx({
-        size: 2,
-        values: {
-          b: 0,
-          bl: null,
-          br: null,
-          d: 3,
-          dbl: 4,
-          dbr: 5,
-          dl: 6,
-          dr: 7,
-          f: null,
-          l: null,
-          r: null,
-          u: 11,
-        },
-      });
-
-      kilo.turn('U');
-      expect(kilo.isSolved()).toBe(true);
-
-      kilo.turn('F');
-      expect(kilo.isSolved()).toBe(false);
-
-      kilo.turn('F-');
-      expect(kilo.isSolved()).toBe(true);
-    });
-  })
-
-  //
-  // getStickersForTurn
-  //
-  describe('getStickersForTurn', () => {
-    const mega = new Dodecaminx({ size: 3 });
-    const giga = new Dodecaminx({ size: 5 });
-
-    it('*U', () => {
-      const allStickers = (Object.keys(mega.state) as DodecaminxFace[]).reduce((acc, face) => {
-        mega.state[face].corners.forEach((arr) => acc.push(...arr));
-        mega.state[face].middles.forEach((arr) => acc.push(...arr));
-        return acc.concat(mega.state[face].center);
-      }, []).filter(identity);
-
-      expect(new Set(mega.getStickersForTurn('*U'))).toEqual(new Set(allStickers));
-    });
-
-    it('U, 2U, Uw', () => {
-      expect(giga.getStickersForTurn('U').length).toBe((5 * 5) + 31); // face and first layer
-      expect(giga.getStickersForTurn('2U').length).toBe((5 * 5)); // second layer only
-      expect(giga.getStickersForTurn('Uw').length).toBe((5 * 5) + (5 * 5) + 31); // face and both layers
-    });
-  });
-
-  //
-  // generateScramble
-  //
-  it('generateScramble', () => {
-    const kilo = new Dodecaminx({ size: 2 });
-
-    expect(kilo.generateScramble(10).split(' ').length).toBe(10);
-  });
-
-  //
-  // scramble
-  //
-  it('scramble', () => {
-    const kilo = new Dodecaminx({ size: 2 });
-    expect(kilo.isSolved()).toBe(true);
-
-    kilo.scramble();
-    expect(kilo.isSolved()).toBe(false);
   });
 });
