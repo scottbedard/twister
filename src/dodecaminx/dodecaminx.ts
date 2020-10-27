@@ -6,6 +6,8 @@ import {
 import {
   createFace,
   faceIsSolved,
+  getFaceStickers,
+  getSliceStickers,
   parseDodecaminxTurn,
   rotateFace,
   rotatePuzzle,
@@ -15,7 +17,7 @@ import {
 } from './helpers';
 
 import { sample } from '../utils/array';
-import { error } from '../utils/function';
+import { error, identity } from '../utils/function';
 import { floor, isInteger, max, rand } from '../utils/number';
 import { Sticker } from '../puzzle';
 
@@ -163,8 +165,29 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @return {Sticker[]}
    */
-  getStickersForTurn(): DodecaminxSticker<Data>[] {
-    error('not implemented');
+  getStickersForTurn(turn: string): DodecaminxSticker<Data>[] {
+    const parsedTurn = this.parse(turn);
+
+    // return all stickers for whole puzzle rotations
+    if (parsedTurn.whole) {
+      return (Object.keys(this.state) as DodecaminxFace[])
+        .reduce((acc, face) => acc.concat(getFaceStickers(this.state[face])), []);
+    }
+
+    // return effected stickers for a turn
+    const stickers = parsedTurn.depth === 1 || parsedTurn.wide
+      ? getFaceStickers(this.state[parsedTurn.target])
+      : [];
+
+    for (let i = parsedTurn.depth; i > 0; i--) {
+      stickers.push(...getSliceStickers(this.state, parsedTurn.target, parsedTurn.depth));
+
+      if (!parsedTurn.wide) {
+        break;
+      }
+    } 
+
+    return stickers;
   }
 
   /**

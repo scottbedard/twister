@@ -16,7 +16,7 @@ import {
 } from './constants';
 
 import { cols, rows } from '../utils/matrix';
-import { error } from '../utils/function';
+import { error, identity } from '../utils/function';
 import { floor, isOdd } from '../utils/number';
 import { roll, splice, times } from '../utils/array';
 
@@ -48,7 +48,7 @@ export function createFace<Data>(size: number, initialValue: DodecaminxValue = n
  *
  * @return {DodecaminxSlice}
  */
-export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, angle: number): DodecaminxSliceObject<T> {
+export function extractSlice<T>(face: DodecaminxFaceObject<T>, depth: number, angle = 0): DodecaminxSliceObject<T> {
   const rotatedFace = rotateFace(face, angle);
   const leadingRows = rows(rotatedFace.corners[0]);
   const trailingCols = cols(rotatedFace.corners[1]);
@@ -91,6 +91,42 @@ export function faceIsSolved<T>(face: DodecaminxFaceObject<T>): boolean {
   }
 
   return true;
+}
+
+/**
+ * Get all stickers from a face.
+ *
+ * @param {DodecaminxFaceObject} face
+ *
+ * @return {DodecacminxSticker[]} 
+ */
+export function getFaceStickers<T>(face: DodecaminxFaceObject<T>): DodecaminxSticker<T>[] {
+  const arr: DodecaminxSticker<T>[] = [];
+
+  face.corners.forEach(quintant => arr.push(...quintant));
+  face.middles.forEach(quintant => arr.push(...quintant));
+
+  if (face.center) {
+    arr.push(face.center);
+  }
+
+  return arr.filter(identity);
+}
+
+/**
+ * Get all stickers that are part of a slice.
+ *
+ * @param {DodecaminxState} state
+ * @param {DodecaminxFace} target
+ * @param {depth} depth
+ *
+ * @return {DodecaminxSticker[]}
+ */
+export function getSliceStickers<T>(state: DodecaminxState<T>, target: DodecaminxFace, depth: number): DodecaminxSticker<T>[] {
+  return (dodecaminxNet[target] as AdjacentRelationship<keyof DodecaminxFace>[])
+    .map(([face]) => extractSlice(state[face], depth))
+    .reduce((acc, slice) => acc.concat(slice.leading, slice.middle, slice.trailing), [])
+    .filter(identity);
 }
 
 /**

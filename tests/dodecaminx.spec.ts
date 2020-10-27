@@ -1,4 +1,5 @@
 import {
+  DodecaminxFace,
   DodecaminxSliceObject,
   DodecaminxTurn,
 } from '../src/dodecaminx/dodecaminx';
@@ -13,6 +14,8 @@ import {
   simplifyFace,
   stringifyTurn,
 } from '../src/dodecaminx/helpers';
+
+import { identity } from '../src/utils/function';
 
 // the abilty to set custom values was added after many of these
 // assertions were made. faces are not ordered alphabetically,
@@ -990,6 +993,30 @@ describe('dodecaminx', () => {
 
     kilo.turn('U-');
     expect(kilo.isSolved()).toBe(true);
+  });
+
+  //
+  // getStickersForTurn
+  //
+  describe('getStickersForTurn', () => {
+    const mega = new Dodecaminx({ size: 3 });
+    const giga = new Dodecaminx({ size: 5 });
+
+    it('*U', () => {
+      const allStickers = (Object.keys(mega.state) as DodecaminxFace[]).reduce((acc, face) => {
+        mega.state[face].corners.forEach((arr) => acc.push(...arr));
+        mega.state[face].middles.forEach((arr) => acc.push(...arr));
+        return acc.concat(mega.state[face].center);
+      }, []).filter(identity);
+
+      expect(new Set(mega.getStickersForTurn('*U'))).toEqual(new Set(allStickers));
+    });
+
+    it('U, 2U, Uw', () => {
+      expect(giga.getStickersForTurn('U').length).toBe((5 * 5) + 31); // face and first layer
+      expect(giga.getStickersForTurn('2U').length).toBe((5 * 5)); // second layer only
+      expect(giga.getStickersForTurn('Uw').length).toBe((5 * 5) + (5 * 5) + 31); // face and both layers
+    });
   });
 
   //
