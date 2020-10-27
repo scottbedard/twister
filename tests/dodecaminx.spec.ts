@@ -1,6 +1,7 @@
 import {
   DodecaminxFace,
   DodecaminxSliceObject,
+  DodecaminxStateSummary,
   DodecaminxTurn,
 } from '../src/dodecaminx/dodecaminx';
 
@@ -769,6 +770,133 @@ describe('dodecaminx', () => {
           expect(stringifyTurn(obj)).toEqual(turn);
         });
       });
+    });
+  });
+
+  //
+  // apply
+  //
+  describe('apply', () => {
+    it('kilo', () => {
+      const kilo = new Dodecaminx({ size: 2 });
+      
+      const state: DodecaminxStateSummary = {
+        b: [
+          [['b-corner-0'], ['b-corner-1'], ['b-corner-2'], ['b-corner-3'], ['b-corner-4']],
+        ],
+        bl: [
+          [['bl-corner-0'], ['bl-corner-1'], ['bl-corner-2'], ['bl-corner-3'], ['bl-corner-4']],
+        ],
+        br: [
+          [['br-corner-0'], ['br-corner-1'], ['br-corner-2'], ['br-corner-3'], ['br-corner-4']],
+        ],
+        d: [
+          [['d-corner-0'], ['d-corner-1'], ['d-corner-2'], ['d-corner-3'], ['d-corner-4']],
+        ],
+        dbl: [
+          [['dbl-corner-0'], ['dbl-corner-1'], ['dbl-corner-2'], ['dbl-corner-3'], ['dbl-corner-4']],
+        ],
+        dbr: [
+          [['dbr-corner-0'], ['dbr-corner-1'], ['dbr-corner-2'], ['dbr-corner-3'], ['dbr-corner-4']],
+        ],
+        dl: [
+          [['dl-corner-0'], ['dl-corner-1'], ['dl-corner-2'], ['dl-corner-3'], ['dl-corner-4']],
+        ],
+        dr: [
+          [['dr-corner-0'], ['dr-corner-1'], ['dr-corner-2'], ['dr-corner-3'], ['dr-corner-4']],
+        ],
+        f: [
+          [['f-corner-0'], ['f-corner-1'], ['f-corner-2'], ['f-corner-3'], ['f-corner-4']],
+        ],
+        l: [
+          [['l-corner-0'], ['l-corner-1'], ['l-corner-2'], ['l-corner-3'], ['l-corner-4']],
+        ],
+        r: [
+          [['r-corner-0'], ['r-corner-1'], ['r-corner-2'], ['r-corner-3'], ['r-corner-4']],
+        ],
+        u: [
+          [['u-corner-0'], ['u-corner-1'], ['u-corner-2'], ['u-corner-3'], ['u-corner-4']],
+        ],
+      };
+
+      expect(kilo.output()).not.toEqual(state);
+
+      kilo.apply(state);
+
+      expect(kilo.output()).toEqual(state);
+    });
+
+    it('mega', () => {
+      const mega = new Dodecaminx({ size: 3 });
+      
+      const state: DodecaminxStateSummary = {
+        b: [
+          [['b-corner-0'], ['b-corner-1'], ['b-corner-2'], ['b-corner-3'], ['b-corner-4']],
+          [['b-middle-0'], ['b-middle-1'], ['b-middle-2'], ['b-middle-3'], ['b-middle-4']],
+          'b-center',
+        ],
+        bl: [
+          [['bl-corner-0'], ['bl-corner-1'], ['bl-corner-2'], ['bl-corner-3'], ['bl-corner-4']],
+          [['bl-middle-0'], ['bl-middle-1'], ['bl-middle-2'], ['bl-middle-3'], ['bl-middle-4']],
+          'bl-center',
+        ],
+        br: [
+          [['br-corner-0'], ['br-corner-1'], ['br-corner-2'], ['br-corner-3'], ['br-corner-4']],
+          [['br-middle-0'], ['br-middle-1'], ['br-middle-2'], ['br-middle-3'], ['br-middle-4']],
+          'br-center',
+        ],
+        d: [
+          [['d-corner-0'], ['d-corner-1'], ['d-corner-2'], ['d-corner-3'], ['d-corner-4']],
+          [['d-middle-0'], ['d-middle-1'], ['d-middle-2'], ['d-middle-3'], ['d-middle-4']],
+          'd-center',
+        ],
+        dbl: [
+          [['dbl-corner-0'], ['dbl-corner-1'], ['dbl-corner-2'], ['dbl-corner-3'], ['dbl-corner-4']],
+          [['dbl-middle-0'], ['dbl-middle-1'], ['dbl-middle-2'], ['dbl-middle-3'], ['dbl-middle-4']],
+          'dbl-center',
+        ],
+        dbr: [
+          [['dbr-corner-0'], ['dbr-corner-1'], ['dbr-corner-2'], ['dbr-corner-3'], ['dbr-corner-4']],
+          [['dbr-middle-0'], ['dbr-middle-1'], ['dbr-middle-2'], ['dbr-middle-3'], ['dbr-middle-4']],
+          'dbr-center',
+        ],
+        dl: [
+          [['dl-corner-0'], ['dl-corner-1'], ['dl-corner-2'], ['dl-corner-3'], ['dl-corner-4']],
+          [['dl-middle-0'], ['dl-middle-1'], ['dl-middle-2'], ['dl-middle-3'], ['dl-middle-4']],
+          'dl-center',
+        ],
+        dr: [
+          [['dr-corner-0'], ['dr-corner-1'], ['dr-corner-2'], ['dr-corner-3'], ['dr-corner-4']],
+          [['dr-middle-0'], ['dr-middle-1'], ['dr-middle-2'], ['dr-middle-3'], ['dr-middle-4']],
+          'dr-center',
+        ],
+        f: [
+          [['f-corner-0'], ['f-corner-1'], ['f-corner-2'], ['f-corner-3'], ['f-corner-4']],
+          [['f-middle-0'], ['f-middle-1'], ['f-middle-2'], ['f-middle-3'], ['f-middle-4']],
+          'f-center',
+        ],
+        l: [
+          [['l-corner-0'], ['l-corner-1'], ['l-corner-2'], ['l-corner-3'], ['l-corner-4']],
+          [['l-middle-0'], ['l-middle-1'], ['l-middle-2'], ['l-middle-3'], ['l-middle-4']],
+          'l-center',
+        ],
+        r: [
+          [['r-corner-0'], ['r-corner-1'], ['r-corner-2'], ['r-corner-3'], ['r-corner-4']],
+          [['r-middle-0'], ['r-middle-1'], ['r-middle-2'], ['r-middle-3'], ['r-middle-4']],
+          'r-center',
+        ],
+        u: [
+          [['u-corner-0'], ['u-corner-1'], ['u-corner-2'], ['u-corner-3'], ['u-corner-4']],
+          [['u-middle-0'], ['u-middle-1'], ['u-middle-2'], ['u-middle-3'], ['u-middle-4']],
+          'u-center',
+        ],
+      };
+
+      expect(mega.output()).not.toEqual(state);
+
+      mega.apply(state);
+
+      expect(mega.output()).toEqual(state);
     });
   });
 

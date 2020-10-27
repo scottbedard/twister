@@ -17,7 +17,7 @@ import {
 } from './helpers';
 
 import { sample } from '../utils/array';
-import { error, identity } from '../utils/function';
+import { error } from '../utils/function';
 import { floor, isInteger, max, rand } from '../utils/number';
 import { Sticker } from '../puzzle';
 
@@ -102,7 +102,35 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    * @return {void}
    */
   apply(state: DodecaminxStateSummary): void {
-    error('not implemented');
+    (Object.keys(state) as DodecaminxFace[]).forEach((face) => {
+      const [corners, middles, centerValue] = state[face];
+
+      corners.forEach((quintant, i) => {
+        quintant.forEach((value, j) => {
+          const sticker = this.state[face].corners?.[i]?.[j];
+
+          if (sticker) {
+            sticker.value = value;
+          }
+        });
+      });
+
+      if (middles) {
+        middles.forEach((quintant, i) => {
+          quintant.forEach((value, j) => {
+            const sticker = this.state[face].middles?.[i]?.[j];
+
+            if (sticker) {
+              sticker.value = value;
+            }
+          });
+        });
+      }
+
+      if (centerValue && this.state[face].center !== null) {
+        this.state[face].center.value = centerValue;
+      }
+    });
   }
 
   /**
