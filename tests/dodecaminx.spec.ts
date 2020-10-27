@@ -13,7 +13,6 @@ import {
   injectSlice,
   rotateFace,
   simplifyFace,
-  stringifyTurn,
 } from '../src/dodecaminx/helpers';
 
 import { identity } from '../src/utils/function';
@@ -718,16 +717,25 @@ describe('dodecaminx', () => {
       const giga = new Dodecaminx({ size: 5 });
 
       const turns: Record<string, DodecaminxTurn> = {
-        'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
-        'F2': { depth: 1, rotation: 2, target: 'f', wide: false, whole: false },
-        'F-': { depth: 1, rotation: -1, target: 'f', wide: false, whole: false },
-        'F2-': { depth: 1, rotation: -2, target: 'f', wide: false, whole: false },
-        'Fw': { depth: 2, rotation: 1, target: 'f', wide: true, whole: false },
-        'Fw-': { depth: 2, rotation: -1, target: 'f', wide: true, whole: false },
-        '2Fw-': { depth: 2, rotation: -1, target: 'f', wide: true, whole: false },
-        'Fw2-': { depth: 2, rotation: -2, target: 'f', wide: true, whole: false },
-        '2F': { depth: 2, rotation: 1, target: 'f', wide: false, whole: false },
-        '*F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: true },
+        // standard turns
+        'F': { depth: 1, pochmann: false, rotation: 1, target: 'f', wide: false, whole: false },
+        'F2': { depth: 1, pochmann: false, rotation: 2, target: 'f', wide: false, whole: false },
+        'F-': { depth: 1, pochmann: false, rotation: -1, target: 'f', wide: false, whole: false },
+        'F2-': { depth: 1, pochmann: false, rotation: -2, target: 'f', wide: false, whole: false },
+        'Fw': { depth: 2, pochmann: false, rotation: 1, target: 'f', wide: true, whole: false },
+        'Fw-': { depth: 2, pochmann: false, rotation: -1, target: 'f', wide: true, whole: false },
+        '2Fw-': { depth: 2, pochmann: false, rotation: -1, target: 'f', wide: true, whole: false },
+        'Fw2-': { depth: 2, pochmann: false, rotation: -2, target: 'f', wide: true, whole: false },
+        '2F': { depth: 2, pochmann: false, rotation: 1, target: 'f', wide: false, whole: false },
+        
+        // puzzle rotations
+        '*F': { depth: 1, pochmann: false, rotation: 1, target: 'f', wide: false, whole: true },
+        
+        // pochmann
+        'R++': { depth: 1, pochmann: true, rotation: 2, target: 'r', wide: false, whole: false },
+        'R--': { depth: 1, pochmann: true, rotation: -2, target: 'r', wide: false, whole: false },
+        'D++': { depth: 1, pochmann: true, rotation: 2, target: 'd', wide: false, whole: false },
+        'D--': { depth: 1, pochmann: true, rotation: -2, target: 'd', wide: false, whole: false },
       };
 
       it('throws error when turn is invalid', () => {
@@ -747,27 +755,6 @@ describe('dodecaminx', () => {
       Object.keys(turns).forEach(turn => {
         it(turn, () => {
           expect(giga.parse(turn)).toEqual(turns[turn]);
-        });
-      });
-    });
-
-    describe('stringify', () => {
-      const turns: Record<string, DodecaminxTurn> = {
-        'F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: false },
-        'F2': { depth: 1, rotation: 2, target: 'f', wide: false, whole: false },
-        'F-': { depth: 1, rotation: -1, target: 'f', wide: false, whole: false },
-        'F2-': { depth: 1, rotation: -2, target: 'f', wide: false, whole: false },
-        'Fw': { depth: 2, rotation: 1, target: 'f', wide: true, whole: false },
-        'Fw-': { depth: 2, rotation: -1, target: 'f', wide: true, whole: false },
-        'Fw2-': { depth: 2, rotation: -2, target: 'f', wide: true, whole: false },
-        '2F': { depth: 2, rotation: 1, target: 'f', wide: false, whole: false },
-        '*F': { depth: 1, rotation: 1, target: 'f', wide: false, whole: true },
-      };
-
-      Object.keys(turns).forEach(turn => {
-        it(turn, () => {
-          const obj = turns[turn];
-          expect(stringifyTurn(obj)).toEqual(turn);
         });
       });
     });
@@ -974,7 +961,6 @@ describe('dodecaminx', () => {
   //
   it('generateScramble', () => {
     const kilo = new Dodecaminx({ size: 2 });
-
     expect(kilo.generateScramble(10).split(' ').length).toBe(10);
   });
 

@@ -1,6 +1,5 @@
 import {
   defaultValues,
-  dodecaminxIntersections,
 } from './constants';
 
 import {
@@ -13,12 +12,12 @@ import {
   rotatePuzzle,
   rotateSlices,
   simplifyFace,
-  stringifyTurn,
+  walkSlices,
 } from './helpers';
 
 import { sample } from '../utils/array';
 import { error } from '../utils/function';
-import { floor, isInteger, max, rand } from '../utils/number';
+import { floor, isInteger } from '../utils/number';
 import { Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
@@ -66,11 +65,18 @@ export type DodecaminxStateSummary = Record<DodecaminxFace, DodecaminxFaceSimple
 // turn
 export type DodecaminxTurn = {
   depth: number,
+  pochmann: boolean,
   rotation: number,
   target: DodecaminxFace,
-  wide: boolean,
   whole: boolean,
+  wide: boolean,
 };
+
+// pochmann turn
+export type DodecaminxPochmannTurn = {
+  depth: number
+  turn: 'R++' | 'R--' | 'D++' | 'D--' | 'U' | 'U-';
+}
 
 /**
  * Dodecaminx.
@@ -141,9 +147,20 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    * @return {void} 
    */
   execute(turn: DodecaminxTurn): void {
-    if (turn.whole) {
+    if (turn.pochmann) {
+      // pochmann scrambling
+      if (turn.target === 'r') {
+        this.state.l = rotateFace(this.state.l, turn.rotation);
+        rotateSlices(this.state, 'l', 1, turn.rotation);
+        rotatePuzzle(this.state, 'dbr', turn.rotation);
+      } else {
+        this.state.u = rotateFace(this.state.u, turn.rotation);
+        rotateSlices(this.state, 'u', 1, turn.rotation);
+        rotatePuzzle(this.state, 'd', turn.rotation);
+      }
+    } else if (turn.whole) {
       // rotate entire puzzle
-      rotatePuzzle(this.state, turn);
+      rotatePuzzle(this.state, turn.target, turn.rotation);
     } else {
       // rotate outer face if necessary
       if (turn.depth === 1 || turn.wide) {
@@ -151,13 +168,9 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
       }
 
       // turn slices
-      for (let i = turn.depth; i > 0; i--) {
+      walkSlices(turn.depth, turn.wide, (i) => {
         rotateSlices(this.state, turn.target, i, turn.rotation);
-
-        if (!turn.wide) {
-          break;
-        }
-      } 
+      });
     }
   }
 
@@ -168,19 +181,18 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @return {void}
    */
-  generateScramble(length: number = max(20, this.options.size ** 3)): string {
-    const big = this.options.size > 3;
-    const maxDepth = floor(this.options.size / 2);
-    const turns: string[] = [];
-    const whole = false;
+  generateScramble(length: number = this.options.size * 15): string {
+    const turns = [];
 
-    for (let i = 0, target = sample(Object.keys(this.state) as DodecaminxFace[], this.options.random); i < length; i++) {
-      target = sample(dodecaminxIntersections[target], this.options.random);
-      const depth = big ? rand(0, maxDepth, this.options.random) : 1;
-      const rotation = sample([-2, -1, 1, 2], this.options.random);
-      const wide = depth > 1 && sample([true, false], this.options.random);
+    for (let i = 0, turn = sample(['R', 'D'], this.options.random); i < length; i++) {
+      turn = sample(
+        (i + 1) % 10 === 0
+          ? ['U', 'U-']
+          : turn.startsWith('D') ? ['R++', 'R--'] : ['D++', 'D--'],
+        this.options.random,
+      );
 
-      turns.push(stringifyTurn({ depth, rotation, target, whole, wide }));
+      turns.push(turn);
     }
     
     return turns.join(' ');

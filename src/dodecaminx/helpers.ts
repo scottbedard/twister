@@ -148,6 +148,17 @@ export function injectSlice<T>(target: DodecaminxFaceObject<T>, source: Dodecami
  * @return {DodecaminxTurn}
  */
 export function parseDodecaminxTurn(turn: string, maxDepth: number): DodecaminxTurn {
+  if (['R++', 'R--', 'D++', 'D--'].includes(turn)) {
+    return {
+      depth: 1,
+      pochmann: true,
+      rotation: turn.endsWith('--') ? -2 : 2,
+      target: turn.slice(0, 1).toLowerCase() as DodecaminxFace,
+      whole: false,
+      wide: false,
+    }
+  }
+
   const result = turn.match(/^(?:\*?|(\d)*)(u|f|l|r|bl|br|dl|dr|dbl|dbr|b|d|U|F|L|R|BL|BR|DL|DR|DBL|DBR|B|D){1}(w)?(2)?(['-])?$/);
 
   if (result === null) {
@@ -176,10 +187,11 @@ export function parseDodecaminxTurn(turn: string, maxDepth: number): DodecaminxT
 
   return {
     depth,
+    pochmann: false,
     rotation,
     target: target.toLowerCase() as DodecaminxFace,
-    wide,
     whole,
+    wide,
   };
 }
 
@@ -191,12 +203,11 @@ export function parseDodecaminxTurn(turn: string, maxDepth: number): DodecaminxT
  *
  * @return {void}
  */
-export function rotatePuzzle<T>(state: DodecaminxState<T>, turn: DodecaminxTurn): void {
-  const { rotation, target } = turn;
+export function rotatePuzzle<T>(state: DodecaminxState<T>, target: DodecaminxFace, rotation: number): void {
   const direction = Math.sign(rotation);
 
   // rotate target face
-  state[turn.target] = rotateFace(state[turn.target], turn.rotation);
+  state[target] = rotateFace(state[target], rotation);
 
   // rotate faces that touch the turn equator
   const northRelations = dodecaminxNet[target] as AdjacentRelationship<keyof DodecaminxFace>[];
@@ -216,25 +227,7 @@ export function rotatePuzzle<T>(state: DodecaminxState<T>, turn: DodecaminxTurn)
   }
   
   // rotate opposite face
-  state[dodecaminxOpposites[turn.target]] = rotateFace(state[dodecaminxOpposites[turn.target]], -rotation);
-}
-
-/**
- * Stringify dodecaminx turn.
- *
- * @param {DodecaminxTurn} turn
- *
- * @return {string}
- */
-export function stringifyTurn(turn: DodecaminxTurn): string {
-  const depth = !turn.whole && turn.depth > 1 && !(turn.depth === 2 && turn.wide) ? turn.depth : '';
-  const rotationAmount = turn.rotation === 2 || turn.rotation === -2 ? '2' : '';
-  const rotationDirection = turn.rotation < 0 ? '-' : '';
-  const target = turn.target.toUpperCase();
-  const whole = turn.whole ? '*' : '';
-  const wide = !turn.whole && turn.wide ? 'w' : '';
-
-  return `${whole}${depth}${target}${wide}${rotationAmount}${rotationDirection}`;
+  state[dodecaminxOpposites[target]] = rotateFace(state[dodecaminxOpposites[target]], -rotation);
 }
 
 /**
@@ -295,4 +288,23 @@ export function simplifyFace<T>(face: DodecaminxFaceObject<T>): DodecaminxFaceSi
   }
 
   return result;
+}
+
+/**
+ * Iterate over slices.
+ *
+ * @param {number} depth
+ * @param {boolean} wide 
+ * @param {function} fn
+ *
+ * @return {void} 
+ */
+export function walkSlices(depth: number, wide: boolean, fn: (i: number) => void): void {
+  for (let i = depth; i > 0; i--) {
+    fn(i);
+
+    if (!wide) {
+      break;
+    }
+  } 
 }
