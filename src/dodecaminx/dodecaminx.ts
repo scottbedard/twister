@@ -4,6 +4,7 @@ import {
 
 import {
   createFace,
+  defaultScrambleLength,
   faceIsSolved,
   getFaceStickers,
   getSliceStickers,
@@ -17,7 +18,7 @@ import {
 
 import { sample } from '../utils/array';
 import { error } from '../utils/function';
-import { floor, isInteger, rand } from '../utils/number';
+import { floor, isInteger, max, rand } from '../utils/number';
 import { Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
@@ -185,7 +186,7 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
    *
    * @return {void}
    */
-  generateScramble(length: number = this.options.size * 25): string {
+  generateScramble(length: number = defaultScrambleLength(this.options.size)): string {
     const turns = [];
     const maxDepth = floor(this.options.size / 2);
 

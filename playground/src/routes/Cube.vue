@@ -28,10 +28,10 @@
           <pre v-text="model.isSolved()" />
         </div>
         <div class="col-span-2">
-          <div class="font-bold mb-1">Turns:</div>
+          <div class="font-bold">Turns:</div>
           <div
             v-text="scramble || 'None'"
-            class="overflow-y-auto select-all"
+            class="leading-loose overflow-y-auto select-all"
             style="max-height: 240px" />
         </div>
       </div>

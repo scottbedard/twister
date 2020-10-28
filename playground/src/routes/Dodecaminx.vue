@@ -28,10 +28,10 @@
           <pre v-text="model.isSolved()" />
         </div>
         <div class="col-span-2">
-          <div class="font-bold mb-1">Turns:</div>
+          <div class="font-bold">Turns:</div>
           <div
-            v-text="scramble || 'None'"
-            class="overflow-y-auto select-all"
+            v-html="printableScramble || 'None'"
+            class="leading-loose overflow-y-auto select-all"
             style="max-height: 240px" />
         </div>
       </div>
@@ -248,6 +248,17 @@ export default {
       }
 
       return Math.min(maxSize, Math.max(2, this.model.options.size - 1));
+    },
+    printableScramble() {
+      const turns = (this.scramble ?? '').split(' ');
+
+      const longestSingleTurn = turns
+        .reduce((acc, turn) => (turn.length > acc ? turn.length : acc), 0);
+
+      return turns
+        .map((turn) => turn.padEnd(longestSingleTurn, ' ').replace(/\s/g, '&nbsp;'))
+        .join(' ')
+        .replace(/-/g, '&#8209;');
     },
     puzzleSize() {
       return this.model?.options?.size || defaultSize;

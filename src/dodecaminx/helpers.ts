@@ -40,6 +40,20 @@ export function createFace<Data>(size: number, initialValue: DodecaminxValue = n
 }
 
 /**
+ * Calculate default scramble length
+ *
+ * @param {number} size
+ *
+ * @return {number}
+ */
+export function defaultScrambleLength(size: number): number {
+  if (size < 4) return 50;
+  if (size < 6) return 250;
+  if (size < 8) return 500;
+  return floor((size ** 3) / 10) * 10;
+}
+
+/**
  * Extract a slice of stickers from a face at a given angle.
  *
  * @param {DodecaminxFaceObject} face
