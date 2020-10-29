@@ -135,24 +135,32 @@ Our notation is a superset of [WCA notation](https://www.worldcubeassociation.or
 
 <img src="https://user-images.githubusercontent.com/7980426/76587868-86f67600-64a2-11ea-80f3-74dd928909c6.png">
 
-> **Warning:** This puzzle is currently in development, some methods have not been implemented.
+This puzzle represents N-layered face turning dodecahedrons.
 
-This puzzle represents N-layered face turning dodecahedrons. State for this puzzle is stored as an array of corner matrices and middle values. These arrays start from the faces primary corner, and continue clockwise around the face. The corner matrices are similar to that of the cube face, starting with the corner furthest from the center of the face, and read sequentially towards the center. Middle arrays start with the sticker furthest from the center. Note that for even-layered puzzles, the middle and center values will be an empty array and `null` respectively.
+```js
+import { Dodecaminx } from '@bedard/twister';
+
+const puzzle = new Dodecaminx({ size: 3 });
+```
+
+State for this puzzle is stored as an array of corner matrices and middle values. These arrays start from the primary corner of a face, and continue clockwise around that face. The corner matrices are similar to that of the cube face, starting with the corner furthest from the center of the face, and read sequentially towards the center. Middle arrays start with the sticker furthest from the center. Note that for even-layered puzzles, the middle and center values will be an empty array and `null` respectively.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/7980426/97093355-f9663180-15ff-11eb-93e4-8783045b8f71.png" width="600px">
 </p>
 
-Notation for this puzzle is similar to that of cubes. The main difference is that whole-puzzle rotations are denoted with a `*` prefix. Here are a few examples to demonstrate various turns around the `R` face.
+Notation for this puzzle is similar to that of cubes. The main difference is that whole-puzzle rotations are denoted with a `*` prefix. Here are a few examples to demonstrate various turns around the `U` face.
 
-- `R` = outer layer turned once clockwise
-- `R2` = outer layer turned twice clockwise
-- `R2-` = outer layer turned twice counter-clockwise
-- `2R` = second layer turned once clockwise
-- `2Rw` = second and outer layer turned once clockwise
-- `*R` = entire puzzle rotated once clockwise
-- `*R2` = entire puzzle rotated twice clockwise
-- `*R2-` = entire puzzle rotated twice counter-clockwise
+- `U` = outer layer turned once clockwise
+- `U2` = outer layer turned twice clockwise
+- `U2-` = outer layer turned twice counter-clockwise
+- `UR` = second layer turned once clockwise
+- `2Uw` = second and outer layer turned once clockwise
+- `*U` = entire puzzle rotated once clockwise
+- `*U2` = entire puzzle rotated twice clockwise
+- `*U2-` = entire puzzle rotated twice counter-clockwise
+
+This puzzle also supports a modified version of [Pochmann notation](https://www.speedsolving.com/wiki/index.php/Megaminx_notation#Pochmann_notation). The only modification being a number prefix to indicate the turn depth.
 
 ## License
 
