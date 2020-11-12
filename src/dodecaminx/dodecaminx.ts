@@ -18,7 +18,7 @@ import {
 
 import { sample } from '../utils/array';
 import { error } from '../utils/function';
-import { floor, isInteger, max, rand } from '../utils/number';
+import { floor, isInteger, rand } from '../utils/number';
 import { Sticker } from '../puzzle';
 
 import Puzzle from '../puzzle';
