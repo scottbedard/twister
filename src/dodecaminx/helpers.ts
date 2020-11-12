@@ -118,8 +118,6 @@ export function getFaceStickers<T>(face: DodecaminxFaceObject<T>): DodecaminxSti
  * @return {DodecaminxSticker[]}
  */
 export function getSliceStickers<T>(state: DodecaminxState<T>, target: DodecaminxFace, depth: number): DodecaminxSticker<T>[] {
-  
-  
   return (dodecaminxNet[target] as AdjacentRelationship<keyof DodecaminxFace>[])
     .map(([face, angle]) => extractSlice(state[face], depth, -angle))
     .reduce((acc, slice) => acc.concat(slice.leading, slice.middle, slice.trailing), [])
