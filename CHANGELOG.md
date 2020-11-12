@@ -2,6 +2,10 @@
 
 > **Warning:** This library is a work in progress, and is not ready for production use. Breaking changes may happen at any time.
 
+## 0.6.1
+
+- Fix dodecaminx `getStickersForTurn` logic that extracted slices from incorrect angles ([#11](https://github.com/scottbedard/twister/issues/11))
+
 ## 0.6.0
 
 - Dodecaminx puzzle added
