@@ -954,6 +954,31 @@ describe('dodecaminx', () => {
       expect(giga.getStickersForTurn('2U').length).toBe((5 * 5)); // second layer only
       expect(giga.getStickersForTurn('Uw').length).toBe((5 * 5) + (5 * 5) + 31); // face and both layers
     });
+
+    it('Provides correct slice extraction angles', () => {
+      const kilo = new Dodecaminx({ size: 2 });
+      const stickers = kilo.getStickersForTurn('U');
+
+      [
+        kilo.state.u.corners[0][0],
+        kilo.state.u.corners[1][0],
+        kilo.state.u.corners[2][0],
+        kilo.state.u.corners[3][0],
+        kilo.state.u.corners[4][0],
+        kilo.state.f.corners[0][0],
+        kilo.state.f.corners[4][0],
+        kilo.state.l.corners[0][0],
+        kilo.state.l.corners[1][0],
+        kilo.state.bl.corners[1][0],
+        kilo.state.bl.corners[2][0],
+        kilo.state.br.corners[2][0],
+        kilo.state.br.corners[3][0],
+        kilo.state.r.corners[3][0],
+        kilo.state.r.corners[4][0],
+      ].forEach(sticker => {
+        expect(stickers).toContain(sticker);
+      });
+    });
   });
 
   //
