@@ -51,7 +51,10 @@
               :d="d(obj.path)"
               :fill="colors[obj.sticker.value]"
               :key="`corner-${index}`"
-              :stroke-width="strokeWidth" />
+              :stroke-width="strokeWidth"
+              :style="{
+                display: isHidden(obj.sticker) ? 'none' : undefined,
+              }" />
           </g>
         </g>
       </svg>
@@ -223,6 +226,12 @@ export default {
     },
     isEven() {
       return isEven(this.puzzleSize);
+    },
+    isHidden() {
+      return () => false;
+      // helper function for debugging getStickersForTurn
+      // const hidden = this.model?.getStickersForTurn('Rw') ?? [];
+      // return (sticker) => hidden.includes(sticker);
     },
     middleOutlines() {
       if (this.isEven) {
