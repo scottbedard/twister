@@ -228,7 +228,7 @@ export default class Dodecaminx<Data = Record<string, unknown>> extends Puzzle<D
       : [];
 
     for (let i = parsedTurn.depth; i > 0; i--) {
-      stickers.push(...getSliceStickers(this.state, parsedTurn.target, parsedTurn.depth));
+      stickers.push(...getSliceStickers(this.state, parsedTurn.target, i));
 
       if (!parsedTurn.wide) {
         break;

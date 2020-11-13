@@ -955,7 +955,7 @@ describe('dodecaminx', () => {
       expect(giga.getStickersForTurn('Uw').length).toBe((5 * 5) + (5 * 5) + 31); // face and both layers
     });
 
-    it('Provides correct slice extraction angles', () => {
+    it('provides correct slice extraction angles', () => {
       const kilo = new Dodecaminx({ size: 2 });
       const stickers = kilo.getStickersForTurn('U');
 
@@ -979,6 +979,26 @@ describe('dodecaminx', () => {
         expect(stickers).toContain(sticker);
       });
     });
+
+    it('includes slices of wide turns', () => {
+      const master = new Dodecaminx({ size: 4 });
+      const stickers = master.getStickersForTurn('Uw');
+
+      [
+        ...master.state.u.corners[0],
+        ...master.state.u.corners[1],
+        ...master.state.u.corners[2],
+        ...master.state.u.corners[3],
+        ...master.state.u.corners[4],
+        ...master.state.f.corners[0], ...master.state.f.corners[4],
+        ...master.state.l.corners[0], ...master.state.l.corners[1],
+        ...master.state.bl.corners[1], ...master.state.bl.corners[2],
+        ...master.state.br.corners[2], ...master.state.br.corners[3],
+        ...master.state.r.corners[3], ...master.state.r.corners[4],
+      ].forEach(sticker => {
+        expect(stickers).toContain(sticker);
+      });
+    })
   });
 
   //
