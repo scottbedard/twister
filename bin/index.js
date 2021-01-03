@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
-const { Cube, Dodecaminx } = require('../dist/index');
+const { Cube, Dodecaminx, version } = require('../dist/index');
 const { program } = require('commander');
-const pkg = require('../package.json');
 
 const json = output => JSON.stringify(output);
 const isCube = str => /^(\d+)x(\1)$/.test(str);
@@ -19,7 +18,7 @@ const createModel = (type) => {
   throw 'Invalid puzzle';
 }
 
-program.version(pkg.version);
+program.version(version);
 
 //
 // scramble
