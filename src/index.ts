@@ -13,4 +13,8 @@ export {
   default as Dodecaminx,
 } from './dodecaminx/dodecaminx';
 
+export {
+  default as Puzzle,
+} from './puzzle';
+
 export const version = 'x.y.z';
