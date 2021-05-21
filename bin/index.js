@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /* eslint-disable no-undef */
 const { Cube, Dodecaminx, version } = require('../dist/index');
 const { program } = require('commander');
