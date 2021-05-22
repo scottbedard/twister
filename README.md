@@ -81,14 +81,17 @@ When using with TypeScript, a type argument may be provided to the puzzle constr
 The following utilities are available from the command line.
 
 ```bash
-# generate a scramble
+# apply turns to a puzzle
+$ twister apply 3x3 'R U R-'
+
+# apply turns to a scrambled puzzle
+$ twister apply 3x3 'R U R-' --state='{ ... }'
+
+# scramble a puzzle
 $ twister scramble 3x3
 
-# generate a very short scramble
-$ twister scramble 3x3 --turns 3
-
-# test a solution
-$ twister test 3x3 '{ ... }' 'R U R- ...'
+# scramble a puzzle to a specific depth
+$ twister scramble 3x3 --turns=3
 ```
 
 ## Advanced Usage
