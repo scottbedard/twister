@@ -2,6 +2,10 @@
 
 > **Warning:** This library is a work in progress, and is not ready for production use. Breaking changes may happen at any time.
 
+## 0.6.6
+
+- Fixed node environment issue that broke npx
+
 ## 0.6.5
 
 - Export base `Puzzle` class
