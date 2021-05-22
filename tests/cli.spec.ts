@@ -21,6 +21,15 @@ describe('cli', () => {
   ));
 
   describe('cube', () => {
+    it('apply', async () => {
+      const output = await cli(['apply', '3x3', '"R U R- R U- R-"']);
+      const data = JSON.parse(output.stdout);
+
+      expect(data.puzzle).toBe('3x3');
+      expect(data.solved).toBe(true);
+      expect(Object.keys(data.state)).toEqual(['u', 'l', 'f', 'r', 'b', 'd']);
+    });
+  
     it('scramble', async () => {
       const output = await cli(['scramble', '3x3', '--turns=5']);
       const data = JSON.parse(output.stdout);
@@ -42,6 +51,14 @@ describe('cli', () => {
   });
 
   describe('dodecaminx', () => {
+    it('apply', async () => {
+      const output = await cli(['apply', 'dodecaminx2', '"R U R- R U- R-"']);
+      const data = JSON.parse(output.stdout);
+
+      expect(data.puzzle).toBe('dodecaminx2');
+      expect(data.solved).toBe(true);
+    });
+
     it('scramble', async () => {
       const output = await cli(['scramble', 'dodecaminx2', '--turns=5']);
       const data = JSON.parse(output.stdout);

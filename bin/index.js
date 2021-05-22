@@ -23,13 +23,30 @@ const createModel = (type) => {
 program.version(version);
 
 //
+// apply
+//
+program.command('apply <puzzle> <algorithm>')
+  .description('apply an algorithm to a puzzle')
+  .action((puzzle, alg) => {
+    const model = createModel(puzzle);
+
+    model.turn(alg);
+
+    console.log(json({
+      puzzle,
+      solved: model.isSolved(),
+      state: model.output(),
+    }));
+  });
+
+//
 // scramble
 //
 program.command('scramble <puzzle>')
   .description('scramble puzzle to a given depth')
   .option('-t, --turns [value]', 'Turns')
   .action((puzzle, options) => {
-    const model = createModel(puzzle);    
+    const model = createModel(puzzle);
     const turns = options.turns && parseInt(options.turns.replace(/[^\d]/g, ''), 10);
     const scramble = model.generateScramble(turns);
 
