@@ -26,9 +26,14 @@ program.version(version);
 // apply
 //
 program.command('apply <puzzle> <algorithm>')
-  .description('apply an algorithm to a puzzle')
-  .action((puzzle, alg) => {
+  .description('apply turns to a puzzle')
+  .option('-s, --state [value]', 'Initial puzzle state')
+  .action((puzzle, alg, options) => {
     const model = createModel(puzzle);
+
+    if (options.state) {
+      model.apply(JSON.parse(options.state));
+    }
 
     model.turn(alg);
 
@@ -57,22 +62,6 @@ program.command('scramble <puzzle>')
       turns: turns,
       scramble,
       state: model.output(),
-    }));
-  });
-
-//
-// test
-//
-program.command('test <puzzle> <state> <solution>')
-  .description('test if an algorithm solves a puzzle')
-  .action((puzzle, state, solution) => {
-    const model = createModel(puzzle);
-
-    model.apply(JSON.parse(state));
-    model.turn(solution);
-
-    console.log(json({
-      solved: model.isSolved(),
     }));
   });
 
