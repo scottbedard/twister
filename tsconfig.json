@@ -7,6 +7,7 @@
     "noImplicitAny": true,
     "outDir": "./dist",
     "skipLibCheck": true,
+    "sourceMap": false,
     "target": "es2015",
     "types": [
       "jest",

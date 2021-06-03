@@ -25,6 +25,7 @@ export default {
       plugins: [
         terser(),
       ],
+      sourcemap: true,
     },
   ],
   plugins: [
