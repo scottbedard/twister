@@ -5,13 +5,23 @@
     "url": "https://github.com/scottbedard/twister/issues"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.2.1",
+    "rollup": "^2.50.5",
+    "tslib": "^2.2.0",
+    "typescript": "^4.3.2"
+  },
   "homepage": "https://github.com/scottbedard/twister#readme",
   "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scottbedard/twister.git"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "unpkg": "dist/index.bundle.js",
   "version": "0.7.0"
 }
