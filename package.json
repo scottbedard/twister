@@ -6,7 +6,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@rollup/plugin-eslint": "^8.0.1",
     "@rollup/plugin-typescript": "^8.2.1",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.9.0",

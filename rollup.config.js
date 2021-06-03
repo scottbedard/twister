@@ -1,8 +1,7 @@
-import { terser } from 'rollup-plugin-terser'
-import del from 'rollup-plugin-delete'
-import eslint from '@rollup/plugin-eslint'
-import pkg from './package.json'
-import typescript from '@rollup/plugin-typescript'
+import { terser } from 'rollup-plugin-terser';
+import del from 'rollup-plugin-delete';
+import pkg from './package.json';
+import typescript from '@rollup/plugin-typescript';
 
 export default {
   external: [
@@ -29,8 +28,9 @@ export default {
     },
   ],
   plugins: [
-    eslint(),
     typescript(),
-    del({ targets: 'dist/*' }),
+    del({
+      targets: 'dist/*',
+    }),
   ],
 };

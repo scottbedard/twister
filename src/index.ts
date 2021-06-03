@@ -1,1 +1,1 @@
-console.log('twister');
+export { Puzzle } from './puzzle';
