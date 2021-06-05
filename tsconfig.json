@@ -1,11 +1,15 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "declaration": true,
     "declarationDir": "./dist",
     "esModuleInterop": true,
     "module": "es6",
     "noImplicitAny": true,
     "outDir": "./dist",
+    "paths": {
+      "@/*": ["*"],
+    },
     "skipLibCheck": true,
     "sourceMap": false,
     "target": "es2015",
@@ -19,7 +23,7 @@
     "node_modules"
   ],
   "include": [
-    "src/index.ts",
+    "src/**/*.ts",
     "tests/**/*.ts"
-  ]
+  ],
 }
