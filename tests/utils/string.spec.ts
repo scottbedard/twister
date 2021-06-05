@@ -1,9 +1,11 @@
-import { trim } from '@/utils/string';
+import { lc, trim } from '@/utils/string';
 
 describe('string utils', () => {
-  it('trim', () => {
-    const str = ' hello ';
+  it('lc', () => {
+    expect(lc('HELLO')).toEqual('hello');
+  });
 
-    expect(trim(str)).toEqual('hello');
+  it('trim', () => {
+    expect(trim(' hello ')).toEqual('hello');
   });
 });
