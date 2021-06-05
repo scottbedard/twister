@@ -1,4 +1,5 @@
 import {
+  flattenBy,
   head,
   reverse,
   roll,
@@ -9,6 +10,16 @@ import {
 } from '@/utils/array';
 
 describe('array utils', () => {
+  it('flattenBy', () => {
+    const arr = [
+      { foo: 0, bar: 'a' },
+      { foo: 1, bar: 'b' },
+      { foo: 2, bar: 'c' },
+    ];
+
+    expect(flattenBy(arr, 'foo')).toEqual([0, 1, 2]);
+  });
+
   it('head', () => {
     const arr = [0, 1, 2];
     const item = head(arr);

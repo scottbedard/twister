@@ -1,6 +1,13 @@
 import { rand } from './number';
 
 /**
+ * Flatten an array of objects by key.
+ */
+export function flattenBy<T extends Record<string, unknown>>(arr: T[], key: keyof T) {
+  return arr.map((obj) => obj[key]);
+}
+
+/**
  * Gets the first element of an array.
  *
  * @param {T[]} arr
