@@ -17,6 +17,7 @@ module.exports = {
   root: true,
   rules: {
     '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
+    'class-methods-use-this': 0,
     'import/order': 0,
     'import/prefer-default-export': 0,
     'max-len': ['error', { code: 120, ignoreComments: true }],
