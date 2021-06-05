@@ -1,9 +1,9 @@
 /**
- * Removes the leading and trailing white space and line terminator characters from a string.
+ * Converts all the alphabetic characters in a string to lowercase.
  *
  * @param {string} str string to lowercase
  */
-export function lc<T extends string>(str: T): Lowercase<T> {
+export function lowercase<T extends string>(str: T): Lowercase<T> {
   return str.toLowerCase() as Lowercase<T>;
 }
 

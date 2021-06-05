@@ -1,8 +1,8 @@
-import { lc, trim } from '@/utils/string';
+import { lowercase, trim } from '@/utils/string';
 
 describe('string utils', () => {
-  it('lc', () => {
-    expect(lc('HELLO')).toEqual('hello');
+  it('lowercase', () => {
+    expect(lowercase('HELLO')).toEqual('hello');
   });
 
   it('trim', () => {
