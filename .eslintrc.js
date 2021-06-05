@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     node: true,
+    'jest/globals': true,
   },
   extends: [
     'airbnb-typescript/base',
@@ -11,6 +12,7 @@ module.exports = {
   },
   plugins: [
     '@typescript-eslint',
+    'jest',
   ],
   root: true,
   rules: {
