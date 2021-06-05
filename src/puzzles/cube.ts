@@ -55,7 +55,7 @@ export class Cube extends Puzzle<Options, State, SimpleState, Turn> {
   }
 
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  execute(algorithm: string): void {
+  execute(turn: Turn): void {
     error('not implemented');
   }
 
