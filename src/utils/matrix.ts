@@ -20,6 +20,17 @@ export function cols<T>(matrix: T[]): T[][] {
 }
 
 /**
+ * Extract a layer of values.
+ *
+ * @param {T[]} target Matrix to extract values from.
+ * @param {number} angle Angle to extract values from.
+ * @param {number} depth Depth to extract values from.
+ */
+export function extract<T>(target: T[], angle: number, depth: number) {
+  return rows(rotate(target, angle))[depth];
+}
+
+/**
  * Flatten an array of columns.
  *
  * [                [
@@ -76,18 +87,13 @@ export function flip<T>(arrs: T[][]): T[][] {
  * Inject values into a matrix.
  *
  * @param {T[]} arr Values to inject.
- * @param {T[]} target Target matrix to inject values into.
+ * @param {T[]} target Matrix to inject values into.
  * @param {number} angle Angle to inject values from.
  * @param {number} depth Depth to inject values at.
  *
  * @return {T[]}
  */
-export function inject<T>(
-  arr: T[],
-  target: T[],
-  angle: number,
-  depth: number,
-) {
+export function inject<T>(arr: T[], target: T[], angle: number, depth: number) {
   const targetRows = rows(rotate(target, angle));
 
   splice(targetRows, depth, 1, arr);

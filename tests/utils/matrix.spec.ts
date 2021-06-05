@@ -1,5 +1,6 @@
 import {
   cols,
+  extract,
   flattenCols,
   flattenRows,
   flip,
@@ -19,6 +20,18 @@ describe('matrix utils', () => {
       [2, 5, 8],
       [3, 6, 9],
     ]);
+  });
+
+  it('extract', () => {
+    const matrix = [
+      1, 2, 3,
+      4, 5, 6,
+      7, 8, 9,
+    ];
+
+    expect(extract(matrix, 0, 0)).toEqual([1, 2, 3]);
+    expect(extract(matrix, 1, 1)).toEqual([8, 5, 2]);
+    expect(extract(matrix, 2, 2)).toEqual([3, 2, 1]);
   });
 
   it('flattenCols', () => {
