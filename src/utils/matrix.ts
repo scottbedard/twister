@@ -1,4 +1,4 @@
-import { reverse, slice, times } from './array';
+import { reverse, slice, splice, times } from './array';
 
 /**
  * Chunk a matrix array into columns.
@@ -71,19 +71,52 @@ export function flip<T>(arrs: T[][]): T[][] {
 }
 
 /**
- * Rotate a matrix array.
+ * Inject values into a matrix.
  *
- * @param {T[]} arr
- * @param {-1|1|2} n
+ * @param {T[]} arr Values to inject.
+ * @param {T[]} target Target matrix to inject values into.
+ * @param {number} angle Angle to inject values from.
+ * @param {number} depth Depth to inject values at.
  *
  * @return {T[]}
  */
-export function rotate<T>(arr: T[], n: -1 | 1 | 2): T[] {
-  return n === 2
-    ? reverse(arr)
-    : n === -1
-      ? flattenRows(reverse(cols(arr)))
-      : flattenCols(reverse(rows(arr)));
+export function inject<T>(
+  arr: T[],
+  target: T[],
+  angle: number,
+  depth: number,
+) {
+  const targetRows = rows(rotate(target, angle));
+
+  splice(targetRows, depth, 1, arr);
+
+  return rotate(flattenRows(targetRows), -angle);
+}
+
+/**
+ * Rotate a matrix array.
+ *
+ * @param {T[]} matrix Source matrix to rotate.
+ * @param {number} angle Integer number of rotations. Positive numbers rotate clockwise, negative rotates counter-clockwise.
+ *
+ * @return {T[]}
+ */
+export function rotate<T>(matrix: T[], angle: number): T[] {
+  const rotation = (angle + 4) % 4;
+
+  if (rotation === 1) {
+    return flattenCols(reverse(rows(matrix)));
+  }
+
+  if (rotation === 2) {
+    return reverse(matrix);
+  }
+
+  if (rotation === 3) {
+    return flattenRows(reverse(cols(matrix)));
+  }
+
+  return slice(matrix);
 }
 
 /**
