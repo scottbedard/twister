@@ -1,3 +1,6 @@
+import { identity } from '@/utils/function';
+import { trim } from '@/utils/string';
+
 /**
  * Base puzzle class.
  */
@@ -33,16 +36,16 @@ export abstract class Puzzle<Options, State, SimpleState, Turn> {
   }
 
   /**
-   * Execute a sequence of turns.
+   * Execute a single turn.
    *
-   * @param {algorithm} string turns to execute
+   * @param {Turn} turn Turn to execute.
    */
-  abstract execute(algorithm: string): void;
+  abstract execute(turn: Turn): void;
 
   /**
    * Generate a scramble.
    *
-   * @param {number} depth number of moves to execute
+   * @param {number} depth Turn length of scramble.
    */
   abstract generateScramble(depth: number): string;
 
@@ -66,14 +69,28 @@ export abstract class Puzzle<Options, State, SimpleState, Turn> {
   /**
    * Scramble the puzzle.
    *
-   * @param {number} depth number of moves to execute
+   * @param {number} depth Turn length of scramble.
    */
   scramble(depth: number): void {
-    this.execute(this.generateScramble(depth));
+    this.turn(this.generateScramble(depth));
   }
 
   /**
    * Test if the puzzle is solved.
    */
   abstract test(): boolean;
+
+  /**
+   * Execute an algorithm.
+   *
+   * @param {string} algorithm Sequence of turns to execute.
+   */
+  turn(algorithm: string): void {
+    algorithm
+      .split(' ')
+      .map(trim)
+      .filter(identity)
+      .map(this.parse)
+      .forEach(this.execute);
+  }
 }
