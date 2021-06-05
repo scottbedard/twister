@@ -1,1 +1,2 @@
-export { Puzzle } from './Puzzle';
+export { Cube } from './puzzles/cube';
+export { Puzzle } from './puzzles/puzzle';

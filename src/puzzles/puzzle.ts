@@ -1,7 +1,7 @@
 /**
  * Base puzzle class.
  */
-export abstract class Puzzle<Options, State, Turn> {
+export abstract class Puzzle<Options, State, SimpleState, Turn> {
   /**
    * Puzzle options.
    *
@@ -19,9 +19,9 @@ export abstract class Puzzle<Options, State, Turn> {
   /**
    * Apply puzzle state.
    *
-   * @param {any} state state to apply to the puzzle
+   * @param {SimpleState} state state to apply to the puzzle
    */
-  abstract apply(state: State): void;
+  abstract apply(state: SimpleState): void;
 
   /**
    * Constructor.
@@ -30,8 +30,6 @@ export abstract class Puzzle<Options, State, Turn> {
    */
   constructor(options: Options) {
     this.options = options;
-
-    this.reset();
   }
 
   /**
@@ -51,7 +49,7 @@ export abstract class Puzzle<Options, State, Turn> {
   /**
    * Output puzzle state.
    */
-  abstract output(): State;
+  abstract output(): SimpleState;
 
   /**
    * Parse a turn.
