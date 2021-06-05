@@ -1,4 +1,6 @@
-import { reverse, slice, splice, times } from './array';
+import {
+  reverse, slice, splice, times,
+} from './array';
 
 /**
  * Chunk a matrix array into columns.
@@ -67,7 +69,7 @@ export function flattenRows<T>(arr: T[][]): T[] {
  * @return {T[][]}
  */
 export function flip<T>(arrs: T[][]): T[][] {
-  return arrs[0].map((x, i) => arrs.map(arr => arr[i]));
+  return arrs[0].map((x, i) => arrs.map((arr) => arr[i]));
 }
 
 /**
