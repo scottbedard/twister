@@ -34,6 +34,10 @@ describe('Cube', () => {
         it.todo(turn);
       }
     });
+
+    it('bad turn', () => {
+      expect(() => model.parse('bad turn')).toThrow();
+    });
   });
 
   describe('turn', () => {
