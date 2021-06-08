@@ -1,6 +1,7 @@
 /* eslint-disable quote-props */
 import { Cube } from '@/index';
 import cubeNotation from './cube-notation';
+import cubeScrambles from './cube-scrambles';
 import cubeTurns from './cube-turns';
 
 // standard color scheme with yellow on top and blue in front
@@ -41,6 +42,7 @@ describe('Cube', () => {
   });
 
   describe('turn', () => {
+    // individual turns
     Object.entries(cubeTurns).forEach(([turn, expected]) => {
       const debug = '';
       const name = `3x3 - ${turn}`;
@@ -55,6 +57,24 @@ describe('Cube', () => {
         });
       } else {
         it.todo(name);
+      }
+    });
+
+    // scramble tests
+    cubeScrambles.forEach((obj) => {
+      const debug = 0;
+      const name = `${obj.size}x${obj.size} - scramble`;
+
+      if (!debug || debug === obj.size) {
+        it(name, () => {
+          const model = new Cube({ size: obj.size });
+
+          model.turn(obj.scramble);
+
+          expect(model.output()).toEqual(obj.result);
+        });
+      } else {
+        it.skip(name);
       }
     });
   });
