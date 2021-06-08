@@ -1,5 +1,5 @@
 import { error } from '@/utils/function';
-import { extract, inject } from '@/utils/matrix';
+import { extract, inject, rotate } from '@/utils/matrix';
 import { flattenBy, times } from '@/utils/array';
 import { lowercase } from '@/utils/string';
 import { max } from '@/utils/number';
@@ -7,6 +7,7 @@ import { Puzzle } from '@/puzzles/puzzle';
 
 import {
   cubeNet,
+  cubeOpposites,
 } from './constants';
 
 import {
@@ -50,12 +51,14 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     if (isCubeAxis(turn.target)) {
       // rotate entire puzzle
     } else {
+      // rotate target face
       if (turn.depth === 1 || turn.wide) {
-        // rotate target face
+        this.state[turn.target] = rotate(this.state[turn.target], turn.rotation);
       }
 
+      // rotate opposite face in opposite direction
       if (turn.depth >= this.options.size) {
-        // rotate deep face
+        this.state[cubeOpposites[turn.target]] = rotate(this.state[turn.target], -turn.rotation);
       }
 
       // rotate slices
@@ -63,14 +66,12 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
 
       for (let i = turn.wide ? 0 : turn.depth - 1; i < turn.depth; i += 1) {
         relatedFaces.map((source, index) => {
-          // extract related slices
+          // extract slices from adjacent face
           const [face, angle] = relatedFaces[index];
-
           return extract(this.state[face], angle, i);
         }).forEach((slice, index) => {
-          // inject related slices
+          // inject slices into target faces
           const [relatedFace, angle] = relatedFaces[(index + 4 + turn.rotation) % 4];
-
           this.state[relatedFace] = inject(slice, this.state[relatedFace], angle, i);
         });
       }

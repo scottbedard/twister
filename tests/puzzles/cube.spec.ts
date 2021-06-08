@@ -1,17 +1,22 @@
 /* eslint-disable quote-props */
 import { Cube } from '@/index';
+import cubeTurns from './cube-turns';
+
+// standard color scheme with yellow on top and blue in front
+// yellow, orange, blue, red, green, white
+const [y, o, b, r, g, w] = [0, 1, 2, 3, 4, 5];
 
 describe('Cube', () => {
   it('output', () => {
     const model = new Cube({ size: 2 });
 
     expect(model.output()).toEqual({
-      u: [0, 0, 0, 0],
-      l: [1, 1, 1, 1],
-      f: [2, 2, 2, 2],
-      r: [3, 3, 3, 3],
-      b: [4, 4, 4, 4],
-      d: [5, 5, 5, 5],
+      u: [y, y, y, y],
+      l: [o, o, o, o],
+      f: [b, b, b, b],
+      r: [r, r, r, r],
+      b: [g, g, g, g],
+      d: [w, w, w, w],
     });
   });
 
@@ -58,11 +63,19 @@ describe('Cube', () => {
     expect(() => model.parse('bad turn')).toThrow();
   });
 
-  it.skip('turn', () => {
-    const model = new Cube({ size: 3 });
+  describe.only('turns', () => {
+    (Object.keys(cubeTurns) as (keyof typeof cubeTurns)[]).forEach((turn) => {
+      const only = '';
 
-    model.turn('R');
+      if (!only || only === turn) {
+        it(`3x3 - ${turn}`, () => {
+          const model = new Cube({ size: 3 });
 
-    console.log(model.output());
+          model.turn(turn);
+
+          expect(model.output()).toEqual(cubeTurns[turn]);
+        });
+      }
+    });
   });
 });
