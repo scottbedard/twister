@@ -63,11 +63,11 @@ describe('Cube', () => {
     expect(() => model.parse('bad turn')).toThrow();
   });
 
-  describe.only('turns', () => {
+  describe('turns', () => {
     (Object.keys(cubeTurns) as (keyof typeof cubeTurns)[]).forEach((turn) => {
-      const only = '';
+      const debug = '';
 
-      if (!only || only === turn) {
+      if (!debug || debug === turn) {
         it(`3x3 - ${turn}`, () => {
           const model = new Cube({ size: 3 });
 

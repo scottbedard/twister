@@ -56,9 +56,11 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
         this.state[turn.target] = rotate(this.state[turn.target], turn.rotation);
       }
 
-      // rotate opposite face in opposite direction
+      // rotate opposite face
       if (turn.depth >= this.options.size) {
-        this.state[cubeOpposites[turn.target]] = rotate(this.state[turn.target], -turn.rotation);
+        const oppositeFace = cubeOpposites[turn.target];
+
+        this.state[oppositeFace] = rotate(this.state[oppositeFace], -turn.rotation);
       }
 
       // rotate slices
@@ -68,10 +70,12 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
         relatedFaces.map((source, index) => {
           // extract slices from adjacent face
           const [face, angle] = relatedFaces[index];
+
           return extract(this.state[face], angle, i);
         }).forEach((slice, index) => {
           // inject slices into target faces
           const [relatedFace, angle] = relatedFaces[(index + 4 + turn.rotation) % 4];
+
           this.state[relatedFace] = inject(slice, this.state[relatedFace], angle, i);
         });
       }
