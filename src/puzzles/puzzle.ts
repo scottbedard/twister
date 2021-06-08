@@ -90,7 +90,7 @@ export abstract class Puzzle<Options, State, SimpleState, Turn> {
       .split(' ')
       .map(trim)
       .filter(identity)
-      .map(this.parse)
-      .forEach(this.execute);
+      .map((str) => this.parse(str))
+      .forEach((turn) => this.execute(turn));
   }
 }

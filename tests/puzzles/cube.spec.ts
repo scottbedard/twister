@@ -57,4 +57,12 @@ describe('Cube', () => {
 
     expect(() => model.parse('bad turn')).toThrow();
   });
+
+  it.skip('turn', () => {
+    const model = new Cube({ size: 3 });
+
+    model.turn('R');
+
+    console.log(model.output());
+  });
 });

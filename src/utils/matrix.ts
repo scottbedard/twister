@@ -27,7 +27,7 @@ export function cols<T>(matrix: T[]): T[][] {
  * @param {number} depth Depth to extract values from.
  */
 export function extract<T>(target: T[], angle: number, depth: number) {
-  return rows(rotate(target, angle))[depth];
+  return rows(rotate(target, -angle))[depth];
 }
 
 /**
@@ -94,11 +94,11 @@ export function flip<T>(arrs: T[][]): T[][] {
  * @return {T[]}
  */
 export function inject<T>(arr: T[], target: T[], angle: number, depth: number) {
-  const targetRows = rows(rotate(target, angle));
+  const targetRows = rows(rotate(target, -angle));
 
   splice(targetRows, depth, 1, arr);
 
-  return rotate(flattenRows(targetRows), -angle);
+  return rotate(flattenRows(targetRows), angle);
 }
 
 /**
