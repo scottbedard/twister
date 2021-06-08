@@ -1,5 +1,6 @@
 /* eslint-disable quote-props */
 import { Cube } from '@/index';
+import cubeNotation from './cube-notation';
 import cubeTurns from './cube-turns';
 
 // standard color scheme with yellow on top and blue in front
@@ -20,61 +21,36 @@ describe('Cube', () => {
     });
   });
 
-  it('parse', () => {
-    const model = new Cube({ size: 2 });
+  describe('parse', () => {
+    const debug = '';
+    const model = new Cube({ size: 3 });
 
-    const turns = {
-      'R': {
-        depth: 1,
-        rotation: 1,
-        target: 'r',
-        wide: false,
-      },
-      'R\'': {
-        depth: 1,
-        rotation: -1,
-        target: 'r',
-        wide: false,
-      },
-      '2R': {
-        depth: 2,
-        rotation: 1,
-        target: 'r',
-        wide: false,
-      },
-      'Rw': {
-        depth: 2,
-        rotation: 1,
-        target: 'r',
-        wide: true,
-      },
-      '3Rw2': {
-        depth: 3,
-        rotation: 2,
-        target: 'r',
-        wide: true,
-      },
-    };
-
-    (Object.keys(turns) as (keyof typeof turns)[]).forEach((key) => {
-      expect(model.parse(key)).toEqual(turns[key]);
+    Object.entries(cubeNotation).forEach(([turn, expected]) => {
+      if (!debug || debug === turn) {
+        it(turn, () => {
+          expect(model.parse(turn)).toEqual(expected);
+        });
+      } else {
+        it.todo(turn);
+      }
     });
-
-    expect(() => model.parse('bad turn')).toThrow();
   });
 
-  describe('turns', () => {
-    (Object.keys(cubeTurns) as (keyof typeof cubeTurns)[]).forEach((turn) => {
-      const debug = ''; // <- use this to debug a specific turn
+  describe('turn', () => {
+    Object.entries(cubeTurns).forEach(([turn, expected]) => {
+      const debug = '';
+      const name = `3x3 - ${turn}`;
 
       if (!debug || debug === turn) {
-        it(`3x3 - ${turn}`, () => {
+        it(name, () => {
           const model = new Cube({ size: 3 });
 
           model.turn(turn);
 
-          expect(model.output()).toEqual(cubeTurns[turn]);
+          expect(model.output()).toEqual(expected);
         });
+      } else {
+        it.todo(name);
       }
     });
   });
