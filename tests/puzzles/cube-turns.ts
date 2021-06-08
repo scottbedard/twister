@@ -482,6 +482,103 @@ export default {
       y, y, w,
     ],
   },
+  'Rw': {
+    u: [
+      w, g, g,
+      w, g, g,
+      w, g, g,
+    ],
+    l: [
+      o, o, o,
+      o, o, o,
+      o, o, o,
+    ],
+    f: [
+      g, y, y,
+      g, y, y,
+      g, y, y,
+    ],
+    r: [
+      r, r, r,
+      r, r, r,
+      r, r, r,
+    ],
+    b: [
+      w, w, b,
+      w, w, b,
+      w, w, b,
+    ],
+    d: [
+      y, b, b,
+      y, b, b,
+      y, b, b,
+    ],
+  },
+  'Rw-': {
+    u: [
+      w, b, b,
+      w, b, b,
+      w, b, b,
+    ],
+    l: [
+      o, o, o,
+      o, o, o,
+      o, o, o,
+    ],
+    f: [
+      g, w, w,
+      g, w, w,
+      g, w, w,
+    ],
+    r: [
+      r, r, r,
+      r, r, r,
+      r, r, r,
+    ],
+    b: [
+      y, y, b,
+      y, y, b,
+      y, y, b,
+    ],
+    d: [
+      y, g, g,
+      y, g, g,
+      y, g, g,
+    ],
+  },
+
+  'Rw2': {
+    u: [
+      w, y, y,
+      w, y, y,
+      w, y, y,
+    ],
+    l: [
+      o, o, o,
+      o, o, o,
+      o, o, o,
+    ],
+    f: [
+      g, b, b,
+      g, b, b,
+      g, b, b,
+    ],
+    r: [
+      r, r, r,
+      r, r, r,
+      r, r, r,
+    ],
+    b: [
+      g, g, b,
+      g, g, b,
+      g, g, b,
+    ],
+    d: [
+      y, w, w,
+      y, w, w,
+      y, w, w,
+    ],
+  },
   'B': {
     u: [
       r, r, r,

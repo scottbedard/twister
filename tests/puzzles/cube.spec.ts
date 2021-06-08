@@ -65,7 +65,7 @@ describe('Cube', () => {
 
   describe('turns', () => {
     (Object.keys(cubeTurns) as (keyof typeof cubeTurns)[]).forEach((turn) => {
-      const debug = '';
+      const debug = ''; // <- use this to debug a specific turn
 
       if (!debug || debug === turn) {
         it(`3x3 - ${turn}`, () => {
