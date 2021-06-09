@@ -1,4 +1,3 @@
-/* eslint-disable quote-props */
 const [y, o, b, r, g, w] = [0, 1, 2, 3, 4, 5];
 
 export default {

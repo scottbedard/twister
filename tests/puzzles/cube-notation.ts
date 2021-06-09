@@ -1,5 +1,3 @@
-/* eslint-disable quote-props */
-
 export default {
   'R': {
     depth: 1,

@@ -1,4 +1,3 @@
-/* eslint-disable quote-props */
 import { Cube } from '@/index';
 import cubeNotation from './cube-notation';
 import cubeScrambles from './cube-scrambles';
