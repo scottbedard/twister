@@ -44,11 +44,29 @@ describe('Cube', () => {
   it('scramble', () => {
     const model = new Cube({ size: 3 });
 
-    expect(model.test()).toBe(true);
+    const scramble = model.scramble(10);
 
-    model.scramble();
+    expect(scramble.split(' ').length).toBe(10);
 
     expect(model.test()).toBe(false);
+  });
+
+  it('test', () => {
+    const model = new Cube({ size: 3 });
+
+    expect(model.test()).toBe(true);
+
+    model.state.f[4].value = null;
+
+    expect(model.test()).toBe(true);
+
+    model.turn('R');
+
+    expect(model.test()).toBe(false);
+
+    model.turn('R-');
+
+    expect(model.test()).toBe(true);
   });
 
   describe('turn', () => {

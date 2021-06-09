@@ -1,9 +1,9 @@
 import { error } from '@/utils/function';
 import { extract, inject, rotate } from '@/utils/matrix';
 import { flattenBy, isUniform, last, sample, times, without } from '@/utils/array';
+import { floor, max, rand } from '@/utils/number';
 import { keys } from '@/utils/object';
 import { lowercase } from '@/utils/string';
-import { floor, max, rand } from '@/utils/number';
 import { Puzzle } from '@/puzzles/puzzle';
 
 import {
@@ -148,21 +148,23 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
   }
 
   reset() {
-    const stickers = this.options.size ** 2;
+    const stickers = times(this.options.size ** 2);
 
-    (['u', 'l', 'f', 'r', 'b', 'd'] as CubeFaceLower[]).forEach((face, value) => {
-      this.state[face] = times(stickers).map(() => ({ meta: {}, value }));
+    keys(this.state).forEach((face, value) => {
+      this.state[face] = stickers.map(() => ({ meta: {}, value }));
     });
   }
 
   test(): boolean {
     const { u, l, f, r, b, d } = this.output();
 
-    return isUniform(u)
-      && isUniform(l)
-      && isUniform(f)
-      && isUniform(r)
-      && isUniform(b)
-      && isUniform(d);
+    const isSolved = (face: unknown[]) => isUniform(face.filter((val) => val !== null));
+
+    return isSolved(u)
+      && isSolved(l)
+      && isSolved(f)
+      && isSolved(r)
+      && isSolved(b)
+      && isSolved(d);
   }
 }
