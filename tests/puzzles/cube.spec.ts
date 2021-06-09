@@ -4,21 +4,39 @@ import cubeNotation from './cube-notation';
 import cubeScrambles from './cube-scrambles';
 import cubeTurns from './cube-turns';
 
-// standard color scheme with yellow on top and blue in front
-// yellow, orange, blue, red, green, white
-const [y, o, b, r, g, w] = [0, 1, 2, 3, 4, 5];
-
 describe('Cube', () => {
+  it('apply', () => {
+    const model = new Cube({ size: 2 });
+
+    model.apply({
+      u: ['u0', 'u1', 'u2', 'u3'],
+      l: ['l0', 'l1', 'l2', 'l3'],
+      f: ['f0', 'f1', 'f2', 'f3'],
+      r: ['r0', 'r1', 'r2', 'r3'],
+      b: ['b0', 'b1', 'b2', 'b3'],
+      d: ['d0', 'd1', 'd2', 'd3'],
+    });
+
+    expect(model.output()).toEqual({
+      u: ['u0', 'u1', 'u2', 'u3'],
+      l: ['l0', 'l1', 'l2', 'l3'],
+      f: ['f0', 'f1', 'f2', 'f3'],
+      r: ['r0', 'r1', 'r2', 'r3'],
+      b: ['b0', 'b1', 'b2', 'b3'],
+      d: ['d0', 'd1', 'd2', 'd3'],
+    });
+  });
+
   it('output', () => {
     const model = new Cube({ size: 2 });
 
     expect(model.output()).toEqual({
-      u: [y, y, y, y],
-      l: [o, o, o, o],
-      f: [b, b, b, b],
-      r: [r, r, r, r],
-      b: [g, g, g, g],
-      d: [w, w, w, w],
+      u: [0, 0, 0, 0],
+      l: [1, 1, 1, 1],
+      f: [2, 2, 2, 2],
+      r: [3, 3, 3, 3],
+      b: [4, 4, 4, 4],
+      d: [5, 5, 5, 5],
     });
   });
 

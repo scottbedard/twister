@@ -51,8 +51,12 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
   }
 
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  apply(state: CubeSimpleState): void {
-    error('not implemented');
+  apply(state: Partial<CubeSimpleState>): void {
+    keys(state).forEach((face) => {
+      state[face].forEach((value, index) => {
+        this.state[face][index].value = value;
+      });
+    });
   }
 
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */

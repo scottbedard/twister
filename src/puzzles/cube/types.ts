@@ -29,7 +29,7 @@ export type CubeOptions = {
 /**
  * Simplified cube state.
  */
-export type CubeSimpleState = Record<CubeFaceLower, any>;
+export type CubeSimpleState = Record<CubeFaceLower, unknown[]>;
 
 /**
  * Full cube state.
@@ -41,7 +41,7 @@ export type CubeState = Record<CubeFaceLower, CubeSticker[]>;
  */
 export type CubeSticker = {
   meta: Record<string, unknown>,
-  value: any,
+  value: unknown,
 };
 
 /**
