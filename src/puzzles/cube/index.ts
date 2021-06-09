@@ -50,7 +50,6 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     this.reset();
   }
 
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   apply(state: Partial<CubeSimpleState>): void {
     keys(state).forEach((face) => {
       state[face].forEach((value, index) => {
@@ -59,7 +58,6 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     });
   }
 
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   execute(turn: CubeTurn): void {
     if (isCubeAxis(turn.target)) {
       // rotate entire puzzle
@@ -95,7 +93,6 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     }
   }
 
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   generateScramble(depth: number = max(20, this.options.size ** 3)): string {
     const turns: CubeTurn[] = [];
     const { random, size } = this.options;
