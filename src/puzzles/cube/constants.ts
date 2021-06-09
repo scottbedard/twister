@@ -1,4 +1,13 @@
-import { CubeFaceLower } from './types';
+import { CubeAxisLower, CubeFaceLower } from './types';
+
+/**
+ * Relationship between axis and face turns.
+ */
+export const cubeAxes: Record<CubeAxisLower, CubeFaceLower> = {
+  x: 'r',
+  y: 'u',
+  z: 'f',
+};
 
 /**
  * This constant defines how faces are related to one another. Think of it as

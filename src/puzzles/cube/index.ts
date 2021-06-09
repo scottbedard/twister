@@ -7,6 +7,7 @@ import { lowercase } from '@/utils/string';
 import { Puzzle } from '@/puzzles/puzzle';
 
 import {
+  cubeAxes,
   cubeNet,
   cubeOpposites,
 } from './constants';
@@ -20,8 +21,6 @@ import {
   CubeState,
   CubeTurn,
 } from './types';
-
-import { isCubeAxis } from './utils';
 
 /**
  * Cube
@@ -59,8 +58,14 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
   }
 
   execute(turn: CubeTurn): void {
-    if (isCubeAxis(turn.target)) {
-      // rotate entire puzzle
+    if (turn.target === 'x' || turn.target === 'y' || turn.target === 'z') {
+      // whole cube rotations
+      this.execute({
+        depth: this.options.size,
+        rotation: turn.rotation,
+        target: cubeAxes[turn.target],
+        wide: true,
+      });
     } else {
       // rotate target face
       if (turn.depth === 1 || turn.wide) {
