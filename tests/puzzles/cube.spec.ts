@@ -41,6 +41,16 @@ describe('Cube', () => {
     });
   });
 
+  it('scramble', () => {
+    const model = new Cube({ size: 3 });
+
+    expect(model.test()).toBe(true);
+
+    model.scramble();
+
+    expect(model.test()).toBe(false);
+  });
+
   describe('turn', () => {
     // individual turns
     Object.entries(cubeTurns).forEach(([turn, expected]) => {

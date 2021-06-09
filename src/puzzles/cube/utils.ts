@@ -1,4 +1,4 @@
-import { CubeFaceLower, CubeAxisLower } from './types';
+import { CubeAxisLower, CubeFaceLower } from './types';
 
 /**
  * Test if turn target is an axis.

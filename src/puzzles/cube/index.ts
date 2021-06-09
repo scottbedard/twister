@@ -1,8 +1,9 @@
 import { error } from '@/utils/function';
 import { extract, inject, rotate } from '@/utils/matrix';
-import { flattenBy, times } from '@/utils/array';
+import { flattenBy, isUniform, last, sample, times, without } from '@/utils/array';
+import { keys } from '@/utils/object';
 import { lowercase } from '@/utils/string';
-import { max } from '@/utils/number';
+import { floor, max, rand } from '@/utils/number';
 import { Puzzle } from '@/puzzles/puzzle';
 
 import {
@@ -26,8 +27,16 @@ import { isCubeAxis } from './utils';
  * Cube
  */
 export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTurn> {
-  constructor(options: CubeOptions) {
-    super(options);
+  constructor(options: Partial<CubeOptions>) {
+    const {
+      random = Math.random,
+      size = 3,
+    } = options;
+
+    super({
+      random,
+      size,
+    });
 
     this.state = {
       u: [],
@@ -83,8 +92,26 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
   }
 
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  generateScramble(depth: number): string {
-    return '';
+  generateScramble(depth: number = max(20, this.options.size ** 3)): string {
+    const turns: CubeTurn[] = [];
+    const { random, size } = this.options;
+
+    for (let i = 0; i < depth; i += 1) {
+      turns.push({
+        depth: rand(1, floor(size / 2), random),
+        rotation: sample([-1, 1, 2], random),
+        target: sample(without(keys(cubeNet), last(turns)?.target), random),
+        wide: sample([true, false], random),
+      });
+    }
+
+    return turns.map((turn) => {
+      const wideSuffix = turn.wide && turn.depth > 1 && size > 2 ? 'w' : '';
+      const depthPrefix = turn.depth > (wideSuffix ? 2 : 1) ? turn.depth : '';
+      const rotationSuffix = turn.rotation === -1 ? '-' : (turn.rotation === 2 ? '2' : '');
+
+      return `${depthPrefix}${turn.target.toUpperCase()}${wideSuffix}${rotationSuffix}`;
+    }).join(' ');
   }
 
   output(): CubeSimpleState {
@@ -129,6 +156,13 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
   }
 
   test(): boolean {
-    return false;
+    const { u, l, f, r, b, d } = this.output();
+
+    return isUniform(u)
+      && isUniform(l)
+      && isUniform(f)
+      && isUniform(r)
+      && isUniform(b)
+      && isUniform(d);
   }
 }

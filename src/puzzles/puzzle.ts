@@ -47,7 +47,7 @@ export abstract class Puzzle<Options, State, SimpleState, Turn> {
    *
    * @param {number} depth Turn length of scramble.
    */
-  abstract generateScramble(depth: number): string;
+  abstract generateScramble(depth?: number): string;
 
   /**
    * Output puzzle state.
@@ -71,8 +71,12 @@ export abstract class Puzzle<Options, State, SimpleState, Turn> {
    *
    * @param {number} depth Turn length of scramble.
    */
-  scramble(depth: number): void {
-    this.turn(this.generateScramble(depth));
+  scramble(depth?: number): string {
+    const scramble = this.generateScramble(depth);
+
+    this.turn(scramble);
+
+    return scramble;
   }
 
   /**

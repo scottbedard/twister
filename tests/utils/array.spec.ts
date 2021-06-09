@@ -1,12 +1,15 @@
 import {
   flattenBy,
   head,
+  isUniform,
+  last,
   reverse,
   roll,
   sample,
   slice,
   splice,
   times,
+  without,
 } from '@/utils/array';
 
 describe('array utils', () => {
@@ -26,6 +29,20 @@ describe('array utils', () => {
 
     expect(arr).toEqual([0, 1, 2]);
     expect(item).toEqual(0);
+  });
+
+  it('isUniform', () => {
+    expect(isUniform([])).toBe(true);
+    expect(isUniform([1])).toBe(true);
+    expect(isUniform([1, 1])).toBe(true);
+    expect(isUniform([1, 1, 1])).toBe(true);
+    expect(isUniform([1, 1, 1, 1])).toBe(true);
+    expect(isUniform([1, 1, 1, 1, 2])).toBe(false);
+  });
+
+  it('last', () => {
+    expect(last([])).toBeUndefined();
+    expect(last([0, 1, 2])).toBe(2);
   });
 
   it('reverse', () => {
@@ -76,5 +93,12 @@ describe('array utils', () => {
     const arr = times(3, 'a');
 
     expect(arr).toEqual(['a', 'a', 'a']);
+  });
+
+  it('without', () => {
+    const arr = ['a', 'b', 'c'];
+
+    expect(without(arr)).toEqual(arr);
+    expect(without(arr, 'a', 'b')).toEqual(['c']);
   });
 });

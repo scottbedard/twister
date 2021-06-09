@@ -22,6 +22,7 @@ export type CubeFaceLower = Lowercase<CubeFace>;
  * Cube constructor options.
  */
 export type CubeOptions = {
+  random: () => number,
   size: number,
 };
 

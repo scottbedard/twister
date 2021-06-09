@@ -20,6 +20,34 @@ export function head<T>(arr: T[], begin?: number): T {
 }
 
 /**
+ * Test if an array contains uniform values.
+ *
+ * @param {T[]} arr Array to test for uniformity.
+ */
+export function isUniform<T>(arr: T[]): boolean {
+  if (arr.length > 1) {
+    const val = arr[0];
+
+    for (let i = 1; i < arr.length; i += 1) {
+      if (arr[i] !== val) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Get the last item of an array.
+ *
+ * @param {T[]} arr Array to get last item from.
+ */
+export function last<T>(arr: T[]) {
+  return arr[arr.length - 1];
+}
+
+/**
  * Returns a reversed array without mutating the source.
  *
  * @param {T[]} arr Array to clone and reverse.
@@ -92,4 +120,14 @@ export function splice<T>(arr: T[], start: number, take: number, ...items: T[]):
  */
 export function times<T>(length: number, value?: T): T[] {
   return new Array(length).fill(value);
+}
+
+/**
+ * Create an array excluding given values.
+ *
+ * @param {T[]} arr The array to filter.
+ * @param {...T[]} values Values to exclude.
+ */
+export function without<T>(arr: T[], ...values: T[]): T[] {
+  return arr.filter((val) => !values.includes(val));
 }
