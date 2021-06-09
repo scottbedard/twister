@@ -164,7 +164,7 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
   test(): boolean {
     const { u, l, f, r, b, d } = this.output();
 
-    const isSolved = (face: unknown[]) => isUniform(face.filter((val) => val !== null));
+    const isSolved = (face: unknown[]) => isUniform(without(face, null));
 
     return isSolved(u)
       && isSolved(l)
