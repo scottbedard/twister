@@ -8,7 +8,7 @@ type Cell<T = any> = {
 
 const cell = <T>(value: T) => ({ meta: {}, value });
 
-const simplify = <T>(matrices: Cell<T>[][]) => matrices.map((cells) => flattenBy(cells, 'value'));
+const simplify = <T>(arrs: Cell<T>[][]) => arrs.map((obj) => flattenBy(obj, 'value'));
 
 /**
  * A super matrix manages multiple child matrices, and is used to
@@ -56,12 +56,37 @@ export class SuperMatrix<T = any> {
 
     this.layers = layers;
 
-    this.corners = times(sides, times(floor(layers / 2) ** 2, value).map(cell));
+    this.corners = times(sides).map(() => times(floor(layers / 2) ** 2, value).map(cell));
 
     if (isOdd(layers)) {
       this.center.value = value;
 
-      this.middles = times(sides, times(floor(layers / 2), value).map(cell));
+      this.middles = times(sides).map(() => times(floor(layers / 2), value).map(cell));
+    }
+  }
+
+  /**
+   * Apply simplified values.
+   */
+  apply([corners, middles, center]: [T[][], T[][]?, T?]) {
+    const map = (target: 'corners' | 'middles', arrs: T[][]) => {
+      arrs.forEach((arr, i) => {
+        arr.forEach((value, j) => {
+          this[target][i][j].value = value;
+        });
+      });
+    };
+
+    map('corners', corners);
+
+    if (isOdd(this.layers)) {
+      if (middles) {
+        map('middles', middles);
+      }
+
+      if (center) {
+        this.center.value = center;
+      }
     }
   }
 
