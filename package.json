@@ -35,6 +35,8 @@
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint . --ext .ts",
+    "test:clear": "jest --clearCache",
+    "test:watch": "jest --coverage --watch",
     "test": "jest --coverage"
   },
   "unpkg": "dist/index.bundle.js",
