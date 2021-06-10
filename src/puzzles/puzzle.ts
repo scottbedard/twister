@@ -20,13 +20,6 @@ export abstract class Puzzle<Options, State, SimpleState, Turn> {
   state: State;
 
   /**
-   * Apply puzzle state.
-   *
-   * @param {SimpleState} state state to apply to the puzzle
-   */
-  abstract apply(state: SimpleState): void;
-
-  /**
    * Constructor.
    *
    * @param {Options}  object
@@ -34,6 +27,13 @@ export abstract class Puzzle<Options, State, SimpleState, Turn> {
   constructor(options: Options) {
     this.options = options;
   }
+
+  /**
+   * Apply puzzle state.
+   *
+   * @param {SimpleState} state state to apply to the puzzle
+   */
+  abstract apply(state: SimpleState): void;
 
   /**
    * Execute a single turn.
