@@ -17,7 +17,7 @@ const simplify = <T>(arrs: Cell<T>[][]) => arrs.map((obj) => flattenBy(obj, 'val
  * and a center value.
  *
  * See here for a 5x7 super matrix visualization
- * https://www.desmos.com/geometry/uwqit4og7y
+ * https://www.desmos.com/geometry/nbz63vsuol
  */
 export class SuperMatrix<T = any> {
   /**
