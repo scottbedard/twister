@@ -1,5 +1,5 @@
 import { floor, isOdd } from './number';
-import { flattenBy, times, without } from './array';
+import { flattenBy, roll, times, without } from './array';
 
 type Cell<T = any> = {
   meta: Record<string, unknown>,
@@ -99,5 +99,13 @@ export class SuperMatrix<T = any> {
       isOdd(this.layers) ? simplify(this.middles) : null,
       this.center.value,
     ], null);
+  }
+
+  /**
+   * Rotate.
+   */
+  rotate(angle: number) {
+    this.corners = roll(this.corners, angle);
+    this.middles = roll(this.middles, angle);
   }
 }
