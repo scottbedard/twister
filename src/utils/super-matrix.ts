@@ -1,0 +1,78 @@
+import { floor, isOdd } from './number';
+import { flattenBy, times, without } from './array';
+
+type Cell<T = any> = {
+  meta: Record<string, unknown>,
+  value: T,
+};
+
+const cell = <T>(value: T) => ({ meta: {}, value });
+
+const simplify = <T>(matrices: Cell<T>[][]) => matrices.map((cells) => flattenBy(cells, 'value'));
+
+/**
+ * A super matrix manages multiple child matrices, and is used to
+ * model regular polygon faces with five or more sides. Each corner
+ * is assigned a matrix, and if needed a container for middle edges
+ * and a center value.
+ *
+ * https://www.desmos.com/geometry/uwqit4og7y
+ */
+export class SuperMatrix<T = any> {
+  /**
+   * Center value.
+   */
+  center: Cell<T> = cell(null);
+
+  /**
+   * Corner matrices.
+   */
+  corners: Cell<T>[][] = [];
+
+  /**
+   * Number of layers.
+   */
+  layers: number;
+
+  /**
+   * Middle values.
+   */
+  middles: Cell<T>[][] = [];
+
+  /**
+   * Number of sides.
+   */
+  sides: number;
+
+  /**
+   * Super matrix.
+   *
+   * @param {number} sides Regular polygon sides.
+   * @param {number} layers Number of layers.
+   * @param {T} value Initial value.
+   */
+  constructor(sides: number, layers: number, value: T = null) {
+    this.sides = sides;
+
+    this.layers = layers;
+
+    this.corners = times(sides, times(floor(layers / 2) ** 2, value).map(cell));
+
+    if (isOdd(layers)) {
+      this.center.value = value;
+
+      this.middles = times(sides, times(floor(layers / 2), value).map(cell));
+    }
+  }
+
+  /**
+   * Output simplified values.
+   */
+  output() {
+    return without([
+      simplify(this.corners),
+      isOdd(this.layers) ? simplify(this.middles) : null,
+      this.center.value,
+    ], null);
+  }
+}
