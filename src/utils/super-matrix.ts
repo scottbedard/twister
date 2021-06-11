@@ -1,5 +1,6 @@
-import { floor, isOdd } from './number';
+import { extract } from './matrix';
 import { flattenBy, roll, times, without } from './array';
+import { floor, isOdd } from './number';
 
 type Cell<T = any> = {
   meta: Record<string, unknown>,
@@ -89,6 +90,22 @@ export class SuperMatrix<T = any> {
         this.center.value = center;
       }
     }
+  }
+
+  /**
+   * Extract values from a given angle.
+   *
+   * @param {number} angle Angle to extract values from.
+   * @param {number} depth Depth to extract values from.
+   */
+  extract(angle: number, depth: number): [Cell<T>[], Cell<T> | undefined, Cell<T>[]] {
+    const corners = roll(this.corners, -angle);
+
+    return [
+      extract(corners[0], 0, depth), // leading matrix row
+      roll(this.middles, -angle)[0]?.[depth] ?? undefined, // middle value
+      extract(corners[1], -1, depth), // trailing matrix column
+    ];
   }
 
   /**
