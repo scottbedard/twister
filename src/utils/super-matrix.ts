@@ -112,6 +112,10 @@ export class SuperMatrix<T = any> {
 
   /**
    * Inject values to a super matrix.
+   *
+   * @param {CellLayer<T>} layer Cell layer to inject.
+   * @param {number} angle Angle to inject layer from.
+   * @param {number} depth Depth to inject layer to.
    */
   inject([leading, middle, trailing]: CellLayer<T>, angle: number, depth: number) {
     const corners = roll(this.corners, -angle);
