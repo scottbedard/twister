@@ -1,4 +1,4 @@
-import { extract } from './matrix';
+import { extract, inject } from './matrix';
 import { flattenBy, roll, times, without } from './array';
 import { floor, isOdd } from './number';
 
@@ -6,6 +6,8 @@ type Cell<T = any> = {
   meta: Record<string, unknown>,
   value: T,
 };
+
+type CellLayer<T> = [Cell<T>[], Cell<T> | undefined, Cell<T>[]];
 
 const cell = <T>(value: T) => ({ meta: {}, value });
 
@@ -98,7 +100,7 @@ export class SuperMatrix<T = any> {
    * @param {number} angle Angle to extract values from.
    * @param {number} depth Depth to extract values from.
    */
-  extract(angle: number, depth: number): [Cell<T>[], Cell<T> | undefined, Cell<T>[]] {
+  extract(angle: number, depth: number): CellLayer<T> {
     const corners = roll(this.corners, -angle);
 
     return [
@@ -106,6 +108,26 @@ export class SuperMatrix<T = any> {
       roll(this.middles, -angle)[0]?.[depth] ?? undefined, // middle value
       extract(corners[1], -1, depth), // trailing matrix column
     ];
+  }
+
+  /**
+   * Inject values to a super matrix.
+   */
+  inject([leading, middle, trailing]: CellLayer<T>, angle: number, depth: number) {
+    const corners = roll(this.corners, -angle);
+
+    corners[0] = inject(leading, corners[0], 0, depth);
+    corners[1] = inject(trailing, corners[1], -1, depth);
+
+    this.corners = roll(corners, angle);
+
+    if (isOdd(this.layers) && middle) {
+      const middles = roll(this.middles, -angle);
+
+      middles[0][depth] = middle;
+
+      this.middles = roll(middles, angle);
+    }
   }
 
   /**

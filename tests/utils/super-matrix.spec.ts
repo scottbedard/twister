@@ -58,6 +58,20 @@ const unique5x5: [number[][], number[][], number] = [
   31,
 ];
 
+const simplify = ([
+  leading,
+  middle,
+  trailing,
+]: [
+  { value: number }[],
+  { value: number } | undefined,
+  { value: number }[],
+]) => [
+  leading.map((obj) => obj.value),
+  middle?.value,
+  trailing.map((obj) => obj.value),
+];
+
 describe('SuperMatrix', () => {
   describe('apply', () => {
     it('5x4', () => {
@@ -162,20 +176,6 @@ describe('SuperMatrix', () => {
   });
 
   describe('extract', () => {
-    const simplify = ([
-      leading,
-      middle,
-      trailing,
-    ]: [
-      { value: number }[],
-      { value: number } | undefined,
-      { value: number }[],
-    ]) => [
-      leading.map((obj) => obj.value),
-      middle?.value,
-      trailing.map((obj) => obj.value),
-    ];
-
     it('5x4', () => {
       const model = new SuperMatrix(5, 4);
 
@@ -226,6 +226,92 @@ describe('SuperMatrix', () => {
       expect(simplify(model.extract(1, 1))).toEqual([
         [7, 8], 24, [12, 10],
       ]);
+    });
+  });
+
+  describe('inject', () => {
+    type Cell = { meta: Record<string, unknown>, value: number };
+
+    const expand = ([
+      leading,
+      middle,
+      trailing,
+    ]: [
+      number[],
+      number | undefined,
+      number[],
+    ]): [Cell[], Cell | undefined, Cell[]] => [
+      leading.map((value) => ({ meta: {}, value })),
+      middle ? { meta: {}, value: middle } : undefined,
+      trailing.map((value) => ({ meta: {}, value })),
+    ];
+
+    describe('5x4', () => {
+      let model: SuperMatrix;
+
+      const layer = [[1, 2], undefined, [3, 4]] as [number[], number, number[]];
+
+      beforeEach(() => {
+        model = new SuperMatrix(5, 4, 0);
+      });
+
+      it('angle 0, depth 0', () => {
+        model.inject(expand(layer), 0, 0);
+
+        expect(simplify(model.extract(0, 0))).toEqual(layer);
+      });
+
+      it('angle 0, depth 1', () => {
+        model.inject(expand(layer), 0, 1);
+
+        expect(simplify(model.extract(0, 1))).toEqual(layer);
+      });
+
+      it('angle 1, depth 0', () => {
+        model.inject(expand(layer), 0, 0);
+
+        expect(simplify(model.extract(0, 0))).toEqual(layer);
+      });
+
+      it('angle 1, depth 1', () => {
+        model.inject(expand(layer), 1, 1);
+
+        expect(simplify(model.extract(1, 1))).toEqual(layer);
+      });
+    });
+
+    describe('5x5', () => {
+      let model: SuperMatrix;
+
+      const layer = [[1, 2], 3, [4, 5]] as [number[], number, number[]];
+
+      beforeEach(() => {
+        model = new SuperMatrix(5, 5, 0);
+      });
+
+      it('angle 0, depth 0', () => {
+        model.inject(expand(layer), 0, 0);
+
+        expect(simplify(model.extract(0, 0))).toEqual(layer);
+      });
+
+      it('angle 0, depth 1', () => {
+        model.inject(expand(layer), 0, 1);
+
+        expect(simplify(model.extract(0, 1))).toEqual(layer);
+      });
+
+      it('angle 1, depth 0', () => {
+        model.inject(expand(layer), 0, 0);
+
+        expect(simplify(model.extract(0, 0))).toEqual(layer);
+      });
+
+      it('angle 1, depth 1', () => {
+        model.inject(expand(layer), 1, 1);
+
+        expect(simplify(model.extract(1, 1))).toEqual(layer);
+      });
     });
   });
 });
