@@ -1,10 +1,10 @@
 /**
- * Cube axes.
+ * Cube axes
  */
 export type CubeAxis = 'X' | 'Y' | 'Z';
 
 /**
- * Lowercase cube axis.
+ * Lowercase cube axis
  */
 export type CubeAxisLower = Lowercase<CubeAxis>;
 
@@ -14,12 +14,12 @@ export type CubeAxisLower = Lowercase<CubeAxis>;
 export type CubeFace = 'U' | 'L' | 'F' | 'R' | 'B' | 'D';
 
 /**
- * Lowercase cube faces.
+ * Lowercase cube faces
  */
 export type CubeFaceLower = Lowercase<CubeFace>;
 
 /**
- * Cube constructor options.
+ * Cube options
  */
 export type CubeOptions = {
   random: () => number,
@@ -27,17 +27,17 @@ export type CubeOptions = {
 };
 
 /**
- * Simplified cube state.
- */
-export type CubeSimpleState = Record<CubeFaceLower, unknown[]>;
-
-/**
- * Full cube state.
+ * Cube state
  */
 export type CubeState = Record<CubeFaceLower, CubeSticker[]>;
 
 /**
- * Sticker object.
+ * Simplified cube state
+ */
+export type CubeSimpleState = Record<CubeFaceLower, unknown[]>;
+
+/**
+ * Cube sticker
  */
 export type CubeSticker = {
   meta: Record<string, unknown>,
@@ -45,7 +45,7 @@ export type CubeSticker = {
 };
 
 /**
- * A parsed cube turn.
+ * Parsed cube turn
  */
 export type CubeTurn = {
   depth: number,
