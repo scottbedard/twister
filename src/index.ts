@@ -1,2 +1,2 @@
-export { Cube } from './puzzles/cube/index';
+export { Cube } from './puzzles/cube/cube';
 export { Puzzle } from './puzzles/puzzle';
