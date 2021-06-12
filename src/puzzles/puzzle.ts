@@ -6,70 +6,70 @@ import { trim } from '@/utils/string';
  */
 export abstract class Puzzle<Options, State, SimpleState, Turn> {
   /**
-   * Puzzle options.
+   * Puzzle options
    *
    * @type {Options}
    */
   options: Options;
 
   /**
-   * Current puzzle state.
+   * Current puzzle state
    *
    * @type {State}
    */
   state: State;
 
   /**
-   * Constructor.
+   * Constructor
    *
-   * @param {Options}  object
+   * @param {Options} options
    */
   constructor(options: Options) {
     this.options = options;
   }
 
   /**
-   * Apply puzzle state.
+   * Apply puzzle state
    *
    * @param {SimpleState} state state to apply to the puzzle
    */
   abstract apply(state: SimpleState): void;
 
   /**
-   * Execute a single turn.
+   * Execute a turn
    *
-   * @param {Turn} turn Turn to execute.
+   * @param {Turn} turn turn to execute
    */
   abstract execute(turn: Turn): void;
 
   /**
-   * Generate a scramble.
+   * Generate a scramble
    *
-   * @param {number} depth Turn length of scramble.
+   * @param {number} depth number of scramble turns
    */
   abstract generateScramble(depth?: number): string;
 
   /**
-   * Output puzzle state.
+   * Output puzzle state
    */
   abstract output(): SimpleState;
 
   /**
-   * Parse a turn.
+   * Parse a turn
    *
-   * @param {string} turn Turn to parse
+   * @param {string} turn turn notation to parse
    */
   abstract parse(turn: string): Turn;
 
   /**
-   * Reset puzzle state.
+   * Reset puzzle state
    */
   abstract reset(): void;
 
   /**
-   * Scramble the puzzle.
+   * Scramble the puzzle
    *
-   * @param {number} depth Turn length of scramble.
+   * @param {number} depth number of scramble turns
    */
   scramble(depth?: number): string {
     const scramble = this.generateScramble(depth);
@@ -80,14 +80,14 @@ export abstract class Puzzle<Options, State, SimpleState, Turn> {
   }
 
   /**
-   * Test if the puzzle is solved.
+   * Test if the puzzle is solved
    */
   abstract test(): boolean;
 
   /**
-   * Execute an algorithm.
+   * Execute an algorithm
    *
-   * @param {string} algorithm Sequence of turns to execute.
+   * @param {string} algorithm sequence of turns to execute
    */
   turn(algorithm: string): void {
     algorithm

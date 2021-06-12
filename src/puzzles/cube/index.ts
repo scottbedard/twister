@@ -26,6 +26,11 @@ import {
  * Cube
  */
 export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTurn> {
+  /**
+   * Constructor
+   *
+   * @param {Partial<CubeOptions>} options puzzle options
+   */
   constructor(options: Partial<CubeOptions>) {
     const {
       random = Math.random,
@@ -49,6 +54,11 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     this.reset();
   }
 
+  /**
+   * Apply puzzle state
+   *
+   * @param {Partial<CubeSimpleState>} state state to apply to the puzzle
+   */
   apply(state: Partial<CubeSimpleState>): void {
     keys(state).forEach((face) => {
       state[face].forEach((value, index) => {
@@ -57,6 +67,11 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     });
   }
 
+  /**
+   * Execute a turn
+   *
+   * @param {CubeTurn} turn turn to execute
+   */
   execute(turn: CubeTurn): void {
     if (turn.target === 'x' || turn.target === 'y' || turn.target === 'z') {
       // whole cube rotations
@@ -98,6 +113,11 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     }
   }
 
+  /**
+   * Generate a scramble
+   *
+   * @param {number} depth number of scramble turns
+   */
   generateScramble(depth: number = max(20, this.options.size ** 3)): string {
     const turns: CubeTurn[] = [];
     const { random, size } = this.options;
@@ -120,6 +140,9 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     }).join(' ');
   }
 
+  /**
+   * Output puzzle state
+   */
   output(): CubeSimpleState {
     const simplify = (face: CubeFaceLower) => flattenBy(this.state[face], 'value');
 
@@ -133,6 +156,11 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     };
   }
 
+  /**
+   * Parse a turn
+   *
+   * @param {string} turn turn notation to parse
+   */
   parse(turn: string): CubeTurn {
     const parts = turn.match(/^(\d)*([ulfrbdxyzULFRBDXYZ]){1}(w)*(['-2])*$/);
 
@@ -153,6 +181,9 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     };
   }
 
+  /**
+   * Reset puzzle state
+   */
   reset() {
     const stickers = times(this.options.size ** 2);
 
@@ -161,6 +192,9 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     });
   }
 
+  /**
+   * Test if the puzzle is solved
+   */
   test(): boolean {
     const { u, l, f, r, b, d } = this.output();
 
