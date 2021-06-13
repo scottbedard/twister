@@ -22,6 +22,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'max-len': ['error', { code: 120, ignoreComments: true }],
     'no-nested-ternary': 0,
+    'no-plusplus': 0,
     'object-curly-newline': 0,
     'prefer-destructuring': 0,
     'quote-props': 0,

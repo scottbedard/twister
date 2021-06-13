@@ -1,6 +1,7 @@
 import {
   CompositeLayer,
   CompositeMatrix,
+  createComposite,
   extractComposite,
   injectComposite,
   rotateComposite,
@@ -35,6 +36,18 @@ const stub5x5: CompositeMatrix<number> = [
 ];
 
 describe('composite matrix', () => {
+  describe('createComposite', () => {
+    it('5x4', () => {
+      let i = 1;
+      expect(createComposite(5, 4, () => i++)).toEqual(stub5x4);
+    });
+
+    it('5x5', () => {
+      let i = 1;
+      expect(createComposite(5, 5, () => i++)).toEqual(stub5x5);
+    });
+  });
+
   describe('extractComposite', () => {
     describe('5x4', () => {
       it('angle 0, depth 0', () => {

@@ -1,5 +1,7 @@
 import { extract, inject } from './matrix';
-import { roll } from './array';
+import { floor, isOdd } from '@/utils/number';
+import { roll, times } from './array';
+import { identity } from './function';
 
 /**
  * Composite matrices are used to represent the faces with more than
@@ -33,7 +35,39 @@ export type CompositeLayer<T> = [T[], T | undefined, T[]];
 export type CompositeMatrix<T> = [T[][]] | [T[][], T[][], T];
 
 /**
+ * Create a composite matrix.
+ *
+ * @param {number} sides number of polygon sides, must be >= 5
+ * @param {number} size size of composite matrix. kilominx would be 2, megaminx would be 3, etc...
+ */
+export function createComposite<T>(
+  sides: number,
+  size: number,
+  valueFn: () => T = () => null,
+): CompositeMatrix<T> {
+  const halfSize = floor(size / 2);
+  const matrixSize = halfSize ** 2;
+  const corners = times(sides).map(() => times(matrixSize).map(valueFn));
+
+  if (isOdd(size)) {
+    return [
+      corners,
+      times(size).map(() => times(halfSize).map(valueFn)),
+      valueFn(),
+    ];
+  }
+
+  return [
+    corners,
+  ];
+}
+
+/**
  * Extract layer from composite matrix.
+ *
+ * @param {CompositeMatrix<T>} composite
+ * @param {number} angle
+ * @param {number} depth
  */
 export function extractComposite<T>(
   composite: CompositeMatrix<T>,
@@ -51,6 +85,11 @@ export function extractComposite<T>(
 
 /**
  * Inject layer to composite matrix.
+ *
+ * @param {CompositeMatrix<T>} composite
+ * @param {CompositeLayer<T>} layer
+ * @param {number} angle
+ * @param {number} depth
  */
 export function injectComposite<T>(
   composite: CompositeMatrix<T>,
@@ -82,14 +121,15 @@ export function injectComposite<T>(
 
 /**
  * Rotate a composite matrix.
+ *
+ * @param {CompositeMatrix<T>} composite
+ * @param {number} rotation
  */
 export function rotateComposite<T>(
   composite: CompositeMatrix<T>,
   rotation: number,
 ): CompositeMatrix<T> {
-  const corners = roll(composite[0], rotation);
-
   return composite.length === 1
-    ? [corners]
-    : [corners, roll(composite[1], rotation), composite[2]];
+    ? [roll(composite[0], rotation)]
+    : [roll(composite[0], rotation), roll(composite[1], rotation), composite[2]];
 }
