@@ -39,6 +39,7 @@ export type CompositeMatrix<T> = [T[][]] | [T[][], T[][], T];
  *
  * @param {number} sides number of polygon sides, must be >= 5
  * @param {number} size size of composite matrix. kilominx would be 2, megaminx would be 3, etc...
+ * @param {Function} valueFn function to set initial values
  */
 export function createComposite<T>(
   sides: number,
