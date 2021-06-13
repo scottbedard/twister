@@ -1,6 +1,8 @@
 import {
+  CompositeLayer,
   CompositeMatrix,
   extractComposite,
+  injectComposite,
 } from '@/utils/composite-matrix';
 
 const stub5x4: CompositeMatrix<number> = [
@@ -66,6 +68,64 @@ describe('composite matrix', () => {
 
       it('angle 1, depth 1', () => {
         expect(extractComposite(stub5x5, 1, 1)).toEqual([[7, 8], 24, [12, 10]]);
+      });
+    });
+  });
+
+  describe('injectComposite', () => {
+    describe('5x4', () => {
+      const layer: CompositeLayer<number> = [[-1, -2], undefined, [-3, -4]];
+
+      it('angle 0, depth 0', () => {
+        const composite = injectComposite(stub5x4, layer, 0, 0);
+
+        expect(extractComposite(composite, 0, 0)).toEqual(layer);
+      });
+
+      it('angle 0, depth 1', () => {
+        const composite = injectComposite(stub5x4, layer, 0, 1);
+
+        expect(extractComposite(composite, 0, 1)).toEqual(layer);
+      });
+
+      it('angle 1, depth 0', () => {
+        const composite = injectComposite(stub5x4, layer, 1, 0);
+
+        expect(extractComposite(composite, 1, 0)).toEqual(layer);
+      });
+
+      it('angle 1, depth 1', () => {
+        const composite = injectComposite(stub5x4, layer, 1, 1);
+
+        expect(extractComposite(composite, 1, 1)).toEqual(layer);
+      });
+    });
+
+    describe('5x5', () => {
+      const layer: CompositeLayer<number> = [[-1, -2], undefined, [-3, -4]];
+
+      it('angle 0, depth 0', () => {
+        const composite = injectComposite(stub5x5, layer, 0, 0);
+
+        expect(extractComposite(composite, 0, 0)).toEqual(layer);
+      });
+
+      it('angle 0, depth 1', () => {
+        const composite = injectComposite(stub5x5, layer, 0, 1);
+
+        expect(extractComposite(composite, 0, 1)).toEqual(layer);
+      });
+
+      it('angle 1, depth 0', () => {
+        const composite = injectComposite(stub5x5, layer, 1, 0);
+
+        expect(extractComposite(composite, 1, 0)).toEqual(layer);
+      });
+
+      it('angle 1, depth 1', () => {
+        const composite = injectComposite(stub5x5, layer, 1, 1);
+
+        expect(extractComposite(composite, 1, 1)).toEqual(layer);
       });
     });
   });

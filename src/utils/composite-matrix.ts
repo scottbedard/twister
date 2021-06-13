@@ -39,7 +39,11 @@ export type CompositeMatrix<T> = [T[][]] | [T[][], T[][], T];
 /**
  * Extract layer from composite matrix.
  */
-export function extractComposite<T>(composite: CompositeMatrix<T>, angle: number, depth: number): CompositeLayer<T> {
+export function extractComposite<T>(
+  composite: CompositeMatrix<T>,
+  angle: number,
+  depth: number,
+): CompositeLayer<T> {
   const corners = roll(composite[0], -angle);
 
   return [
@@ -52,8 +56,32 @@ export function extractComposite<T>(composite: CompositeMatrix<T>, angle: number
 /**
  * Inject layer to composite matrix.
  */
-export function injectComposite() {
-  // ...
+export function injectComposite<T>(
+  composite: CompositeMatrix<T>,
+  layer: CompositeLayer<T>,
+  angle: number,
+  depth: number,
+): CompositeMatrix<T> {
+  const corners = roll(composite[0], -angle);
+
+  corners[0] = inject(layer[0], corners[0], 0, depth);
+  corners[1] = inject(layer[2], corners[1], -1, depth);
+
+  if (composite.length > 1) {
+    const middles = roll(composite[1], -angle);
+
+    middles[0][depth] = layer[1];
+
+    return [
+      roll(corners, angle),
+      roll(middles, angle),
+      composite[2],
+    ];
+  }
+
+  return [
+    roll(corners, angle),
+  ];
 }
 
 /**
