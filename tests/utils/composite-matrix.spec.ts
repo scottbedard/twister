@@ -3,6 +3,7 @@ import {
   CompositeMatrix,
   extractComposite,
   injectComposite,
+  rotateComposite,
 } from '@/utils/composite-matrix';
 
 const stub5x4: CompositeMatrix<number> = [
@@ -127,6 +128,40 @@ describe('composite matrix', () => {
 
         expect(extractComposite(composite, 1, 1)).toEqual(layer);
       });
+    });
+  });
+
+  describe('rotateComposite', () => {
+    it('5x4, rotate 1', () => {
+      expect(rotateComposite(stub5x4, 1)).toEqual([
+        [
+          [17, 18, 19, 20],
+          [1, 2, 3, 4],
+          [5, 6, 7, 8],
+          [9, 10, 11, 12],
+          [13, 14, 15, 16],
+        ],
+      ]);
+    });
+
+    it('5x5, rotate 1', () => {
+      expect(rotateComposite(stub5x5, 1)).toEqual([
+        [
+          [17, 18, 19, 20],
+          [1, 2, 3, 4],
+          [5, 6, 7, 8],
+          [9, 10, 11, 12],
+          [13, 14, 15, 16],
+        ],
+        [
+          [29, 30],
+          [21, 22],
+          [23, 24],
+          [25, 26],
+          [27, 28],
+        ],
+        31,
+      ]);
     });
   });
 });

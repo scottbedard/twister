@@ -1,8 +1,4 @@
-import {
-  extract,
-  inject,
-} from './matrix';
-
+import { extract, inject } from './matrix';
 import { roll } from './array';
 
 /**
@@ -11,7 +7,7 @@ import { roll } from './array';
  * by rows of middle values, and a center value if necessary.
  *
  * To help visualize composite matrices, see the following representation
- * of a teraminx, https://www.desmos.com/geometry/clzk2pzhq9
+ * of a teraminx, https://www.desmos.com/geometry/oxqdvfm9ne
  *
  * [
  *   [
@@ -68,7 +64,7 @@ export function injectComposite<T>(
   corners[1] = inject(layer[2], corners[1], -1, depth);
 
   if (composite.length > 1) {
-    const middles = roll(composite[1], -angle);
+    const middles = roll(composite[1], -angle).map((arr) => arr.slice());
 
     middles[0][depth] = layer[1];
 
@@ -87,6 +83,13 @@ export function injectComposite<T>(
 /**
  * Rotate a composite matrix.
  */
-export function rotateComposite() {
-  // ...
+export function rotateComposite<T>(
+  composite: CompositeMatrix<T>,
+  rotation: number,
+): CompositeMatrix<T> {
+  const corners = roll(composite[0], rotation);
+
+  return composite.length === 1
+    ? [corners]
+    : [corners, roll(composite[1], rotation), composite[2]];
 }
