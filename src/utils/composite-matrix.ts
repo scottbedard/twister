@@ -1,7 +1,6 @@
 import { extract, inject } from './matrix';
 import { floor, isOdd } from '@/utils/number';
 import { roll, times } from './array';
-import { identity } from './function';
 
 /**
  * Composite matrices are used to represent the faces with more than
