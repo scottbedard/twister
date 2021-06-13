@@ -1,6 +1,4 @@
-import {
-  reverse, slice, splice, times,
-} from './array';
+import { reverse, slice, splice, times } from './array';
 
 /**
  * Chunk a matrix array into columns.

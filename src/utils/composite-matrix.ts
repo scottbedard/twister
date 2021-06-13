@@ -7,7 +7,7 @@ import { roll } from './array';
  * by rows of middle values, and a center value if necessary.
  *
  * To help visualize composite matrices, see the following representation
- * of a teraminx, https://www.desmos.com/geometry/oxqdvfm9ne
+ * of a teraminx, https://www.desmos.com/geometry/qxudy50gag
  *
  * [
  *   [
