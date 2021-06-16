@@ -4,6 +4,7 @@ import {
   createComposite,
   extractComposite,
   injectComposite,
+  mapComposite,
   rotateComposite,
 } from '@/utils/composite-matrix';
 
@@ -164,6 +165,42 @@ describe('composite matrix', () => {
 
         expect(extractComposite(composite, 1, 1)).toEqual(layer);
       });
+    });
+  });
+
+  describe('mapComposite', () => {
+    const negative = (n: number) => -n;
+
+    it('5x4', () => {
+      expect(mapComposite(stub5x4, negative)).toEqual([
+        [
+          [-1, -2, -3, -4],
+          [-5, -6, -7, -8],
+          [-9, -10, -11, -12],
+          [-13, -14, -15, -16],
+          [-17, -18, -19, -20],
+        ],
+      ]);
+    });
+
+    it('5x5', () => {
+      expect(mapComposite(stub5x5, negative)).toEqual([
+        [
+          [-1, -2, -3, -4],
+          [-5, -6, -7, -8],
+          [-9, -10, -11, -12],
+          [-13, -14, -15, -16],
+          [-17, -18, -19, -20],
+        ],
+        [
+          [-21, -22],
+          [-23, -24],
+          [-25, -26],
+          [-27, -28],
+          [-29, -30],
+        ],
+        -31,
+      ]);
     });
   });
 

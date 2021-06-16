@@ -3,8 +3,8 @@ import { floor, isOdd } from '@/utils/number';
 import { roll, times } from './array';
 
 /**
- * Composite matrices are used to represent the faces with more than
- * 4 sides. Each corner section is stored as a normal matrix, followed
+ * Composite matrices are used to represent faces with more than four
+ * sides. Each corner section is stored as a normal matrix, followed
  * by rows of middle values, and a center value if necessary.
  *
  * To help visualize composite matrices, see the following representation
@@ -120,15 +120,33 @@ export function injectComposite<T>(
 }
 
 /**
+ * Apply a function to each value in a composite matrix.
+ */
+export function mapComposite<T, U = T>(composite: CompositeMatrix<T>, fn: (val: T) => U): CompositeMatrix<U> {
+  const [corners, middles, center] = composite;
+
+  const values = (arr: T[]) => arr.map(fn);
+
+  if (middles && center) {
+    return [
+      corners.map(values),
+      middles.map(values),
+      fn(center),
+    ];
+  }
+
+  return [
+    corners.map(values),
+  ];
+}
+
+/**
  * Rotate a composite matrix.
  *
  * @param {CompositeMatrix<T>} composite
  * @param {number} rotation
  */
-export function rotateComposite<T>(
-  composite: CompositeMatrix<T>,
-  rotation: number,
-): CompositeMatrix<T> {
+export function rotateComposite<T>(composite: CompositeMatrix<T>, rotation: number): CompositeMatrix<T> {
   return composite.length === 1
     ? [roll(composite[0], rotation)]
     : [roll(composite[0], rotation), roll(composite[1], rotation), composite[2]];
