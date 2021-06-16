@@ -52,7 +52,7 @@ export function createComposite<T>(
   if (isOdd(size)) {
     return [
       corners,
-      times(size).map(() => times(halfSize).map(valueFn)),
+      times(sides).map(() => times(halfSize).map(valueFn)),
       valueFn(),
     ];
   }

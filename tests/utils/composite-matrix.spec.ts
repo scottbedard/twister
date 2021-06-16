@@ -7,6 +7,24 @@ import {
   rotateComposite,
 } from '@/utils/composite-matrix';
 
+const stub5x3: CompositeMatrix<number> = [
+  [
+    [1],
+    [2],
+    [3],
+    [4],
+    [5],
+  ],
+  [
+    [6],
+    [7],
+    [8],
+    [9],
+    [10],
+  ],
+  11,
+];
+
 const stub5x4: CompositeMatrix<number> = [
   [
     [1, 2, 3, 4],
@@ -37,6 +55,11 @@ const stub5x5: CompositeMatrix<number> = [
 
 describe('composite matrix', () => {
   describe('createComposite', () => {
+    it('5x3', () => {
+      let i = 1;
+      expect(createComposite(5, 3, () => i++)).toEqual(stub5x3);
+    });
+
     it('5x4', () => {
       let i = 1;
       expect(createComposite(5, 4, () => i++)).toEqual(stub5x4);
