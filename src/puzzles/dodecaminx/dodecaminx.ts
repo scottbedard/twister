@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { CompositeMatrix, createComposite, mapComposite } from '@/utils/composite-matrix';
 import { error } from '@/utils/function';
 import { isOdd } from '@/utils/number';
 import { keys } from '@/utils/object';
+import { lowercase } from '@/utils/string';
 import { Puzzle } from '@/puzzles/puzzle';
 
 import {
+  DodecaminxFace,
   DodecaminxOptions,
   DodecaminxState,
   DodecaminxStateSimple,
@@ -128,9 +129,35 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    *
    * @param {string} turn turn notation to parse
    */
-  parse(turn: string) {
-    error('not implemented');
-    return {};
+  parse(turn: string): DodecaminxTurn {
+    const parts = turn.match(/^(\d*|\+)?(B|BL|BR|D|DBL|DBR|DL|DR|F|L|R|U){1}(w)?('|-|2|2'|2-)?$/);
+
+    if (!parts) {
+      error(`Invalid turn: ${turn}`);
+    }
+
+    const prefix = parts[1];
+    const target = lowercase(<DodecaminxFace> parts[2]);
+    const wide = !!parts[3];
+    const rotation = ['-', '\''].includes(parts[4])
+      ? -1
+      : ['2-', '2\''].includes(parts[4])
+        ? -2
+        : parts[4] === '2'
+          ? 2
+          : 1;
+
+    return {
+      depth: !prefix && wide
+        ? 2
+        : !prefix || prefix === '+'
+          ? 1
+          : Number(prefix),
+      rotation,
+      target,
+      whole: prefix === '+',
+      wide,
+    };
   }
 
   /**

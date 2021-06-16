@@ -1,4 +1,5 @@
 import { Dodecaminx } from '@/index';
+import dodecaminxNotation from './dodecaminx-notation';
 
 describe('Dodecaminx', () => {
   it('apply', () => {
@@ -89,6 +90,25 @@ describe('Dodecaminx', () => {
         [[11], [11], [11], [11], [11]],
         11,
       ],
+    });
+  });
+
+  describe('parse', () => {
+    const debug = '';
+    const model = new Dodecaminx({ size: 3 });
+
+    Object.entries(dodecaminxNotation).forEach(([turn, expected]) => {
+      if (!debug || debug === turn) {
+        it(turn, () => {
+          expect(model.parse(turn)).toEqual(expected);
+        });
+      } else {
+        it.todo(turn);
+      }
+    });
+
+    it('bad turn', () => {
+      expect(() => model.parse('bad turn')).toThrow();
     });
   });
 });
