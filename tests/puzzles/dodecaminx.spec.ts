@@ -26,6 +26,14 @@ describe('Dodecaminx', () => {
     expect(model.state.f[2].value).toBe(-11);
   });
 
+  it('generateScramble', () => {
+    const model = new Dodecaminx({ size: 3 });
+
+    const scramble = model.generateScramble(10);
+
+    expect(scramble.split(' ').length).toBe(10);
+  });
+
   it('output', () => {
     const model = new Dodecaminx({ size: 3 });
 

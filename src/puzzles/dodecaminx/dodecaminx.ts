@@ -1,9 +1,12 @@
 import { CompositeMatrix, createComposite, mapComposite } from '@/utils/composite-matrix';
 import { error } from '@/utils/function';
-import { isOdd } from '@/utils/number';
+import { floor, isOdd, max, rand } from '@/utils/number';
 import { keys } from '@/utils/object';
+import { last, sample, without } from '@/utils/array';
 import { lowercase } from '@/utils/string';
 import { Puzzle } from '@/puzzles/puzzle';
+
+import { dodecaminxNet } from './constants';
 
 import {
   DodecaminxFace,
@@ -97,9 +100,33 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    *
    * @param {number} depth number of scramble turns
    */
-  generateScramble(depth?: number) {
-    error('not implemented');
-    return '';
+  generateScramble(depth: number = max(30, this.options.size ** 3)) {
+    const turns: DodecaminxTurn[] = [];
+    const { random, size } = this.options;
+
+    for (let i = 0; i < depth; i += 1) {
+      turns.push({
+        depth: rand(1, floor(size / 2), random),
+        rotation: sample([-2, -1, 1, 2], random),
+        target: sample(without(keys(dodecaminxNet), last(turns)?.target), random),
+        whole: false,
+        wide: sample([true, false], random),
+      });
+    }
+
+    return turns.map((turn) => {
+      const wideSuffix = turn.wide && turn.depth > 1 && size > 2 ? 'w' : '';
+      const depthPrefix = turn.depth > (wideSuffix ? 2 : 1) ? turn.depth : '';
+      const rotationSuffix = turn.rotation === -2
+        ? '2-'
+        : turn.rotation === -1
+          ? '-'
+          : turn.rotation === 2
+            ? '2'
+            : '';
+
+      return `${depthPrefix}${turn.target.toUpperCase()}${wideSuffix}${rotationSuffix}`;
+    }).join(' ');
   }
 
   /**
