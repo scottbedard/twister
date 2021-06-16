@@ -1,5 +1,6 @@
 import { Dodecaminx } from '@/index';
 import dodecaminxNotation from './dodecaminx-notation';
+import dodecaminxTurns from './dodecaminx-turns';
 
 describe('Dodecaminx', () => {
   it('apply', () => {
@@ -117,6 +118,27 @@ describe('Dodecaminx', () => {
 
     it('bad turn', () => {
       expect(() => model.parse('bad turn')).toThrow();
+    });
+  });
+
+  describe('turn', () => {
+    // individual turns
+    dodecaminxTurns.forEach((obj) => {
+      const name = `${obj.size} - ${obj.turn}`;
+
+      const fn = () => {
+        const model = new Dodecaminx({ size: obj.size });
+
+        model.turn(obj.turn);
+
+        expect(model.output()).toEqual(obj.result);
+      };
+
+      if (obj.only) {
+        it.only(name, fn);
+      } else {
+        it(name, fn);
+      }
     });
   });
 });

@@ -92,7 +92,19 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    * @param {DodecaminxTurn} turn turn to execute
    */
   execute(turn: DodecaminxTurn) {
-    error('not implemented');
+    if (turn.whole) {
+      // @todo
+    } else {
+      // rotate target face
+      if (turn.depth === 1 || turn.wide) {
+        // @todo
+      }
+
+      // rotate slices
+      for (let i = turn.wide ? 0 : turn.depth - 1; i < turn.depth; i += 1) {
+        // @todo
+      }
+    }
   }
 
   /**
