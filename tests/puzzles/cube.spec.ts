@@ -16,14 +16,30 @@ describe('Cube', () => {
       d: ['d0', 'd1', 'd2', 'd3'],
     });
 
-    expect(model.output()).toEqual({
-      u: ['u0', 'u1', 'u2', 'u3'],
-      l: ['l0', 'l1', 'l2', 'l3'],
-      f: ['f0', 'f1', 'f2', 'f3'],
-      r: ['r0', 'r1', 'r2', 'r3'],
-      b: ['b0', 'b1', 'b2', 'b3'],
-      d: ['d0', 'd1', 'd2', 'd3'],
-    });
+    expect(model.state.u[0].value).toBe('u0');
+    expect(model.state.u[1].value).toBe('u1');
+    expect(model.state.u[2].value).toBe('u2');
+    expect(model.state.u[3].value).toBe('u3');
+    expect(model.state.l[0].value).toBe('l0');
+    expect(model.state.l[1].value).toBe('l1');
+    expect(model.state.l[2].value).toBe('l2');
+    expect(model.state.l[3].value).toBe('l3');
+    expect(model.state.f[0].value).toBe('f0');
+    expect(model.state.f[1].value).toBe('f1');
+    expect(model.state.f[2].value).toBe('f2');
+    expect(model.state.f[3].value).toBe('f3');
+    expect(model.state.r[0].value).toBe('r0');
+    expect(model.state.r[1].value).toBe('r1');
+    expect(model.state.r[2].value).toBe('r2');
+    expect(model.state.r[3].value).toBe('r3');
+    expect(model.state.b[0].value).toBe('b0');
+    expect(model.state.b[1].value).toBe('b1');
+    expect(model.state.b[2].value).toBe('b2');
+    expect(model.state.b[3].value).toBe('b3');
+    expect(model.state.d[0].value).toBe('d0');
+    expect(model.state.d[1].value).toBe('d1');
+    expect(model.state.d[2].value).toBe('d2');
+    expect(model.state.d[3].value).toBe('d3');
   });
 
   it('output', () => {
