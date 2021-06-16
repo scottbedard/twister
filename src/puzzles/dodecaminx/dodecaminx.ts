@@ -1,4 +1,4 @@
-import { CompositeMatrix, createComposite, mapComposite } from '@/utils/composite-matrix';
+import { CompositeMatrix, createComposite, extractComposite, injectComposite, mapComposite } from '@/utils/composite-matrix';
 import { error } from '@/utils/function';
 import { floor, isOdd, max, rand } from '@/utils/number';
 import { keys } from '@/utils/object';
@@ -101,8 +101,20 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
       }
 
       // rotate slices
+      const relatedFaces = dodecaminxNet[turn.target];
+
       for (let i = turn.wide ? 0 : turn.depth - 1; i < turn.depth; i += 1) {
-        // @todo
+        relatedFaces.map((source, index) => {
+          // extract layers from adjacent face
+          const [face, angle] = relatedFaces[index];
+
+          return extractComposite(this.state[face], angle, i);
+        }).forEach((layer, index) => {
+          // inject layers into target faces
+          const [relatedFace, angle] = relatedFaces[(index + 5 + turn.rotation) % 5];
+
+          this.state[relatedFace] = injectComposite(this.state[relatedFace], layer, angle, i);
+        });
       }
     }
   }

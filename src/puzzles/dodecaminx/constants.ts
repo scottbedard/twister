@@ -4,7 +4,7 @@ import { DodecaminxFaceLower } from './types';
  * This constant defines how faces are related to one another. Think of it as
  * an unfolded dodecahedron, with the U face oriented towards you.
  */
-export const dodecaminxNet: Record<DodecaminxFaceLower, any> = {
+export const dodecaminxNet: Record<DodecaminxFaceLower, [DodecaminxFaceLower, number][]> = {
   b: [],
   bl: [],
   br: [],
@@ -16,5 +16,11 @@ export const dodecaminxNet: Record<DodecaminxFaceLower, any> = {
   f: [],
   l: [],
   r: [],
-  u: [],
+  u: [
+    ['bl', 1],
+    ['br', 2],
+    ['r', 3],
+    ['f', 4],
+    ['l', 0],
+  ],
 };

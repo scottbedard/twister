@@ -27,7 +27,7 @@ const tests: TurnTest[] = [
   {
     only: false,
     size: 3,
-    turn: 'R',
+    turn: 'U',
     result: {
       u: [
         [[u], [u], [u], [u], [u]],
@@ -35,28 +35,28 @@ const tests: TurnTest[] = [
         u,
       ],
       l: [
-        [[l], [l], [l], [l], [l]],
-        [[l], [l], [l], [l], [l]],
+        [[f], [f], [l], [l], [l]],
+        [[f], [l], [l], [l], [l]],
         l,
       ],
       f: [
-        [[f], [f], [f], [f], [f]],
-        [[f], [f], [f], [f], [f]],
+        [[r], [f], [f], [f], [r]],
+        [[f], [f], [f], [f], [r]],
         f,
       ],
       r: [
-        [[r], [r], [r], [r], [r]],
-        [[r], [r], [r], [r], [r]],
+        [[r], [r], [r], [br], [br]],
+        [[r], [r], [r], [br], [r]],
         r,
       ],
       bl: [
-        [[bl], [bl], [bl], [bl], [bl]],
-        [[bl], [bl], [bl], [bl], [bl]],
+        [[bl], [l], [l], [bl], [bl]],
+        [[bl], [l], [bl], [bl], [bl]],
         bl,
       ],
       br: [
-        [[br], [br], [br], [br], [br]],
-        [[br], [br], [br], [br], [br]],
+        [[br], [br], [bl], [bl], [br]],
+        [[br], [br], [bl], [br], [br]],
         br,
       ],
       dl: [
