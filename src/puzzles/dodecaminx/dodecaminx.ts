@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { CompositeMatrix, createComposite, mapComposite } from '@/utils/composite-matrix';
 import { error } from '@/utils/function';
+import { isOdd } from '@/utils/number';
 import { keys } from '@/utils/object';
 import { Puzzle } from '@/puzzles/puzzle';
-import { createComposite, mapComposite } from '@/utils/composite-matrix';
 
 import {
   DodecaminxOptions,
@@ -11,7 +12,6 @@ import {
   DodecaminxSticker,
   DodecaminxTurn,
 } from './types';
-import { isOdd } from '@/utils/number';
 
 /**
  * Dodecaminx
@@ -104,10 +104,23 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
   /**
    * Output puzzle state
    */
-  // @ts-ignore
-  output() {
-    error('not implemented');
-    return this.state;
+  output(): DodecaminxStateSimple {
+    const simplify = (composite: CompositeMatrix<DodecaminxSticker>) => mapComposite(composite, (obj) => obj.value);
+
+    return {
+      b: simplify(this.state.b),
+      bl: simplify(this.state.bl),
+      br: simplify(this.state.br),
+      d: simplify(this.state.d),
+      dbl: simplify(this.state.dbl),
+      dbr: simplify(this.state.dbr),
+      dl: simplify(this.state.dl),
+      dr: simplify(this.state.dr),
+      f: simplify(this.state.f),
+      l: simplify(this.state.l),
+      r: simplify(this.state.r),
+      u: simplify(this.state.u),
+    };
   }
 
   /**
@@ -124,22 +137,9 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    * Reset puzzle state
    */
   reset(): void {
-    const { size } = this.options;
-
-    const stickerFactory = (value: number): () => DodecaminxSticker => () => ({ meta: {}, value });
-
-    this.state.b = createComposite(5, size, stickerFactory(0));
-    this.state.bl = createComposite(5, size, stickerFactory(1));
-    this.state.br = createComposite(5, size, stickerFactory(2));
-    this.state.d = createComposite(5, size, stickerFactory(3));
-    this.state.dbl = createComposite(5, size, stickerFactory(4));
-    this.state.dbr = createComposite(5, size, stickerFactory(5));
-    this.state.dl = createComposite(5, size, stickerFactory(6));
-    this.state.dr = createComposite(5, size, stickerFactory(7));
-    this.state.f = createComposite(5, size, stickerFactory(8));
-    this.state.l = createComposite(5, size, stickerFactory(9));
-    this.state.r = createComposite(5, size, stickerFactory(10));
-    this.state.u = createComposite(5, size, stickerFactory(11));
+    keys(this.state).forEach((face, index) => {
+      this.state[face] = createComposite(5, this.options.size, () => ({ meta: {}, value: index }));
+    });
   }
 
   /**
