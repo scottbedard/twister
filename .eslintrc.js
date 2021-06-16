@@ -20,7 +20,7 @@ module.exports = {
     'class-methods-use-this': 0,
     'import/order': 0,
     'import/prefer-default-export': 0,
-    'max-len': ['error', { code: 120, ignoreComments: true }],
+    'max-len': 0,
     'no-nested-ternary': 0,
     'no-plusplus': 0,
     'object-curly-newline': 0,
