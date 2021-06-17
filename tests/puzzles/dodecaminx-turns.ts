@@ -101,6 +101,10 @@ const tests: TurnTest[] = [
   //     ...stub5x3,
   //   },
   // },
+
+  //
+  // megaminx U
+  //
   {
     only: false,
     size: 3,
@@ -134,6 +138,10 @@ const tests: TurnTest[] = [
       ],
     },
   },
+
+  //
+  // megaminx U-
+  //
   {
     only: false,
     size: 3,
@@ -167,6 +175,10 @@ const tests: TurnTest[] = [
       ],
     },
   },
+
+  //
+  // megaminx U2
+  //
   {
     only: false,
     size: 3,
@@ -200,6 +212,10 @@ const tests: TurnTest[] = [
       ],
     },
   },
+
+  //
+  // megaminx U2-
+  //
   {
     only: false,
     size: 3,
@@ -229,6 +245,154 @@ const tests: TurnTest[] = [
       br: [
         [[br], [br], [f], [f], [br]],
         [[br], [br], [f], [br], [br]],
+        br,
+      ],
+    },
+  },
+
+  //
+  // megaminx R
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'R',
+    result: {
+      ...stub5x3,
+      dbr: [
+        [[dbr], [dbr], [dbr], [br], [br]],
+        [[dbr], [dbr], [dbr], [br], [dbr]],
+        dbr,
+      ],
+      dr: [
+        [[dr], [dr], [dr], [dbr], [dbr]],
+        [[dr], [dr], [dr], [dbr], [dr]],
+        dr,
+      ],
+      f: [
+        [[dr], [dr], [f], [f], [f]],
+        [[dr], [f], [f], [f], [f]],
+        f,
+      ],
+      u: [
+        [[u], [f], [f], [u], [u]],
+        [[u], [f], [u], [u], [u]],
+        u,
+      ],
+      br: [
+        [[br], [u], [u], [br], [br]],
+        [[br], [u], [br], [br], [br]],
+        br,
+      ],
+    },
+  },
+
+  //
+  // megaminx R-
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'R-',
+    result: {
+      ...stub5x3,
+      dbr: [
+        [[dbr], [dbr], [dbr], [dr], [dr]],
+        [[dbr], [dbr], [dbr], [dr], [dbr]],
+        dbr,
+      ],
+      dr: [
+        [[dr], [dr], [dr], [f], [f]],
+        [[dr], [dr], [dr], [f], [dr]],
+        dr,
+      ],
+      f: [
+        [[u], [u], [f], [f], [f]],
+        [[u], [f], [f], [f], [f]],
+        f,
+      ],
+      u: [
+        [[u], [br], [br], [u], [u]],
+        [[u], [br], [u], [u], [u]],
+        u,
+      ],
+      br: [
+        [[br], [dbr], [dbr], [br], [br]],
+        [[br], [dbr], [br], [br], [br]],
+        br,
+      ],
+    },
+  },
+
+  //
+  // megaminx R2
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'R2',
+    result: {
+      ...stub5x3,
+      dbr: [
+        [[dbr], [dbr], [dbr], [u], [u]],
+        [[dbr], [dbr], [dbr], [u], [dbr]],
+        dbr,
+      ],
+      dr: [
+        [[dr], [dr], [dr], [br], [br]],
+        [[dr], [dr], [dr], [br], [dr]],
+        dr,
+      ],
+      f: [
+        [[dbr], [dbr], [f], [f], [f]],
+        [[dbr], [f], [f], [f], [f]],
+        f,
+      ],
+      u: [
+        [[u], [dr], [dr], [u], [u]],
+        [[u], [dr], [u], [u], [u]],
+        u,
+      ],
+      br: [
+        [[br], [f], [f], [br], [br]],
+        [[br], [f], [br], [br], [br]],
+        br,
+      ],
+    },
+  },
+
+  //
+  // megaminx R2-
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'R2-',
+    result: {
+      ...stub5x3,
+      dbr: [
+        [[dbr], [dbr], [dbr], [f], [f]],
+        [[dbr], [dbr], [dbr], [f], [dbr]],
+        dbr,
+      ],
+      dr: [
+        [[dr], [dr], [dr], [u], [u]],
+        [[dr], [dr], [dr], [u], [dr]],
+        dr,
+      ],
+      f: [
+        [[br], [br], [f], [f], [f]],
+        [[br], [f], [f], [f], [f]],
+        f,
+      ],
+      u: [
+        [[u], [dbr], [dbr], [u], [u]],
+        [[u], [dbr], [u], [u], [u]],
+        u,
+      ],
+      br: [
+        [[br], [dr], [dr], [br], [br]],
+        [[br], [dr], [br], [br], [br]],
         br,
       ],
     },
