@@ -545,6 +545,154 @@ const tests: TurnTest[] = [
       ],
     },
   },
+
+  //
+  // megaminx F
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'F',
+    result: {
+      ...stub5x3,
+      r: [
+        [[r], [r], [u], [u], [r]],
+        [[r], [r], [u], [r], [r]],
+        r,
+      ],
+      dr: [
+        [[dr], [dr], [r], [r], [dr]],
+        [[dr], [dr], [r], [dr], [dr]],
+        dr,
+      ],
+      dl: [
+        [[dl], [dl], [dr], [dr], [dl]],
+        [[dl], [dl], [dr], [dl], [dl]],
+        dl,
+      ],
+      l: [
+        [[l], [dl], [dl], [l], [l]],
+        [[l], [dl], [l], [l], [l]],
+        l,
+      ],
+      u: [
+        [[u], [u], [l], [l], [u]],
+        [[u], [u], [l], [u], [u]],
+        u,
+      ],
+    },
+  },
+
+  //
+  // megaminx F-
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'F-',
+    result: {
+      ...stub5x3,
+      r: [
+        [[r], [r], [dr], [dr], [r]],
+        [[r], [r], [dr], [r], [r]],
+        r,
+      ],
+      dr: [
+        [[dr], [dr], [dl], [dl], [dr]],
+        [[dr], [dr], [dl], [dr], [dr]],
+        dr,
+      ],
+      dl: [
+        [[dl], [dl], [l], [l], [dl]],
+        [[dl], [dl], [l], [dl], [dl]],
+        dl,
+      ],
+      l: [
+        [[l], [u], [u], [l], [l]],
+        [[l], [u], [l], [l], [l]],
+        l,
+      ],
+      u: [
+        [[u], [u], [r], [r], [u]],
+        [[u], [u], [r], [u], [u]],
+        u,
+      ],
+    },
+  },
+
+  //
+  // megaminx F2
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'F2',
+    result: {
+      ...stub5x3,
+      r: [
+        [[r], [r], [l], [l], [r]],
+        [[r], [r], [l], [r], [r]],
+        r,
+      ],
+      dr: [
+        [[dr], [dr], [u], [u], [dr]],
+        [[dr], [dr], [u], [dr], [dr]],
+        dr,
+      ],
+      dl: [
+        [[dl], [dl], [r], [r], [dl]],
+        [[dl], [dl], [r], [dl], [dl]],
+        dl,
+      ],
+      l: [
+        [[l], [dr], [dr], [l], [l]],
+        [[l], [dr], [l], [l], [l]],
+        l,
+      ],
+      u: [
+        [[u], [u], [dl], [dl], [u]],
+        [[u], [u], [dl], [u], [u]],
+        u,
+      ],
+    },
+  },
+
+  //
+  // megaminx F2-
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'F2-',
+    result: {
+      ...stub5x3,
+      r: [
+        [[r], [r], [dl], [dl], [r]],
+        [[r], [r], [dl], [r], [r]],
+        r,
+      ],
+      dr: [
+        [[dr], [dr], [l], [l], [dr]],
+        [[dr], [dr], [l], [dr], [dr]],
+        dr,
+      ],
+      dl: [
+        [[dl], [dl], [u], [u], [dl]],
+        [[dl], [dl], [u], [dl], [dl]],
+        dl,
+      ],
+      l: [
+        [[l], [r], [r], [l], [l]],
+        [[l], [r], [l], [l], [l]],
+        l,
+      ],
+      u: [
+        [[u], [u], [dr], [dr], [u]],
+        [[u], [u], [dr], [u], [u]],
+        u,
+      ],
+    },
+  },
 ];
 
 export default tests;
