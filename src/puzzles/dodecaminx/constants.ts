@@ -6,7 +6,13 @@ import { DodecaminxFaceLower } from './types';
  */
 export const dodecaminxNet: Record<DodecaminxFaceLower, [DodecaminxFaceLower, number][]> = {
   b: [],
-  bl: [],
+  bl: [
+    ['br', 3],
+    ['u', 4],
+    ['l', 4],
+    ['dbl', 0],
+    ['b', 0],
+  ],
   br: [
     ['dbr', 4],
     ['r', 4],
