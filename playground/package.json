@@ -8,7 +8,8 @@
   "dependencies": {
     "@vueuse/core": "^5.0.3",
     "feather-icons": "^4.28.0",
-    "vue": "^3.0.5"
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.9"
   },
   "devDependencies": {
     "@types/feather-icons": "^4.7.0",

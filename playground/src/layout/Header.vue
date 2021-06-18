@@ -1,17 +1,19 @@
 <template>
   <div class="border-b border-gray-300 flex h-20 justify-between px-6 dark:border-gray-600">
-    <div class="flex font-bold items-center">
+    <RouterLink
+      class="flex font-bold items-center"
+      :to="{ name: 'home' }">
       Twister
-    </div>
+    </RouterLink>
 
     <nav class="flex gap-4 items-center">
-      <a href="#" @click.prevent>
+      <RouterLink :to="{ name: 'cube' }">
         Cube
-      </a>
+      </RouterLink>
 
-      <a href="#" @click.prevent>
+      <RouterLink :to="{ name: 'dodecaminx' }">
         Dodecaminx
-      </a>
+      </RouterLink>
 
       <a
         href="https://github.com/scottbedard/twister"

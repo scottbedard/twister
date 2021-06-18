@@ -8,7 +8,7 @@
   <Header />
 
   <div class="p-6 text-center">
-    Soon...
+    <RouterView />
   </div>
 </template>
 
