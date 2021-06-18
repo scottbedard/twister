@@ -3,6 +3,12 @@ import { DodecaminxFaceLower } from './types';
 /**
  * This constant defines how faces are related to one another. Think of it as
  * an unfolded dodecahedron, with the U face oriented towards you.
+ *
+ * https://www.desmos.com/geometry/o8kuskawcb
+ *
+ * The related faces go clockwise around each target face, starting from the
+ * target face's primary corner. The number associated with each relationship
+ * represents what edge of the related face borders the target face.
  */
 export const dodecaminxNet: Record<DodecaminxFaceLower, [DodecaminxFaceLower, number][]> = {
   b: [
