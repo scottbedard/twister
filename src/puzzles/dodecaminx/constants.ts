@@ -5,7 +5,13 @@ import { DodecaminxFaceLower } from './types';
  * an unfolded dodecahedron, with the U face oriented towards you.
  */
 export const dodecaminxNet: Record<DodecaminxFaceLower, [DodecaminxFaceLower, number][]> = {
-  b: [],
+  b: [
+    ['bl', 4],
+    ['dbl', 4],
+    ['d', 4],
+    ['dbr', 0],
+    ['br', 4],
+  ],
   bl: [
     ['br', 3],
     ['u', 4],

@@ -1729,6 +1729,117 @@ const tests: TurnTest[] = [
       ],
     },
   },
+
+  //
+  // megaminx B
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'B',
+    result: {
+      ...stub5x3,
+      bl: [
+        [[br], [bl], [bl], [bl], [br]],
+        [[bl], [bl], [bl], [bl], [br]],
+        bl,
+      ],
+      dbl: [
+        [[bl], [dbl], [dbl], [dbl], [bl]],
+        [[dbl], [dbl], [dbl], [dbl], [bl]],
+        dbl,
+      ],
+      d: [
+        [[dbl], [d], [d], [d], [dbl]],
+        [[d], [d], [d], [d], [dbl]],
+        d,
+      ],
+      dbr: [
+        [[d], [d], [dbr], [dbr], [dbr]],
+        [[d], [dbr], [dbr], [dbr], [dbr]],
+        dbr,
+      ],
+      br: [
+        [[dbr], [br], [br], [br], [dbr]],
+        [[br], [br], [br], [br], [dbr]],
+        br,
+      ],
+    },
+  },
+
+  //
+  // megaminx B-
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'B-',
+    result: {
+      ...stub5x3,
+      bl: [
+        [[dbl], [bl], [bl], [bl], [dbl]],
+        [[bl], [bl], [bl], [bl], [dbl]],
+        bl,
+      ],
+      dbl: [
+        [[d], [dbl], [dbl], [dbl], [d]],
+        [[dbl], [dbl], [dbl], [dbl], [d]],
+        dbl,
+      ],
+      d: [
+        [[dbr], [d], [d], [d], [dbr]],
+        [[d], [d], [d], [d], [dbr]],
+        d,
+      ],
+      dbr: [
+        [[br], [br], [dbr], [dbr], [dbr]],
+        [[br], [dbr], [dbr], [dbr], [dbr]],
+        dbr,
+      ],
+      br: [
+        [[bl], [br], [br], [br], [bl]],
+        [[br], [br], [br], [br], [bl]],
+        br,
+      ],
+    },
+  },
+
+  //
+  // megaminx B2
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'B2',
+    result: {
+      ...stub5x3,
+      bl: [
+        [[dbr], [bl], [bl], [bl], [dbr]],
+        [[bl], [bl], [bl], [bl], [dbr]],
+        bl,
+      ],
+      dbl: [
+        [[br], [dbl], [dbl], [dbl], [br]],
+        [[dbl], [dbl], [dbl], [dbl], [br]],
+        dbl,
+      ],
+      d: [
+        [[bl], [d], [d], [d], [bl]],
+        [[d], [d], [d], [d], [bl]],
+        d,
+      ],
+      dbr: [
+        [[dbl], [dbl], [dbr], [dbr], [dbr]],
+        [[dbl], [dbr], [dbr], [dbr], [dbr]],
+        dbr,
+      ],
+      br: [
+        [[d], [br], [br], [br], [d]],
+        [[br], [br], [br], [br], [d]],
+        br,
+      ],
+    },
+  },
 ];
 
 export default tests;
