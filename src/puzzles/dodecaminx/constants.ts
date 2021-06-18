@@ -10,7 +10,13 @@ import { DodecaminxFaceLower } from './types';
  * target face's primary corner. The number associated with each relationship
  * represents what edge of the related face borders the target face.
  */
-export const dodecaminxNet: Record<DodecaminxFaceLower, [DodecaminxFaceLower, number][]> = {
+export const dodecaminxNet: Record<DodecaminxFaceLower, [
+  [DodecaminxFaceLower, number],
+  [DodecaminxFaceLower, number],
+  [DodecaminxFaceLower, number],
+  [DodecaminxFaceLower, number],
+  [DodecaminxFaceLower, number],
+]> = {
   b: [
     ['bl', 4],
     ['dbl', 4],
