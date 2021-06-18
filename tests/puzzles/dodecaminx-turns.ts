@@ -1433,6 +1433,154 @@ const tests: TurnTest[] = [
       ],
     },
   },
+
+  //
+  // megaminx BR
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'BR',
+    result: {
+      ...stub5x3,
+      dbr: [
+        [[b], [dbr], [dbr], [dbr], [b]],
+        [[dbr], [dbr], [dbr], [dbr], [b]],
+        dbr,
+      ],
+      r: [
+        [[dbr], [r], [r], [r], [dbr]],
+        [[r], [r], [r], [r], [dbr]],
+        r,
+      ],
+      u: [
+        [[r], [r], [u], [u], [u]],
+        [[r], [u], [u], [u], [u]],
+        u,
+      ],
+      bl: [
+        [[u], [u], [bl], [bl], [bl]],
+        [[u], [bl], [bl], [bl], [bl]],
+        bl,
+      ],
+      b: [
+        [[bl], [b], [b], [b], [bl]],
+        [[b], [b], [b], [b], [bl]],
+        b,
+      ],
+    },
+  },
+
+  //
+  // megaminx BR-
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'BR-',
+    result: {
+      ...stub5x3,
+      dbr: [
+        [[r], [dbr], [dbr], [dbr], [r]],
+        [[dbr], [dbr], [dbr], [dbr], [r]],
+        dbr,
+      ],
+      r: [
+        [[u], [r], [r], [r], [u]],
+        [[r], [r], [r], [r], [u]],
+        r,
+      ],
+      u: [
+        [[bl], [bl], [u], [u], [u]],
+        [[bl], [u], [u], [u], [u]],
+        u,
+      ],
+      bl: [
+        [[b], [b], [bl], [bl], [bl]],
+        [[b], [bl], [bl], [bl], [bl]],
+        bl,
+      ],
+      b: [
+        [[dbr], [b], [b], [b], [dbr]],
+        [[b], [b], [b], [b], [dbr]],
+        b,
+      ],
+    },
+  },
+
+  //
+  // megaminx BR2
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'BR2',
+    result: {
+      ...stub5x3,
+      dbr: [
+        [[bl], [dbr], [dbr], [dbr], [bl]],
+        [[dbr], [dbr], [dbr], [dbr], [bl]],
+        dbr,
+      ],
+      r: [
+        [[b], [r], [r], [r], [b]],
+        [[r], [r], [r], [r], [b]],
+        r,
+      ],
+      u: [
+        [[dbr], [dbr], [u], [u], [u]],
+        [[dbr], [u], [u], [u], [u]],
+        u,
+      ],
+      bl: [
+        [[r], [r], [bl], [bl], [bl]],
+        [[r], [bl], [bl], [bl], [bl]],
+        bl,
+      ],
+      b: [
+        [[u], [b], [b], [b], [u]],
+        [[b], [b], [b], [b], [u]],
+        b,
+      ],
+    },
+  },
+
+  //
+  // megaminx BR2-
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'BR2-',
+    result: {
+      ...stub5x3,
+      dbr: [
+        [[u], [dbr], [dbr], [dbr], [u]],
+        [[dbr], [dbr], [dbr], [dbr], [u]],
+        dbr,
+      ],
+      r: [
+        [[bl], [r], [r], [r], [bl]],
+        [[r], [r], [r], [r], [bl]],
+        r,
+      ],
+      u: [
+        [[b], [b], [u], [u], [u]],
+        [[b], [u], [u], [u], [u]],
+        u,
+      ],
+      bl: [
+        [[dbr], [dbr], [bl], [bl], [bl]],
+        [[dbr], [bl], [bl], [bl], [bl]],
+        bl,
+      ],
+      b: [
+        [[r], [b], [b], [b], [r]],
+        [[b], [b], [b], [b], [r]],
+        b,
+      ],
+    },
+  },
 ];
 
 export default tests;
