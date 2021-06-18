@@ -9,7 +9,13 @@ export const dodecaminxNet: Record<DodecaminxFaceLower, [DodecaminxFaceLower, nu
   bl: [],
   br: [],
   d: [],
-  dbl: [],
+  dbl: [
+    ['bl', 3],
+    ['l', 3],
+    ['dl', 0],
+    ['d', 0],
+    ['b', 1],
+  ],
   dbr: [
     ['b', 3],
     ['d', 3],
