@@ -13,7 +13,7 @@
 
     <!-- mobile nav toggle -->
     <a
-      class="md:hidden"
+      class="sm:hidden"
       href="#"
       :title="`${isMobileNavExpanded ? 'Hide' : 'Show'} mobile navigation`"
       @click.prevent="toggleMobileNav">
@@ -22,10 +22,10 @@
 
     <!-- mobile nav -->
     <nav
-      class="bg-white border-l border-gray-200 fixed flex flex-col h-full max-w-xs right-0 top-16 transform transition-transform w-2/3 dark:bg-gray-900 dark:border-gray-600"
+      class="bg-white border-l border-gray-200 fixed flex flex-col h-full max-w-xs right-0 top-16 transform transition-transform w-2/3 dark:bg-gray-900 dark:border-gray-600 sm:hidden"
       :class="isMobileNavExpanded ? 'translate-x-0' : 'translate-x-full'">
       <RouterLink
-        class="border-b border-gray-200 flex items-center px-2 py-4"
+        class="border-b border-gray-200 flex items-center px-2 py-4 dark:border-gray-600"
         :to="{ name: 'cube' }">
         <Icon class="mr-1" name="chevron-right" />
 
@@ -33,7 +33,7 @@
       </RouterLink>
 
       <RouterLink
-        class="border-b border-gray-200 flex items-center px-2 py-4"
+        class="border-b border-gray-200 flex items-center px-2 py-4 dark:border-gray-600"
         :to="{ name: 'dodecaminx' }">
         <Icon class="mr-1" name="chevron-right" />
 
@@ -57,7 +57,7 @@
     </nav>
 
     <!-- desktop nav -->
-    <nav class="gap-4 hidden items-center md:flex">
+    <nav class="gap-4 hidden items-center sm:flex">
       <RouterLink :to="{ name: 'cube' }">
         Cube
       </RouterLink>
