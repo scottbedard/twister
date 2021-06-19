@@ -2,12 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a:not(.unstyled) {
+  @apply hover:text-green-500;
+}
 </style>
 
 <template>
   <Header />
 
-  <div class="p-6 text-center">
+  <div class="p-6">
     <RouterView />
   </div>
 </template>
