@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Code } from '@/components'
+import { Code } from 'playground/components'
 
 export default defineComponent({
   components: {

@@ -10,7 +10,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "paths": {
-      "@/*": ["*"],
+      "playground/*": ["*"],
+      "@/*": ["../../src/*"],
     },
     "resolveJsonModule": true,
     "sourceMap": true,

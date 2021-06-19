@@ -11,7 +11,11 @@ export default defineConfig({
     alias: [
       {
         find: '@',
-        replacement: path.resolve(__dirname, 'src')
+        replacement: path.resolve(__dirname, '../src')
+      },
+      {
+        find: 'playground',
+        replacement: path.resolve(__dirname, 'src'),
       }
     ]
   },

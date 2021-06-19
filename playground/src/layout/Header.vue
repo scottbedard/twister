@@ -84,8 +84,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
-import { Icon } from '@/components'
-import { isDark } from '@/store/state'
+import { Icon } from 'playground/components'
+import { isDark } from 'playground/store/state'
 import { useRoute } from 'vue-router'
 import { onClickOutside, useToggle } from '@vueuse/core'
 
