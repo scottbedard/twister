@@ -14,7 +14,7 @@
           v-model="turns"
           autofocus
           placeholder="Enter turns"
-          @keypress.enter="turn" />
+          @keypress.enter="model.turn(turns)" />
 
         <Button @click="scramble">
           Scramble
@@ -83,10 +83,6 @@ export default defineComponent({
       model.value.scramble()
     }
 
-    const turn = () => {
-      model.value.turn(turns.value)
-    }
-
     onMounted(reset)
     
     watch(() => model.value.options.size, (n: number) => {
@@ -102,7 +98,6 @@ export default defineComponent({
       reset,
       scramble,
       size,
-      turn,
       turns,
     }
   },
