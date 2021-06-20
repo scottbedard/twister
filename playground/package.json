@@ -8,11 +8,13 @@
   "dependencies": {
     "@vueuse/core": "^5.0.3",
     "feather-icons": "^4.28.0",
+    "lodash-es": "^4.17.21",
     "vue": "^3.0.5",
     "vue-router": "^4.0.9"
   },
   "devDependencies": {
     "@types/feather-icons": "^4.7.0",
+    "@types/lodash-es": "^4.17.4",
     "@vitejs/plugin-vue": "^1.2.3",
     "@vue/compiler-sfc": "^3.0.5",
     "autoprefixer": "^10.2.6",

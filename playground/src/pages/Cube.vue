@@ -9,12 +9,13 @@
     </p>
 
     <div class="gap-6 grid md:grid-cols-12">
-      <div class="md:col-span-6 xl:col-span-4">
-        <div class="gap-6 grid sm:grid-cols-3 ">
+      <div class="md:col-span-6">
+        <div class="gap-6 grid mb-6 sm:grid-cols-3 ">
           <Input
             v-model="turns"
             autofocus
-            placeholder="Enter turns" />
+            placeholder="Enter turns"
+            @keypress.enter="turn" />
 
           <Button @click="scramble">
             Scramble
@@ -24,57 +25,92 @@
             Reset
           </Button>
         </div>
+        
+        <p class="mb-6">
+          This puzzle is exposed globally as <InlineCode @click="log">window.model</InlineCode> Use your dev tools or the inputs above to
+          manipulate it. For example, try running <InlineCode @click="model.options.size = nextSize">model.options.size = {{ nextSize }}</InlineCode>,
+          or <InlineCode @click="model.turn('R')">model.turn('R')</InlineCode>.
+        </p>
 
-        <pre>{{ { size } }}</pre>
+        <div>
+          <div>Solved: {{ model.test() }}</div>
+          <div>Turns: {{ moveHistory.length ? moveHistory.join(' ') : 'None' }}</div>
+        </div>
       </div>
 
-      <div class="border border-blue-500 md:col-span-6 xl:col-span-8">
-        <pre>{{ model }}</pre>
+      <div class="md:col-span-6">
+        <CubeNet :model="model" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Button, Input } from 'playground/components'
+import { Button, InlineCode, Input } from 'playground/components'
 import { Cube } from '@/index'
-import { defineComponent, onMounted, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
+import CubeNet from 'playground/partials/cube/CubeNet.vue'
 
 export default defineComponent({
   setup() {
+    const moveHistory = ref<string[]>([])
+
     const size = ref(3)
 
     const model = ref(new Cube({ size: size.value }))
 
     const turns = ref('')
 
+    const nextSize = computed(() => model.value.options.size >= 10 ? 2 : model.value.options.size + 1)
+
+    const log = () => {
+      console.log((window as any).model)
+    }
+
     const reset = () => {
+      moveHistory.value = []
       model.value = new Cube({ size: size.value })
+
+      const nativeTurn = model.value.turn.bind(model.value)
+
+      model.value.turn = (move: string) => {
+        moveHistory.value.push(move)
+        nativeTurn(move)
+      }
+
+      (window as any).model = model.value
     }
 
     const scramble = () => {
       model.value.scramble()
     }
 
-    onMounted(() => {
-      (window as any).model = model.value
-    })
+    const turn = () => {
+      model.value.turn(turns.value)
+    }
+
+    onMounted(reset)
     
     watch(() => model.value.options.size, (n: number) => {
       size.value = n
-
       reset()
     })
 
     return {
+      log,
       model,
+      moveHistory,
+      nextSize,
       reset,
       scramble,
       size,
+      turn,
       turns,
     }
   },
   components: {
+    InlineCode,
+    CubeNet,
     Button,
     Input,
   },
