@@ -14,7 +14,7 @@
           v-model="turns"
           autofocus
           placeholder="Enter turns"
-          @keypress.enter="turn" />
+          @keypress.enter="model.turn(turns)" />
 
         <Button @click="scramble">
           Scramble
@@ -27,8 +27,8 @@
       
       <p class="leading-loose mb-6">
         This puzzle is exposed globally as <InlineCode>window.model</InlineCode> Use your dev tools or the inputs above to
-        manipulate it. For example, try running <InlineCode>model.options.size = {{ 4 }}</InlineCode>,
-        or <InlineCode>model.turn('R')</InlineCode>.
+        manipulate it. For example, try running <InlineCode @click="model.options.size = nextSize">model.options.size = {{ nextSize }}</InlineCode>,
+        or <InlineCode @click="model.turn('R')">model.turn('R')</InlineCode>.
       </p>
 
       <div class="leading-loose">
@@ -38,36 +38,40 @@
     </div>
 
     <div class="md:col-span-6">
-      Soon...
+      <pre class="text-xs">{{ model.output() }}</pre>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
 import { Button, InlineCode, Input } from 'playground/components'
+import { computed, defineComponent, ref, watch } from 'vue'
+import { Dodecaminx } from '@/index'
 import DodecaminxNet from 'playground/partials/dodecaminx/DodecaminxNet.vue'
 
 export default defineComponent({
   setup() {
+    const model = ref(new Dodecaminx({ size: 3 }))
+
     const turns = ref('')
 
-    const reset = () => {
+    const nextSize = computed(() => model.value.options.size >= 10 ? 2 : model.value.options.size + 1)
 
+    const reset = () => {
+      model.value = new Dodecaminx({ size: model.value.options.size })
     }
 
     const scramble = () => {
-
+      model.value.scramble()
     }
 
-    const turn = () => {
-
-    }
+    watch(() => model.value.options.size, reset)
 
     return {
+      model,
+      nextSize,
       reset,
       scramble,
-      turn,
       turns,
     }
   },
