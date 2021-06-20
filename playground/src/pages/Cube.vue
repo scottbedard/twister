@@ -1,46 +1,44 @@
 <template>
-  <div>
-    <h1 class="font-bold text-2xl">
-      Cube
-    </h1>
+  <h1 class="font-bold text-2xl">
+    Cube
+  </h1>
 
-    <p class="mb-6">
-      A face-turning NxN cube.
-    </p>
+  <p class="mb-6">
+    A face-turning NxN cube.
+  </p>
 
-    <div class="gap-6 grid md:grid-cols-12">
-      <div class="md:col-span-6">
-        <div class="gap-6 grid mb-6 sm:grid-cols-3 ">
-          <Input
-            v-model="turns"
-            autofocus
-            placeholder="Enter turns"
-            @keypress.enter="turn" />
+  <div class="gap-6 grid md:grid-cols-12">
+    <div class="md:col-span-6">
+      <div class="gap-6 grid mb-6 sm:grid-cols-3 ">
+        <Input
+          v-model="turns"
+          autofocus
+          placeholder="Enter turns"
+          @keypress.enter="turn" />
 
-          <Button @click="scramble">
-            Scramble
-          </Button>
+        <Button @click="scramble">
+          Scramble
+        </Button>
 
-          <Button @click="reset">
-            Reset
-          </Button>
-        </div>
-        
-        <p class="leading-loose mb-6">
-          This puzzle is exposed globally as <InlineCode @click="log">window.model</InlineCode> Use your dev tools or the inputs above to
-          manipulate it. For example, try running <InlineCode @click="model.options.size = nextSize">model.options.size = {{ nextSize }}</InlineCode>,
-          or <InlineCode @click="model.turn('R')">model.turn('R')</InlineCode>.
-        </p>
-
-        <div class="leading-loose">
-          <div>Solved: {{ model.test() }}</div>
-          <div>Turns: {{ moveHistory.length ? moveHistory.join(' ') : 'None' }}</div>
-        </div>
+        <Button @click="reset">
+          Reset
+        </Button>
       </div>
+      
+      <p class="leading-loose mb-6">
+        This puzzle is exposed globally as <InlineCode @click="log">window.model</InlineCode> Use your dev tools or the inputs above to
+        manipulate it. For example, try running <InlineCode @click="model.options.size = nextSize">model.options.size = {{ nextSize }}</InlineCode>,
+        or <InlineCode @click="model.turn('R')">model.turn('R')</InlineCode>.
+      </p>
 
-      <div class="md:col-span-6">
-        <CubeNet :model="model" />
+      <div class="leading-loose">
+        <div>Solved: {{ model.test() }}</div>
+        <div>Turns: {{ moveHistory.length ? moveHistory.join(' ') : 'None' }}</div>
       </div>
+    </div>
+
+    <div class="md:col-span-6">
+      <CubeNet :model="model" />
     </div>
   </div>
 </template>
