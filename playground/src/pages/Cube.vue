@@ -26,13 +26,13 @@
           </Button>
         </div>
         
-        <p class="mb-6">
+        <p class="leading-loose mb-6">
           This puzzle is exposed globally as <InlineCode @click="log">window.model</InlineCode> Use your dev tools or the inputs above to
           manipulate it. For example, try running <InlineCode @click="model.options.size = nextSize">model.options.size = {{ nextSize }}</InlineCode>,
           or <InlineCode @click="model.turn('R')">model.turn('R')</InlineCode>.
         </p>
 
-        <div>
+        <div class="leading-loose">
           <div>Solved: {{ model.test() }}</div>
           <div>Turns: {{ moveHistory.length ? moveHistory.join(' ') : 'None' }}</div>
         </div>
