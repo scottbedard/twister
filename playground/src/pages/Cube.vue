@@ -32,8 +32,8 @@
       </p>
 
       <div class="leading-loose">
-        <div>Solved: {{ model.test() }}</div>
-        <div>Turns: {{ moveHistory.length ? moveHistory.join(' ') : 'None' }}</div>
+        <div><b>Solved:</b> {{ model.test() }}</div>
+        <div><b>Turns:</b> {{ moveHistory.join(' ') }}</div>
       </div>
     </div>
 

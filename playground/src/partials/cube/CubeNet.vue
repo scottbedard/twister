@@ -14,7 +14,7 @@
         :fill="color(sticker.value)"
         :height="stickerSize"
         :key="stickerIndex"
-        :rx="stickerSize / 20"
+        :rx="stickerSize / 8"
         :stroke-width="stickerSize / 20"
         :width="stickerSize"
         :x="stickerSize * colIndex(stickerIndex)"
