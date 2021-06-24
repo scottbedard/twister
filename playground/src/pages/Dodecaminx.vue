@@ -32,8 +32,8 @@
       </p>
 
       <div class="leading-loose">
-        <div><b>Solved:</b>> true</div>
-        <div><b>Turns:</b> None</div>
+        <div><b>Solved:</b> {{ model.test() }}</div>
+        <div><b>Turns:</b> {{ moveHistory.join(' ') }}</div>
       </div>
     </div>
 
@@ -45,30 +45,50 @@
 
 <script lang="ts">
 import { Button, InlineCode, Input } from 'playground/components'
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { Dodecaminx } from '@/index'
 import DodecaminxNet from 'playground/partials/dodecaminx/DodecaminxNet.vue'
 
 export default defineComponent({
   setup() {
-    const model = ref(new Dodecaminx({ size: 3 }))
+    const size = ref(3)
+    
+    const model = ref(new Dodecaminx({ size: size.value }))
+
+    const moveHistory = ref<string[]>([])
 
     const turns = ref('')
 
     const nextSize = computed(() => model.value.options.size >= 10 ? 2 : model.value.options.size + 1)
 
     const reset = () => {
-      model.value = new Dodecaminx({ size: model.value.options.size })
+      moveHistory.value = []
+      model.value = new Dodecaminx({ size: size.value })
+
+      const nativeTurn = model.value.turn.bind(model.value)
+
+      model.value.turn = (move: string) => {
+        moveHistory.value.push(move)
+        nativeTurn(move)
+      }
+
+      (window as any).model = model.value
     }
 
     const scramble = () => {
       model.value.scramble()
     }
 
-    watch(() => model.value.options.size, reset)
+    onMounted(reset)
+    
+    watch(() => model.value.options.size, (n: number) => {
+      size.value = n
+      reset()
+    })
 
     return {
       model,
+      moveHistory,
       nextSize,
       reset,
       scramble,
