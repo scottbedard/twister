@@ -3,20 +3,39 @@
     <svg
       viewBox="0 0 9.8 4.9"
       xmlns="http://www.w3.org/2000/svg">
-      <g transform="translate(2.6, 2.2)">
-        <g
+      <g
+        class="text-gray-900"
+        transform="translate(2.6, 2.2)">
+        <template
           v-for="face in faces"
-          :key="face.key"
-          :transform="face.transform">
+          :key="`group-${face.key}`">
+          <clipPath :id="`clip-${face.key}`">
+            <path
+              stroke="currentColor"
+              :d="d(outline)" />
+          </clipPath>
+
           <path
-            v-for="(obj, index) in face.stickers"
             stroke="currentColor"
-            :d="d(obj?.path ?? [])"
-            :fill="colors[obj?.sticker.value]"
-            :key="`corner-${index}`"
-            :stroke-width="strokeWidth" />
-        </g>
+            :d="d(outline)"
+            :stroke-width="strokeWidth"
+            :transform="face.transform" />
+    
+          <g
+            :clip-path="`url(#clip-${face.key})`"
+            :transform="face.transform">
+            <path
+              v-for="(obj, index) in face.stickers"
+              stroke="currentColor"
+              :d="d(obj?.path ?? [])"
+              :fill="colors[obj?.sticker.value]"
+              :key="`corner-${index}`"
+              :stroke-width="strokeWidth" />
+          </g>
+        </template>
       </g>
+
+      <!-- <use clip-path="url(#myClip)" xlink:href="#heart" fill="red" /> -->
     </svg>
   </div>
 </template>
@@ -242,6 +261,7 @@ export default defineComponent({
       d,
       faces,
       strokeWidth,
+      outline: [p0, p1, p2, p3, p4]
     }
   },
   props: {
