@@ -1,4 +1,4 @@
-import { CompositeMatrix, createComposite, extractComposite, injectComposite, mapComposite } from '@/utils/composite-matrix';
+import { CompositeMatrix, createComposite, extractComposite, injectComposite, mapComposite, rotateComposite } from '@/utils/composite-matrix';
 import { error } from '@/utils/function';
 import { floor, isOdd, max, rand } from '@/utils/number';
 import { keys } from '@/utils/object';
@@ -97,7 +97,7 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
     } else {
       // rotate target face
       if (turn.depth === 1 || turn.wide) {
-        // @todo
+        this.state[turn.target] = rotateComposite(this.state[turn.target], turn.rotation);
       }
 
       // rotate slices
