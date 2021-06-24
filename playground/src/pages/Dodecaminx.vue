@@ -32,13 +32,13 @@
       </p>
 
       <div class="leading-loose">
-        <div>Solved: true</div>
-        <div>Turns: None</div>
+        <div><b>Solved:</b>> true</div>
+        <div><b>Turns:</b> None</div>
       </div>
     </div>
 
     <div class="md:col-span-6">
-      <pre class="text-xs">{{ model.output() }}</pre>
+      <DodecaminxNet :model="model" />
     </div>
   </div>
 </template>
