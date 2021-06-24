@@ -181,7 +181,7 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    * @param {string} turn turn notation to parse
    */
   parse(turn: string): DodecaminxTurn {
-    const parts = turn.match(/^(\d*|\+)?(B|BL|BR|D|DBL|DBR|DL|DR|F|L|R|U){1}(w)?('|-|2|2'|2-)?$/);
+    const parts = turn.match(/^(\d*)?(B|BL|BR|D|DBL|DBR|DL|DR|F|L|R|U|b|bl|br|d|dbl|dbr|dl|dr|f|l|r|u){1}(w)?('|-|2|2'|2-)?$/);
 
     if (!parts) {
       error(`Invalid turn: ${turn}`);
@@ -206,7 +206,7 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
           : Number(prefix),
       rotation,
       target,
-      whole: prefix === '+',
+      whole: parts[2] === target,
       wide,
     };
   }

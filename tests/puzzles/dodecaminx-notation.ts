@@ -55,14 +55,14 @@ export default {
     whole: false,
     wide: true,
   },
-  '+R': {
+  'r': {
     depth: 1,
     rotation: 1,
     target: 'r',
     whole: true,
     wide: false,
   },
-  '+DBL2-': {
+  'dbl2-': {
     depth: 1,
     rotation: -2,
     target: 'dbl',
