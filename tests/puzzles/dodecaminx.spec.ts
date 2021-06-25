@@ -121,6 +121,24 @@ describe('Dodecaminx', () => {
     });
   });
 
+  it('test', () => {
+    const model = new Dodecaminx({ size: 3 });
+
+    expect(model.test()).toBe(true);
+
+    model.state.f[0][0][0].value = null;
+
+    expect(model.test()).toBe(true);
+
+    model.turn('R');
+
+    expect(model.test()).toBe(false);
+
+    model.turn('R-');
+
+    expect(model.test()).toBe(true);
+  });
+
   describe('turn', () => {
     // individual turns
     dodecaminxTurns.forEach((obj) => {

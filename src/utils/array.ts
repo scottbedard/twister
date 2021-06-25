@@ -1,10 +1,20 @@
 import { rand } from './number';
+import { ValueOrArray } from './types';
 
 /**
  * Flatten an array of objects by key.
  */
 export function flattenBy<T extends Record<string, unknown>>(arr: T[], key: keyof T) {
   return arr.map((obj) => obj[key]);
+}
+
+/**
+ * Flatten a recursive array.
+ *
+ * @param {ValueOrArray<T>[]} arr recursive array to flatten
+ */
+export function flattenDeep<T>(arr: ValueOrArray<T>[]): T[] {
+  return arr.reduce<T[]>((acc, val) => acc.concat(Array.isArray(val) ? flattenDeep(val) : val), []);
 }
 
 /**

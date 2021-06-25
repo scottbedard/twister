@@ -2,7 +2,7 @@ import { CompositeMatrix, createComposite, extractComposite, injectComposite, ma
 import { error } from '@/utils/function';
 import { floor, isOdd, max, min, rand } from '@/utils/number';
 import { keys } from '@/utils/object';
-import { last, sample, without } from '@/utils/array';
+import { flattenDeep, isUniform, last, sample, without } from '@/utils/array';
 import { lowercase } from '@/utils/string';
 import { Puzzle } from '@/puzzles/puzzle';
 
@@ -242,6 +242,21 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    * Test if the puzzle is solved
    */
   test() {
-    return false;
+    const { b, bl, br, d, dbl, dbr, dl, dr, f, l, r, u } = this.output();
+
+    const isSolved = (face: CompositeMatrix<number>) => isUniform(without(flattenDeep(face), null));
+
+    return isSolved(b)
+      && isSolved(bl)
+      && isSolved(br)
+      && isSolved(d)
+      && isSolved(dbl)
+      && isSolved(dbr)
+      && isSolved(dl)
+      && isSolved(dr)
+      && isSolved(f)
+      && isSolved(l)
+      && isSolved(r)
+      && isSolved(u);
   }
 }

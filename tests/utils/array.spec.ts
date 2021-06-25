@@ -1,5 +1,6 @@
 import {
   flattenBy,
+  flattenDeep,
   head,
   isUniform,
   last,
@@ -21,6 +22,12 @@ describe('array utils', () => {
     ];
 
     expect(flattenBy(arr, 'foo')).toEqual([0, 1, 2]);
+  });
+
+  it('flattenDeep', () => {
+    const arr = [0, 1, 2, [3, [4, [5]]]];
+
+    expect(flattenDeep(arr)).toEqual([0, 1, 2, 3, 4, 5]);
   });
 
   it('head', () => {
