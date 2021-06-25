@@ -1,6 +1,6 @@
 import { CompositeMatrix, createComposite, extractComposite, injectComposite, mapComposite, rotateComposite } from '@/utils/composite-matrix';
 import { error } from '@/utils/function';
-import { floor, isOdd, max, rand } from '@/utils/number';
+import { floor, isOdd, max, min, rand } from '@/utils/number';
 import { keys } from '@/utils/object';
 import { last, sample, without } from '@/utils/array';
 import { lowercase } from '@/utils/string';
@@ -122,7 +122,11 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
       rotateAdjacent(oppositeTarget, -turn.rotation);
     } else {
       // extract and inject layers from related faces
-      for (let i = turn.wide ? 0 : turn.depth - 1; i < turn.depth; i += 1) {
+      for (
+        let i = turn.wide ? 0 : turn.depth - 1;
+        i < min(turn.depth, floor(this.options.size / 2));
+        i += 1
+      ) {
         relatedFaces
           .map(([face, angle]) => extractComposite(this.state[face], angle, i))
           .forEach((layer, index) => {

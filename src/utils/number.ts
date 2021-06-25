@@ -43,6 +43,17 @@ export function max(...values: number[]): number {
 }
 
 /**
+ * Returns the smaller of a set of supplied numeric expressions.
+ *
+ * @param {...number[]} values Numeric expressions to be evaluated.
+ *
+ * @return {number}
+ */
+export function min(...values: number[]): number {
+  return Math.min(...values);
+}
+
+/**
  * Generate random integer.
  *
  * @param {number} low - Lower bound for random integer.
