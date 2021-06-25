@@ -6,10 +6,14 @@ import { last, sample, without } from '@/utils/array';
 import { lowercase } from '@/utils/string';
 import { Puzzle } from '@/puzzles/puzzle';
 
-import { dodecaminxNet } from './constants';
+import {
+  dodecaminxNet,
+  dodecaminxOpposites,
+} from './constants';
 
 import {
   DodecaminxFace,
+  DodecaminxFaceLower,
   DodecaminxOptions,
   DodecaminxState,
   DodecaminxStateSimple,
@@ -92,29 +96,39 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    * @param {DodecaminxTurn} turn turn to execute
    */
   execute(turn: DodecaminxTurn) {
+    const relatedFaces = dodecaminxNet[turn.target];
+    const oppositeTarget = dodecaminxOpposites[turn.target];
+
+    // rotate target face
+    if (turn.depth === 1 || turn.wide || turn.whole) {
+      this.state[turn.target] = rotateComposite(this.state[turn.target], turn.rotation);
+    }
+
     if (turn.whole) {
-      // @todo
+      // rotate opposite face
+      this.state[oppositeTarget] = rotateComposite(this.state[oppositeTarget], -turn.rotation);
+
+      // rotate faces adjacent to the target and opposite
+      const rotateAdjacent = (target: DodecaminxFaceLower, rotation: number) => {
+        dodecaminxNet[target]
+          .map(([face, angle]) => rotateComposite(this.state[face], -angle))
+          .forEach((face, index) => {
+            const [relatedFace, angle] = dodecaminxNet[target][(index + 5 + rotation) % 5];
+            this.state[relatedFace] = rotateComposite(face, angle);
+          });
+      };
+
+      rotateAdjacent(turn.target, turn.rotation);
+      rotateAdjacent(oppositeTarget, -turn.rotation);
     } else {
-      // rotate target face
-      if (turn.depth === 1 || turn.wide) {
-        this.state[turn.target] = rotateComposite(this.state[turn.target], turn.rotation);
-      }
-
-      // rotate slices
-      const relatedFaces = dodecaminxNet[turn.target];
-
+      // extract and inject layers from related faces
       for (let i = turn.wide ? 0 : turn.depth - 1; i < turn.depth; i += 1) {
-        relatedFaces.map((source, index) => {
-          // extract layers from adjacent face
-          const [face, angle] = relatedFaces[index];
-
-          return extractComposite(this.state[face], angle, i);
-        }).forEach((layer, index) => {
-          // inject layers into target faces
-          const [relatedFace, angle] = relatedFaces[(index + 5 + turn.rotation) % 5];
-
-          this.state[relatedFace] = injectComposite(this.state[relatedFace], layer, angle, i);
-        });
+        relatedFaces
+          .map(([face, angle]) => extractComposite(this.state[face], angle, i))
+          .forEach((layer, index) => {
+            const [relatedFace, angle] = relatedFaces[(index + 5 + turn.rotation) % 5];
+            this.state[relatedFace] = injectComposite(this.state[relatedFace], layer, angle, i);
+          });
       }
     }
   }

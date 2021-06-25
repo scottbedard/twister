@@ -102,3 +102,21 @@ export const dodecaminxNet: Record<DodecaminxFaceLower, [
     ['bl', 1],
   ],
 };
+
+/**
+ * Dodecaminx faces that are opposite one another.
+ */
+export const dodecaminxOpposites: Record<DodecaminxFaceLower, DodecaminxFaceLower> = {
+  b: 'f',
+  bl: 'dr',
+  br: 'dl',
+  d: 'u',
+  dbl: 'r',
+  dbr: 'l',
+  dl: 'br',
+  dr: 'bl',
+  f: 'b',
+  l: 'dbr',
+  r: 'dbl',
+  u: 'd',
+};
