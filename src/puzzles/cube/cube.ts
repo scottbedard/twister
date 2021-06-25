@@ -196,15 +196,8 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
    * Test if the puzzle is solved
    */
   test(): boolean {
-    const { u, l, f, r, b, d } = this.output();
+    const output = this.output();
 
-    const isSolved = (face: unknown[]) => isUniform(without(face, null));
-
-    return isSolved(u)
-      && isSolved(l)
-      && isSolved(f)
-      && isSolved(r)
-      && isSolved(b)
-      && isSolved(d);
+    return !keys(output).some((face) => !isUniform(without(output[face], null)));
   }
 }

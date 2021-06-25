@@ -242,21 +242,8 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    * Test if the puzzle is solved
    */
   test() {
-    const { b, bl, br, d, dbl, dbr, dl, dr, f, l, r, u } = this.output();
+    const output = this.output();
 
-    const isSolved = (face: CompositeMatrix<number>) => isUniform(without(flattenDeep(face), null));
-
-    return isSolved(b)
-      && isSolved(bl)
-      && isSolved(br)
-      && isSolved(d)
-      && isSolved(dbl)
-      && isSolved(dbr)
-      && isSolved(dl)
-      && isSolved(dr)
-      && isSolved(f)
-      && isSolved(l)
-      && isSolved(r)
-      && isSolved(u);
+    return !keys(output).some((face) => !isUniform(without(flattenDeep(output[face]), null)));
   }
 }
