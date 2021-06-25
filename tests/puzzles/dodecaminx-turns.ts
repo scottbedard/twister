@@ -1840,6 +1840,77 @@ const tests: TurnTest[] = [
       ],
     },
   },
+
+  //
+  // megaminx u
+  //
+  {
+    only: false,
+    size: 3,
+    turn: 'u',
+    result: {
+      u: [
+        [[u], [u], [u], [u], [u]],
+        [[u], [u], [u], [u], [u]],
+        u,
+      ],
+      l: [
+        [[f], [f], [f], [f], [f]],
+        [[f], [f], [f], [f], [f]],
+        f,
+      ],
+      f: [
+        [[r], [r], [r], [r], [r]],
+        [[r], [r], [r], [r], [r]],
+        r,
+      ],
+      r: [
+        [[br], [br], [br], [br], [br]],
+        [[br], [br], [br], [br], [br]],
+        br,
+      ],
+      bl: [
+        [[l], [l], [l], [l], [l]],
+        [[l], [l], [l], [l], [l]],
+        l,
+      ],
+      br: [
+        [[bl], [bl], [bl], [bl], [bl]],
+        [[bl], [bl], [bl], [bl], [bl]],
+        bl,
+      ],
+      dl: [
+        [[dr], [dr], [dr], [dr], [dr]],
+        [[dr], [dr], [dr], [dr], [dr]],
+        dr,
+      ],
+      dr: [
+        [[dbr], [dbr], [dbr], [dbr], [dbr]],
+        [[dbr], [dbr], [dbr], [dbr], [dbr]],
+        dbr,
+      ],
+      dbl: [
+        [[dl], [dl], [dl], [dl], [dl]],
+        [[dl], [dl], [dl], [dl], [dl]],
+        dl,
+      ],
+      dbr: [
+        [[b], [b], [b], [b], [b]],
+        [[b], [b], [b], [b], [b]],
+        b,
+      ],
+      b: [
+        [[dbl], [dbl], [dbl], [dbl], [dbl]],
+        [[dbl], [dbl], [dbl], [dbl], [dbl]],
+        dbl,
+      ],
+      d: [
+        [[d], [d], [d], [d], [d]],
+        [[d], [d], [d], [d], [d]],
+        d,
+      ],
+    },
+  },
 ];
 
 export default tests;
