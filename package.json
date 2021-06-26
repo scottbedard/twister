@@ -38,6 +38,7 @@
   "scripts": {
     "build": "rollup -c --configPlugin typescript",
     "lint": "eslint . --ext .ts",
+    "publish:ci": "node ./scripts/publish.js",
     "test:clear": "jest --clearCache",
     "test:watch": "jest --coverage --watch",
     "test": "jest --coverage"
