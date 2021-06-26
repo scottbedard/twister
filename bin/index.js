@@ -38,7 +38,7 @@ program
 
     console.log(json({
       puzzle,
-      solved: model.isSolved(),
+      solved: model.test(),
       state: model.output(),
     }))
   })
