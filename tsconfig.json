@@ -23,7 +23,8 @@
   "exclude": [
     "bin",
     "dist",
-    "node_modules"
+    "node_modules",
+    "scripts",
   ],
   "include": [
     "rollup.config.ts",
