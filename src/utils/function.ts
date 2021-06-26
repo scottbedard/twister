@@ -1,28 +1,17 @@
 /**
  * Throw an error.
  *
- * @param {string} messsage
- *
- * @return {never}
+ * @param {string} message Error message.
  */
-export function error(message: string): never {
+export function error(message?: string) {
   throw new Error(message);
 }
 
 /**
- * Identity.
+ * This method returns the first argument it receives.
  *
- * @param {T} val
- *
- * @return {T}
+ * @param {T} arg Value to return.
  */
-export function identity<T>(val: T): T {
-  return val;
+export function identity<T>(arg: T) {
+  return arg;
 }
-
-/**
- * No operation.
- *
- * @return {void}
- */
-export function noop(): void {}

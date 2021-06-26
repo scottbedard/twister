@@ -1,3 +1,8 @@
+.eslintrc.js
 dist
+jest.config.js
 node_modules
+playground
+rollup.config.js
 scripts
+vetur.config.js

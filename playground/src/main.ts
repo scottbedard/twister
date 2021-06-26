@@ -1,38 +1,28 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import App from './App.vue';
-import './assets/tailwind.css';
+import { createApp } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import App from './App.vue'
 
-Vue.config.productionTip = false;
-
-Vue.use(VueRouter);
-
-const router = new VueRouter({
-  mode: 'history',
+const router = createRouter({
+  history: createWebHistory(),
   routes: [
     {
+      component: () => import('./pages/Home.vue'),
+      name: 'home',
       path: '/',
-      redirect: '/cube',
     },
     {
-      component: () => import('@/routes/Cube.vue'),
+      component: () => import('./pages/Cube.vue'),
       name: 'cube',
       path: '/cube',
     },
     {
-      component: () => import('@/routes/Dodecaminx.vue'),
+      component: () => import('./pages/Dodecaminx.vue'),
       name: 'dodecaminx',
       path: '/dodecaminx',
     },
-    {
-      path: '*',
-      component: () => import('@/routes/404.vue'),
-    },
   ],
-});
+})
 
-// @ts-ignore
-window.app = new Vue({
-  render: (h) => h(App),
-  router,
-}).$mount('#app');
+createApp(App)
+  .use(router)
+  .mount('#app')

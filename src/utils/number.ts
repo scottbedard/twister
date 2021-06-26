@@ -1,7 +1,7 @@
 /**
  * Returns the greatest integer less than or equal to its numeric argument.
  *
- * @param {number} n
+ * @param {number} n A numeric expression.
  *
  * @return {number}
  */
@@ -12,7 +12,7 @@ export function floor(n: number): number {
 /**
  * Test if a number is an integer.
  *
- * @param {number} n
+ * @param {number} n A numeric expression.
  *
  * @return {boolean}
  */
@@ -23,7 +23,7 @@ export function isInteger(n: number): boolean {
 /**
  * Test if a number is odd.
  *
- * @param {number} n
+ * @param {number} n A numeric expression.
  *
  * @return {boolean}
  */
@@ -34,22 +34,33 @@ export function isOdd(n: number): boolean {
 /**
  * Returns the larger of a set of supplied numeric expressions.
  *
- * @param {...number[]} values
+ * @param {...number[]} values Numeric expressions to be evaluated.
  *
- * @return {number} 
+ * @return {number}
  */
 export function max(...values: number[]): number {
   return Math.max(...values);
 }
 
 /**
+ * Returns the smaller of a set of supplied numeric expressions.
+ *
+ * @param {...number[]} values Numeric expressions to be evaluated.
+ *
+ * @return {number}
+ */
+export function min(...values: number[]): number {
+  return Math.min(...values);
+}
+
+/**
  * Generate random integer.
  *
- * @param {number} min
- * @param {number} max
+ * @param {number} low - Lower bound for random integer.
+ * @param {number} high - Upper bound for random integer.
  *
- * @return number
+ * @return {number}
  */
-export function rand(min: number, max: number, random: () => number): number {
-  return floor((random || Math.random)() * (max - min + 1)) + min;
+export function rand(low: number, high: number, random: () => number = Math.random): number {
+  return floor(random() * (high - low + 1)) + low;
 }

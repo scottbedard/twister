@@ -6,10 +6,10 @@ type Output = {
   error: any,
   stderr: string,
   stdout: string,
-}
+};
 
 describe('cli', () => {
-  const cli = (args: string[]): Promise<Output> => new Promise(resolve => exec(
+  const cli = (args: string[]): Promise<Output> => new Promise((resolve) => exec(
     `node ${path.resolve(__dirname, '../bin/index')} ${args.join(' ')}`,
     {},
     (error: any, stdout: string, stderr: string) => resolve({
@@ -17,56 +17,29 @@ describe('cli', () => {
       error,
       stderr,
       stdout,
-    })
+    }),
   ));
 
-  describe('cube', () => {
-    it('apply', async () => {
-      const output1 = await cli(['apply', '3x3', '"R U R-"']);
-      const data1 = JSON.parse(output1.stdout);
+  it('apply', async () => {
+    const output1 = await cli(['apply', 'cube3', '"R U R-"']);
+    const data1 = JSON.parse(output1.stdout);
 
-      expect(data1.puzzle).toBe('3x3');
-      expect(data1.solved).toBe(false);
-      expect(Object.keys(data1.state)).toEqual(['u', 'l', 'f', 'r', 'b', 'd']);
+    expect(data1.puzzle).toBe('cube3');
+    expect(data1.solved).toBe(false);
+    expect(Object.keys(data1.state)).toEqual(['u', 'l', 'f', 'r', 'b', 'd']);
 
-      const output2 = await cli(['apply', '3x3', '"R U- R-"', `--state='${JSON.stringify(data1.state)}'`]);
-      const data2 = JSON.parse(output2.stdout);
+    const output2 = await cli(['apply', 'cube3', '"R U- R-"', `--state='${JSON.stringify(data1.state)}'`]);
+    const data2 = JSON.parse(output2.stdout);
 
-      expect(data2.solved).toBe(true);
-    });
-  
-    it('scramble', async () => {
-      const output = await cli(['scramble', '3x3', '--turns=5']);
-      const data = JSON.parse(output.stdout);
-
-      expect(data.puzzle).toBe('3x3');
-      expect(data.scramble.split(' ').length).toBe(5);
-      expect(Object.keys(data.state)).toEqual(['u', 'l', 'f', 'r', 'b', 'd']);
-      expect(data.turns).toBe(5);
-    });
+    expect(data2.solved).toBe(true);
   });
 
-  describe('dodecaminx', () => {
-    it('apply', async () => {
-      const output1 = await cli(['apply', 'dodecaminx2', '"R U R-"']);
-      const data1 = JSON.parse(output1.stdout);
+  it('scramble', async () => {
+    const output = await cli(['scramble', 'cube3', '--depth=5']);
+    const data = JSON.parse(output.stdout);
 
-      expect(data1.puzzle).toBe('dodecaminx2');
-      expect(data1.solved).toBe(false);
-
-      const output2 = await cli(['apply', 'dodecaminx2', '"R U- R-"', `--state='${JSON.stringify(data1.state)}'`]);
-      const data2 = JSON.parse(output2.stdout);
-
-      expect(data2.solved).toBe(true);
-    });
-
-    it('scramble', async () => {
-      const output = await cli(['scramble', 'dodecaminx2', '--turns=5']);
-      const data = JSON.parse(output.stdout);
-
-      expect(data.puzzle).toBe('dodecaminx2');
-      expect(data.scramble.split(' ').length).toBe(5);
-      expect(data.turns).toBe(5);
-    });
+    expect(data.puzzle).toBe('cube3');
+    expect(data.scramble.split(' ').length).toBe(5);
+    expect(Object.keys(data.state)).toEqual(['u', 'l', 'f', 'r', 'b', 'd']);
   });
 });

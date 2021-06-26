@@ -1,20 +1,4 @@
-export {
-  default as Cube,
-  CubeAxis,
-  CubeFace,
-  CubeOptions,
-  CubeState,
-  CubeSticker,
-  CubeValue,
-  CubeTurn,
-} from './cube/cube';
-
-export {
-  default as Dodecaminx,
-} from './dodecaminx/dodecaminx';
-
-export {
-  default as Puzzle,
-} from './puzzle';
-
+export { Cube } from './puzzles/cube/cube';
+export { Dodecaminx } from './puzzles/dodecaminx/dodecaminx';
+export { Puzzle } from './puzzles/puzzle';
 export const version = 'x.y.z';
