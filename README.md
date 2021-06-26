@@ -10,6 +10,15 @@
 
 Twister is a library for modeling the state of twisty puzzles. To get started, [check out the interactive playground](https://twister.speedcube.site/).
 
+- [Installation](#installation)
+- [Basic usage](#basic-usage)
+- [Advanced usage](#advanced-usage)
+- [CLI](#cli)
+- [Puzzles](#puzzles)
+  - [Cube](#cube)
+  - [Dodecaminx](#dodecaminx)
+- [License](#license)
+
 > **Warning:** This branch will explore a rewrite in hopes of a 1.0 release candidate. Expect chaos.
 
 ## Installation
@@ -174,7 +183,9 @@ $ twister scramble cube3
 $ twister scramble cube3 --depth=10
 ```
 
-## Cube
+## Puzzles
+
+### Cube
 
 This puzzle represents an N-layered face turning cube.
 
@@ -194,7 +205,7 @@ Cube state is represented as an array of sticker objects. Each face array starts
 
 Our notation is a superset of [WCA notation](https://www.worldcubeassociation.org/regulations/#12a). Any algorithm produced by a WCA scrambler is compatible with this library. There are however, a couple of extensions we've made to the WCA notation. The first of which is the optional use of a `-` to indicate counter-clockwise turns. The second is the ability to annotate "slice turns" with a single move. To do this, simply omit the `wide` segment of a turn. For example, a `3F` in our notation system would be equal to `3Fw 2Fw'` in WCA notation.
 
-## Dodecaminx
+### Dodecaminx
 
 This puzzle represents an N-layered face turning dodecahedron.
 
