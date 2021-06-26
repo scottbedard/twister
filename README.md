@@ -19,8 +19,6 @@ Twister is a library for modeling the state of twisty puzzles. To get started, [
   - [Dodecaminx](#dodecaminx)
 - [License](#license)
 
-> **Warning:** This branch will explore a rewrite in hopes of a 1.0 release candidate. Expect chaos.
-
 ## Installation
 
 The recommended way to install is through NPM.
