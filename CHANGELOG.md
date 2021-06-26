@@ -2,6 +2,25 @@
 
 > **Warning:** This library is a work in progress, and is not ready for production use. Breaking changes may happen at any time.
 
+## 1.0.0-beta.1
+
+#### Improvements
+
+- A number of technical improvements, the largest of which being that cubes now use the "net" strategy for managing how faces are related to one another. This significantly reduces the size of the library, and makes things much more maintainable.
+- Migrated the playground from vue-cli to vite.
+- Added a light mode to the playground.
+- Refactored tests to be more maintainable.
+
+#### Breaking changes
+
+- Simplified how state for Dodecaminx faces, we now use "composite matrices". See the `src/utils/composite-matrix.ts` for more information.
+- Renamed `getStickersForTurn` to `stickers`.
+- Renamed `isSolved` to `test`.
+- `scramble` and `generateScramble` now return the resulting scramble.
+- Typescript resources for specific puzzles are no longer exported.
+- Dodecaminx no longer supports Pochmann-style scrambling notation.
+- Dodecaminx now uses lowercase letters to denote whole-puzzle turns.
+
 ## 0.7.0
 
 -  **BREAKING:** Replaced `test` CLI command with `apply`
