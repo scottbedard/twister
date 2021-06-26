@@ -5,11 +5,13 @@
     "declarationDir": "./dist",
     "esModuleInterop": true,
     "module": "es6",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "outDir": "./dist",
     "paths": {
       "@/*": ["*"],
     },
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": false,
     "target": "es2015",
@@ -19,11 +21,13 @@
     ]
   },
   "exclude": [
+    "bin",
     "dist",
     "node_modules"
   ],
   "include": [
+    "rollup.config.ts",
     "src/**/*.ts",
-    "tests/**/*.ts"
+    "tests/**/*.ts",
   ],
 }

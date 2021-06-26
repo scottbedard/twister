@@ -1,10 +1,12 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import { defineConfig } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
 import del from 'rollup-plugin-delete';
 import eslint from '@rbnlffl/rollup-plugin-eslint';
 import pkg from './package.json';
 import typescript from '@rollup/plugin-typescript';
 
-export default {
+export default defineConfig({
   external: [
     ...Object.keys(pkg.dependencies || {}),
   ],
@@ -33,4 +35,4 @@ export default {
     eslint(),
     typescript(),
   ],
-};
+});

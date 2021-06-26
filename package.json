@@ -1,6 +1,8 @@
 {
   "author": "Scott Bedard",
-  "bin": {},
+  "bin": {
+    "twister": "./bin/index.js"
+  },
   "bugs": {
     "url": "https://github.com/scottbedard/twister/issues"
   },
@@ -9,20 +11,21 @@
     "@rbnlffl/rollup-plugin-eslint": "^2.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.9.0",
-    "@typescript-eslint/eslint-plugin": "^4.26.0",
-    "@typescript-eslint/parser": "^4.26.0",
-    "eslint": "^7.28.0",
+    "@types/node": "^15.12.4",
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "commander": "^8.0.0",
+    "eslint": "^7.29.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jest": "^24.3.6",
-    "jest": "^27.0.4",
-    "rollup": "^2.50.5",
+    "jest": "^27.0.5",
+    "rollup": "^2.52.3",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-terser": "^7.0.2",
-    "ts-jest": "^27.0.2",
-    "tslib": "^2.2.0",
-    "typescript": "^4.3.2"
+    "ts-jest": "^27.0.3",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.4"
   },
   "homepage": "https://github.com/scottbedard/twister#readme",
   "license": "MIT",
@@ -33,7 +36,7 @@
     "url": "git+https://github.com/scottbedard/twister.git"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c --configPlugin typescript",
     "lint": "eslint . --ext .ts",
     "test:clear": "jest --clearCache",
     "test:watch": "jest --coverage --watch",
