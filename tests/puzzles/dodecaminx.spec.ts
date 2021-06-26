@@ -121,6 +121,15 @@ describe('Dodecaminx', () => {
     });
   });
 
+  describe('stickers', () => {
+    it('u', () => {
+      const model = new Dodecaminx({ size: 3 });
+      const stickers = model.stickers('u');
+
+      expect(stickers.length).toBe(11 * 12);
+    });
+  });
+
   it('test', () => {
     const model = new Dodecaminx({ size: 3 });
 
