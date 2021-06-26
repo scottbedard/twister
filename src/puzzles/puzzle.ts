@@ -4,7 +4,7 @@ import { trim } from '@/utils/string';
 /**
  * Base puzzle class.
  */
-export abstract class Puzzle<Options, State, SimpleState, Turn> {
+export abstract class Puzzle<Options, State, SimpleState, Turn, Sticker> {
   /**
    * Puzzle options
    *
@@ -60,6 +60,13 @@ export abstract class Puzzle<Options, State, SimpleState, Turn> {
    * @param {string} turn turn notation to parse
    */
   abstract parse(turn: string): Turn;
+
+  /**
+   * Get stickers that will be effected by a turn.
+   *
+   * @param {string} turn turn to preview
+   */
+  abstract preview(turn: string): Sticker[];
 
   /**
    * Reset puzzle state

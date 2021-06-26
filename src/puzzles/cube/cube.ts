@@ -19,13 +19,14 @@ import {
   CubeOptions,
   CubeSimpleState,
   CubeState,
+  CubeSticker,
   CubeTurn,
 } from './types';
 
 /**
  * Cube
  */
-export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTurn> {
+export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTurn, CubeSticker> {
   /**
    * Constructor
    *
@@ -179,6 +180,15 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
       rotation,
       wide,
     };
+  }
+
+  /**
+   * Get stickers that will be effected by a turn.
+   *
+   * @param {string} turn turn to preview
+   */
+  preview(): CubeSticker[] {
+    return [];
   }
 
   /**

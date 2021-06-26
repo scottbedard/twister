@@ -24,7 +24,7 @@ import {
 /**
  * Dodecaminx
  */
-export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, DodecaminxStateSimple, DodecaminxTurn> {
+export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, DodecaminxStateSimple, DodecaminxTurn, DodecaminxSticker> {
   /**
    * Constructor
    *
@@ -227,6 +227,15 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
       whole: parts[2] === target,
       wide,
     };
+  }
+
+  /**
+   * Get stickers that will be effected by a turn.
+   *
+   * @param {string} turn turn to preview
+   */
+  preview(): DodecaminxSticker[] {
+    return [];
   }
 
   /**
