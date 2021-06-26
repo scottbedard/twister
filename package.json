@@ -31,6 +31,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
+  "name": "@bedard/twister",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scottbedard/twister.git"
@@ -44,5 +45,5 @@
     "test": "jest --coverage"
   },
   "unpkg": "dist/index.bundle.js",
-  "version": "1.0.0-beta.3"
+  "version": "1.0.0-beta.4"
 }
