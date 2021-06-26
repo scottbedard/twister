@@ -128,6 +128,39 @@ describe('Dodecaminx', () => {
 
       expect(stickers.length).toBe(11 * 12);
     });
+
+    it('U', () => {
+      const model = new Dodecaminx({ size: 3 });
+      const stickers = model.stickers('U');
+
+      expect(stickers.length).toBe(11 + (3 * 5));
+      expect(stickers).toContain(model.state.u[0][0][0]);
+      expect(stickers).toContain(model.state.u[0][1][0]);
+      expect(stickers).toContain(model.state.u[0][2][0]);
+      expect(stickers).toContain(model.state.u[0][3][0]);
+      expect(stickers).toContain(model.state.u[0][4][0]);
+      expect(stickers).toContain(model.state.u[1][0][0]);
+      expect(stickers).toContain(model.state.u[1][1][0]);
+      expect(stickers).toContain(model.state.u[1][2][0]);
+      expect(stickers).toContain(model.state.u[1][3][0]);
+      expect(stickers).toContain(model.state.u[1][4][0]);
+      expect(stickers).toContain(model.state.u[2]);
+      expect(stickers).toContain(model.state.l[0][0][0]);
+      expect(stickers).toContain(model.state.l[1][0][0]);
+      expect(stickers).toContain(model.state.l[0][1][0]);
+      expect(stickers).toContain(model.state.bl[0][1][0]);
+      expect(stickers).toContain(model.state.bl[1][1][0]);
+      expect(stickers).toContain(model.state.bl[0][2][0]);
+      expect(stickers).toContain(model.state.br[0][2][0]);
+      expect(stickers).toContain(model.state.br[1][2][0]);
+      expect(stickers).toContain(model.state.br[0][3][0]);
+      expect(stickers).toContain(model.state.r[0][3][0]);
+      expect(stickers).toContain(model.state.r[1][3][0]);
+      expect(stickers).toContain(model.state.r[0][4][0]);
+      expect(stickers).toContain(model.state.f[0][4][0]);
+      expect(stickers).toContain(model.state.f[1][4][0]);
+      expect(stickers).toContain(model.state.f[0][0][0]);
+    });
   });
 
   it('test', () => {

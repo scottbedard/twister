@@ -254,6 +254,22 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
 
     const stickers: DodecaminxSticker[] = [];
 
+    // include target face stickers
+    if (turn.depth === 1 || turn.wide) {
+      stickers.push(...flattenDeep(this.state[turn.target]));
+    }
+
+    // include layers from related faces
+    for (
+      let i = turn.wide ? 0 : turn.depth - 1;
+      i < min(turn.depth, floor(this.options.size / 2));
+      i += 1
+    ) {
+      dodecaminxNet[turn.target].forEach(([face, angle]) => {
+        stickers.push(...flattenDeep(extractComposite(this.state[face], angle, i)));
+      });
+    }
+
     return stickers;
   }
 
