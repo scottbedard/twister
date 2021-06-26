@@ -28,12 +28,14 @@ Alternatively, you can use the CDN. When using the CDN, the library will be expo
 
 ## Basic usage
 
-The recommended way to interact with a Twister model is via destructured importing. This allows your bundler to tree-shake any unused puzzles from your application.
+Below is the recommended way to instantiate Twister models. Using destructured imports allows for unused puzzles to be tree-shaken from your application.
 
 ```js
 import { Cube } from '@bedard/twister'
 
-const puzzle = new Cube({ size: 3 })
+const puzzle = new Cube({
+  size: 3,
+})
 ```
 
 Once a puzzle has been instantiated, the following methods are available...
@@ -48,7 +50,7 @@ puzzle.apply(state)
 
 ##### `execute`
 
-Updates a puzzle's state with a parsed turn object. In most situations, it's simpler to use the `turn` method and make use of the puzzle's turn notation.
+Updates puzzle state using a parsed turn object. In most situations, it's simpler to use the `turn` method and make use of turn notation.
 
 ```js
 const turn = puzzle.parse('R')
@@ -119,6 +121,34 @@ Execute an algorithm.
 ```js
 puzzle.turn('R U R- ...')
 ```
+
+## Advanced usage
+
+All stickers are stored as `{ value }` objects. This allows for additional information, such as rendering data, to be attached to the stickers. To do this, simply instantiate the puzzle, and modify the objects that are part of `puzzle.state`.
+
+```js
+import { Cube } from '@bedard/twister'
+
+const puzzle = new Cube({
+  size: 3,
+})
+
+puzzle.state.u[0].foo = 'bar'
+```
+
+For applications with advanced scrambling needs, a custom random function can be provided on instantiation. Below is an example using [Rando.js](https://randojs.com/) to generate cryptographically strong scrambles. The `random` option must be a function that returns a floating point number between `0` and `1`. By default, [`Math.random`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) is used.
+
+```js
+import { Cube } from '@bedard/twister'
+import { rando } from '@nastyox/rando.js';
+
+const cube = new Cube({
+  random: rando,
+  size: 3,
+});
+```
+
+> While this library does it's best to generate strong scrambles, _**it should never be used in WCA events**_. Always use the official [TNoodle](https://github.com/thewca/tnoodle) library for WCA purposes.
 
 ## License
 
