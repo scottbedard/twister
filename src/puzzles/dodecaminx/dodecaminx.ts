@@ -230,21 +230,21 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
   }
 
   /**
-   * Get stickers that will be effected by a turn.
-   *
-   * @param {string} turn turn to preview
-   */
-  preview(): DodecaminxSticker[] {
-    return [];
-  }
-
-  /**
    * Reset puzzle state
    */
   reset(): void {
     keys(this.state).forEach((face, index) => {
       this.state[face] = createComposite(5, this.options.size, () => ({ meta: {}, value: index }));
     });
+  }
+
+  /**
+   * Get stickers that are part of a turn.
+   *
+   * @param {string} turn turn to extract stickers from
+   */
+  stickers(): DodecaminxSticker[] {
+    return [];
   }
 
   /**

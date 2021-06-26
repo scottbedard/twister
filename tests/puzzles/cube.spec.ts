@@ -74,6 +74,14 @@ describe('Cube', () => {
     });
   });
 
+  describe('stickers', () => {
+    it('X', () => {
+      const model = new Cube({ size: 3 });
+
+      expect(model.stickers('X').length).toBe((3 ** 2) * 6);
+    });
+  });
+
   it('scramble', () => {
     const model = new Cube({ size: 3 });
 

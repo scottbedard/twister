@@ -62,13 +62,6 @@ export abstract class Puzzle<Options, State, SimpleState, Turn, Sticker> {
   abstract parse(turn: string): Turn;
 
   /**
-   * Get stickers that will be effected by a turn.
-   *
-   * @param {string} turn turn to preview
-   */
-  abstract preview(turn: string): Sticker[];
-
-  /**
    * Reset puzzle state
    */
   abstract reset(): void;
@@ -85,6 +78,13 @@ export abstract class Puzzle<Options, State, SimpleState, Turn, Sticker> {
 
     return scramble;
   }
+
+  /**
+   * Get stickers that are part of a turn.
+   *
+   * @param {string} turn turn to extract stickers from
+   */
+  abstract stickers(turn: string): Sticker[];
 
   /**
    * Test if the puzzle is solved

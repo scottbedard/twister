@@ -183,15 +183,6 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
   }
 
   /**
-   * Get stickers that will be effected by a turn.
-   *
-   * @param {string} turn turn to preview
-   */
-  preview(): CubeSticker[] {
-    return [];
-  }
-
-  /**
    * Reset puzzle state
    */
   reset() {
@@ -200,6 +191,23 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     keys(this.state).forEach((face, value) => {
       this.state[face] = stickers.map(() => ({ meta: {}, value }));
     });
+  }
+
+  /**
+   * Get stickers that are part of a turn.
+   *
+   * @param {string} turn turn to extract stickers from
+   */
+  stickers(turnNotation: string): CubeSticker[] {
+    const turn = this.parse(turnNotation);
+    const { u, l, f, r, b, d } = this.state;
+
+    // whole puzzle rotation, return all stickers
+    if (turn.target === 'x' || turn.target === 'y' || turn.target === 'z') {
+      return [].concat(u, l, f, r, b, d);
+    }
+
+    return [];
   }
 
   /**
