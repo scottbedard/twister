@@ -202,12 +202,35 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     const turn = this.parse(turnNotation);
     const { u, l, f, r, b, d } = this.state;
 
-    // whole puzzle rotation, return all stickers
+    // return all stickers for whole-puzzle rotations
     if (turn.target === 'x' || turn.target === 'y' || turn.target === 'z') {
       return [].concat(u, l, f, r, b, d);
     }
 
-    return [];
+    const stickers: CubeSticker[] = [];
+
+    // include target face stickers
+    if (turn.depth === 1 || turn.wide) {
+      stickers.push(...this.state[turn.target]);
+    }
+
+    // include slice stickers
+    const relatedFaces = cubeNet[turn.target];
+
+    for (let i = turn.wide ? 0 : turn.depth - 1; i < turn.depth; i += 1) {
+      relatedFaces.forEach((source, index) => {
+        const [face, angle] = relatedFaces[index];
+
+        stickers.push(...extract(this.state[face], angle, i));
+      });
+    }
+
+    // include opposite face stickers
+    if (turn.depth >= this.options.size) {
+      stickers.push(...this.state[cubeOpposites[turn.target]]);
+    }
+
+    return stickers;
   }
 
   /**
