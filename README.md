@@ -38,7 +38,7 @@ const puzzle = new Cube({ size: 3 })
 
 Once a puzzle has been instantiated, the following methods are available...
 
-##### `apply`
+#### `apply`
 
 Applies a particular state to the puzzle. Think of this as the counterpart of the `output` method. 
 
@@ -46,7 +46,7 @@ Applies a particular state to the puzzle. Think of this as the counterpart of th
 puzzle.apply(state)
 ```
 
-##### `execute`
+#### `execute`
 
 Updates puzzle state using a parsed turn object. In most situations, it's simpler to use the `turn` method and make use of turn notation.
 
@@ -56,7 +56,7 @@ const turn = puzzle.parse('R')
 puzzle.execute(turn)
 ```
 
-##### `generateScramble`
+#### `generateScramble`
 
 Generates a scramble of a default or specified number of moves, but does not execute it.
 
@@ -64,7 +64,7 @@ Generates a scramble of a default or specified number of moves, but does not exe
 const scramble = puzzle.generateScramble()
 ```
 
-##### `output`
+#### `output`
 
 Returns a minified version of the puzzle's state. This function works well for saving a puzzle's state as JSON, and setting that state using the `apply` method.
 
@@ -72,7 +72,7 @@ Returns a minified version of the puzzle's state. This function works well for s
 const state = puzzle.output()
 ```
 
-##### `parse`
+#### `parse`
 
 Convert a string of puzzle notation to a turn object. This method is generally only used when interacting with the `execute` method.
 
@@ -80,7 +80,7 @@ Convert a string of puzzle notation to a turn object. This method is generally o
 const turn = puzzle.parse('R')
 ```
 
-##### `reset`
+#### `reset`
 
 Return a puzzle to it's solved state.
 
@@ -88,7 +88,7 @@ Return a puzzle to it's solved state.
 puzzle.reset()
 ```
 
-##### `scramble`
+#### `scramble`
 
 Scrambles a puzzle to a default or specified number of moves. This is similar to `generateScramble`, with the only difference being that this method executes the resulting scramble.
 
@@ -96,7 +96,7 @@ Scrambles a puzzle to a default or specified number of moves. This is similar to
 puzzle.scramble()
 ```
 
-##### `stickers`
+#### `stickers`
 
 Returns all stickers that are part of a given turn.
 
@@ -104,7 +104,7 @@ Returns all stickers that are part of a given turn.
 const stickers = puzzle.stickers('R')
 ```
 
-##### `test`
+#### `test`
 
 Returns `true` or `false`, indicating if the puzzle is currently solved.
 
@@ -112,7 +112,7 @@ Returns `true` or `false`, indicating if the puzzle is currently solved.
 const solved = puzzle.test()
 ```
 
-##### `turn`
+#### `turn`
 
 Execute an algorithm.
 
@@ -146,13 +146,39 @@ const puzzle = new Cube({
 
 > While this library does it's best to generate strong scrambles, _**it should never be used in WCA events**_. Always use the official [TNoodle](https://github.com/thewca/tnoodle) library for WCA purposes.
 
-## Puzzles
+## CLI
 
-### Cube
+The following utilities are available from the command line. Note that when using the CLI, puzzle names also denote their options. For example, a megaminx goes by the name `dodecaminx3`, whereas a gigaminx goes by the name `dodecaminx5`, etc...
+
+#### `apply`
+
+Apply turns to a puzzle. This command can be used to test if an algorithm solves a puzzle.
+
+```bash
+# apply turns to a solved puzzle
+$ twister apply cube3 "R U R-"
+
+# apply turns from an initial state
+$ twister apply cube3 "R U R-" --state="{...}"
+```
+
+#### `scramble`
+
+Scramble a puzzle.
+
+```bash
+# scramble a puzzle to the default number of moves
+$ twister scramble cube3
+
+# scramble a puzzle to a specific number of moves
+$ twister scramble cube3 --depth=10
+```
+
+## Cube
+
+This puzzle represents an N-layered face turning cube.
 
 <img src="https://user-images.githubusercontent.com/7980426/76586921-8a3c3280-649f-11ea-9d9c-31b7a3080e60.png">
-
-This puzzle represents an NxNxN face turning cube.
 
 ```js
 import { Cube } from '@bedard/twister';
@@ -168,11 +194,11 @@ Cube state is represented as an array of sticker objects. Each face array starts
 
 Our notation is a superset of [WCA notation](https://www.worldcubeassociation.org/regulations/#12a). Any algorithm produced by a WCA scrambler is compatible with this library. There are however, a couple of extensions we've made to the WCA notation. The first of which is the optional use of a `-` to indicate counter-clockwise turns. The second is the ability to annotate "slice turns" with a single move. To do this, simply omit the `wide` segment of a turn. For example, a `3F` in our notation system would be equal to `3Fw 2Fw'` in WCA notation.
 
-### Dodecaminx
-
-<img src="https://user-images.githubusercontent.com/7980426/76587868-86f67600-64a2-11ea-80f3-74dd928909c6.png">
+## Dodecaminx
 
 This puzzle represents an N-layered face turning dodecahedron.
+
+<img src="https://user-images.githubusercontent.com/7980426/76587868-86f67600-64a2-11ea-80f3-74dd928909c6.png">
 
 ```js
 import { Dodecaminx } from '@bedard/twister';
