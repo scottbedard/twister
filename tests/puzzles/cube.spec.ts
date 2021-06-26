@@ -109,6 +109,72 @@ describe('Cube', () => {
       expect(stickers).toContain(model.state.b[1]);
       expect(stickers).toContain(model.state.b[2]);
     });
+
+    it('Uw', () => {
+      const model = new Cube({ size: 3 });
+      const stickers = model.stickers('Uw');
+
+      expect(stickers.length).toBe((3 ** 2) + (6 * 4));
+      expect(stickers).toContain(model.state.u[0]);
+      expect(stickers).toContain(model.state.u[1]);
+      expect(stickers).toContain(model.state.u[2]);
+      expect(stickers).toContain(model.state.u[3]);
+      expect(stickers).toContain(model.state.u[4]);
+      expect(stickers).toContain(model.state.u[5]);
+      expect(stickers).toContain(model.state.u[6]);
+      expect(stickers).toContain(model.state.u[7]);
+      expect(stickers).toContain(model.state.u[8]);
+      expect(stickers).toContain(model.state.l[0]);
+      expect(stickers).toContain(model.state.l[1]);
+      expect(stickers).toContain(model.state.l[2]);
+      expect(stickers).toContain(model.state.l[3]);
+      expect(stickers).toContain(model.state.l[4]);
+      expect(stickers).toContain(model.state.l[5]);
+      expect(stickers).toContain(model.state.f[0]);
+      expect(stickers).toContain(model.state.f[1]);
+      expect(stickers).toContain(model.state.f[2]);
+      expect(stickers).toContain(model.state.f[3]);
+      expect(stickers).toContain(model.state.f[4]);
+      expect(stickers).toContain(model.state.f[5]);
+      expect(stickers).toContain(model.state.r[0]);
+      expect(stickers).toContain(model.state.r[1]);
+      expect(stickers).toContain(model.state.r[2]);
+      expect(stickers).toContain(model.state.r[3]);
+      expect(stickers).toContain(model.state.r[4]);
+      expect(stickers).toContain(model.state.r[5]);
+      expect(stickers).toContain(model.state.b[0]);
+      expect(stickers).toContain(model.state.b[1]);
+      expect(stickers).toContain(model.state.b[2]);
+      expect(stickers).toContain(model.state.b[3]);
+      expect(stickers).toContain(model.state.b[4]);
+      expect(stickers).toContain(model.state.b[5]);
+    });
+
+    it('2U', () => {
+      const model = new Cube({ size: 3 });
+      const stickers = model.stickers('2U');
+
+      expect(stickers.length).toBe(3 * 4);
+      expect(stickers).toContain(model.state.l[3]);
+      expect(stickers).toContain(model.state.l[4]);
+      expect(stickers).toContain(model.state.l[5]);
+      expect(stickers).toContain(model.state.f[3]);
+      expect(stickers).toContain(model.state.f[4]);
+      expect(stickers).toContain(model.state.f[5]);
+      expect(stickers).toContain(model.state.r[3]);
+      expect(stickers).toContain(model.state.r[4]);
+      expect(stickers).toContain(model.state.r[5]);
+      expect(stickers).toContain(model.state.b[3]);
+      expect(stickers).toContain(model.state.b[4]);
+      expect(stickers).toContain(model.state.b[5]);
+    });
+
+    it('3Uw', () => {
+      const model = new Cube({ size: 3 });
+      const stickers = model.stickers('3Uw');
+
+      expect(stickers.length).toBe((3 ** 2) * 6);
+    });
   });
 
   it('scramble', () => {
