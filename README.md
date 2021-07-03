@@ -155,7 +155,7 @@ const puzzle = new Cube({
 
 ## CLI
 
-The following utilities are available from the command line. Constructor options can be provided using the `--options` flag. Note that when providing JSON arguments, we use [JSON5](https://json5.org/) syntax for a smoother user experience.
+The following utilities are available from the command line. Constructor options can be provided via `--options`. Note that when providing JSON arguments, we use [JSON5](https://json5.org/) syntax for a smoother user experience.
 
 #### `scramble`
 
