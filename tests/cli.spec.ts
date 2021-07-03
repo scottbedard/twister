@@ -35,11 +35,11 @@ describe('cli', () => {
   });
 
   it('scramble', async () => {
-    const output = await cli(['scramble', 'cube3', '--depth=5']);
+    const output = await cli(['scramble', 'cube3', '--turns=5']);
     const data = JSON.parse(output.stdout);
 
     expect(data.puzzle).toBe('cube3');
-    expect(data.scramble.split(' ').length).toBe(5);
+    expect(data.turns).toBe(5);
     expect(Object.keys(data.state)).toEqual(['u', 'l', 'f', 'r', 'b', 'd']);
   });
 });

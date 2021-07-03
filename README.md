@@ -174,11 +174,11 @@ $ twister apply cube3 "R U R-" --state="{...}"
 Scramble a puzzle.
 
 ```bash
-# scramble a puzzle to the default number of moves
+# scramble a puzzle
 $ twister scramble cube3
 
 # scramble a puzzle to a specific number of moves
-$ twister scramble cube3 --depth=10
+$ twister scramble cube3 --turns=10
 ```
 
 ## Puzzles

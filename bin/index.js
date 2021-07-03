@@ -47,12 +47,12 @@ program
 // scramble
 //
 program.command('scramble <puzzle>')
-  .description('scramble puzzle to a given depth')
-  .option('-d, --depth [value]', 'length of scramble')
+  .description('scramble puzzle to a given number of turns')
+  .option('-t, --turns [value]', 'length of scramble')
   .action((puzzle, options) => {
     const model = createModel(puzzle)
-    const depth = options.depth && parseInt(options.depth.replace(/[^\d]/g, ''), 10)
-    const scramble = model.generateScramble(depth)
+    const turns = options.turns && parseInt(options.turns.replace(/[^\d]/g, ''), 10)
+    const scramble = model.generateScramble(turns)
 
     model.turn(scramble)
 
@@ -60,6 +60,7 @@ program.command('scramble <puzzle>')
       puzzle,
       scramble,
       state: model.output(),
+      turns: scramble.split(' ').length,
     }))
   })
 
