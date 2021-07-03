@@ -4,7 +4,7 @@
   </h1>
 
   <p class="mb-6">
-    A face-turning NxN cube.
+    A face turning N-layered cube.
   </p>
 
   <div class="gap-6 grid md:grid-cols-12">

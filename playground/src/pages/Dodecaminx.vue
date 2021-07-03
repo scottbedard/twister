@@ -4,7 +4,7 @@
   </h1>
 
   <p class="mb-6">
-    A face-turning N-layered dodecahedron.
+    A face turning N-layered dodecahedron.
   </p>
 
   <div class="gap-6 grid md:grid-cols-12">

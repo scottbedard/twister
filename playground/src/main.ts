@@ -6,9 +6,10 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      component: () => import('./pages/Home.vue'),
-      name: 'home',
       path: '/',
+      redirect: {
+        name: 'cube',
+      },
     },
     {
       component: () => import('./pages/Cube.vue'),

@@ -5,7 +5,7 @@
     <!-- title -->
     <RouterLink
       class="flex font-bold items-center"
-      :to="{ name: 'home' }">
+      :to="'/'">
       <Icon class="mr-2" name="box" size="5.5" />
 
       Twister
@@ -40,7 +40,7 @@
         Dodecaminx
       </RouterLink>
 
-      <div class="flex gap-4 justify-center pt-4">
+      <div class="flex gap-8 justify-center pt-4">
         <a
           href="https://github.com/scottbedard/twister"
           target="_blank">
@@ -57,18 +57,23 @@
     </nav>
 
     <!-- desktop nav -->
-    <nav class="gap-4 hidden items-center sm:flex">
-      <RouterLink :to="{ name: 'cube' }">
+    <nav class="gap-8 hidden items-center sm:flex">
+      <RouterLink
+        active-class="text-green-500"
+        :to="{ name: 'cube' }">
         Cube
       </RouterLink>
 
-      <RouterLink :to="{ name: 'dodecaminx' }">
+      <RouterLink
+        active-class="text-green-500"
+        :to="{ name: 'dodecaminx' }">
         Dodecaminx
       </RouterLink>
 
       <a
         href="https://github.com/scottbedard/twister"
-        target="_blank">
+        target="_blank"
+        title="View repository on GitHub">
         <Icon name="github" size="4.5" />
       </a>
 
