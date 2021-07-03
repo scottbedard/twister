@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 const { Cube, Dodecaminx, version } = require('../dist/index')
 const { program } = require('commander')
+const JSON5 = require('json5')
 
 const json = output => JSON.stringify(output)
 
-const isCube = str => /^cube(\d+)$/.test(str)
+const createModel = (type, options) => {
+  const normalizedType = type.trim().toLowerCase()
+  const normalizedOptions = JSON5.parse(options)
 
-const isDodecaminx = str => /^dodecaminx(\d+)$/.test(str)
-
-const createModel = (type) => {
-  if (isCube(type)) {
-    return new Cube({ size: parseInt(type.slice(4), 10) })
+  if (normalizedType === 'cube') {
+    return new Cube(normalizedOptions)
   }
   
-  if (isDodecaminx(type)) {
-    return new Dodecaminx({ size: parseInt(type.slice(10), 10) })
+  if (normalizedType === 'dodecaminx') {
+    return new Dodecaminx(normalizedOptions)
   }
 
   throw 'Invalid puzzle'
@@ -24,19 +24,21 @@ const createModel = (type) => {
 // apply
 //
 program
-  .command('apply <puzzle> <algorithm>')
+  .command('turn [puzzle] [algorithm]')
   .description('apply turns to a puzzle')
-  .option('-s, --state [value]', 'initial puzzle state')
+  .option('-o, --options [value]', 'puzzle options', '{}')
+  .option('-s, --state [value]', 'initial state')
   .action((puzzle, alg, options) => {
-    const model = createModel(puzzle)
+    const model = createModel(puzzle, options.options)
 
     if (options.state) {
-      model.apply(JSON.parse(options.state))
+      model.apply(JSON5.parse(options.state))
     }
 
     model.turn(alg)
 
     console.log(json({
+      options: model.options,
       puzzle,
       solved: model.test(),
       state: model.output(),
@@ -46,24 +48,26 @@ program
 //
 // scramble
 //
-program.command('scramble <puzzle>')
-  .description('scramble puzzle to a given number of turns')
+program.command('scramble [puzzle]')
+  .description('scramble puzzle')
+  .option('-o, --options [value]', 'puzzle options', '{}')
   .option('-t, --turns [value]', 'length of scramble')
   .action((puzzle, options) => {
-    const model = createModel(puzzle)
+    const model = createModel(puzzle, options.options)
     const turns = options.turns && parseInt(options.turns.replace(/[^\d]/g, ''), 10)
     const scramble = model.generateScramble(turns)
 
     model.turn(scramble)
 
     console.log(json({
-      puzzle,
+      options: model.options,
       scramble,
       state: model.output(),
       turns: scramble.split(' ').length,
     }))
   })
 
-program.version(version)
-
-program.parse(process.argv)
+program
+  .name('twister')
+  .version(version, '-v, --version')
+  .parse(process.argv)
