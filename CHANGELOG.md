@@ -2,6 +2,12 @@
 
 > **Warning:** This library is a work in progress, and is not ready for production use. Breaking changes may happen at any time.
 
+## 1.0.0-beta.7
+
+#### Breaking changes
+
+- CLI no longer uses special puzzle names to define constructor options. An explicit `options` parameter must now be provided to use non-default values.
+
 ## 1.0.0-beta.1
 
 #### Improvements
