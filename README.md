@@ -215,7 +215,7 @@ import { Dodecaminx } from '@bedard/twister';
 const puzzle = new Dodecaminx({ size: 3 });
 ```
 
-State for a dodecaminx is stored as an array of corner matrices and middle values. These arrays start from the primary corner of a face, and continue clockwise around that face. The corner matrices are similar to that of a cube face, starting with the corner furthest from the center and reading sequentially towards the center. Middle arrays start with the sticker furthest from the center. Note that for even-layered puzzles, the middle and center values will be an empty array and `null` respectively.
+State for a dodecaminx is stored as an array of corner matrices, middle arrays, and a center value. These arrays start from the primary corner of a face, and continue clockwise around that face. The corner matrices are similar to that of a cube face, starting with the corner furthest from the center and reading sequentially towards the center. Middle arrays start with the sticker furthest from the center. Note that for even-layered puzzles, the middle and center values are omitted.
 
 <p align="center">
   <img src="https://user-images.githubusercontent.com/7980426/97093355-f9663180-15ff-11eb-93e4-8783045b8f71.png" width="600px">
