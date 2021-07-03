@@ -10,11 +10,17 @@ const createModel = (type, options) => {
   const normalizedOptions = JSON5.parse(options)
 
   if (normalizedType === 'cube') {
-    return new Cube(normalizedOptions)
+    return {
+      model: new Cube(normalizedOptions),
+      modelType: 'cube',
+    }
   }
   
   if (normalizedType === 'dodecaminx') {
-    return new Dodecaminx(normalizedOptions)
+    return {
+      model: new Dodecaminx(normalizedOptions),
+      modelType: 'dodecaminx',
+    }
   }
 
   throw 'Invalid puzzle'
@@ -29,7 +35,7 @@ program
   .option('-o, --options [value]', 'puzzle options', '{}')
   .option('-s, --state [value]', 'initial state')
   .action((puzzle, alg, options) => {
-    const model = createModel(puzzle, options.options)
+    const { model, modelType } = createModel(puzzle, options.options)
 
     if (options.state) {
       model.apply(JSON5.parse(options.state))
@@ -39,7 +45,7 @@ program
 
     console.log(json({
       options: model.options,
-      puzzle,
+      puzzle: modelType,
       solved: model.test(),
       state: model.output(),
     }))
@@ -53,7 +59,7 @@ program.command('scramble [puzzle]')
   .option('-o, --options [value]', 'puzzle options', '{}')
   .option('-t, --turns [value]', 'length of scramble')
   .action((puzzle, options) => {
-    const model = createModel(puzzle, options.options)
+    const { model, modelType } = createModel(puzzle, options.options)
     const turns = options.turns && parseInt(options.turns.replace(/[^\d]/g, ''), 10)
     const scramble = model.generateScramble(turns)
 
@@ -61,6 +67,7 @@ program.command('scramble [puzzle]')
 
     console.log(json({
       options: model.options,
+      puzzle: modelType,
       scramble,
       state: model.output(),
       turns: scramble.split(' ').length,
