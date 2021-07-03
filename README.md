@@ -155,18 +155,18 @@ const puzzle = new Cube({
 
 ## CLI
 
-The following utilities are available from the command line. Note that when using the CLI, puzzle names also denote their options. For example, a megaminx goes by the name `dodecaminx3`, whereas a gigaminx goes by the name `dodecaminx5`, etc...
+The following utilities are available from the command line. Constructor options can be provided using the `--options` flag. Note that when providing JSON arguments, we use [JSON5](https://json5.org/) syntax for a smoother user experience.
 
-#### `apply`
+#### `turn`
 
-Apply turns to a puzzle. This command can be used to test if an algorithm solves a puzzle.
+Execute an algorithm. This will be performed on a solved puzzle unless an initial state is provided.
 
 ```bash
 # apply turns to a solved puzzle
-$ twister apply cube3 "R U R-"
+$ twister apply cube "R U R-"
 
 # apply turns from an initial state
-$ twister apply cube3 "R U R-" --state="{...}"
+$ twister apply cube "R U R-" --state="{...}"
 ```
 
 #### `scramble`
@@ -175,10 +175,10 @@ Scramble a puzzle.
 
 ```bash
 # scramble a puzzle
-$ twister scramble cube3
+$ twister scramble cube
 
 # scramble a puzzle to a specific number of moves
-$ twister scramble cube3 --turns=10
+$ twister scramble cube --turns=10
 ```
 
 ## Puzzles
