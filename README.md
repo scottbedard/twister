@@ -47,7 +47,7 @@ Once a puzzle has been instantiated, the following methods are available...
 
 #### `apply`
 
-Applies a particular state to the puzzle. Think of this as the counterpart of the `output` method. 
+Set the puzzle to a given state.
 
 ```js
 puzzle.apply(state)
@@ -73,7 +73,7 @@ const scramble = puzzle.generateScramble()
 
 #### `output`
 
-Returns a minified version of the puzzle's state. This function works well for saving a puzzle's state as JSON, and setting that state using the `apply` method.
+Returns a minified version of the puzzle's state. This method is useful for saving state as JSON, then restoring that state via the `apply` method.
 
 ```js
 const state = puzzle.output()
@@ -81,7 +81,7 @@ const state = puzzle.output()
 
 #### `parse`
 
-Convert a string of puzzle notation to a turn object. This method is generally only used when interacting with the `execute` method.
+Converts a string of puzzle notation to a turn object. This method is generally used to interact with the `execute` method, but is also useful for testing if a piece of notation is valid.
 
 ```js
 const turn = puzzle.parse('R')
@@ -89,7 +89,7 @@ const turn = puzzle.parse('R')
 
 #### `reset`
 
-Return a puzzle to it's solved state.
+Return a puzzle to its solved state.
 
 ```js
 puzzle.reset()
@@ -97,7 +97,7 @@ puzzle.reset()
 
 #### `scramble`
 
-Scrambles a puzzle to a default or specified number of moves. This is similar to `generateScramble`, with the only difference being that this method executes the resulting scramble.
+Scrambles a puzzle to a default or specified number of moves. This is similar to `generateScramble`, the only difference being that this method executes the resulting scramble. This method is also available via the CLI, [more info here](#cli).
 
 ```js
 puzzle.scramble()
@@ -105,7 +105,7 @@ puzzle.scramble()
 
 #### `stickers`
 
-Returns all stickers that are part of a given turn.
+Get all stickers effected by a turn.
 
 ```js
 const stickers = puzzle.stickers('R')
@@ -113,7 +113,7 @@ const stickers = puzzle.stickers('R')
 
 #### `test`
 
-Returns `true` or `false`, indicating if the puzzle is currently solved.
+Test if the puzzle is solved.
 
 ```js
 const solved = puzzle.test()
@@ -121,10 +121,10 @@ const solved = puzzle.test()
 
 #### `turn`
 
-Execute an algorithm.
+Executes an algorithm. This method is also available via the CLI, [more info here](#cli).
 
 ```js
-puzzle.turn('R U R- ...')
+puzzle.turn('R U R-')
 ```
 
 ## Advanced usage
@@ -157,18 +157,6 @@ const puzzle = new Cube({
 
 The following utilities are available from the command line. Constructor options can be provided using the `--options` flag. Note that when providing JSON arguments, we use [JSON5](https://json5.org/) syntax for a smoother user experience.
 
-#### `turn`
-
-Execute an algorithm. This will be performed on a solved puzzle unless an initial state is provided.
-
-```bash
-# apply turns to a solved puzzle
-$ twister apply cube "R U R-"
-
-# apply turns from an initial state
-$ twister apply cube "R U R-" --state="{...}"
-```
-
 #### `scramble`
 
 Scramble a puzzle.
@@ -179,6 +167,18 @@ $ twister scramble cube
 
 # scramble a puzzle to a specific number of moves
 $ twister scramble cube --turns=10
+```
+
+#### `turn`
+
+Execute an algorithm. This will be performed on a solved puzzle unless an initial state is provided.
+
+```bash
+# apply turns to a solved puzzle
+$ twister apply cube "R U R-"
+
+# apply turns from an initial state
+$ twister apply cube "R U R-" --state="{...}"
 ```
 
 ## Puzzles
