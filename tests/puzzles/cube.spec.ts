@@ -42,6 +42,20 @@ describe('Cube', () => {
     expect(model.state.d[3].value).toBe('d3');
   });
 
+  it('generateScramble', () => {
+    const model = new Cube({
+      random: () => 0.5,
+    });
+
+    const turn = model.generateScramble(1);
+
+    expect(model.generateScramble(1, turn)).not.toBe(turn);
+
+    const scramble = model.generateScramble(5);
+
+    expect(scramble.split(' ').length).toBe(5);
+  });
+
   it('output', () => {
     const model = new Cube({ size: 2 });
 

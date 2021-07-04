@@ -28,11 +28,17 @@ describe('Dodecaminx', () => {
   });
 
   it('generateScramble', () => {
-    const model = new Dodecaminx({ size: 3 });
+    const model = new Dodecaminx({
+      random: () => 0.5,
+    });
 
-    const scramble = model.generateScramble(10);
+    const turn = model.generateScramble(1);
 
-    expect(scramble.split(' ').length).toBe(10);
+    expect(model.generateScramble(1, turn)).not.toBe(turn);
+
+    const scramble = model.generateScramble(5);
+
+    expect(scramble.split(' ').length).toBe(5);
   });
 
   it('output', () => {

@@ -141,16 +141,21 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    * Generate a scramble
    *
    * @param {number} depth number of scramble turns
+   * @param {string} prevTurn previous turn
    */
-  generateScramble(depth: number = max(30, this.options.size ** 3)) {
+  generateScramble(depth: number = max(30, this.options.size ** 3), prevTurn?: string) {
     const turns: DodecaminxTurn[] = [];
     const { random, size } = this.options;
 
     for (let i = 0; i < depth; i += 1) {
+      const prevTarget = i === 0 && prevTurn
+        ? this.parse(prevTurn).target
+        : last(turns)?.target;
+
       turns.push({
         depth: rand(1, floor(size / 2), random),
         rotation: sample([-2, -1, 1, 2], random),
-        target: sample(without(keys(dodecaminxNet), last(turns)?.target), random),
+        target: sample(without(keys(dodecaminxNet), prevTarget), random),
         whole: false,
         wide: sample([true, false], random),
       });

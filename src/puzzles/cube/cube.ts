@@ -118,16 +118,21 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
    * Generate a scramble
    *
    * @param {number} depth number of scramble turns
+   * @param {string} prevTurn previous turn
    */
-  generateScramble(depth: number = max(20, this.options.size ** 3)): string {
+  generateScramble(depth: number = max(20, this.options.size ** 3), prevTurn?: string): string {
     const turns: CubeTurn[] = [];
     const { random, size } = this.options;
 
     for (let i = 0; i < depth; i += 1) {
+      const prevTarget = i === 0 && prevTurn
+        ? this.parse(prevTurn).target
+        : last(turns)?.target;
+
       turns.push({
         depth: rand(1, floor(size / 2), random),
         rotation: sample([-1, 1, 2], random),
-        target: sample(without(keys(cubeNet), last(turns)?.target), random),
+        target: sample(without(keys(cubeNet), prevTarget), random),
         wide: sample([true, false], random),
       });
     }
