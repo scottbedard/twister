@@ -87,7 +87,7 @@ Convert a single piece of puzzle notation to a turn object. This method is gener
 const turn = puzzle.parse('R')
 ```
 
-### `parseAlgorithm`
+#### `parseAlgorithm`
 
 Convert a space-delimited string of turns into an array of turn objects.
 
