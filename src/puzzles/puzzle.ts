@@ -63,11 +63,24 @@ export abstract class Puzzle<
   abstract output(): SimpleState;
 
   /**
-   * Parse a turn
+   * Parse a single turn
    *
    * @param {string} turn turn notation to parse
    */
   abstract parse(turn: string): Turn;
+
+  /**
+   * Parse an algorithm
+   *
+   * @param {string} turn algorithm to parse
+   */
+  parseAlgorithm(algorithm: string): Turn[] {
+    return algorithm
+      .split(' ')
+      .map(trim)
+      .filter(identity)
+      .map((str) => this.parse(str));
+  }
 
   /**
    * Reset puzzle state
@@ -106,11 +119,8 @@ export abstract class Puzzle<
    * @param {string} algorithm sequence of turns to execute
    */
   turn(algorithm: string): void {
-    algorithm
-      .split(' ')
-      .map(trim)
-      .filter(identity)
-      .map((str) => this.parse(str))
+    this
+      .parseAlgorithm(algorithm)
       .forEach((turn) => this.execute(turn));
   }
 }

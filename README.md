@@ -81,10 +81,18 @@ const state = puzzle.output()
 
 #### `parse`
 
-Converts a string of puzzle notation to a turn object. This method is generally used to interact with the `execute` method, but is also useful for testing if a piece of notation is valid.
+Convert a single piece of puzzle notation to a turn object. This method is generally used to interact with the `execute` method, but is also useful for testing if notation is valid.
 
 ```js
 const turn = puzzle.parse('R')
+```
+
+### `parseAlgorithm`
+
+Convert a space-delimited string of turns into an array of turn objects.
+
+```js
+const turns = puzzle.parseAlgorithm('R U R-')
 ```
 
 #### `reset`
