@@ -1,10 +1,17 @@
 import { identity } from '@/utils/function';
 import { trim } from '@/utils/string';
+import { BaseTurn } from './types';
 
 /**
  * Base puzzle class.
  */
-export abstract class Puzzle<Options, State, SimpleState, Turn, Sticker> {
+export abstract class Puzzle<
+  Options,
+  State,
+  SimpleState,
+  Turn extends BaseTurn,
+  Sticker,
+> {
   /**
    * Puzzle options
    *

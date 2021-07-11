@@ -51,5 +51,6 @@ export type CubeTurn = {
   depth: number,
   rotation: -1 | 1 | 2,
   target: CubeFaceLower | CubeAxisLower,
+  whole: boolean,
   wide: boolean,
 };

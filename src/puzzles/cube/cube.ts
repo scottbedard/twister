@@ -81,6 +81,7 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
         rotation: turn.rotation,
         target: cubeAxes[turn.target],
         wide: true,
+        whole: true,
       });
     } else {
       // rotate target face
@@ -133,6 +134,7 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
         depth: rand(1, floor(size / 2), random),
         rotation: sample([-1, 1, 2], random),
         target: sample(without(keys(cubeNet), prevTarget), random),
+        whole: false,
         wide: sample([true, false], random),
       });
     }
@@ -178,12 +180,14 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     const target = lowercase(<CubeFace | CubeAxis> parts[2]);
     const wide = !!parts[3];
     const rotation = "-'".includes(parts[4]) ? -1 : parts[4] === '2' ? 2 : 1;
+    const whole = 'xyz'.includes(target) || (wide && depth >= this.options.size);
 
     return {
       depth: wide ? max(2, depth) : depth,
       target,
       rotation,
       wide,
+      whole,
     };
   }
 
