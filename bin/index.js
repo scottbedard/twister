@@ -27,27 +27,34 @@ const createModel = (type, options) => {
 }
 
 //
-// apply
+// parse
 //
 program
-  .command('turn [puzzle] [algorithm]')
-  .description('apply turns to a puzzle')
+  .command('parse [puzzle] [turn]')
+  .description('parse turn notation')
   .option('-o, --options [value]', 'puzzle options', '{}')
-  .option('-s, --state [value]', 'initial state')
-  .action((puzzle, alg, options) => {
+  .action((puzzle, turn, options) => {
     const { model, modelType } = createModel(puzzle, options.options)
 
-    if (options.state) {
-      model.apply(JSON5.parse(options.state))
-    }
+    console.log(json({
+      puzzle: modelType,
+      turn: model.parse(turn),
+    }))
+  })
 
-    model.turn(alg)
+//
+// parseAlgorithm
+//
+program
+  .command('parseAlgorithm [puzzle] [algorithm]')
+  .description('parse multiple pieces of turn notation')
+  .option('-o, --options [value]', 'puzzle options', '{}')
+  .action((puzzle, algorithm, options) => {
+    const { model, modelType } = createModel(puzzle, options.options)
 
     console.log(json({
-      options: model.options,
       puzzle: modelType,
-      solved: model.test(),
-      state: model.output(),
+      turns: model.parseAlgorithm(algorithm),
     }))
   })
 
@@ -71,6 +78,31 @@ program.command('scramble [puzzle]')
       scramble,
       state: model.output(),
       turns: scramble.split(' ').length,
+    }))
+  })
+
+//
+// turn
+//
+program
+  .command('turn [puzzle] [algorithm]')
+  .description('apply turns to a puzzle')
+  .option('-o, --options [value]', 'puzzle options', '{}')
+  .option('-s, --state [value]', 'initial state')
+  .action((puzzle, alg, options) => {
+    const { model, modelType } = createModel(puzzle, options.options)
+
+    if (options.state) {
+      model.apply(JSON5.parse(options.state))
+    }
+
+    model.turn(alg)
+
+    console.log(json({
+      options: model.options,
+      puzzle: modelType,
+      solved: model.test(),
+      state: model.output(),
     }))
   })
 

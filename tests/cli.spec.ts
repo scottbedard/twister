@@ -20,6 +20,43 @@ describe('cli', () => {
     }),
   ));
 
+  it('parse', async () => {
+    const output = await cli(['parse', 'cube', 'R']);
+    const data = JSON.parse(output.stdout);
+
+    expect(data.puzzle).toBe('cube');
+    expect(data.turn).toEqual({
+      depth: 1,
+      target: 'r',
+      rotation: 1,
+      wide: false,
+      whole: false,
+    });
+  });
+
+  it('parseAlgorithm', async () => {
+    const output = await cli(['parseAlgorithm', 'cube', '"R U"']);
+    const data = JSON.parse(output.stdout);
+
+    expect(data.puzzle).toBe('cube');
+    expect(data.turns).toEqual([
+      {
+        depth: 1,
+        target: 'r',
+        rotation: 1,
+        wide: false,
+        whole: false,
+      },
+      {
+        depth: 1,
+        target: 'u',
+        rotation: 1,
+        wide: false,
+        whole: false,
+      },
+    ]);
+  });
+
   it('turn', async () => {
     // with no --state flag we should be scrambling the puzzle
     const output = await cli(['turn', 'cube', '"R U R-"']);
