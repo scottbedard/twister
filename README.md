@@ -165,6 +165,22 @@ const puzzle = new Cube({
 
 The following utilities are available from the command line. Constructor options can be provided via `--options`. Note that when providing JSON arguments, we use [JSON5](https://json5.org/) syntax for a smoother user experience.
 
+#### `parse`
+
+Parse a single piece of turn notation.
+
+```bash
+$ twister parse cube R
+```
+
+#### `parseAlgorithm`
+
+Parse multiple pieces of turn notation.
+
+```bash
+$ twister parseAlgorithm cube "R U R-"
+```
+
 #### `scramble`
 
 Scramble a puzzle.
