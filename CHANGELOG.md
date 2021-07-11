@@ -1,6 +1,12 @@
 # Twister changelog
 
-> **Warning:** This library is a work in progress, and is not ready for production use. Breaking changes may happen at any time.
+> **Warning:** This library is in beta. Breaking changes are no longer anticipated, but may still happen before 1.0 is tagged.
+
+## 1.0.0-beta.9
+
+- All turn objects now include a `whole` property
+- Added `parseAlgorithm` method
+- Added `parse` and `parseAlgorithm` cli commands
 
 ## 1.0.0-beta.8
 
