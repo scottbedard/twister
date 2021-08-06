@@ -199,10 +199,10 @@ Execute an algorithm. This will be performed on a solved puzzle unless an initia
 
 ```bash
 # apply turns to a solved puzzle
-$ twister apply cube "R U R-"
+$ twister turn cube "R U R-"
 
 # apply turns from an initial state
-$ twister apply cube "R U R-" --state="{...}"
+$ twister turn cube "R U R-" --state="{...}"
 ```
 
 ## Puzzles
