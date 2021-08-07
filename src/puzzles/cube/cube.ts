@@ -1,6 +1,6 @@
 import { error } from '@/utils/function';
 import { extract, inject, rotate } from '@/utils/matrix';
-import { flattenBy, isUniform, last, sample, times, without } from '@/utils/array';
+import { flattenBy, flattenDeep, isUniform, last, sample, times, without } from '@/utils/array';
 import { floor, max, rand } from '@/utils/number';
 import { keys } from '@/utils/object';
 import { lowercase } from '@/utils/string';
@@ -203,17 +203,20 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
   }
 
   /**
-   * Get stickers that are part of a turn.
+   * Get stickers.
    *
-   * @param {string} turn turn to extract stickers from
+   * @param {string} turnNotation turn to extract stickers from
    */
-  stickers(turnNotation: string): CubeSticker[] {
+  stickers(turnNotation?: string): CubeSticker[] {
+    if (!turnNotation) {
+      return flattenDeep(Object.values(this.state));
+    }
+
     const turn = this.parse(turnNotation);
-    const { u, l, f, r, b, d } = this.state;
 
     // return all stickers for whole-puzzle rotations
     if (turn.target === 'x' || turn.target === 'y' || turn.target === 'z') {
-      return [].concat(u, l, f, r, b, d);
+      return flattenDeep(Object.values(this.state));
     }
 
     const stickers: CubeSticker[] = [];

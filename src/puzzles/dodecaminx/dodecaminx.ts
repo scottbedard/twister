@@ -244,17 +244,20 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
   }
 
   /**
-   * Get stickers that are part of a turn.
+   * Get stickers.
    *
    * @param {string} turnNotation turn to extract stickers from
    */
-  stickers(turnNotation: string): DodecaminxSticker[] {
+  stickers(turnNotation?: string): DodecaminxSticker[] {
+    if (!turnNotation) {
+      return flattenDeep(Object.values(this.state));
+    }
+
     const turn = this.parse(turnNotation);
-    const { b, bl, br, d, dbl, dbr, dl, dr, f, l, r, u } = this.state;
 
     // return all stickers for whole-puzzle rotations
     if (turn.whole) {
-      return flattenDeep([b, bl, br, d, dbl, dbr, dl, dr, f, l, r, u]);
+      return flattenDeep(Object.values(this.state));
     }
 
     const stickers: DodecaminxSticker[] = [];

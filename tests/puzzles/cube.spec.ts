@@ -89,6 +89,13 @@ describe('Cube', () => {
   });
 
   describe('stickers', () => {
+    it('all stickers', () => {
+      const model = new Cube({ size: 3 });
+      const stickers = model.stickers();
+
+      expect(stickers.length).toBe((3 ** 2) * 6);
+    });
+
     it('X', () => {
       const model = new Cube({ size: 3 });
       const stickers = model.stickers('X');

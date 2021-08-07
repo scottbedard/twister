@@ -128,6 +128,13 @@ describe('Dodecaminx', () => {
   });
 
   describe('stickers', () => {
+    it('all stickers', () => {
+      const model = new Dodecaminx({ size: 3 });
+      const stickers = model.stickers();
+
+      expect(stickers.length).toBe(11 * 12);
+    });
+
     it('u', () => {
       const model = new Dodecaminx({ size: 3 });
       const stickers = model.stickers('u');

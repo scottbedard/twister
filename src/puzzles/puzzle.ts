@@ -102,11 +102,11 @@ export abstract class Puzzle<
   }
 
   /**
-   * Get stickers that are part of a turn.
+   * Get stickers.
    *
-   * @param {string} turn turn to extract stickers from
+   * @param {string} turnNotation turn to extract stickers from
    */
-  abstract stickers(turn: string): Sticker[];
+  abstract stickers(turnNotation?: string): Sticker[];
 
   /**
    * Test if the puzzle is solved

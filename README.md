@@ -113,7 +113,7 @@ puzzle.scramble()
 
 #### `stickers`
 
-Get all stickers effected by a turn.
+Get stickers affected by a turn. If no turn notation is provided, all stickers will be returned.
 
 ```js
 const stickers = puzzle.stickers('R')
