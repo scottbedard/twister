@@ -2,6 +2,10 @@
 
 > **Warning:** This library is in beta. Breaking changes are no longer anticipated, but may still happen before 1.0 is tagged.
 
+## 1.0.0-beta.11
+
+- Fix cubes not erroring when parsing prime double turns ([#29](https://github.com/scottbedard/twister/issues/29))
+
 ## 1.0.0-beta.10
 
 - If no argument is provided to `stickers`, all stickers will be returned
