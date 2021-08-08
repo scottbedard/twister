@@ -73,18 +73,26 @@ describe('Cube', () => {
     const debug = '';
     const model = new Cube({ size: 3 });
 
-    Object.entries(cubeNotation).forEach(([turn, expected]) => {
-      if (!debug || debug === turn) {
-        it(turn, () => {
-          expect(model.parse(turn)).toEqual(expected);
-        });
-      } else {
-        it.todo(turn);
-      }
+    describe('valid', () => {
+      Object.entries(cubeNotation).forEach(([turn, expected]) => {
+        if (!debug || debug === turn) {
+          it(turn, () => {
+            expect(model.parse(turn)).toEqual(expected);
+          });
+        } else {
+          it.todo(turn);
+        }
+      });
     });
 
-    it('bad turn', () => {
-      expect(() => model.parse('bad turn')).toThrow();
+    describe('invalid', () => {
+      it('bad turn', () => {
+        expect(() => model.parse('bad turn')).toThrow();
+      });
+
+      it('R2-', () => {
+        expect(() => model.parse('R2-')).toThrow();
+      });
     });
   });
 
