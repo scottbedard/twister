@@ -170,7 +170,7 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
    * @param {string} turn turn notation to parse
    */
   parse(turn: string): CubeTurn {
-    const parts = turn.match(/^(\d)*([ulfrbdxyzULFRBDXYZ]){1}(w)*(['-2])?$/);
+    const parts = turn.match(/^(\d)*([ulfrbdxyz]){1}(w)*(['-2])?$/i);
 
     if (!parts) {
       error(`Invalid turn: ${turn}`);
