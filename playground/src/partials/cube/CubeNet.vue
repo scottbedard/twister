@@ -8,7 +8,7 @@
       :transform="`translate(${faceTransforms[face][0]}, ${faceTransforms[face][1]})`">
       <rect
         v-for="(sticker, stickerIndex) in model.state[face]"
-        class="text-gray-900"
+        class="cursor-pointer text-gray-900"
         stroke="currentColor"
         :data-value="sticker.value"
         :fill="color(sticker.value)"
@@ -19,6 +19,7 @@
         :width="stickerSize"
         :x="stickerSize * colIndex(stickerIndex)"
         :y="stickerSize * rowIndex(stickerIndex)"
+        @click="$emit('click-sticker', sticker)"
       />
     </g>
   </svg>
@@ -28,8 +29,6 @@
 import { computed, defineComponent, PropType } from 'vue'
 import { Cube } from '@/index'
 import { times } from 'lodash-es'
-
-const colors = ['#FFEE5D', '#EFAA18', '#2589E2', '#EC6157', '#5CBD60', '#F0F0F0']
 
 const faceTransforms = {
   u: [1.1, 0.05],
@@ -56,7 +55,7 @@ export default defineComponent({
     const rowMap = computed(() => mapRows(props.model.options.size))
     const stickerSize = computed(() => 1 / props.model.options.size)
 
-    const color = (value: any) => colors[value]
+    const color = (value: any) => props.colors[value] ?? '#6B7280';
     const colIndex = (stickerIndex: number) => colMap.value[stickerIndex];
     const rowIndex = (stickerIndex: number) => rowMap.value[stickerIndex];
 
@@ -69,7 +68,14 @@ export default defineComponent({
       stickerSize,
     }
   },
+  emits: [
+    'click-sticker',
+  ],
   props: {
+    colors: {
+      required: true,
+      type: Array as PropType<string[]>
+    },
     model: {
       required: true,
       type: Object as PropType<Cube>

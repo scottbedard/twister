@@ -32,26 +32,74 @@
       </p>
 
       <div class="leading-loose">
+        <div class="flex flex-wrap items-center gap-x-3">
+          <b>Editor:</b>
+          <a
+            v-for="(color, index) in colors"
+            href="#"
+            title="Select color"
+            :class="['border border-darken-25 h-4 rounded-full shadow-sm transition-all w-4 dark:border-lighten-25', {
+              'transform scale-150 shadow-md': selectedColor === index,
+            }]"
+            :style="{
+              background: color,
+            }"
+            :key="index"
+            @click.prevent="selectColor(index)" />
+
+          <a
+            class="unstyled hover:text-red-500"
+            href="#"
+            title="Clear puzzle"
+            @click.prevent="clear">
+            <Icon name="x" />
+          </a>
+
+          <a
+            href="#"
+            title="Copy state"
+            @click.prevent="copyState">
+            <Icon name="clipboard" size="4.2" />  
+          </a>
+
+          <span
+            v-if="copied"
+            class="font-bold text-xs">
+            State copied!
+          </span>
+        </div>
         <div><b>Solved:</b> {{ model.test() }}</div>
         <div><b>Turns:</b> {{ moveHistory.join(' ') }}</div>
       </div>
     </div>
 
     <div class="md:col-span-6">
-      <CubeNet :model="model" />
+      <CubeNet
+        :colors="colors"
+        :model="model"
+        @click-sticker="onClickSticker" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Button, InlineCode, Input } from 'playground/components'
-import { Cube } from '@/index'
+import { Button, InlineCode, Icon, Input } from 'playground/components'
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
+import { Cube } from '@/index'
+import { useClipboard } from '@vueuse/core'
 import CubeNet from 'playground/partials/cube/CubeNet.vue'
 
 export default defineComponent({
   setup() {
+    const clipboard = useClipboard()
+
+    const copied = ref(false)
+
+    const colors = ['#FFEE5D', '#EFAA18', '#2589E2', '#EC6157', '#5CBD60', '#F0F0F0']
+
     const moveHistory = ref<string[]>([])
+
+    const selectedColor = ref<number | null>(null)
 
     const size = ref(3)
 
@@ -60,6 +108,24 @@ export default defineComponent({
     const turns = ref('')
 
     const nextSize = computed(() => model.value.options.size >= 10 ? 2 : model.value.options.size + 1)
+
+    const clear = () => {
+      for (const key in model.value.state) {
+        model.value.state[key].forEach(sticker => {
+          sticker.value = null
+        })
+      }
+    }
+
+    const copyState = () => {
+      clipboard.copy(JSON.stringify(model.value.output()));
+
+      copied.value = true;
+
+      setTimeout(() => {
+        copied.value = false;
+      }, 3000);
+    }
 
     const log = () => {
       console.log((window as any).model)
@@ -79,6 +145,22 @@ export default defineComponent({
       (window as any).model = model.value
     }
 
+    const onClickSticker = (sticker: any) => {
+      if (sticker.value === selectedColor.value) {
+        sticker.value = null
+      } else {
+        sticker.value = selectedColor.value
+      }
+    }
+
+    const selectColor = (color: number) => {
+      if (color === selectedColor.value) {
+        selectedColor.value = null
+      } else {
+        selectedColor.value = color
+      }
+    }
+
     const scramble = () => {
       model.value.scramble()
     }
@@ -91,20 +173,27 @@ export default defineComponent({
     })
 
     return {
+      clear,
+      colors,
+      copied,
+      copyState,
       log,
       model,
       moveHistory,
       nextSize,
+      onClickSticker,
       reset,
       scramble,
-      size,
+      selectColor,
+      selectedColor,
       turns,
     }
   },
   components: {
-    InlineCode,
-    CubeNet,
     Button,
+    CubeNet,
+    Icon,
+    InlineCode,
     Input,
   },
 })
