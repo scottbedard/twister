@@ -16,7 +16,7 @@
       class="sm:hidden"
       href="#"
       :title="`${isMobileNavExpanded ? 'Hide' : 'Show'} mobile navigation`"
-      @click.prevent="toggleMobileNav">
+      @click.prevent="toggleMobileNav()">
       <Icon :name="isMobileNavExpanded ? 'x' : 'menu'" />
     </a>
 
@@ -50,7 +50,7 @@
         <a
           href="#"
           :title="`Toggle ${isDark ? 'light' : 'dark'} mode`"
-          @click.prevent="toggleDark">
+          @click.prevent="toggleDark()">
           <Icon :name="isDark ? 'moon' : 'sun'" />
         </a>
       </div>
@@ -80,7 +80,7 @@
       <a
         href="#"
         :title="`Toggle ${isDark ? 'light' : 'dark'} mode`"
-        @click.prevent="toggleDark">
+        @click.prevent="toggleDark()">
         <Icon :name="isDark ? 'moon' : 'sun'" />
       </a>
     </nav>
