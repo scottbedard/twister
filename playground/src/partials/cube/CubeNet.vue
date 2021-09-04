@@ -8,7 +8,7 @@
       :transform="`translate(${faceTransforms[face][0]}, ${faceTransforms[face][1]})`">
       <rect
         v-for="(sticker, stickerIndex) in model.state[face]"
-        class="cursor-pointer text-gray-900"
+        class="cursor-pointer text-gray-900 hover:opacity-90"
         stroke="currentColor"
         :data-value="sticker.value"
         :fill="color(sticker.value)"

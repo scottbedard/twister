@@ -26,7 +26,7 @@
             :transform="face.transform">
             <path
               v-for="(obj, index) in face.stickers"
-              class="cursor-pointer"
+              class="cursor-pointer hover:opacity-90"
               stroke="currentColor"
               :d="d(obj?.path ?? [])"
               :fill="color(obj?.sticker.value)"
