@@ -140,7 +140,6 @@ export default defineComponent({
     }
 
     const onClickSticker = (sticker: any) => {
-      console.log('click', sticker)
       if (sticker.value === selectedColor.value) {
         sticker.value = null
       } else {
