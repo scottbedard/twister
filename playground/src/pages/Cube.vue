@@ -110,11 +110,9 @@ export default defineComponent({
     const nextSize = computed(() => model.value.options.size >= 10 ? 2 : model.value.options.size + 1)
 
     const clear = () => {
-      for (const key in model.value.state) {
-        model.value.state[key].forEach(sticker => {
-          sticker.value = null
-        })
-      }
+      model.value.stickers().forEach(sticker => {
+        sticker.value = null
+      })
     }
 
     const copyState = () => {

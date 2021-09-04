@@ -55,7 +55,7 @@ export default defineComponent({
     const rowMap = computed(() => mapRows(props.model.options.size))
     const stickerSize = computed(() => 1 / props.model.options.size)
 
-    const color = (value: any) => props.colors[value] ?? '#6B7280';
+    const color = (value: any) => props.colors[value] ?? '#9CA3AF';
     const colIndex = (stickerIndex: number) => colMap.value[stickerIndex];
     const rowIndex = (stickerIndex: number) => rowMap.value[stickerIndex];
 

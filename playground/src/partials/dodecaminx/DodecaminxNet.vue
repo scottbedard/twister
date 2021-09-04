@@ -26,16 +26,16 @@
             :transform="face.transform">
             <path
               v-for="(obj, index) in face.stickers"
+              class="cursor-pointer"
               stroke="currentColor"
               :d="d(obj?.path ?? [])"
-              :fill="colors[obj?.sticker.value]"
+              :fill="color(obj?.sticker.value)"
               :key="`corner-${index}`"
-              :stroke-width="strokeWidth" />
+              :stroke-width="strokeWidth"
+              @click="$emit('click-sticker', obj.sticker)" />
           </g>
         </template>
       </g>
-
-      <!-- <use clip-path="url(#myClip)" xlink:href="#heart" fill="red" /> -->
     </svg>
   </div>
 </template>
@@ -51,22 +51,6 @@ type Face = Dodecaminx['state']['u']
 
 const mapCols = (n: number) => times(n ** 2).map((x, i) => i % n)
 const mapRows = (n: number) => times(n ** 2).map((x, i) => Math.floor(i / n))
-
-// colors
-const colors = [
-  '#718096', // b: gray
-  '#ED8936', // bl: orange
-  '#9AE6B4', // br: light green
-  '#FBD38D', // d: creme
-  '#90CDF4', // dbl: light blue
-  '#F687B3', // dbr: pink
-  '#2F855A', // dl: dark green
-  '#E53E3E', // dr: red
-  '#F7FAFC', // f: white
-  '#9F7AEA', // l: purple
-  '#2B6CB0', // r: dark blue
-  '#F6E05E', // u: yellow
-]
 
 // origin
 const origin: Vector = [0, 0]
@@ -191,6 +175,8 @@ export default defineComponent({
         : Math.max(0.02, (7 - props.model.options.size) / 100)
     })
 
+    const color = (value: any) => props.colors[value] ?? '#9CA3AF';
+
     const center = (face: Face) => {
       return isEven(props.model.options.size)
         ? null
@@ -257,14 +243,21 @@ export default defineComponent({
     }
 
     return {
-      colors,
+      color,
       d,
       faces,
       strokeWidth,
       outline: [p0, p1, p2, p3, p4]
     }
   },
+  emits: [
+    'click-sticker',
+  ],
   props: {
+    colors: {
+      required: true,
+      type: Array as PropType<string[]>,
+    },
     model: {
       required: true,
       type: Object as PropType<Dodecaminx>

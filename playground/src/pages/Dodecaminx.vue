@@ -32,25 +32,87 @@
       </p>
 
       <div class="leading-loose">
+        <div class="flex flex-wrap items-center gap-x-3">
+          <b>Editor:</b>
+
+          <a
+            v-for="(color, index) in colors"
+            href="#"
+            title="Select color"
+            :class="['border border-darken-25 h-4 rounded-full shadow-sm transition-all w-4 dark:border-lighten-25', {
+              'transform scale-150 shadow-md': selectedColor === index,
+            }]"
+            :style="{
+              background: color,
+            }"
+            :key="index"
+            @click.prevent="selectColor(index)" />
+
+          <a
+            class="unstyled hover:text-red-500"
+            href="#"
+            title="Clear puzzle"
+            @click.prevent="clear">
+            <Icon name="x" />
+          </a>
+
+          <a
+            href="#"
+            title="Copy state"
+            @click.prevent="copyState">
+            <Icon name="clipboard" size="4.2" />  
+          </a>
+
+          <span
+            v-if="copied"
+            class="font-bold text-xs">
+            State copied!
+          </span>
+        </div>
         <div><b>Solved:</b> {{ model.test() }}</div>
         <div><b>Turns:</b> {{ moveHistory.join(' ') }}</div>
       </div>
     </div>
 
     <div class="md:col-span-6">
-      <DodecaminxNet :model="model" />
+      <DodecaminxNet
+        :colors="colors"
+        :model="model"
+        @click-sticker="onClickSticker" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Button, InlineCode, Input } from 'playground/components'
+import { Button, Icon, InlineCode, Input } from 'playground/components'
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { Dodecaminx } from '@/index'
+import { useClipboard } from '@vueuse/core'
 import DodecaminxNet from 'playground/partials/dodecaminx/DodecaminxNet.vue'
 
 export default defineComponent({
   setup() {
+    const colors = [
+      '#4B5563', // b: gray
+      '#ED8936', // bl: orange
+      '#9AE6B4', // br: light green
+      '#FBD38D', // d: creme
+      '#90CDF4', // dbl: light blue
+      '#F687B3', // dbr: pink
+      '#2F855A', // dl: dark green
+      '#E53E3E', // dr: red
+      '#F3F4F6', // f: white
+      '#9F7AEA', // l: purple
+      '#2B6CB0', // r: dark blue
+      '#F6E05E', // u: yellow
+    ]
+
+    const clipboard = useClipboard()
+
+    const copied = ref(false)
+
+    const selectedColor = ref<number | null>(null)
+
     const size = ref(3)
     
     const model = ref(new Dodecaminx({ size: size.value }))
@@ -60,6 +122,31 @@ export default defineComponent({
     const turns = ref('')
 
     const nextSize = computed(() => model.value.options.size >= 10 ? 2 : model.value.options.size + 1)
+
+    const clear = () => {
+      model.value.stickers().forEach(sticker => {
+        sticker.value = null
+      })
+    }
+
+    const copyState = () => {
+      clipboard.copy(JSON.stringify(model.value.output()));
+
+      copied.value = true;
+
+      setTimeout(() => {
+        copied.value = false;
+      }, 3000);
+    }
+
+    const onClickSticker = (sticker: any) => {
+      console.log('click', sticker)
+      if (sticker.value === selectedColor.value) {
+        sticker.value = null
+      } else {
+        sticker.value = selectedColor.value
+      }
+    }
 
     const reset = () => {
       moveHistory.value = []
@@ -79,6 +166,14 @@ export default defineComponent({
       model.value.scramble()
     }
 
+    const selectColor = (color: number) => {
+      if (color === selectedColor.value) {
+        selectedColor.value = null
+      } else {
+        selectedColor.value = color
+      }
+    }
+
     onMounted(reset)
     
     watch(() => model.value.options.size, (n: number) => {
@@ -87,17 +182,25 @@ export default defineComponent({
     })
 
     return {
+      clear,
+      colors,
+      copied,
+      copyState,
       model,
       moveHistory,
       nextSize,
+      onClickSticker,
       reset,
       scramble,
+      selectColor,
+      selectedColor,
       turns,
     }
   },
   components: {
     Button,
     DodecaminxNet,
+    Icon,
     InlineCode,
     Input,
   },
