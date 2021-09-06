@@ -30,7 +30,7 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    *
    * @param {Partial<CubeOptions>} options puzzle options
    */
-  constructor(options: Partial<DodecaminxOptions>) {
+  constructor(options: Partial<DodecaminxOptions> = {}) {
     const {
       random = Math.random,
       size = 3,

@@ -25,7 +25,7 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
    *
    * @param {Options} options
    */
-  constructor(options: Options) {
+  constructor(options: Options = {} as Options) {
     this.options = options;
   }
 

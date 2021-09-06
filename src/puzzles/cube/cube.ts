@@ -32,7 +32,7 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
    *
    * @param {Partial<CubeOptions>} options puzzle options
    */
-  constructor(options: Partial<CubeOptions>) {
+  constructor(options: Partial<CubeOptions> = {}) {
     const {
       random = Math.random,
       size = 3,
