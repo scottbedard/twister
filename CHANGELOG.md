@@ -2,6 +2,10 @@
 
 > **Warning:** This library is in beta. Breaking changes are no longer anticipated, but may still happen before 1.0 is tagged.
 
+## 1.0.0-beta.12
+
+- The base puzzle class is no longer abstract. It can be instantiated as used as a placeholder, but cannot be scrambled.
+
 ## 1.0.0-beta.11
 
 - Fix cubes not erroring when parsing prime double turns ([#29](https://github.com/scottbedard/twister/issues/29))
