@@ -1,17 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { identity } from '@/utils/function';
 import { trim } from '@/utils/string';
-import { BaseTurn } from './types';
 
 /**
  * Base puzzle class.
  */
-export abstract class Puzzle<
-  Options,
-  State,
-  SimpleState,
-  Turn extends BaseTurn,
-  Sticker,
-> {
+export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
   /**
    * Puzzle options
    *
@@ -37,37 +31,40 @@ export abstract class Puzzle<
 
   /**
    * Apply puzzle state
-   *
-   * @param {SimpleState} state state to apply to the puzzle
    */
-  abstract apply(state: SimpleState): void;
+  apply(state: Partial<SimpleState>): void {
+    // ...
+  }
 
   /**
    * Execute a turn
-   *
-   * @param {Turn} turn turn to execute
    */
-  abstract execute(turn: Turn): void;
+  execute(turn: Turn): void {
+    // ...
+  }
 
   /**
    * Generate a scramble
-   *
-   * @param {number} depth number of scramble turns
-   * @param {string} prevTurn previous turn
    */
-  abstract generateScramble(depth?: number, prevTurn?: string): string;
+  generateScramble(depth?: number, prevTurn?: string): string {
+    return '';
+  }
 
   /**
    * Output puzzle state
    */
-  abstract output(): SimpleState;
+  output(): SimpleState {
+    return {} as SimpleState;
+  }
 
   /**
    * Parse a single turn
    *
    * @param {string} turn turn notation to parse
    */
-  abstract parse(turn: string): Turn;
+  parse(turn: string): Turn {
+    return {} as Turn;
+  }
 
   /**
    * Parse an algorithm
@@ -85,7 +82,9 @@ export abstract class Puzzle<
   /**
    * Reset puzzle state
    */
-  abstract reset(): void;
+  reset(): void {
+    // ...
+  }
 
   /**
    * Scramble the puzzle
@@ -106,12 +105,16 @@ export abstract class Puzzle<
    *
    * @param {string} turnNotation turn to extract stickers from
    */
-  abstract stickers(turnNotation?: string): Sticker[];
+  stickers(turnNotation?: string): Sticker[] {
+    return [];
+  }
 
   /**
    * Test if the puzzle is solved
    */
-  abstract test(): boolean;
+  test(): boolean {
+    return true;
+  }
 
   /**
    * Execute an algorithm
