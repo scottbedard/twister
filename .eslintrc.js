@@ -17,6 +17,8 @@ module.exports = {
   root: true,
   rules: {
     '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
+    '@typescript-eslint/semi': ['error', 'never'],
+    'arrow-parens': ['error', 'as-needed'],
     'class-methods-use-this': 0,
     'import/order': 0,
     'import/prefer-default-export': 0,
@@ -26,5 +28,6 @@ module.exports = {
     'object-curly-newline': 0,
     'prefer-destructuring': 0,
     'quote-props': 0,
+    'semi': ['error', 'never'],
   },
 };
