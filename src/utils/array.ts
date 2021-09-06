@@ -1,11 +1,11 @@
-import { rand } from './number';
-import { ValueOrArray } from './types';
+import { rand } from './number'
+import { ValueOrArray } from './types'
 
 /**
  * Flatten an array of objects by key.
  */
 export function flattenBy<T extends Record<string, unknown>>(arr: T[], key: keyof T) {
-  return arr.map((obj) => obj[key]);
+  return arr.map(obj => obj[key])
 }
 
 /**
@@ -14,7 +14,7 @@ export function flattenBy<T extends Record<string, unknown>>(arr: T[], key: keyo
  * @param {ValueOrArray<T>[]} arr recursive array to flatten
  */
 export function flattenDeep<T>(arr: ValueOrArray<T>[]): T[] {
-  return arr.reduce<T[]>((acc, val) => acc.concat(Array.isArray(val) ? flattenDeep(val) : val), []);
+  return arr.reduce<T[]>((acc, val) => acc.concat(Array.isArray(val) ? flattenDeep(val) : val), [])
 }
 
 /**
@@ -26,7 +26,7 @@ export function flattenDeep<T>(arr: ValueOrArray<T>[]): T[] {
  * @return {T}
  */
 export function head<T>(arr: T[], begin?: number): T {
-  return slice(arr, begin).shift();
+  return slice(arr, begin).shift()
 }
 
 /**
@@ -36,16 +36,16 @@ export function head<T>(arr: T[], begin?: number): T {
  */
 export function isUniform<T>(arr: T[]): boolean {
   if (arr.length > 1) {
-    const val = arr[0];
+    const val = arr[0]
 
     for (let i = 1; i < arr.length; i += 1) {
       if (arr[i] !== val) {
-        return false;
+        return false
       }
     }
   }
 
-  return true;
+  return true
 }
 
 /**
@@ -54,7 +54,7 @@ export function isUniform<T>(arr: T[]): boolean {
  * @param {T[]} arr Array to get last item from.
  */
 export function last<T>(arr: T[]) {
-  return arr[arr.length - 1];
+  return arr[arr.length - 1]
 }
 
 /**
@@ -65,7 +65,7 @@ export function last<T>(arr: T[]) {
  * @return {T[]}
  */
 export function reverse<T>(arr: T[]): T[] {
-  return slice(arr).reverse();
+  return slice(arr).reverse()
 }
 
 /**
@@ -77,9 +77,9 @@ export function reverse<T>(arr: T[]): T[] {
  * @return {T[]}
  */
 export function roll<T>(arr: T[], n: number): T[] {
-  const offset = ((-n % arr.length) + arr.length) % arr.length;
+  const offset = ((-n % arr.length) + arr.length) % arr.length
 
-  return slice(arr, offset).concat(slice(arr, 0, offset));
+  return slice(arr, offset).concat(slice(arr, 0, offset))
 }
 
 /**
@@ -90,7 +90,7 @@ export function roll<T>(arr: T[], n: number): T[] {
  * @return {T}
  */
 export function sample<T>(arr: T[], random: () => number): T {
-  return arr[rand(0, arr.length - 1, random)];
+  return arr[rand(0, arr.length - 1, random)]
 }
 
 /**
@@ -103,7 +103,7 @@ export function sample<T>(arr: T[], random: () => number): T {
  * @return {T[]}
  */
 export function slice<T>(arr: T[], start?: number, end?: number): T[] {
-  return arr.slice(start, end);
+  return arr.slice(start, end)
 }
 
 /**
@@ -117,7 +117,7 @@ export function slice<T>(arr: T[], start?: number, end?: number): T[] {
  * @return {T[]} An array containing the elements that were deleted.
  */
 export function splice<T>(arr: T[], start: number, take: number, ...items: T[]): T[] {
-  return arr.splice(start, take, ...items);
+  return arr.splice(start, take, ...items)
 }
 
 /**
@@ -129,7 +129,7 @@ export function splice<T>(arr: T[], start: number, take: number, ...items: T[]):
  * @return {Array}
  */
 export function times<T>(length: number, value?: T): T[] {
-  return new Array(length).fill(value);
+  return new Array(length).fill(value)
 }
 
 /**
@@ -139,5 +139,5 @@ export function times<T>(length: number, value?: T): T[] {
  * @param {...T[]} values Values to exclude.
  */
 export function without<T>(arr: T[], ...values: T[]): T[] {
-  return arr.filter((val) => !values.includes(val));
+  return arr.filter(val => !values.includes(val))
 }

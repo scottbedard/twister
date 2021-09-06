@@ -6,7 +6,7 @@
  * @return {number}
  */
 export function floor(n: number): number {
-  return Math.floor(n);
+  return Math.floor(n)
 }
 
 /**
@@ -17,7 +17,7 @@ export function floor(n: number): number {
  * @return {boolean}
  */
 export function isInteger(n: number): boolean {
-  return Number.isInteger(n);
+  return Number.isInteger(n)
 }
 
 /**
@@ -28,7 +28,7 @@ export function isInteger(n: number): boolean {
  * @return {boolean}
  */
 export function isOdd(n: number): boolean {
-  return n % 2 === 1;
+  return n % 2 === 1
 }
 
 /**
@@ -39,7 +39,7 @@ export function isOdd(n: number): boolean {
  * @return {number}
  */
 export function max(...values: number[]): number {
-  return Math.max(...values);
+  return Math.max(...values)
 }
 
 /**
@@ -50,7 +50,7 @@ export function max(...values: number[]): number {
  * @return {number}
  */
 export function min(...values: number[]): number {
-  return Math.min(...values);
+  return Math.min(...values)
 }
 
 /**
@@ -62,5 +62,5 @@ export function min(...values: number[]): number {
  * @return {number}
  */
 export function rand(low: number, high: number, random: () => number = Math.random): number {
-  return floor(random() * (high - low + 1)) + low;
+  return floor(random() * (high - low + 1)) + low
 }

@@ -1,4 +1,4 @@
-import { DodecaminxFaceLower } from './types';
+import { DodecaminxFaceLower } from './types'
 
 /**
  * This constant defines how faces are related to one another. Think of it as
@@ -101,7 +101,7 @@ export const dodecaminxNet: Record<DodecaminxFaceLower, [
     ['l', 0],
     ['bl', 1],
   ],
-};
+}
 
 /**
  * Dodecaminx faces that are opposite one another.
@@ -119,4 +119,4 @@ export const dodecaminxOpposites: Record<DodecaminxFaceLower, DodecaminxFaceLowe
   l: 'dbr',
   r: 'dbl',
   u: 'd',
-};
+}

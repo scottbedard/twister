@@ -4,7 +4,7 @@
  * @param {string} str string to lowercase
  */
 export function lowercase<T extends string>(str: T): Lowercase<T> {
-  return str.toLowerCase() as Lowercase<T>;
+  return str.toLowerCase() as Lowercase<T>
 }
 
 /**
@@ -13,5 +13,5 @@ export function lowercase<T extends string>(str: T): Lowercase<T> {
  * @param {string} str string to trim
  */
 export function trim(str: string): string {
-  return str.trim();
+  return str.trim()
 }

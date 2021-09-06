@@ -1,27 +1,27 @@
-import { Dodecaminx } from '@/index';
-import { DodecaminxStateSimple } from '@/puzzles/dodecaminx/types';
+import { Dodecaminx } from '@/index'
+import { DodecaminxStateSimple } from '@/puzzles/dodecaminx/types'
 
-const model = new Dodecaminx({ size: 2 });
+const model = new Dodecaminx({ size: 2 })
 
-const b = model.state.b[0][0][0].value;
-const bl = model.state.bl[0][0][0].value;
-const br = model.state.br[0][0][0].value;
-const d = model.state.d[0][0][0].value;
-const dbl = model.state.dbl[0][0][0].value;
-const dbr = model.state.dbr[0][0][0].value;
-const dl = model.state.dl[0][0][0].value;
-const dr = model.state.dr[0][0][0].value;
-const f = model.state.f[0][0][0].value;
-const l = model.state.l[0][0][0].value;
-const r = model.state.r[0][0][0].value;
-const u = model.state.u[0][0][0].value;
+const b = model.state.b[0][0][0].value
+const bl = model.state.bl[0][0][0].value
+const br = model.state.br[0][0][0].value
+const d = model.state.d[0][0][0].value
+const dbl = model.state.dbl[0][0][0].value
+const dbr = model.state.dbr[0][0][0].value
+const dl = model.state.dl[0][0][0].value
+const dr = model.state.dr[0][0][0].value
+const f = model.state.f[0][0][0].value
+const l = model.state.l[0][0][0].value
+const r = model.state.r[0][0][0].value
+const u = model.state.u[0][0][0].value
 
 type TurnTest = {
   only: boolean,
   result: DodecaminxStateSimple,
   size: number,
   turn: string,
-};
+}
 
 //
 // megaminx
@@ -87,7 +87,7 @@ const stub5x3: DodecaminxStateSimple = {
     [[d], [d], [d], [d], [d]],
     d,
   ],
-};
+}
 
 //
 // tests
@@ -1911,6 +1911,6 @@ const tests: TurnTest[] = [
       ],
     },
   },
-];
+]
 
-export default tests;
+export default tests

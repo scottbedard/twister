@@ -1,4 +1,4 @@
-import { CubeAxisLower, CubeFaceLower } from './types';
+import { CubeAxisLower, CubeFaceLower } from './types'
 
 /**
  * Relationship between axis and face turns.
@@ -7,7 +7,7 @@ export const cubeAxes: Record<CubeAxisLower, CubeFaceLower> = {
   x: 'r',
   y: 'u',
   z: 'f',
-};
+}
 
 /**
  * This constant defines how faces are related to one another. Think of it as
@@ -64,7 +64,7 @@ export const cubeNet: Record<CubeFaceLower, [
     ['b', 2],
     ['l', 2],
   ],
-};
+}
 
 /**
  * Faces that are opposite one another. This is used on turns where the depth
@@ -77,4 +77,4 @@ export const cubeOpposites: Record<CubeFaceLower, CubeFaceLower> = {
   r: 'l',
   b: 'f',
   d: 'u',
-};
+}

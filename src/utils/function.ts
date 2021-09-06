@@ -4,7 +4,7 @@
  * @param {string} message Error message.
  */
 export function error(message?: string) {
-  throw new Error(message);
+  throw new Error(message)
 }
 
 /**
@@ -13,5 +13,5 @@ export function error(message?: string) {
  * @param {T} arg Value to return.
  */
 export function identity<T>(arg: T) {
-  return arg;
+  return arg
 }

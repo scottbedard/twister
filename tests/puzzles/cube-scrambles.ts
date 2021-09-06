@@ -1,4 +1,4 @@
-const [y, o, b, r, g, w] = [0, 1, 2, 3, 4, 5];
+const [y, o, b, r, g, w] = [0, 1, 2, 3, 4, 5]
 
 // the following scrambles were generated using the old WCA scrambler
 // https://www.worldcubeassociation.org/regulations/history/files/scrambles/scramble_cube.htm
@@ -159,4 +159,4 @@ export default [
       ],
     },
   },
-];
+]

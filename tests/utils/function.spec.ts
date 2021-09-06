@@ -1,16 +1,16 @@
 import {
   error,
   identity,
-} from '@/utils/function';
+} from '@/utils/function'
 
 describe('function utils', () => {
   it('error', () => {
-    expect(() => error()).toThrow();
-  });
+    expect(() => error()).toThrow()
+  })
 
   it('identity', () => {
-    const obj = {};
+    const obj = {}
 
-    expect(identity(obj)).toBe(obj);
-  });
-});
+    expect(identity(obj)).toBe(obj)
+  })
+})

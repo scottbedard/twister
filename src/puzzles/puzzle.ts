@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { identity } from '@/utils/function';
-import { trim } from '@/utils/string';
+import { identity } from '@/utils/function'
+import { trim } from '@/utils/string'
 
 /**
  * Base puzzle class.
@@ -11,14 +11,14 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
    *
    * @type {Options}
    */
-  options: Options;
+  options: Options
 
   /**
    * Current puzzle state
    *
    * @type {State}
    */
-  state: State;
+  state: State
 
   /**
    * Constructor
@@ -26,7 +26,7 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
    * @param {Options} options
    */
   constructor(options: Options = {} as Options) {
-    this.options = options;
+    this.options = options
   }
 
   /**
@@ -47,14 +47,14 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
    * Generate a scramble
    */
   generateScramble(depth?: number, prevTurn?: string): string {
-    return '';
+    return ''
   }
 
   /**
    * Output puzzle state
    */
   output(): SimpleState {
-    return {} as SimpleState;
+    return {} as SimpleState
   }
 
   /**
@@ -63,7 +63,7 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
    * @param {string} turn turn notation to parse
    */
   parse(turn: string): Turn {
-    return {} as Turn;
+    return {} as Turn
   }
 
   /**
@@ -76,7 +76,7 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
       .split(' ')
       .map(trim)
       .filter(identity)
-      .map((str) => this.parse(str));
+      .map(str => this.parse(str))
   }
 
   /**
@@ -93,11 +93,11 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
    * @param {string} prevTurn previous turn
    */
   scramble(depth?: number, prevTurn?: string): string {
-    const scramble = this.generateScramble(depth, prevTurn);
+    const scramble = this.generateScramble(depth, prevTurn)
 
-    this.turn(scramble);
+    this.turn(scramble)
 
-    return scramble;
+    return scramble
   }
 
   /**
@@ -106,14 +106,14 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
    * @param {string} turnNotation turn to extract stickers from
    */
   stickers(turnNotation?: string): Sticker[] {
-    return [];
+    return []
   }
 
   /**
    * Test if the puzzle is solved
    */
   test(): boolean {
-    return true;
+    return true
   }
 
   /**
@@ -124,6 +124,6 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
   turn(algorithm: string): void {
     this
       .parseAlgorithm(algorithm)
-      .forEach((turn) => this.execute(turn));
+      .forEach(turn => this.execute(turn))
   }
 }

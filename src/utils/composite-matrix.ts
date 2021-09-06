@@ -1,6 +1,6 @@
-import { extract, inject } from './matrix';
-import { floor, isOdd } from '@/utils/number';
-import { roll, times } from './array';
+import { extract, inject } from './matrix'
+import { floor, isOdd } from '@/utils/number'
+import { roll, times } from './array'
 
 /**
  * Composite matrices are used to represent faces with more than four
@@ -29,9 +29,9 @@ import { roll, times } from './array';
  * ]
  */
 
-export type CompositeLayer<T> = [T[], T | undefined, T[]];
+export type CompositeLayer<T> = [T[], T | undefined, T[]]
 
-export type CompositeMatrix<T> = [T[][]] | [T[][], T[][], T];
+export type CompositeMatrix<T> = [T[][]] | [T[][], T[][], T]
 
 /**
  * Create a composite matrix.
@@ -45,21 +45,21 @@ export function createComposite<T>(
   size: number,
   valueFn: () => T = () => null,
 ): CompositeMatrix<T> {
-  const halfSize = floor(size / 2);
-  const matrixSize = halfSize ** 2;
-  const corners = times(sides).map(() => times(matrixSize).map(valueFn));
+  const halfSize = floor(size / 2)
+  const matrixSize = halfSize ** 2
+  const corners = times(sides).map(() => times(matrixSize).map(valueFn))
 
   if (isOdd(size)) {
     return [
       corners,
       times(sides).map(() => times(halfSize).map(valueFn)),
       valueFn(),
-    ];
+    ]
   }
 
   return [
     corners,
-  ];
+  ]
 }
 
 /**
@@ -74,13 +74,13 @@ export function extractComposite<T>(
   angle: number,
   depth: number,
 ): CompositeLayer<T> {
-  const corners = roll(composite[0], -angle);
+  const corners = roll(composite[0], -angle)
 
   return [
     extract(corners[0], 0, depth),
     roll(composite[1] ?? [], -angle)[0]?.[depth],
     extract(corners[1], -1, depth),
-  ];
+  ]
 }
 
 /**
@@ -97,47 +97,47 @@ export function injectComposite<T>(
   angle: number,
   depth: number,
 ): CompositeMatrix<T> {
-  const corners = roll(composite[0], -angle);
+  const corners = roll(composite[0], -angle)
 
-  corners[0] = inject(layer[0], corners[0], 0, depth);
-  corners[1] = inject(layer[2], corners[1], -1, depth);
+  corners[0] = inject(layer[0], corners[0], 0, depth)
+  corners[1] = inject(layer[2], corners[1], -1, depth)
 
   if (composite.length > 1) {
-    const middles = roll(composite[1], -angle).map((arr) => arr.slice());
+    const middles = roll(composite[1], -angle).map(arr => arr.slice())
 
-    middles[0][depth] = layer[1];
+    middles[0][depth] = layer[1]
 
     return [
       roll(corners, angle),
       roll(middles, angle),
       composite[2],
-    ];
+    ]
   }
 
   return [
     roll(corners, angle),
-  ];
+  ]
 }
 
 /**
  * Apply a function to each value in a composite matrix.
  */
 export function mapComposite<T, U = T>(composite: CompositeMatrix<T>, fn: (val: T) => U): CompositeMatrix<U> {
-  const [corners, middles, center] = composite;
+  const [corners, middles, center] = composite
 
-  const values = (arr: T[]) => arr.map(fn);
+  const values = (arr: T[]) => arr.map(fn)
 
   if (middles && center) {
     return [
       corners.map(values),
       middles.map(values),
       fn(center),
-    ];
+    ]
   }
 
   return [
     corners.map(values),
-  ];
+  ]
 }
 
 /**
@@ -149,5 +149,5 @@ export function mapComposite<T, U = T>(composite: CompositeMatrix<T>, fn: (val: 
 export function rotateComposite<T>(composite: CompositeMatrix<T>, rotation: number): CompositeMatrix<T> {
   return composite.length === 1
     ? [roll(composite[0], rotation)]
-    : [roll(composite[0], rotation), roll(composite[1], rotation), composite[2]];
+    : [roll(composite[0], rotation), roll(composite[1], rotation), composite[2]]
 }

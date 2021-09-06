@@ -62,4 +62,4 @@ export default {
     wide: false,
     whole: true,
   },
-};
+}

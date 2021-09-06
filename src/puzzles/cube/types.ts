@@ -1,22 +1,22 @@
 /**
  * Cube axes
  */
-export type CubeAxis = 'X' | 'Y' | 'Z';
+export type CubeAxis = 'X' | 'Y' | 'Z'
 
 /**
  * Lowercase cube axis
  */
-export type CubeAxisLower = Lowercase<CubeAxis>;
+export type CubeAxisLower = Lowercase<CubeAxis>
 
 /**
  * Cube faces.
  */
-export type CubeFace = 'U' | 'L' | 'F' | 'R' | 'B' | 'D';
+export type CubeFace = 'U' | 'L' | 'F' | 'R' | 'B' | 'D'
 
 /**
  * Lowercase cube faces
  */
-export type CubeFaceLower = Lowercase<CubeFace>;
+export type CubeFaceLower = Lowercase<CubeFace>
 
 /**
  * Cube options
@@ -24,17 +24,17 @@ export type CubeFaceLower = Lowercase<CubeFace>;
 export type CubeOptions = {
   random: () => number,
   size: number,
-};
+}
 
 /**
  * Cube state
  */
-export type CubeState = Record<CubeFaceLower, CubeSticker[]>;
+export type CubeState = Record<CubeFaceLower, CubeSticker[]>
 
 /**
  * Simplified cube state
  */
-export type CubeSimpleState = Record<CubeFaceLower, unknown[]>;
+export type CubeSimpleState = Record<CubeFaceLower, unknown[]>
 
 /**
  * Cube sticker
@@ -42,7 +42,7 @@ export type CubeSimpleState = Record<CubeFaceLower, unknown[]>;
 export type CubeSticker = {
   meta: Record<string, unknown>,
   value: unknown,
-};
+}
 
 /**
  * Parsed cube turn
@@ -53,4 +53,4 @@ export type CubeTurn = {
   target: CubeFaceLower | CubeAxisLower,
   whole: boolean,
   wide: boolean,
-};
+}
