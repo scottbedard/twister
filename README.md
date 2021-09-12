@@ -47,7 +47,7 @@ Once a puzzle has been instantiated, the following methods are available...
 
 #### `apply`
 
-Set the puzzle to a given state.
+Set the puzzle to a given state. State objects can be created using the [`output`](#output) method.
 
 ```js
 puzzle.apply(state)
@@ -55,7 +55,7 @@ puzzle.apply(state)
 
 #### `execute`
 
-Updates puzzle state using a parsed turn object. In most situations, it's simpler to use the `turn` method and make use of turn notation.
+Updates puzzle state using a parsed turn object. In most situations, it's simpler to use the [`turn`](#turn) method and make use of turn notation.
 
 ```js
 const turn = puzzle.parse('R')
@@ -73,7 +73,7 @@ const scramble = puzzle.generateScramble()
 
 #### `output`
 
-Returns a minified version of the puzzle's state. This method is useful for saving state as JSON, then restoring that state via the `apply` method.
+Returns a minified version of the puzzle's state. This method is useful for saving state as JSON, then restoring that state via the [`apply`](#apply) method.
 
 ```js
 const state = puzzle.output()
@@ -105,7 +105,7 @@ puzzle.reset()
 
 #### `scramble`
 
-Scrambles a puzzle to a default or specified number of moves. This is similar to `generateScramble`, the only difference being that this method executes the resulting scramble. This method is also available via the CLI, [more info here](#cli).
+Scrambles a puzzle to a default or specified number of moves. This is similar to [`generateScramble`](#generatescramble), the only difference being that this method executes the resulting scramble. This method is also available via the CLI, [more info here](#cli).
 
 ```js
 puzzle.scramble()
