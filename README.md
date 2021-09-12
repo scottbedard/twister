@@ -81,7 +81,7 @@ const state = puzzle.output()
 
 #### `parse`
 
-Convert a single piece of puzzle notation to a turn object. This method is generally used to interact with the `execute` method, but is also useful for testing if notation is valid.
+Convert a single piece of puzzle notation to a turn object. This method is generally used to interact with the [`execute`](#execute) method, but is also useful for testing if notation is valid.
 
 ```js
 const turn = puzzle.parse('R')
