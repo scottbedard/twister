@@ -2,6 +2,10 @@
 
 > **Warning:** This library is in beta. Breaking changes are no longer anticipated, but may still happen before 1.0 is tagged.
 
+## 1.0.0-beta.13
+
+- Added [`clone`](https://github.com/scottbedard/twister#clone) method to base puzzle class.
+
 ## 1.0.0-beta.12
 
 - The base puzzle class is no longer abstract. It can be instantiated as used as a placeholder, but cannot be scrambled.
