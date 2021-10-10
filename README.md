@@ -53,6 +53,16 @@ Set the puzzle to a given state. State objects can be created using the [`output
 puzzle.apply(state)
 ```
 
+#### `clone`
+
+Create a new puzzle instance with the same `state` and `options`.
+
+```js
+const puzzle = new Puzzle()
+
+const clone = puzzle.clone()
+```
+
 #### `execute`
 
 Updates puzzle state using a parsed turn object. In most situations, it's simpler to use the [`turn`](#turn) method and make use of turn notation.
