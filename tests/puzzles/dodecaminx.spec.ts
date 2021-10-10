@@ -27,6 +27,20 @@ describe('Dodecaminx', () => {
     expect(model.state.f[2].value).toBe(-11)
   })
 
+  it('clone', () => {
+    const model = new Dodecaminx({ size: 2 })
+
+    model.turn('F')
+
+    const clone = model.clone()
+
+    expect(clone.test()).toBe(false)
+
+    clone.turn('F-')
+
+    expect(clone.test()).toBe(true)
+  })
+
   it('generateScramble', () => {
     const model = new Dodecaminx({
       random: () => 0.5,

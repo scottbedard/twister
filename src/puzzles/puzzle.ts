@@ -37,6 +37,17 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
   }
 
   /**
+   * Create a new instance of a puzzle
+   */
+  clone() {
+    const clone: this = Reflect.construct(this.constructor, [JSON.parse(JSON.stringify(this.options))])
+
+    clone.apply(this.output())
+
+    return clone
+  }
+
+  /**
    * Execute a turn
    */
   execute(turn: Turn): void {

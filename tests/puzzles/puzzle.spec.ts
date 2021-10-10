@@ -7,6 +7,15 @@ describe('Puzzle', () => {
     expect(() => puzzle.apply({})).not.toThrow()
   })
 
+  it('clone', () => {
+    const puzzle = new Puzzle({ foo: 'bar' })
+    const clone = puzzle.clone()
+
+    expect(clone).toBeInstanceOf(Puzzle)
+    expect(clone.options).toEqual(puzzle.options)
+    expect(clone.options).not.toBe(puzzle.options)
+  })
+
   it('execute', () => {
     const puzzle = new Puzzle()
 

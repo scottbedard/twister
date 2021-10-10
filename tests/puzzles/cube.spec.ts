@@ -42,6 +42,20 @@ describe('Cube', () => {
     expect(model.state.d[3].value).toBe('d3')
   })
 
+  it('clone', () => {
+    const model = new Cube({ size: 2 })
+
+    model.turn('F')
+
+    const clone = model.clone()
+
+    expect(clone.test()).toBe(false)
+
+    clone.turn('F-')
+
+    expect(clone.test()).toBe(true)
+  })
+
   it('generateScramble', () => {
     const model = new Cube({
       random: () => 0.5,
