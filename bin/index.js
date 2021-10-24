@@ -89,6 +89,7 @@ program
   .description('apply turns to a puzzle')
   .option('-o, --options [value]', 'puzzle options', '{}')
   .option('-s, --state [value]', 'initial state')
+  .option('-t, --test [value]', 'test state')
   .action((puzzle, alg, options) => {
     const { model, modelType } = createModel(puzzle, options.options)
 
@@ -101,7 +102,7 @@ program
     console.log(json({
       options: model.options,
       puzzle: modelType,
-      solved: model.test(),
+      solved: options.test ? model.test(JSON5.parse(options.test)) : model.test(),
       state: model.output(),
     }))
   })

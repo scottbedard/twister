@@ -217,6 +217,9 @@ $ twister turn cube "R U R-"
 
 # apply turns from an initial state
 $ twister turn cube "R U R-" --state="{...}"
+
+# apply turns and test for a particular state
+$ twister turn cube "R U R-" --test="{...}"
 ```
 
 ## Puzzles

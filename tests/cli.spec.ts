@@ -69,6 +69,17 @@ describe('cli', () => {
     const output2 = await cli(['turn', 'cube', '"R U- R-"', `--state='${JSON.stringify(data.state)}'`])
     const data2 = JSON.parse(output2.stdout)
     expect(data2.solved).toBe(true)
+
+    // with --test state
+    const output3 = await cli([
+      'turn',
+      'cube',
+      'R',
+      `--test='${JSON.stringify({ u: [0, 0, 2, 0, 0, 2, 0, 0, 2] })}'`,
+    ])
+    const data3 = JSON.parse(output3.stdout)
+
+    expect(data3.solved).toBe(true)
   })
 
   it('scramble', async () => {
