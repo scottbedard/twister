@@ -2,7 +2,7 @@ import { CompositeMatrix, createComposite, extractComposite, injectComposite, ma
 import { error } from '@/utils/function'
 import { floor, isOdd, max, min, rand } from '@/utils/number'
 import { keys } from '@/utils/object'
-import { flattenDeep, isUniform, last, sample, without } from '@/utils/array'
+import { flattenDeep, hasSameElements, isUniform, last, sample, without } from '@/utils/array'
 import { lowercase } from '@/utils/string'
 import { Puzzle } from '@/puzzles/puzzle'
 
@@ -282,10 +282,16 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
   }
 
   /**
-   * Test if the puzzle is solved
+   * Test if the puzzle is solved or matches a specific state.
+   *
+   * @param {Partial<DodecaminxStateSimple>} state state to test for
    */
-  test() {
+  test(state?: Partial<DodecaminxStateSimple>) {
     const output = this.output()
+
+    if (state) {
+      return !keys(state).some(face => !hasSameElements(flattenDeep(state[face]), flattenDeep(output[face])))
+    }
 
     return !keys(output).some(face => !isUniform(without(flattenDeep(output[face]), null)))
   }

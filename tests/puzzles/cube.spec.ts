@@ -248,6 +248,30 @@ describe('Cube', () => {
     expect(model.test()).toBe(true)
   })
 
+  it('test specific state', () => {
+    const model = new Cube({ size: 2 })
+
+    model.apply({
+      f: [0, 0, 1, 1],
+      l: [1, 1, 0, 0],
+    })
+
+    expect(model.test({
+      f: [0, 0, 1, 1],
+      l: [1, 1, 0, 0],
+    })).toBe(true)
+
+    expect(model.test({
+      f: [1, 1, 1, 1],
+    })).toBe(false)
+
+    model.turn('U-')
+
+    expect(model.test({
+      f: [1, 1, 1, 1],
+    })).toBe(true)
+  })
+
   describe('turn', () => {
     // individual turns
     Object.entries(cubeTurns).forEach(([turn, expected]) => {

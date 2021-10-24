@@ -208,6 +208,30 @@ describe('Dodecaminx', () => {
     expect(model.test()).toBe(true)
   })
 
+  it('test specific state', () => {
+    const model = new Dodecaminx({ size: 2 })
+
+    model.apply({
+      f: [[[10], [8], [8], [8], [10]]],
+      l: [[[8], [8], [9], [9], [9]]],
+    })
+
+    expect(model.test({
+      f: [[[10], [8], [8], [8], [10]]],
+      l: [[[8], [8], [9], [9], [9]]],
+    })).toBe(true)
+
+    expect(model.test({
+      f: [[[8], [8], [8], [8], [8]]],
+    })).toBe(false)
+
+    model.turn('U-')
+
+    expect(model.test({
+      f: [[[8], [8], [8], [8], [8]]],
+    })).toBe(true)
+  })
+
   describe('turn', () => {
     // individual turns
     dodecaminxTurns.forEach(obj => {

@@ -1,6 +1,7 @@
 import {
   flattenBy,
   flattenDeep,
+  hasSameElements,
   head,
   isUniform,
   last,
@@ -28,6 +29,16 @@ describe('array utils', () => {
     const arr = [0, 1, 2, [3, [4, [5]]]]
 
     expect(flattenDeep(arr)).toEqual([0, 1, 2, 3, 4, 5])
+  })
+
+  it('hasSameElements', () => {
+    expect(hasSameElements([], [])).toBe(true)
+    expect(hasSameElements([1], [])).toBe(false)
+    expect(hasSameElements([], [1])).toBe(false)
+    expect(hasSameElements([1], [2])).toBe(false)
+    expect(hasSameElements([1], [1])).toBe(true)
+    expect(hasSameElements([1, 2, 3], [1, 2, 'bad'])).toBe(false)
+    expect(hasSameElements([1, 2, 3], [1, 2, 3])).toBe(true)
   })
 
   it('head', () => {

@@ -121,9 +121,11 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
   }
 
   /**
-   * Test if the puzzle is solved
+   * Test if the puzzle is solved or matches a specific state.
+   *
+   * @param {Partial<SimpleState>} state state to test for
    */
-  test(): boolean {
+  test(state?: Partial<SimpleState>): boolean {
     return true
   }
 

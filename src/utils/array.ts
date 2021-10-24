@@ -18,6 +18,18 @@ export function flattenDeep<T>(arr: ValueOrArray<T>[]): T[] {
 }
 
 /**
+ * Test if two arrays have identical elements.
+ *
+ * @param {T[]} arr1
+ * @param {T[]} arr2
+ *
+ * @return {boolean}
+ */
+export function hasSameElements<T>(arr1: T[], arr2: T[]): boolean {
+  return arr1.length === arr2.length && !arr1.some((val, i) => val !== arr2[i])
+}
+
+/**
  * Gets the first element of an array.
  *
  * @param {T[]} arr

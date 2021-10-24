@@ -1,6 +1,6 @@
 import { error } from '@/utils/function'
 import { extract, inject, rotate } from '@/utils/matrix'
-import { flattenBy, flattenDeep, isUniform, last, sample, times, without } from '@/utils/array'
+import { flattenBy, flattenDeep, hasSameElements, isUniform, last, sample, times, without } from '@/utils/array'
 import { floor, max, rand } from '@/utils/number'
 import { keys } from '@/utils/object'
 import { lowercase } from '@/utils/string'
@@ -246,10 +246,16 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
   }
 
   /**
-   * Test if the puzzle is solved
+   * Test if the puzzle is solved or matches a specific state.
+   *
+   * @param {Partial<CubeSimpleState>} state state to test for
    */
-  test(): boolean {
+  test(state?: Partial<CubeSimpleState>): boolean {
     const output = this.output()
+
+    if (state) {
+      return !keys(state).some(face => !hasSameElements(state[face], output[face]))
+    }
 
     return !keys(output).some(face => !isUniform(without(output[face], null)))
   }
