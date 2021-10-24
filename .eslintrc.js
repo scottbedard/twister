@@ -20,6 +20,7 @@ module.exports = {
     '@typescript-eslint/semi': ['error', 'never'],
     'arrow-parens': ['error', 'as-needed'],
     'class-methods-use-this': 0,
+    'import/extensions': 0,
     'import/order': 0,
     'import/prefer-default-export': 0,
     'max-len': 0,
