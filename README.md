@@ -131,10 +131,14 @@ const stickers = puzzle.stickers('R')
 
 #### `test`
 
-Test if the puzzle is solved.
+Test if the puzzle is solved, or matches a specific state.
 
 ```js
+// test if the puzzle is solved
 const solved = puzzle.test()
+
+// test for a specific state
+const isSame = puzzle.test(otherPuzzle.output())
 ```
 
 #### `turn`
