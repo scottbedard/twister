@@ -9,20 +9,25 @@ a:not(.unstyled) {
 </style>
 
 <template>
-  <Header />
+  <div class="flex flex-col min-h-screen">
+    <Header />
 
-  <div class="p-6">
-    <RouterView />
+    <div class="flex-1 p-6">
+      <RouterView />
+    </div>
+
+    <div class="p-6 text-sm">
+      <a
+        v-text="`v${version}`"
+        href="https://github.com/scottbedard/twister/blob/main/CHANGELOG.md"
+        target="_blank"
+        title="View changelog" />
+    </div>
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { defineComponent } from 'vue'
+import { version } from '@/index'
 import Header from './layout/Header.vue'
-
-export default defineComponent({
-  components: {
-    Header,
-  },
-})
 </script>
