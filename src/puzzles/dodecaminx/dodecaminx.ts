@@ -65,8 +65,10 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    * @param {Partial<DodecaminxStateSimple>} state state to apply to the puzzle
    */
   apply(state: Partial<DodecaminxStateSimple>) {
+    const symbol = Symbol()
+
     keys(state).forEach(face => {
-      const [corners, middles, center] = state[face]
+      const [corners, middles, center = symbol] = state[face]
 
       corners.forEach((matrix, i) => {
         matrix.forEach((value, j) => {
@@ -83,7 +85,7 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
           })
         }
 
-        if (center) {
+        if (center !== symbol) {
           this.state[face][2].value = center
         }
       }

@@ -30,5 +30,6 @@ module.exports = {
     'prefer-destructuring': 0,
     'quote-props': 0,
     'semi': ['error', 'never'],
+    'symbol-description': 0,
   },
 };
