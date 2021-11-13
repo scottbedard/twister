@@ -18,7 +18,7 @@ a:not(.unstyled) {
 
     <div class="p-6 text-sm">
       <a
-        v-text="`v${version}`"
+        v-text="pkg.version"
         href="https://github.com/scottbedard/twister/blob/main/CHANGELOG.md"
         target="_blank"
         title="View changelog" />
@@ -28,6 +28,6 @@ a:not(.unstyled) {
 
 <script lang="ts" setup>
 import { defineComponent } from 'vue'
-import { version } from '@/index'
 import Header from './layout/Header.vue'
+import pkg from '../../package.json'
 </script>
