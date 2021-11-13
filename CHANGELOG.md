@@ -2,6 +2,10 @@
 
 > **Warning:** This library is in beta. Breaking changes are no longer anticipated, but may still happen before 1.0 is tagged.
 
+## 1.0.0-beta.15
+
+- Allow for falsey center values when applying state to an odd-layered Dodecaminx ([#36](https://github.com/scottbedard/twister/issues/36))
+
 ## 1.0.0-beta.14
 
 - Added state argument to `test` command to assert puzzle matches a particular state. This includes adding a `--test` argument to the `turn` CLI command.
