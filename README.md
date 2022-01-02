@@ -89,7 +89,7 @@ const state = puzzle.output()
 
 #### `parse`
 
-Convert a single piece of puzzle notation to a turn object. This method is generally used to interact with the [`execute`](#execute) method, but is also useful for testing if notation is valid.
+Convert a single piece of puzzle notation to a turn object. This method is generally used to interact with the [`execute`](#execute) method, but is also useful for testing if notation is valid. To parse a turn in reverse, provide `true` as the second argument.
 
 ```js
 const turn = puzzle.parse('R')
@@ -97,7 +97,7 @@ const turn = puzzle.parse('R')
 
 #### `parseAlgorithm`
 
-Convert a space-delimited string of turns into an array of turn objects.
+Convert a space-delimited string of turns into an array of turn objects. To parse an algorithm in reverse, provide `true` as the second argument.
 
 ```js
 const turns = puzzle.parseAlgorithm('R U R-')
@@ -145,6 +145,16 @@ Executes an algorithm. This method is also available via the CLI, [more info her
 
 ```js
 puzzle.turn('R U R-')
+```
+
+#### `unturn`
+
+Execute the reverse of an algorithm. Note that unturns are executed from right to left.
+
+```js
+const scramble = puzzle.scramble()
+
+puzzle.unturn(scramble)
 ```
 
 ## Advanced usage
