@@ -9,7 +9,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x]
+        node-version: [14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -21,6 +21,8 @@ jobs:
       run: npm install
     - name: Build
       run: npm run build
+    - name: Build playground
+      run: cd ./playground && npm install && npm run build
     - name: Test
       run: npm test
     - name: Report coverage
