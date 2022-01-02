@@ -2,6 +2,10 @@
 
 > **Warning:** This library is in beta. Breaking changes are no longer anticipated, but may still happen before 1.0 is tagged.
 
+## 1.0.0-beta.16
+
+- Implement [`unturn`](https://github.com/scottbedard/twister#unturn) method to execute algorithms in reverse. An unturn flag has also been added to [`parse`](https://github.com/scottbedard/twister#parse) and [`parseAlgorithm`](https://github.com/scottbedard/twister#parsealgorithm).
+
 ## 1.0.0-beta.15
 
 - Allow for falsey center values when applying state to an odd-layered Dodecaminx ([#36](https://github.com/scottbedard/twister/issues/36))
