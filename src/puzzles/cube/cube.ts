@@ -168,8 +168,9 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
    * Parse a turn
    *
    * @param {string} turn turn notation to parse
+   * @param {boolean} unturn reverse turn
    */
-  parse(turn: string): CubeTurn {
+  parse(turn: string, unturn?: boolean): CubeTurn {
     const parts = turn.match(/^(\d)*([ulfrbdxyz]){1}(w)*(['-2])?$/i)
 
     if (!parts) {
@@ -185,7 +186,7 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     return {
       depth: wide ? max(2, depth) : depth,
       target,
-      rotation,
+      rotation: unturn && rotation !== 2 ? rotation * -1 : rotation,
       wide,
       whole,
     }

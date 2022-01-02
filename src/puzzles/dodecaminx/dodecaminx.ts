@@ -204,8 +204,9 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
    * Parse a turn
    *
    * @param {string} turn turn notation to parse
+   * @param {boolean} unturn reverse turn
    */
-  parse(turn: string): DodecaminxTurn {
+  parse(turn: string, unturn?: boolean): DodecaminxTurn {
     const parts = turn.match(/^(\d*)?(B|BL|BR|D|DBL|DBR|DL|DR|F|L|R|U|b|bl|br|d|dbl|dbr|dl|dr|f|l|r|u){1}(w)?('|-|2|2'|2-)?$/)
 
     if (!parts) {
@@ -229,7 +230,7 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
         : !prefix || prefix === '+'
           ? 1
           : Number(prefix),
-      rotation,
+      rotation: unturn ? rotation * -1 : rotation,
       target,
       whole: parts[2] === target,
       wide,

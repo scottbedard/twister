@@ -108,6 +108,18 @@ describe('Cube', () => {
         expect(() => model.parse('R2-')).toThrow()
       })
     })
+
+    describe('unturn', () => {
+      [
+        ['R', 'R-'],
+        ['R-', 'R'],
+        ['R2', 'R2'],
+      ].forEach(([notation, reversedNotation]) => {
+        it(`${notation} -> ${reversedNotation}`, () => {
+          expect(model.parse(notation, true)).toEqual(model.parse(reversedNotation))
+        })
+      })
+    })
   })
 
   describe('stickers', () => {
@@ -307,6 +319,20 @@ describe('Cube', () => {
       } else {
         it.skip(name)
       }
+    })
+  })
+
+  describe('unturn', () => {
+    it('reverse a turn', () => {
+      const cube = new Cube({ size: 3 })
+
+      const scramble = cube.scramble()
+
+      expect(cube.test()).toBe(false)
+
+      cube.unturn(scramble)
+
+      expect(cube.test()).toBe(true)
     })
   })
 })

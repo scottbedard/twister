@@ -41,7 +41,7 @@ export type DodecaminxSticker<Meta = Record<string, any>> = {
  */
 export type DodecaminxTurn = {
   depth: number,
-  rotation: -2 | -1 | 1 | 2,
+  rotation: number,
   target: DodecaminxFaceLower,
   whole: boolean,
   wide: boolean,

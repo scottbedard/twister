@@ -72,8 +72,9 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
    * Parse a single turn
    *
    * @param {string} turn turn notation to parse
+   * @param {boolean} unturn reverse turn
    */
-  parse(turn: string): Turn {
+  parse(turn: string, unturn?: boolean): Turn {
     return {} as Turn
   }
 
@@ -81,13 +82,14 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
    * Parse an algorithm
    *
    * @param {string} turn algorithm to parse
+   * @param {boolean?} unturn reverse algorithm
    */
-  parseAlgorithm(algorithm: string): Turn[] {
+  parseAlgorithm(algorithm: string, unturn?: boolean): Turn[] {
     return algorithm
       .split(' ')
       .map(trim)
       .filter(identity)
-      .map(str => this.parse(str))
+      .map(str => this.parse(str, unturn))
   }
 
   /**
@@ -137,6 +139,18 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
   turn(algorithm: string): void {
     this
       .parseAlgorithm(algorithm)
+      .forEach(turn => this.execute(turn))
+  }
+
+  /**
+   * Execute the reverse-turns of an algorithm
+   *
+   * @param {string} algorithm sequence of turns to reverse
+   */
+  unturn(algorithm: string): void {
+    this
+      .parseAlgorithm(algorithm, true)
+      .reverse()
       .forEach(turn => this.execute(turn))
   }
 }

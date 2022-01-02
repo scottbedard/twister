@@ -157,6 +157,19 @@ describe('Dodecaminx', () => {
     it('bad turn', () => {
       expect(() => model.parse('bad turn')).toThrow()
     })
+
+    describe('unturn', () => {
+      [
+        ['R', 'R-'],
+        ['R-', 'R'],
+        ['R2', 'R2-'],
+        ['R2-', 'R2'],
+      ].forEach(([notation, reversedNotation]) => {
+        it(`${notation} -> ${reversedNotation}`, () => {
+          expect(model.parse(notation, true)).toEqual(model.parse(reversedNotation))
+        })
+      })
+    })
   })
 
   describe('stickers', () => {
@@ -269,5 +282,17 @@ describe('Dodecaminx', () => {
         it(name, fn)
       }
     })
+  })
+
+  it('unturn', () => {
+    const dodecaminx = new Dodecaminx({ size: 3 })
+
+    const scramble = dodecaminx.scramble()
+
+    expect(dodecaminx.test()).toBe(false)
+
+    dodecaminx.unturn(scramble)
+
+    expect(dodecaminx.test()).toBe(true)
   })
 })
