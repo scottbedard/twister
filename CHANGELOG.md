@@ -2,6 +2,11 @@
 
 > **Warning:** This library is in beta. Breaking changes are no longer anticipated, but may still happen before 1.0 is tagged.
 
+## 1.0.0-beta.17
+
+- Implement [`notation`](https://github.com/scottbedard/twister#notation) method to generate string representation of parsed turn objects.
+- [`unturn`](https://github.com/scottbedard/twister#unturn) now returns the reversed algorithm.
+
 ## 1.0.0-beta.16
 
 - Implement [`unturn`](https://github.com/scottbedard/twister#unturn) method to execute algorithms in reverse. An unturn flag has also been added to [`parse`](https://github.com/scottbedard/twister#parse) and [`parseAlgorithm`](https://github.com/scottbedard/twister#parsealgorithm).

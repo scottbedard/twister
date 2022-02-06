@@ -79,6 +79,16 @@ Generates a scramble of a default or specified number of moves, but does not exe
 const scramble = puzzle.generateScramble()
 ```
 
+#### `notation`
+
+Generate the string representation of a parsed turn object. This method can be thought of as the opposite of [`parse`](#parse).
+
+```js
+const turn = puzzle.parse('R')
+
+puzzle.notation(turn) // 'R'
+```
+
 #### `output`
 
 Returns a minified version of the puzzle's state. This method is useful for saving state as JSON, then restoring that state via the [`apply`](#apply) method.
@@ -152,9 +162,9 @@ puzzle.turn('R U R-')
 Execute the reverse of an algorithm. Note that unturns are executed from right to left.
 
 ```js
-const scramble = puzzle.scramble()
+const scramble = puzzle.turn('R U R-')
 
-puzzle.unturn(scramble)
+puzzle.unturn('R U R-') // 'R U- R-'
 ```
 
 ## Advanced usage
