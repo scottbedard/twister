@@ -70,6 +70,25 @@ describe('Cube', () => {
     expect(scramble.split(' ').length).toBe(5)
   })
 
+  it('notation', () => {
+    const model = new Cube({ size: 4 })
+
+    const turns = [
+      'R',
+      'R-',
+      '2R',
+      'Rw',
+      'Rw-',
+      'R2',
+      '2R2',
+      '3Rw2',
+    ]
+
+    turns.forEach(turn => {
+      expect(model.notation(model.parse(turn))).toBe(turn)
+    })
+  })
+
   it('output', () => {
     const model = new Cube({ size: 2 })
 
@@ -240,25 +259,6 @@ describe('Cube', () => {
     expect(scramble.split(' ').length).toBe(10)
 
     expect(model.test()).toBe(false)
-  })
-
-  it('stringify', () => {
-    const model = new Cube({ size: 4 })
-
-    const turns = [
-      'R',
-      'R-',
-      '2R',
-      'Rw',
-      'Rw-',
-      'R2',
-      '2R2',
-      '3Rw2',
-    ]
-
-    turns.forEach(turn => {
-      expect(model.stringify(model.parse(turn))).toBe(turn)
-    })
   })
 
   it('test', () => {

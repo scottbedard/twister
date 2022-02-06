@@ -149,6 +149,29 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
   }
 
   /**
+   * Generate notation from a turn object.
+   *
+   * @param {Turn} turn turn object to stringify
+   */
+  notation(turn: CubeTurn): string {
+    const depth = turn.depth === 1 || (turn.depth === 2 && turn.wide)
+      ? ''
+      : turn.depth.toString()
+
+    const target = uppercase(turn.target)
+
+    const rotation = turn.rotation === -1
+      ? '-'
+      : turn.rotation === 2
+        ? '2'
+        : ''
+
+    const wide = turn.wide ? 'w' : ''
+
+    return `${depth}${target}${wide}${rotation}`
+  }
+
+  /**
    * Output puzzle state
    */
   output(): CubeSimpleState {
@@ -244,29 +267,6 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     }
 
     return stickers
-  }
-
-  /**
-   * Stringify a turn.
-   *
-   * @param {Turn} turn turn object to stringify
-   */
-  stringify(turn: CubeTurn): string {
-    const depth = turn.depth === 1 || (turn.depth === 2 && turn.wide)
-      ? ''
-      : turn.depth.toString()
-
-    const target = uppercase(turn.target)
-
-    const rotation = turn.rotation === -1
-      ? '-'
-      : turn.rotation === 2
-        ? '2'
-        : ''
-
-    const wide = turn.wide ? 'w' : ''
-
-    return `${depth}${target}${wide}${rotation}`
   }
 
   /**

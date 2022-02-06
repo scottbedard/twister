@@ -179,6 +179,33 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
   }
 
   /**
+   * Generate notation from a turn object.
+   *
+   * @param {Turn} turn turn object to stringify
+   */
+  notation(turn: DodecaminxTurn): string {
+    const depth = turn.depth === 1 || (turn.depth === 2 && turn.wide)
+      ? ''
+      : turn.depth.toString()
+
+    const target = turn.whole
+      ? lowercase(turn.target)
+      : uppercase(turn.target)
+
+    const rotation = turn.rotation === -2
+      ? '2-'
+      : turn.rotation === -1
+        ? '-'
+        : turn.rotation === 2
+          ? '2'
+          : ''
+
+    const wide = turn.wide ? 'w' : ''
+
+    return `${depth}${target}${wide}${rotation}`
+  }
+
+  /**
    * Output puzzle state
    */
   output(): DodecaminxStateSimple {
@@ -282,33 +309,6 @@ export class Dodecaminx extends Puzzle<DodecaminxOptions, DodecaminxState, Dodec
     }
 
     return stickers
-  }
-
-  /**
-   * Stringify a turn.
-   *
-   * @param {DodecaminxTurn} turn turn object to stringify
-   */
-  stringify(turn: DodecaminxTurn): string {
-    const depth = turn.depth === 1 || (turn.depth === 2 && turn.wide)
-      ? ''
-      : turn.depth.toString()
-
-    const target = turn.whole
-      ? lowercase(turn.target)
-      : uppercase(turn.target)
-
-    const rotation = turn.rotation === -2
-      ? '2-'
-      : turn.rotation === -1
-        ? '-'
-        : turn.rotation === 2
-          ? '2'
-          : ''
-
-    const wide = turn.wide ? 'w' : ''
-
-    return `${depth}${target}${wide}${rotation}`
   }
 
   /**

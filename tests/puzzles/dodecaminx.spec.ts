@@ -73,6 +73,32 @@ describe('Dodecaminx', () => {
     expect(scramble.split(' ').length).toBe(5)
   })
 
+  it('notation', () => {
+    const model = new Dodecaminx({ size: 4 })
+
+    const turns = [
+      'R',
+      'R-',
+      'R2-',
+      '2R',
+      'Rw',
+      'Rw-',
+      'Rw2-',
+      'R2',
+      '2R2',
+      '3Rw2',
+      '3Rw2-',
+      'R2-',
+      'r2-',
+      'r2',
+      'r',
+    ]
+
+    turns.forEach(turn => {
+      expect(model.notation(model.parse(turn))).toBe(turn)
+    })
+  })
+
   it('output', () => {
     const model = new Dodecaminx({ size: 3 })
 
@@ -218,32 +244,6 @@ describe('Dodecaminx', () => {
       expect(stickers).toContain(model.state.f[0][4][0])
       expect(stickers).toContain(model.state.f[1][4][0])
       expect(stickers).toContain(model.state.f[0][0][0])
-    })
-  })
-
-  it('stringify', () => {
-    const model = new Dodecaminx({ size: 4 })
-
-    const turns = [
-      'R',
-      'R-',
-      'R2-',
-      '2R',
-      'Rw',
-      'Rw-',
-      'Rw2-',
-      'R2',
-      '2R2',
-      '3Rw2',
-      '3Rw2-',
-      'R2-',
-      'r2-',
-      'r2',
-      'r',
-    ]
-
-    turns.forEach(turn => {
-      expect(model.stringify(model.parse(turn))).toBe(turn)
     })
   })
 

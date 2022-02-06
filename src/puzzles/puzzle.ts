@@ -62,6 +62,15 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
   }
 
   /**
+   * Generate notation from a turn object.
+   *
+   * @param {Turn} turn turn object to stringify
+   */
+  notation(turn: Turn): string {
+    return ''
+  }
+
+  /**
    * Output puzzle state
    */
   output(): SimpleState {
@@ -123,15 +132,6 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
   }
 
   /**
-   * Stringify a turn.
-   *
-   * @param {Turn} turn turn object to stringify
-   */
-  stringify(turn: Turn): string {
-    return ''
-  }
-
-  /**
    * Test if the puzzle is solved or matches a specific state.
    *
    * @param {Partial<SimpleState>} state state to test for
@@ -164,6 +164,6 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
     turns.forEach(turn => this.execute(turn))
 
     return turns
-      .map(turn => this.stringify(turn)).join(' ')
+      .map(turn => this.notation(turn)).join(' ')
   }
 }
