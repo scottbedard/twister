@@ -326,7 +326,7 @@ describe('Dodecaminx', () => {
     it('returns the reversed algorithn', () => {
       const cube = new Dodecaminx({ size: 3 })
 
-      expect(cube.unturn('R U R-')).toBe('R U- R-')
+      expect(cube.unturn('R U R- U-')).toBe('U R U- R-')
     })
   })
 })
