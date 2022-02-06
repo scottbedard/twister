@@ -57,12 +57,13 @@ describe('cli', () => {
     ])
   })
 
-  it('turn', async () => {
+  it.only('turn', async () => {
     // with no --state flag we should be scrambling the puzzle
     const output = await cli(['turn', 'cube', '"R U R-"'])
     const data = JSON.parse(output.stdout)
     expect(data.puzzle).toBe('cube')
     expect(data.solved).toBe(false)
+    expect(data.unturn).toBe('R U- R-')
     expect(Object.keys(data.state)).toEqual(['u', 'l', 'f', 'r', 'b', 'd'])
 
     // now use that output to test turning from a non-solved state
@@ -77,6 +78,7 @@ describe('cli', () => {
       'R',
       `--test='${JSON.stringify({ u: [0, 0, 2, 0, 0, 2, 0, 0, 2] })}'`,
     ])
+
     const data3 = JSON.parse(output3.stdout)
 
     expect(data3.solved).toBe(true)
