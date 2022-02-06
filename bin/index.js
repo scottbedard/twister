@@ -104,7 +104,7 @@ program
       puzzle: modelType,
       solved: options.test ? model.test(JSON5.parse(options.test)) : model.test(),
       state: model.output(),
-      unturn: model.unturn(alg),
+      unturn: model.clone().unturn(alg),
     }))
   })
 

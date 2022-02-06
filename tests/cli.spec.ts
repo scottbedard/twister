@@ -57,7 +57,7 @@ describe('cli', () => {
     ])
   })
 
-  it.only('turn', async () => {
+  it('turn', async () => {
     // with no --state flag we should be scrambling the puzzle
     const output = await cli(['turn', 'cube', '"R U R-"'])
     const data = JSON.parse(output.stdout)
