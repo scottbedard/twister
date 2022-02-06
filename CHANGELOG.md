@@ -5,6 +5,7 @@
 ## 1.0.0-beta.17
 
 - Implement [`notation`](https://github.com/scottbedard/twister#notation) method to generate string representation of parsed turn objects.
+- The [`turn`](https://github.com/scottbedard/twister#turn-1) CLI command now returns an `unturn` algorithm to reverse the applied of turns.
 - [`unturn`](https://github.com/scottbedard/twister#unturn) now returns the reversed algorithm.
 
 ## 1.0.0-beta.16
