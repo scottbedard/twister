@@ -123,6 +123,15 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
   }
 
   /**
+   * Stringify a turn.
+   *
+   * @param {Turn} turn turn object to stringify
+   */
+  stringify(turn: Turn): string {
+    return ''
+  }
+
+  /**
    * Test if the puzzle is solved or matches a specific state.
    *
    * @param {Partial<SimpleState>} state state to test for
@@ -147,10 +156,14 @@ export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
    *
    * @param {string} algorithm sequence of turns to reverse
    */
-  unturn(algorithm: string): void {
-    this
+  unturn(algorithm: string): string {
+    const turns = this
       .parseAlgorithm(algorithm, true)
       .reverse()
-      .forEach(turn => this.execute(turn))
+
+    turns.forEach(turn => this.execute(turn))
+
+    return turns
+      .map(turn => this.stringify(turn)).join(' ')
   }
 }

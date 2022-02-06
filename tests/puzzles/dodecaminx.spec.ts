@@ -221,6 +221,32 @@ describe('Dodecaminx', () => {
     })
   })
 
+  it('stringify', () => {
+    const model = new Dodecaminx({ size: 4 })
+
+    const turns = [
+      'R',
+      'R-',
+      'R2-',
+      '2R',
+      'Rw',
+      'Rw-',
+      'Rw2-',
+      'R2',
+      '2R2',
+      '3Rw2',
+      '3Rw2-',
+      'R2-',
+      'r2-',
+      'r2',
+      'r',
+    ]
+
+    turns.forEach(turn => {
+      expect(model.stringify(model.parse(turn))).toBe(turn)
+    })
+  })
+
   it('test', () => {
     const model = new Dodecaminx({ size: 3 })
 
@@ -284,15 +310,23 @@ describe('Dodecaminx', () => {
     })
   })
 
-  it('unturn', () => {
-    const dodecaminx = new Dodecaminx({ size: 3 })
+  describe('unturn', () => {
+    it('reverse a turn', () => {
+      const dodecaminx = new Dodecaminx({ size: 3 })
 
-    const scramble = dodecaminx.scramble()
+      const scramble = dodecaminx.scramble()
 
-    expect(dodecaminx.test()).toBe(false)
+      expect(dodecaminx.test()).toBe(false)
 
-    dodecaminx.unturn(scramble)
+      dodecaminx.unturn(scramble)
 
-    expect(dodecaminx.test()).toBe(true)
+      expect(dodecaminx.test()).toBe(true)
+    })
+
+    it('returns the reversed algorithn', () => {
+      const cube = new Dodecaminx({ size: 3 })
+
+      expect(cube.unturn('R U R-')).toBe('R U- R-')
+    })
   })
 })

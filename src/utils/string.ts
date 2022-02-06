@@ -15,3 +15,12 @@ export function lowercase<T extends string>(str: T): Lowercase<T> {
 export function trim(str: string): string {
   return str.trim()
 }
+
+/**
+ * Converts all the alphabetic characters in a string to uppercase.
+ *
+ * @param {string} str string to uppercase
+ */
+export function uppercase<T extends string>(str: string): Uppercase<T> {
+  return str.toUpperCase() as Uppercase<T>
+}

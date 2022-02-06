@@ -242,6 +242,25 @@ describe('Cube', () => {
     expect(model.test()).toBe(false)
   })
 
+  it('stringify', () => {
+    const model = new Cube({ size: 4 })
+
+    const turns = [
+      'R',
+      'R-',
+      '2R',
+      'Rw',
+      'Rw-',
+      'R2',
+      '2R2',
+      '3Rw2',
+    ]
+
+    turns.forEach(turn => {
+      expect(model.stringify(model.parse(turn))).toBe(turn)
+    })
+  })
+
   it('test', () => {
     const model = new Cube({ size: 3 })
 
@@ -333,6 +352,12 @@ describe('Cube', () => {
       cube.unturn(scramble)
 
       expect(cube.test()).toBe(true)
+    })
+
+    it('returns the reversed algorithn', () => {
+      const cube = new Cube({ size: 3 })
+
+      expect(cube.unturn('R U R-')).toBe('R U- R-')
     })
   })
 })

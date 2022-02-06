@@ -3,7 +3,7 @@ import { extract, inject, rotate } from '@/utils/matrix'
 import { flattenBy, flattenDeep, hasSameElements, isUniform, last, sample, times, without } from '@/utils/array'
 import { floor, max, rand } from '@/utils/number'
 import { keys } from '@/utils/object'
-import { lowercase } from '@/utils/string'
+import { lowercase, uppercase } from '@/utils/string'
 import { Puzzle } from '@/puzzles/puzzle'
 
 import {
@@ -244,6 +244,29 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
     }
 
     return stickers
+  }
+
+  /**
+   * Stringify a turn.
+   *
+   * @param {Turn} turn turn object to stringify
+   */
+  stringify(turn: CubeTurn): string {
+    const depth = turn.depth === 1 || (turn.depth === 2 && turn.wide)
+      ? ''
+      : turn.depth.toString()
+
+    const target = uppercase(turn.target)
+
+    const rotation = turn.rotation === -1
+      ? '-'
+      : turn.rotation === 2
+        ? '2'
+        : ''
+
+    const wide = turn.wide ? 'w' : ''
+
+    return `${depth}${target}${wide}${rotation}`
   }
 
   /**
