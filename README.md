@@ -81,7 +81,7 @@ const scramble = puzzle.generateScramble()
 
 #### `notation`
 
-Generate the string representation of a parsed turn object. This method can be thought of as the opposite of [`parse`](#parse).
+Generate the string representation of a parsed turn object. This can be thought of as the opposite of [`parse`](#parse).
 
 ```js
 const turn = puzzle.parse('R')
