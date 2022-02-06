@@ -354,7 +354,7 @@ describe('Cube', () => {
       expect(cube.test()).toBe(true)
     })
 
-    it.only('returns the reversed algorithn', () => {
+    it('returns the reversed algorithn', () => {
       const cube = new Cube({ size: 3 })
 
       expect(cube.unturn('R U R- U-')).toBe('U R U- R-')
