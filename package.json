@@ -43,7 +43,7 @@
     "lint:fix": "npm run lint -- --fix",
     "publish:ci": "node ./scripts/publish.js",
     "test:clear": "jest --clearCache",
-    "test:watch": "jest --coverage --watch",
+    "test:watch": "jest --coverage --watch --verbose=false",
     "test": "jest --coverage"
   },
   "unpkg": "dist/index.bundle.js",
