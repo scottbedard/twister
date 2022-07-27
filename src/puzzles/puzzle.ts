@@ -5,7 +5,7 @@ import { trim } from '@/utils/string'
 /**
  * Base puzzle class.
  */
-export class Puzzle<Options, State, SimpleState, Turn, Sticker> {
+export class Puzzle<Options = any, State = any, SimpleState = any, Turn = any, Sticker = any> {
   /**
    * Puzzle options
    *
