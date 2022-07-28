@@ -2,6 +2,10 @@
 
 > **Warning:** This library is in beta. Breaking changes are no longer anticipated, but may still happen before 1.0 is tagged.
 
+## 1.0.0-beta.19
+
+- Fix cube notation parsing. Multiple wide suffixes and overly deep turns now throw errors.
+
 ## 1.0.0-beta.18
 
 - Set default `Puzzle` generics to `any`
