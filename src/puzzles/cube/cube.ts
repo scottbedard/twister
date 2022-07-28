@@ -194,13 +194,18 @@ export class Cube extends Puzzle<CubeOptions, CubeState, CubeSimpleState, CubeTu
    * @param {boolean} unturn reverse turn
    */
   parse(turn: string, unturn?: boolean): CubeTurn {
-    const parts = turn.match(/^(\d)*([ulfrbdxyz]){1}(w)*(['-2])?$/i)
+    const parts = turn.match(/^(\d)*([ulfrbdxyz]){1}(w)?(['-2])?$/i)
 
     if (!parts) {
       error(`Invalid turn: ${turn}`)
     }
 
     const depth = parts[1] ? parseInt(parts[1], 10) : 1
+
+    if (depth > this.options.size) {
+      error(`Invalid turn: ${turn}`)
+    }
+
     const target = lowercase(<CubeFace | CubeAxis> parts[2])
     const wide = !!parts[3]
     const rotation = "-'".includes(parts[4]) ? -1 : parts[4] === '2' ? 2 : 1

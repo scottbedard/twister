@@ -126,6 +126,14 @@ describe('Cube', () => {
       it('R2-', () => {
         expect(() => model.parse('R2-')).toThrow()
       })
+
+      it('Rww', () => {
+        expect(() => model.parse('Rww')).toThrow()
+      })
+
+      it('4R (too deep for 3x3)', () => {
+        expect(() => model.parse('4R')).toThrow()
+      })
     })
 
     describe('unturn', () => {
