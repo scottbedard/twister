@@ -1,6 +1,6 @@
 # twister
 
-[![Build status](https://img.shields.io/github/workflow/status/scottbedard/twister/Test)](https://github.com/scottbedard/twister/actions)
+[![Build status](https://img.shields.io/github/actions/workflow/status/scottbedard/twister/test.yml?branch=main)](https://github.com/scottbedard/twister/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/scottbedard/twister)](https://codecov.io/gh/scottbedard/twister)
 [![NPM](https://img.shields.io/npm/v/@bedard/twister)](https://www.npmjs.com/package/@bedard/twister)
 [![Bundle size](https://img.shields.io/bundlephobia/minzip/@bedard/twister?label=gzipped)](https://bundlephobia.com/result?p=@bedard/twister)
