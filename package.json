@@ -1,0 +1,17 @@
+{
+  "author": "Scott Bedard",
+  "bugs": {
+    "url": "https://github.com/scottbedard/twister/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "homepage": "https://github.com/scottbedard/twister#readme",
+  "license": "MIT",
+  "name": "@bedard/twister",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scottbedard/twister.git"
+  },
+  "scripts": {},
+  "version": "2.0.0-pre.0"
+}
