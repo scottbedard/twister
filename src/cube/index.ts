@@ -33,4 +33,14 @@ export class Cube {
       b: createFace(size, 5),
     }
   }
+
+  reset() {
+    // @todo: add test for this
+    this.state.u = createFace(this.size, 0)
+    this.state.d = createFace(this.size, 1)
+    this.state.l = createFace(this.size, 2)
+    this.state.r = createFace(this.size, 3)
+    this.state.f = createFace(this.size, 4)
+    this.state.b = createFace(this.size, 5)
+  }
 }
