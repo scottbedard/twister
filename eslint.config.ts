@@ -11,6 +11,7 @@ export default defineConfig([
       'dist',
       'docs/.vitepress/cache',
       'docs/.vitepress/dist',
+      '**/auto-imports.d.ts',
       'node_modules',
       'package-lock.json',
       'package.json',

@@ -1,6 +1,8 @@
 import { defineConfig } from 'vitepress'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import tailwindcss from '@tailwindcss/vite'
+import autoimport from 'unplugin-auto-import/vite'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -34,6 +36,13 @@ export default defineConfig({
     ],
   },
   vite: {
+    plugins: [
+      autoimport({
+        imports: ['vue'],
+        dts: '.vitepress/auto-imports.d.ts',
+      }),
+      tailwindcss(),
+    ],
     resolve: {
       alias: {
         '@': resolve(__dirname, '../../src'),

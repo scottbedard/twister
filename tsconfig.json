@@ -26,5 +26,5 @@
     "noUnusedParameters": true,
     "strict": true
   },
-  "include": ["src", "tests"]
+  "include": ["src", "tests", "docs", "docs/.vitepress/auto-imports.d.ts"]
 }

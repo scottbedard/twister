@@ -3,9 +3,11 @@ outline: deep
 ---
 
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import CubeDemo from './components/CubeDemo.vue'
 </script>
 
-# Runtime API Examples
+# Cube
 
-<HelloWorld />
+A traditional six sided face turning puzzle
+
+<CubeDemo />
