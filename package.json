@@ -5,12 +5,13 @@
     "@types/node": "^25.3.3",
     "typescript": "~5.9.3",
     "vite": "^8.0.0-beta.13",
+    "vite-plugin-dts": "^4.5.4",
     "vitepress": "2.0.0-alpha.16"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/twister.js",
   "name": "twister",
-  "module": "dist/index.js",
+  "module": "dist/twister.js",
   "pnpm": {
     "overrides": {
       "vite": "^8.0.0-beta.13"
@@ -24,5 +25,6 @@
     "docs:preview": "vitepress preview docs"
   },
   "type": "module",
-  "version": "2.0.0-alpha.0"
+  "version": "2.0.0-alpha.0",
+  "types": "dist/index.d.ts"
 }
