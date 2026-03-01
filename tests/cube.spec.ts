@@ -19,7 +19,7 @@ describe('Cube', () => {
 
       for (const sticker of cube.state[face]) {
         expect(sticker).toMatchObject({
-          face: expect.any(Number),
+          face,
           index: expect.any(Number),
           orientation: 0,
         })
@@ -32,5 +32,70 @@ describe('Cube', () => {
     expect(() => new Cube(-1)).toThrow()
     expect(() => new Cube(1.5)).toThrow()
     expect(() => new Cube(NaN)).toThrow()
+  })
+
+  test('parses', () => {
+    expect(new Cube(3).parse('R')).toMatchObject({
+      depth: 1,
+      rotation: 1,
+      target: 'r',
+      wide: false,
+    })
+
+    expect(new Cube(3).parse('R\'')).toMatchObject({
+      depth: 1,
+      rotation: -1,
+      target: 'r',
+      wide: false,
+    })
+
+    expect(new Cube(3).parse('R-')).toMatchObject({
+      depth: 1,
+      rotation: -1,
+      target: 'r',
+      wide: false,
+    })
+
+    expect(new Cube(3).parse('2R')).toMatchObject({
+      depth: 2,
+      rotation: 1,
+      target: 'r',
+      wide: false,
+    })
+
+    expect(new Cube(3).parse('Rw')).toMatchObject({
+      depth: 2,
+      rotation: 1,
+      target: 'r',
+      wide: true,
+    })
+
+    expect(new Cube(3).parse('3Rw2')).toMatchObject({
+      depth: 3,
+      rotation: 2,
+      target: 'r',
+      wide: true,
+    })
+
+    expect(new Cube(3).parse('X')).toMatchObject({
+      depth: 1,
+      rotation: 1,
+      target: 'x',
+      wide: false,
+    })
+
+    expect(new Cube(3).parse('Y')).toMatchObject({
+      depth: 1,
+      rotation: 1,
+      target: 'y',
+      wide: false,
+    })
+
+    expect(new Cube(3).parse('Z')).toMatchObject({
+      depth: 1,
+      rotation: 1,
+      target: 'z',
+      wide: false,
+    })
   })
 })
