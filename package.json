@@ -2,8 +2,14 @@
   "author": "Scott Bedard",
   "description": "A library for twisty puzzle state management",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.9.0",
     "@types/node": "^25.3.3",
+    "eslint": "^10.0.2",
+    "eslint-plugin-vue": "^10.8.0",
+    "globals": "^17.4.0",
     "typescript": "~5.9.3",
+    "typescript-eslint": "^8.56.1",
     "vite": "^8.0.0-beta.13",
     "vite-plugin-dts": "^4.5.4",
     "vitepress": "2.0.0-alpha.16",
@@ -19,11 +25,13 @@
     }
   },
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build",
-    "docs:dev": "vitepress dev docs",
+    "dev": "vite",
     "docs:build": "vitepress build docs",
+    "docs:dev": "vitepress dev docs",
     "docs:preview": "vitepress preview docs",
+    "lint:fix": "eslint . --fix",
+    "lint": "eslint .",
     "test": "vitest"
   },
   "type": "module",
