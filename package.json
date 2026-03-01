@@ -1,8 +1,21 @@
 {
+  "author": "Scott Bedard",
+  "description": "A library for twisty puzzle state management",
+  "devDependencies": {
+    "@types/node": "^25.3.3",
+    "typescript": "~5.9.3",
+    "vite": "^8.0.0-beta.13",
+    "vitepress": "2.0.0-alpha.16"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
   "name": "twister",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "module": "dist/index.js",
+  "pnpm": {
+    "overrides": {
+      "vite": "^8.0.0-beta.13"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -10,15 +23,6 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
   },
-  "devDependencies": {
-    "@types/node": "^25.3.3",
-    "typescript": "~5.9.3",
-    "vite": "^8.0.0-beta.13",
-    "vitepress": "2.0.0-alpha.16"
-  },
-  "pnpm": {
-    "overrides": {
-      "vite": "^8.0.0-beta.13"
-    }
-  }
+  "type": "module",
+  "version": "2.0.0-alpha.0"
 }
