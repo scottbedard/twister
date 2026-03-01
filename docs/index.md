@@ -3,9 +3,8 @@
 layout: home
 
 hero:
-  name: "Twister"
-  text: "A library for twisty puzzle state management"
-  tagline: My great project tagline
+  name: Twister
+  tagline: A library for twisty puzzle state management
   actions:
     - theme: brand
       text: Markdown Examples
@@ -15,11 +14,10 @@ hero:
       link: /api-examples
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Cube
+    details: A traditional six sided face turning puzzle
+    link: /cube
+  - title: Dodecaminx
+    details: A face turning dodecahedral puzzle
 ---
 
