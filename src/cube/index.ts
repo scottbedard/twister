@@ -1,4 +1,4 @@
-import type { CubeOptions, CubeSticker } from './types'
+import type { CubeFace, CubeOptions, CubeSticker } from './types'
 import { createFace } from './utils'
 
 export class Cube {
@@ -6,14 +6,7 @@ export class Cube {
 
   readonly size: number
 
-  readonly state: {
-    u: CubeSticker[]
-    d: CubeSticker[]
-    l: CubeSticker[]
-    r: CubeSticker[]
-    f: CubeSticker[]
-    b: CubeSticker[]
-  }
+  readonly state: Record<CubeFace, CubeSticker[]>
 
   constructor(opts: number | CubeOptions) {
     const size = typeof opts === 'number' ? opts : opts.size
@@ -25,22 +18,22 @@ export class Cube {
     this.rand = typeof opts === 'number' ? Math.random : opts.rand
     this.size = size
     this.state = {
-      u: createFace(size, 0),
-      d: createFace(size, 1),
-      l: createFace(size, 2),
-      r: createFace(size, 3),
-      f: createFace(size, 4),
-      b: createFace(size, 5),
+      u: createFace(size, 'u'),
+      d: createFace(size, 'd'),
+      l: createFace(size, 'l'),
+      r: createFace(size, 'r'),
+      f: createFace(size, 'f'),
+      b: createFace(size, 'b'),
     }
   }
 
   reset() {
     // @todo: add test for this
-    this.state.u = createFace(this.size, 0)
-    this.state.d = createFace(this.size, 1)
-    this.state.l = createFace(this.size, 2)
-    this.state.r = createFace(this.size, 3)
-    this.state.f = createFace(this.size, 4)
-    this.state.b = createFace(this.size, 5)
+    this.state.u = createFace(this.size, 'u')
+    this.state.d = createFace(this.size, 'd')
+    this.state.l = createFace(this.size, 'l')
+    this.state.r = createFace(this.size, 'r')
+    this.state.f = createFace(this.size, 'f')
+    this.state.b = createFace(this.size, 'b')
   }
 }
