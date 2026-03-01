@@ -1,7 +1,36 @@
-import { expect, test } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import { Cube } from '@/index'
 
-test('test', () => {
-  const cube = new Cube()
-  expect(cube.test()).toBe('hello')
+describe('Cube', () => {
+  test('new Cube(n)', () => {
+    const cube = new Cube(2)
+    expect(cube).toBeInstanceOf(Cube)
+    expect(cube.size).toBe(2)
+  })
+
+  test('new Cube(opts)', () => {
+    const cube = new Cube({ size: 2, rand: () => 0.5 })
+    expect(cube).toBeInstanceOf(Cube)
+    expect(cube.size).toBe(2)
+    expect(cube.rand()).toBe(0.5)
+
+    for (const face of ['u', 'd', 'l', 'r', 'f', 'b'] as const) {
+      expect(cube.state[face]).toHaveLength(4)
+
+      for (const sticker of cube.state[face]) {
+        expect(sticker).toMatchObject({
+          face: expect.any(Number),
+          index: expect.any(Number),
+          orientation: 0,
+        })
+      }
+    }
+  })
+
+  test('throws for invalid sizes', () => {
+    expect(() => new Cube(0)).toThrow()
+    expect(() => new Cube(-1)).toThrow()
+    expect(() => new Cube(1.5)).toThrow()
+    expect(() => new Cube(NaN)).toThrow()
+  })
 })
