@@ -4,14 +4,26 @@
     "url": "https://github.com/scottbedard/twister/issues"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vite": "^8.0.0-beta.13"
+  },
   "homepage": "https://github.com/scottbedard/twister#readme",
   "license": "MIT",
   "name": "@bedard/twister",
+  "pnpm": {
+    "overrides": {
+      "vite": "^8.0.0-beta.13"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scottbedard/twister.git"
   },
-  "scripts": {},
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
   "version": "2.0.0-pre.0"
 }
