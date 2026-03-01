@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
@@ -22,5 +26,5 @@
     "noUnusedParameters": true,
     "strict": true
   },
-  "include": ["src"]
+  "include": ["src", "tests"]
 }

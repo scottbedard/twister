@@ -1,7 +1,18 @@
 import { defineConfig } from 'vitepress'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  vite: {
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, '../../src'),
+      },
+    },
+  },
   title: "Twister",
   description: "A library for twisty puzzle state management",
   themeConfig: {
