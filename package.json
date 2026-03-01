@@ -25,13 +25,13 @@
     }
   },
   "scripts": {
-    "build": "tsc && vite build",
-    "dev": "vite",
-    "docs:build": "vitepress build docs",
-    "docs:dev": "vitepress dev docs",
-    "docs:preview": "vitepress preview docs",
+    "build:docs": "vitepress build docs",
+    "build:lib": "tsc && vite build",
+    "build": "pnpm build:lib && pnpm build:docs",
+    "dev": "vitepress dev docs",
     "lint:fix": "eslint . --fix",
     "lint": "eslint .",
+    "preview": "vitepress preview docs",
     "test": "vitest"
   },
   "type": "module",
