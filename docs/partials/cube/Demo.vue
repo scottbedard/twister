@@ -32,34 +32,40 @@
       class="gap-2 grid grid-cols-4"
       :style="{
         '--cube-size': `repeat(${size}, 1fr)`,
-        '--sticker-border': `${Math.floor(width / 8 / size)}px`,
-        '--sticker-gap': size < 5 ? '3px' : size < 10 ? '2px' : '1px',
-        '--sticker-radius': size < 5 ? '.5rem' : size < 10 ? '.25rem' : '0',
+        '--sticker-border': `${Math.floor(width / 5 / size)}px`,
+        '--sticker-gap': size < 5 ? '5px' : size < 10 ? '3px' : '1px',
+        '--sticker-radius': size < 5 ? '8px' : size < 10 ? '4px' : '0',
       }">
       <div ref="boxEl" />
 
       <DemoFace
         class="col-start-2"
+        :size
         :stickers="cube.state.u" />
 
       <DemoFace
         class="row-start-2"
+        :size
         :stickers="cube.state.l" />
 
       <DemoFace
         class="row-start-2"
+        :size
         :stickers="cube.state.f" />
 
       <DemoFace
         class="row-start-2"
+        :size
         :stickers="cube.state.r" />
 
       <DemoFace
         class="row-start-2"
+        :size
         :stickers="cube.state.b" />
 
       <DemoFace
         class="col-start-2"
+        :size
         :stickers="cube.state.d" />
     </div>
   </div>
@@ -78,5 +84,5 @@ const cube = computed(() => new Cube(size.value))
 
 const boxEl = useTemplateRef('boxEl')
 
-const { width, height } = useElementBounding(boxEl)
+const { width } = useElementBounding(boxEl)
 </script>
