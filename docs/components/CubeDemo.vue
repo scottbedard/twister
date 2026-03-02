@@ -3,41 +3,88 @@
     <RangeInput
       v-model="size"
       :label="`Size (${size})`"
+      :min="1"
+      :max="20"
     />
 
-    <pre>{{ foo }}</pre>
-
-    <div class="gap-2 grid grid-cols-4">
-      <div class="col-start-2 border border-[red]">
-        U
+    <div
+      class="gap-2 grid grid-cols-4"
+      :style="{ '--cube-size': `repeat(${cube.size}, 1fr)` }"
+    >
+      <div
+        class="col-start-2 gap-1 grid grid-col"
+        :style="{ gridTemplateColumns: `var(--cube-size)` }"
+      >
+        <div
+          v-for="sticker in cube.state.u"
+          :key="sticker.index"
+          class="aspect-square border border-[red]"
+        />
       </div>
 
-      <div class="row-start-2 border border-[blue]">
-        L
+      <div
+        class="gap-1 grid grid-col row-start-2"
+        :style="{ gridTemplateColumns: `var(--cube-size)` }"
+      >
+        <div
+          v-for="sticker in cube.state.u"
+          :key="sticker.index"
+          class="aspect-square border border-[red]"
+        />
       </div>
 
-      <div class="row-start-2 border border-[green]">
-        F
+      <div
+        class="gap-1 grid grid-col row-start-2"
+        :style="{ gridTemplateColumns: `var(--cube-size)` }"
+      >
+        <div
+          v-for="sticker in cube.state.u"
+          :key="sticker.index"
+          class="aspect-square border border-[red]"
+        />
       </div>
 
-      <div class="row-start-2 border border-[yellow]">
-        R
+      <div
+        class="gap-1 grid grid-col row-start-2"
+        :style="{ gridTemplateColumns: `var(--cube-size)` }"
+      >
+        <div
+          v-for="sticker in cube.state.u"
+          :key="sticker.index"
+          class="aspect-square border border-[red]"
+        />
       </div>
 
-      <div class="row-start-2 border border-[purple]">
-        B
+      <div
+        class="col-start-2 gap-1 grid grid-col row-start-2"
+        :style="{ gridTemplateColumns: `var(--cube-size)` }"
+      >
+        <div
+          v-for="sticker in cube.state.u"
+          :key="sticker.index"
+          class="aspect-square border border-[red]"
+        />
       </div>
-      <div class="row-start-3 col-start-2 border border-[orange]">
-        D
+
+      <div
+        class="col-start-2 gap-1 grid grid-col"
+        :style="{ gridTemplateColumns: `var(--cube-size)` }"
+      >
+        <div
+          v-for="sticker in cube.state.u"
+          :key="sticker.index"
+          class="aspect-square border border-[red]"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import RangeInput from './RangeInput.vue'
 import { Cube } from '@/index'
+import RangeInput from './RangeInput.vue'
 
 const size = ref(3)
-const foo = ref(new Cube(3))
+
+const cube = computed(() => new Cube(size.value))
 </script>

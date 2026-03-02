@@ -35,4 +35,10 @@ export default defineConfig([
       },
     },
   },
+  {
+    files: ['docs/**/*.vue', 'docs/**/*.ts'],
+    rules: {
+      'no-undef': 'off', // ts already checks this, and eslint conflicts with auto-imports
+    },
+  },
 ])
