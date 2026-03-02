@@ -32,9 +32,12 @@
       class="gap-2 grid grid-cols-4"
       :style="{
         '--cube-size': `repeat(${size}, 1fr)`,
-        '--sticker-gap': size < 5 ? '.25rem' : size < 10 ? '2px' : '1px',
+        '--sticker-border': `${Math.floor(width / 8 / size)}px`,
+        '--sticker-gap': size < 5 ? '3px' : size < 10 ? '2px' : '1px',
         '--sticker-radius': size < 5 ? '.5rem' : size < 10 ? '.25rem' : '0',
       }">
+      <div ref="boxEl" />
+
       <DemoFace
         class="col-start-2"
         :stickers="cube.state.u" />
@@ -64,6 +67,7 @@
 
 <script setup lang="ts">
 import { Cube } from '@/index'
+import { useElementBounding } from '@vueuse/core'
 import Button from '~/components/Button.vue'
 import DemoFace from './DemoFace.vue'
 import RangeInput from '~/components/RangeInput.vue'
@@ -71,4 +75,8 @@ import RangeInput from '~/components/RangeInput.vue'
 const size = ref(3)
 
 const cube = computed(() => new Cube(size.value))
+
+const boxEl = useTemplateRef('boxEl')
+
+const { width, height } = useElementBounding(boxEl)
 </script>
