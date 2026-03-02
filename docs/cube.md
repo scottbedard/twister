@@ -1,5 +1,5 @@
 ---
-
+title: Cube
 ---
 
 <script setup>

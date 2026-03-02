@@ -1,1 +1,4 @@
 @import "tailwindcss";
+
+/* Match VitePress dark mode: html gets class="dark" */
+@custom-variant dark (&:where(.dark, .dark *));
