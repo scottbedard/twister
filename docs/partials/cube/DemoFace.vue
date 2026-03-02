@@ -4,12 +4,28 @@
     <div
       v-for="sticker in stickers"
       :key="sticker.index"
-      class="aspect-square bg-gray-500/50 rounded-(--sticker-radius)" />
+      :class="[
+        'aspect-square border border-(--vp-c-border) flex items-center justify-center rounded-(--sticker-radius)',
+        {
+          u: 'bg-yellow-300',
+          l: 'bg-orange-500',
+          f: 'bg-blue-400',
+          r: 'bg-red-500',
+          b: 'bg-green-500',
+          d: 'bg-gray-100',
+        }[sticker.face],
+      ]" />
   </div>
 </template>
 
 <script setup lang="ts">
+import type { CubeSticker } from '@/index'
+
 defineProps<{
-  stickers: { index: number }[]
+  stickers: CubeSticker[]
 }>()
+
+function arrow(orientation: number) {
+  return ['', '→', '↓', '←'][orientation]
+}
 </script>

@@ -53,11 +53,11 @@
 
       <DemoFace
         class="row-start-2"
-        :stickers="cube.state.d" />
+        :stickers="cube.state.b" />
 
       <DemoFace
         class="col-start-2"
-        :stickers="cube.state.b" />
+        :stickers="cube.state.d" />
     </div>
   </div>
 </template>
