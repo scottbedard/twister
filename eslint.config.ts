@@ -9,9 +9,9 @@ export default defineConfig([
   {
     ignores: [
       'dist',
+      'docs/.vitepress/auto-imports.d.ts',
       'docs/.vitepress/cache',
       'docs/.vitepress/dist',
-      '**/auto-imports.d.ts',
       'node_modules',
       'package-lock.json',
       'package.json',
@@ -34,9 +34,43 @@ export default defineConfig([
         parser: ts.parser,
       },
     },
+    rules: {
+      'vue/attributes-order': ['error', {
+        alphabetical: true,
+        order: [
+          ['CONDITIONALS', 'CONTENT', 'LIST_RENDERING', 'OTHER_DIRECTIVES', 'RENDER_MODIFIERS', 'SLOT', 'TWO_WAY_BINDING'],
+          ['ATTR_STATIC', 'ATTR_SHORTHAND_BOOL'],
+          'ATTR_DYNAMIC',
+          'EVENTS',
+        ],
+      }],
+      'vue/html-closing-bracket-newline': [
+        'error',
+        {
+          multiline: 'never',
+          selfClosingTag: {
+            multiline: 'never',
+            singleline: 'never',
+          },
+          singleline: 'never',
+        },
+      ],
+      'vue/html-closing-bracket-spacing': ['error', {
+        endTag: 'never',
+        selfClosingTag: 'always',
+        startTag: 'never',
+      }],
+      'vue/padding-line-between-tags': ['error', [
+        { blankLine: 'always', next: '*', prev: '*' },
+      ]],
+      'vue/v-bind-style': ['error', 'shorthand', {
+        sameNameShorthand: 'always',
+      }],
+      'vue/multi-word-component-names': 'off',
+    },
   },
   {
-    files: ['docs/**/*.vue', 'docs/**/*.ts'],
+    files: ['**/*.vue', '**/*.ts'],
     rules: {
       'no-undef': 'off', // ts already checks this, and eslint conflicts with auto-imports
     },

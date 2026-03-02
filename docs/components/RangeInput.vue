@@ -1,18 +1,16 @@
 <template>
   <label :for="id">
     <span
-      class="block text-sm font-medium text-gray-900"
       v-text="label"
-    />
+      class="block mb-2 text-sm font-bold" />
 
     <input
       :id
       v-model.number="model"
-      class="mt-3 h-3.5 w-full appearance-none rounded-full bg-gray-300 [&amp;::-webkit-slider-thumb]:size-7 [&amp;::-webkit-slider-thumb]:cursor-pointer [&amp;::-webkit-slider-thumb]:appearance-none [&amp;::-webkit-slider-thumb]:rounded-full [&amp;::-webkit-slider-thumb]:border-[6px] [&amp;::-webkit-slider-thumb]:border-gray-500 [&amp;::-webkit-slider-thumb]:bg-gray-200"
-      :max
-      :min
+      class="cursor-grab h-2 w-full appearance-none rounded-full bg-gray-500/10 [&amp;::-webkit-slider-thumb]:size-7 [&amp;::-webkit-slider-thumb]:cursor-pointer [&amp;::-webkit-slider-thumb]:appearance-none [&amp;::-webkit-slider-thumb]:rounded-full [&amp;::-webkit-slider-thumb]:border-[6px] [&amp;::-webkit-slider-thumb]:border-gray-500 [&amp;::-webkit-slider-thumb]:bg-gray-200 active:cursor-grabbing"
       type="range"
-    >
+      :max
+      :min>
   </label>
 </template>
 

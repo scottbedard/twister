@@ -1,13 +1,13 @@
 ---
-outline: deep
+
 ---
 
 <script setup>
-import CubeDemo from './components/CubeDemo.vue'
+import Demo from './partials/cube/Demo.vue'
 </script>
 
 # Cube
 
 A traditional six sided face turning puzzle
 
-<CubeDemo />
+<Demo />
