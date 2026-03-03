@@ -3,7 +3,7 @@
     class="gap-(--sticker-gap) grid grid-cols-(--cube-size)">
     <div
       v-for="sticker in displayStickers"
-      :key="sticker.index"
+      :key="`${sticker.face}-${sticker.index}`"
       :class="[
         'aspect-square flex items-center justify-center rounded-(--sticker-radius) overflow-hidden',
         'outline -outline-offset-1 outline--(--vp-c-border)',

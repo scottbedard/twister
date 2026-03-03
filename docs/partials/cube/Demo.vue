@@ -6,7 +6,7 @@
           Clear
         </Button>
 
-        <Button>
+        <Button @click="reset">
           Reset
         </Button>
 
@@ -73,16 +73,68 @@
 
 <script setup lang="ts">
 import { Cube } from '@/index'
-import { useElementBounding } from '@vueuse/core'
+import { useElementBounding, useEventListener } from '@vueuse/core'
 import Button from '~/components/Button.vue'
 import DemoFace from './DemoFace.vue'
 import RangeInput from '~/components/RangeInput.vue'
 
 const size = ref(3)
 
-const cube = computed(() => new Cube(size.value))
+const cube = ref(new Cube(size.value))
 
 const boxEl = useTemplateRef('boxEl')
 
 const { width } = useElementBounding(boxEl)
+
+onMounted(() => {
+  useEventListener(window, 'keydown', onKeydown)
+})
+
+watch(size, reset)
+
+function onKeydown(e: KeyboardEvent) {
+  const turn = {
+    'i': 'R',
+    'k': 'R-',
+    'j': 'U',
+    'f': 'U-',
+    'e': 'L-',
+    'd': 'L',
+    's': 'D',
+    'l': 'D-',
+    'w': 'B',
+    'o': 'B-',
+    'a': 'Y-',
+    ';': 'Y',
+    'u': 'X',
+    'n': 'X-',
+    'r': 'X',
+    'c': 'X-',
+    'm': 'X-',
+    'v': 'X-',
+    'I': '2R',
+    'K': '2R-',
+    'E': '2L-',
+    'D': '2L',
+    'J': 'U',
+    'F': 'U-',
+    'g': 'F-',
+    'h': 'F',
+    'G': 'Fw-',
+    'H': 'Fw',
+    '9': 'Rw',
+    ',': 'Rw-',
+    '4': 'Lw-',
+    'x': 'Lw',
+    '3': 'Lw-',
+  }[e.key]
+
+  if (turn) {
+    cube.value.turn(turn)
+  }
+}
+
+function reset() {
+  cube.value = new Cube(size.value)
+}
 </script>
