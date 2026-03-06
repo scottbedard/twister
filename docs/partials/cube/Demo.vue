@@ -121,6 +121,12 @@ onMounted(() => {
 watch(size, reset)
 
 function onKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape') {
+    reset()
+
+    return
+  }
+
   const turn = {
     'i': 'R',
     'k': 'R-',
