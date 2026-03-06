@@ -19,7 +19,7 @@
         <RangeInput
           v-model="size"
           class="w-40"
-          :max="20"
+          :max
           :min="1" />
 
         <div class="opacity-90 text-sm">
@@ -98,12 +98,14 @@ const size = computed({
   get: () => {
     const v = Array.isArray(params.size) ? params.size[0] : params.size
     const n = Number(v)
-    return Number.isInteger(n) && n >= 1 && n <= 10 ? n : 3
+    return Number.isInteger(n) && n >= 1 && n <= max ? n : 3
   },
   set: (v: number) => {
     params.size = String(v)
   },
 })
+
+const max = 10
 
 const cube = ref(new Cube(size.value))
 
