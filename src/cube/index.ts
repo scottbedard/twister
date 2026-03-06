@@ -1,6 +1,6 @@
 import { extract, injectMatrix, rotate } from '@/utils'
 import { cubeAxes, cubeNet, cubeOpposites } from './constants'
-import { createFace } from './utils'
+import { createFace, getQuadrant } from './utils'
 import type {
   CubeAxis,
   CubeFace,
@@ -35,17 +35,33 @@ export class Cube {
     }
   }
 
-  getRotation(sticker: CubeSticker): 0 | 1 | 2 | 3 {
-    const faceStickers = this.state[sticker.face]
-    const maxIndex = this.size * this.size - 1
-    if (!faceStickers || sticker.index < 0 || sticker.index > maxIndex) {
-      return 0
+  getRotation(sticker: CubeSticker): number {
+    // find the current index of the sticker
+    for (const face of ['u', 'd', 'l', 'r', 'f', 'b'] as const) {
+      const index = this.state[face].findIndex(
+        s => s.face === sticker.face && s.index === sticker.index,
+      )
+
+      if (index < 0) {
+        continue
+      }
+
+      const current = getQuadrant(index, this.size)
+      const original = getQuadrant(sticker.index, this.size)
+      return (current - original + 4) % 4
     }
-    const row = Math.floor(sticker.index / this.size)
-    const col = sticker.index % this.size
-    const mid = this.size / 2
-    const quadrant = (row >= mid ? 2 : 0) + (col >= mid ? 1 : 0)
-    return quadrant as 0 | 1 | 2 | 3
+
+    return 0
+  }
+
+  findSticker(sticker: CubeSticker): { face: CubeFace, index: number } | null {
+    for (const face of ['u', 'd', 'l', 'r', 'f', 'b'] as const) {
+      const index = this.state[face].findIndex(
+        s => s.face === sticker.face && s.index === sticker.index,
+      )
+      if (index !== -1) return { face, index }
+    }
+    return null
   }
 
   /**

@@ -87,12 +87,23 @@
 <script setup lang="ts">
 import { Cube } from '@/index'
 import type { CubeSticker } from '@/index'
-import { refDebounced, useElementBounding, useEventListener } from '@vueuse/core'
+import { refDebounced, useElementBounding, useEventListener, useUrlSearchParams } from '@vueuse/core'
 import Button from '~/components/Button.vue'
 import DemoFace from './DemoFace.vue'
 import RangeInput from '~/components/RangeInput.vue'
 
-const size = ref(3)
+const params = useUrlSearchParams('history', { initialValue: { size: '3' } })
+
+const size = computed({
+  get: () => {
+    const v = Array.isArray(params.size) ? params.size[0] : params.size
+    const n = Number(v)
+    return Number.isInteger(n) && n >= 1 && n <= 20 ? n : 3
+  },
+  set: (v: number) => {
+    params.size = String(v)
+  },
+})
 
 const cube = ref(new Cube(size.value))
 

@@ -3,9 +3,10 @@
     class="gap-(--sticker-gap) grid grid-cols-(--cube-size)">
     <div
       v-for="sticker in displayStickers"
-      v-text="cube.getRotation(sticker)"
+      v-text="cube.getRotation(sticker) ?? -1"
       :key="`${sticker.face}-${sticker.index}`"
       :class="[
+        'text-xs',
         'aspect-square flex items-center justify-center rounded-(--sticker-radius) overflow-hidden',
         'outline -outline-offset-1 outline--(--vp-c-border)',
         {
@@ -22,7 +23,7 @@
         borderLeftWidth: polygonContainsPoint(paths.l, sticker.coords.l) ? 'var(--sticker-border)' : undefined,
         borderBottomWidth: polygonContainsPoint(paths.b, sticker.coords.b) ? 'var(--sticker-border)' : undefined,
         borderRightWidth: polygonContainsPoint(paths.r, sticker.coords.r) ? 'var(--sticker-border)' : undefined,
-        transform: `rotate(${0 * 90}deg)`,
+        transform: `rotate(${cube.getRotation(sticker) * 90}deg)`,
       }"
       @mouseenter="model = sticker"
       @mouseleave="model = null" />
