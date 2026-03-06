@@ -98,7 +98,7 @@ const size = computed({
   get: () => {
     const v = Array.isArray(params.size) ? params.size[0] : params.size
     const n = Number(v)
-    return Number.isInteger(n) && n >= 1 && n <= 20 ? n : 3
+    return Number.isInteger(n) && n >= 1 && n <= 10 ? n : 3
   },
   set: (v: number) => {
     params.size = String(v)
