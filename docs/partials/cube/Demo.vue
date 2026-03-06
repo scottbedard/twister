@@ -41,8 +41,8 @@
       <DemoFace
         v-model="hoverSticker"
         class="col-start-2"
-        :size
-        :stickers="cube.state.u" />
+        face="u"
+        :cube />
 
       <div class="flex items-center px-2">
         <pre class="text-sm">{{ {
@@ -54,32 +54,32 @@
       <DemoFace
         v-model="hoverSticker"
         class="row-start-2"
-        :size
-        :stickers="cube.state.l" />
+        face="l"
+        :cube />
 
       <DemoFace
         v-model="hoverSticker"
         class="row-start-2"
-        :size
-        :stickers="cube.state.f" />
+        face="f"
+        :cube />
 
       <DemoFace
         v-model="hoverSticker"
         class="row-start-2"
-        :size
-        :stickers="cube.state.r" />
+        face="r"
+        :cube />
 
       <DemoFace
         v-model="hoverSticker"
         class="row-start-2"
-        :size
-        :stickers="cube.state.b" />
+        face="b"
+        :cube />
 
       <DemoFace
         v-model="hoverSticker"
         class="col-start-2"
-        :size
-        :stickers="cube.state.d" />
+        face="d"
+        :cube />
     </div>
   </div>
 </template>

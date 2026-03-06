@@ -35,6 +35,19 @@ export class Cube {
     }
   }
 
+  getRotation(sticker: CubeSticker): 0 | 1 | 2 | 3 {
+    const faceStickers = this.state[sticker.face]
+    const maxIndex = this.size * this.size - 1
+    if (!faceStickers || sticker.index < 0 || sticker.index > maxIndex) {
+      return 0
+    }
+    const row = Math.floor(sticker.index / this.size)
+    const col = sticker.index % this.size
+    const mid = this.size / 2
+    const quadrant = (row >= mid ? 2 : 0) + (col >= mid ? 1 : 0)
+    return quadrant as 0 | 1 | 2 | 3
+  }
+
   /**
    * Parse turn notation
    */

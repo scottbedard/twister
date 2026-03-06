@@ -3,6 +3,7 @@
     class="gap-(--sticker-gap) grid grid-cols-(--cube-size)">
     <div
       v-for="sticker in displayStickers"
+      v-text="cube.getRotation(sticker)"
       :key="`${sticker.face}-${sticker.index}`"
       :class="[
         'aspect-square flex items-center justify-center rounded-(--sticker-radius) overflow-hidden',
@@ -29,35 +30,36 @@
 </template>
 
 <script setup lang="ts">
-import type { CubeSticker } from '@/index'
+import type { Cube } from '@/index'
+import type { CubeFace, CubeSticker } from '@/index'
 import type { Vec } from '@/utils/types'
 
-const {
-  size,
-  stickers,
-} = defineProps<{
-  size: number
-  stickers: CubeSticker[]
+const { cube, face } = defineProps<{
+  cube: Cube
+  face: CubeFace
 }>()
+
+const stickers = computed(() => cube.state[face])
 
 type Paths = Record<'t' | 'l' | 'b' | 'r', Vec<3, Vec<2>>>
 
 const model = defineModel<CubeSticker | null>()
 
 const displayStickers = computed(() => {
-  return stickers.map((sticker) => {
-    const coords = getIndexCoords(sticker.index, size)
+  return stickers.value.map((sticker) => {
+    const coords = getIndexCoords(sticker.index, cube.size)
     return { ...sticker, coords }
   })
 })
 
 const paths = computed<Paths>(() => {
-  const mid: Vec<2> = [size / 2, size / 2]
+  const s = cube.size
+  const mid: Vec<2> = [s / 2, s / 2]
   return {
-    t: [[0, 0], [size, 0], mid],
-    l: [[0, 0], mid, [0, size]],
-    b: [[0, size], mid, [size, size]],
-    r: [[size, size], mid, [size, 0]],
+    t: [[0, 0], [s, 0], mid],
+    l: [[0, 0], mid, [0, s]],
+    b: [[0, s], mid, [s, s]],
+    r: [[s, s], mid, [s, 0]],
   }
 })
 
