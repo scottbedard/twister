@@ -10,7 +10,6 @@ export type CubeOptions = {
 export interface CubeSticker {
   face: CubeFace
   index: number
-  orientation: 0 | 1 | 2 | 3
 }
 
 export type CubeTurn = {

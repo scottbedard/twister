@@ -98,13 +98,13 @@ export class Cube {
 
     // rotate target face
     if (depth === 1 || wide) {
-      console.log('rotate', target, rotation)
       this.state[target] = rotate(this.state[target], rotation)
     }
 
     // rotate the opposite face
     if (depth >= this.size) {
       const opposite = cubeOpposites[target]
+
       this.state[opposite] = rotate(this.state[opposite], -rotation)
     }
 
@@ -119,6 +119,7 @@ export class Cube {
       }).forEach((slice, index) => {
         // inject slices into target faces
         const [relatedFace, angle] = relatedFaces[(index + 4 + rotation) % 4]
+
         this.state[relatedFace] = injectMatrix(slice, this.state[relatedFace], angle, i)
       })
     }

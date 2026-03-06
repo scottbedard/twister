@@ -21,7 +21,10 @@
         borderLeftWidth: polygonContainsPoint(paths.l, sticker.coords.l) ? 'var(--sticker-border)' : undefined,
         borderBottomWidth: polygonContainsPoint(paths.b, sticker.coords.b) ? 'var(--sticker-border)' : undefined,
         borderRightWidth: polygonContainsPoint(paths.r, sticker.coords.r) ? 'var(--sticker-border)' : undefined,
-      }" />
+        transform: `rotate(${0 * 90}deg)`,
+      }"
+      @mouseenter="model = sticker"
+      @mouseleave="model = null" />
   </div>
 </template>
 
@@ -38,6 +41,8 @@ const {
 }>()
 
 type Paths = Record<'t' | 'l' | 'b' | 'r', Vec<3, Vec<2>>>
+
+const model = defineModel<CubeSticker | null>()
 
 const displayStickers = computed(() => {
   return stickers.map((sticker) => {

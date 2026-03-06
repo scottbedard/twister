@@ -39,31 +39,44 @@
       <div ref="boxEl" />
 
       <DemoFace
+        v-model="hoverSticker"
         class="col-start-2"
         :size
         :stickers="cube.state.u" />
 
+      <div class="flex items-center px-2">
+        <pre class="text-sm">{{ {
+          face: hoverStickerDisplay?.face ?? null,
+          index: hoverStickerDisplay?.index ?? null,
+        } }}</pre>
+      </div>
+
       <DemoFace
+        v-model="hoverSticker"
         class="row-start-2"
         :size
         :stickers="cube.state.l" />
 
       <DemoFace
+        v-model="hoverSticker"
         class="row-start-2"
         :size
         :stickers="cube.state.f" />
 
       <DemoFace
+        v-model="hoverSticker"
         class="row-start-2"
         :size
         :stickers="cube.state.r" />
 
       <DemoFace
+        v-model="hoverSticker"
         class="row-start-2"
         :size
         :stickers="cube.state.b" />
 
       <DemoFace
+        v-model="hoverSticker"
         class="col-start-2"
         :size
         :stickers="cube.state.d" />
@@ -73,7 +86,8 @@
 
 <script setup lang="ts">
 import { Cube } from '@/index'
-import { useElementBounding, useEventListener } from '@vueuse/core'
+import type { CubeSticker } from '@/index'
+import { refDebounced, useElementBounding, useEventListener } from '@vueuse/core'
 import Button from '~/components/Button.vue'
 import DemoFace from './DemoFace.vue'
 import RangeInput from '~/components/RangeInput.vue'
@@ -83,6 +97,9 @@ const size = ref(3)
 const cube = ref(new Cube(size.value))
 
 const boxEl = useTemplateRef('boxEl')
+
+const hoverSticker = shallowRef<CubeSticker | null>(null)
+const hoverStickerDisplay = refDebounced(hoverSticker, 50)
 
 const { width } = useElementBounding(boxEl)
 
@@ -116,7 +133,7 @@ function onKeydown(e: KeyboardEvent) {
     'K': '2R-',
     'E': '2L-',
     'D': '2L',
-    'J': 'U',
+    'J': '2U',
     'F': 'U-',
     'g': 'F-',
     'h': 'F',
