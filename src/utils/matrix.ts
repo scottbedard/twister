@@ -141,27 +141,21 @@ export function rows<T>(arr: T[]): T[][] {
 }
 
 /**
- * Return the quadrant (0–3) for an index in a square matrix of size len×len.
+ * Return the quadrant (0–3) for an index in a square matrix of size NxN.
  * Quadrants: 0 = top-left, 1 = top-right, 2 = bottom-right, 3 = bottom-left.
- * For odd-sized matrices, the center cell is assigned to quadrant 1.
  */
-export function quadrant(index: number, len: number): number {
-  const mid = Math.floor(len / 2)
-  const row = Math.floor(index / len)
-  const col = index % len
-  const odd = len % 2 === 1
-
-  if (odd && row === mid && col === mid) return 1
-
-  if (row < mid && (col < mid || (odd && col === mid))) return 0
-  if (row < mid && col > mid) return 1
-  if (odd && row === mid && col < mid) return 3
-  if (odd && row === mid && col > mid) return 1
-
-  if (col >= mid) {
-    if (odd && row <= mid) return 1
-    if (!odd && row < mid) return 1
-    return 2 // row >= mid for even, row > mid for odd (center already handled)
-  }
-  return 3
+export function quadrant(index: number, size: number): number {
+  const mid = Math.floor(size / 2)
+  const row = Math.floor(index / size)
+  const col = index % size
+  const odd = size % 2 === 1
+  const top = row < mid
+  const left = col < mid
+  if (top && (left || (odd && col === mid))) return 0
+  const right = col >= mid
+  if ((top && right) || (odd && row === mid && right)) return 1
+  const bottom = row >= mid
+  if (bottom && right && (!odd || row > mid)) return 2
+  if (bottom && left) return 3
+  throw new Error('invalid quadrant index')
 }
