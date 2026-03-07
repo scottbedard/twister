@@ -153,7 +153,7 @@ function onKeydown(e: KeyboardEvent) {
     'E': '2L-',
     'D': '2L',
     'J': '2U',
-    'F': 'U-',
+    'F': '2U-',
     'g': 'F-',
     'h': 'F',
     'G': 'Fw-',
@@ -163,6 +163,8 @@ function onKeydown(e: KeyboardEvent) {
     '4': 'Lw-',
     'x': 'Lw',
     '3': 'Lw-',
+    'S': '2D',
+    'L': '2D-',
   }[e.key]
 
   if (turn) {
