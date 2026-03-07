@@ -1,6 +1,6 @@
-import { extract, injectMatrix, rotate } from '@/utils'
+import { extract, injectMatrix, rotate, quadrant } from '@/utils'
 import { cubeAxes, cubeNet, cubeOpposites } from './constants'
-import { createFace, getQuadrant } from './utils'
+import { createFace } from './utils'
 import type {
   CubeAxis,
   CubeFace,
@@ -46,8 +46,8 @@ export class Cube {
         continue
       }
 
-      const current = getQuadrant(index, this.size)
-      const original = getQuadrant(sticker.index, this.size)
+      const current = quadrant(index, this.size)
+      const original = quadrant(sticker.index, this.size)
       return (current - original + 4) % 4
     }
 

@@ -139,3 +139,29 @@ export function rows<T>(arr: T[]): T[][] {
     return arr.slice(start, start + size)
   })
 }
+
+/**
+ * Return the quadrant (0–3) for an index in a square matrix of size len×len.
+ * Quadrants: 0 = top-left, 1 = top-right, 2 = bottom-right, 3 = bottom-left.
+ * For odd-sized matrices, the center cell is assigned to quadrant 1.
+ */
+export function quadrant(index: number, len: number): number {
+  const mid = Math.floor(len / 2)
+  const row = Math.floor(index / len)
+  const col = index % len
+  const odd = len % 2 === 1
+
+  if (odd && row === mid && col === mid) return 1
+
+  if (row < mid && (col < mid || (odd && col === mid))) return 0
+  if (row < mid && col > mid) return 1
+  if (odd && row === mid && col < mid) return 3
+  if (odd && row === mid && col > mid) return 1
+
+  if (col >= mid) {
+    if (odd && row <= mid) return 1
+    if (!odd && row < mid) return 1
+    return 2 // row >= mid for even, row > mid for odd (center already handled)
+  }
+  return 3
+}

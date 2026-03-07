@@ -5,6 +5,7 @@ import {
   flattenRows,
   flip,
   injectMatrix,
+  quadrant,
   rotate,
   rows,
 } from '@/utils/matrix'
@@ -236,5 +237,69 @@ describe('matrix utils', () => {
       [4, 5, 6],
       [7, 8, 9],
     ])
+  })
+
+  describe('quadrant', () => {
+    test('2x2', () => {
+      // 0 1
+      // 3 2
+      const len = 2
+      expect(quadrant(0, len)).toBe(0)
+      expect(quadrant(1, len)).toBe(1)
+      expect(quadrant(2, len)).toBe(3)
+      expect(quadrant(3, len)).toBe(2)
+    })
+
+    test('3x3', () => {
+      // 0 0 1
+      // 3 x 1
+      // 3 2 2
+      const len = 3
+      expect(quadrant(0, len)).toBe(0)
+      expect(quadrant(1, len)).toBe(0)
+      expect(quadrant(2, len)).toBe(1)
+      expect(quadrant(3, len)).toBe(3)
+      expect(quadrant(4, len)).toBe(1) // center -> adjacent (1)
+      expect(quadrant(5, len)).toBe(1)
+      expect(quadrant(6, len)).toBe(3)
+      expect(quadrant(7, len)).toBe(2)
+      expect(quadrant(8, len)).toBe(2)
+    })
+
+    test('4x4', () => {
+      // 0 0 1 1
+      // 0 0 1 1
+      // 3 3 2 2
+      // 3 3 2 2
+      const len = 4
+      const expected = [
+        0, 0, 1, 1,
+        0, 0, 1, 1,
+        3, 3, 2, 2,
+        3, 3, 2, 2,
+      ]
+      for (let i = 0; i < len * len; i++) {
+        expect(quadrant(i, len)).toBe(expected[i])
+      }
+    })
+
+    test('5x5', () => {
+      // 0 0 0 1 1
+      // 0 0 0 1 1
+      // 3 3 x 1 1
+      // 3 3 2 2 2
+      // 3 3 2 2 2
+      const len = 5
+      const expected = [
+        0, 0, 0, 1, 1,
+        0, 0, 0, 1, 1,
+        3, 3, 1, 1, 1, // center (index 12) -> 1
+        3, 3, 2, 2, 2,
+        3, 3, 2, 2, 2,
+      ]
+      for (let i = 0; i < len * len; i++) {
+        expect(quadrant(i, len)).toBe(expected[i])
+      }
+    })
   })
 })

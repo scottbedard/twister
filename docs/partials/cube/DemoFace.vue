@@ -3,7 +3,6 @@
     class="gap-(--sticker-gap) grid grid-cols-(--cube-size)">
     <div
       v-for="sticker in displayStickers"
-      v-text="cube.getRotation(sticker) ?? -1"
       :key="`${sticker.face}-${sticker.index}`"
       :class="[
         'text-xs',
