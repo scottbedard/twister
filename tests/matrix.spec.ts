@@ -1,5 +1,6 @@
 import {
   cols,
+  coords,
   extract,
   flattenCols,
   flattenRows,
@@ -23,6 +24,36 @@ describe('matrix utils', () => {
       [2, 5, 8],
       [3, 6, 9],
     ])
+  })
+
+  describe('coords', () => {
+    test('3x3: row/col for each index', () => {
+      const size = 3
+      expect(coords(0, size)).toEqual({ col: 0, mid: 1, odd: true, row: 0 })
+      expect(coords(1, size)).toEqual({ col: 1, mid: 1, odd: true, row: 0 })
+      expect(coords(2, size)).toEqual({ col: 2, mid: 1, odd: true, row: 0 })
+      expect(coords(3, size)).toEqual({ col: 0, mid: 1, odd: true, row: 1 })
+      expect(coords(4, size)).toEqual({ col: 1, mid: 1, odd: true, row: 1 })
+      expect(coords(5, size)).toEqual({ col: 2, mid: 1, odd: true, row: 1 })
+      expect(coords(6, size)).toEqual({ col: 0, mid: 1, odd: true, row: 2 })
+      expect(coords(7, size)).toEqual({ col: 1, mid: 1, odd: true, row: 2 })
+      expect(coords(8, size)).toEqual({ col: 2, mid: 1, odd: true, row: 2 })
+    })
+
+    test('2x2: mid and odd', () => {
+      expect(coords(0, 2)).toEqual({ col: 0, mid: 1, odd: false, row: 0 })
+      expect(coords(3, 2)).toEqual({ col: 1, mid: 1, odd: false, row: 1 })
+    })
+
+    test('4x4: even size mid', () => {
+      expect(coords(0, 4)).toEqual({ col: 0, mid: 2, odd: false, row: 0 })
+      expect(coords(5, 4)).toEqual({ col: 1, mid: 2, odd: false, row: 1 })
+      expect(coords(15, 4)).toEqual({ col: 3, mid: 2, odd: false, row: 3 })
+    })
+
+    test('5x5: odd size mid', () => {
+      expect(coords(12, 5)).toEqual({ col: 2, mid: 2, odd: true, row: 2 })
+    })
   })
 
   describe('extract', () => {

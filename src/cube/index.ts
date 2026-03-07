@@ -1,4 +1,4 @@
-import { extract, injectMatrix, rotate, quadrant } from '@/utils'
+import { coords, extract, injectMatrix, rotate, quadrant } from '@/utils'
 import { cubeAxes, cubeNet, cubeOpposites } from './constants'
 import { createFace } from './utils'
 import type {
@@ -76,6 +76,12 @@ export class Cube {
 
       if (index < 0) {
         continue
+      }
+
+      const { odd, row, col, mid } = coords(index, this.size)
+
+      if (odd && row === mid && col === mid) {
+        return this.centers[face]
       }
 
       const current = quadrant(index, this.size)

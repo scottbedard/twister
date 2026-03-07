@@ -12,6 +12,18 @@ export function cols<T>(matrix: T[]): T[][] {
 }
 
 /**
+ * Find the coordinates of an index inside a square matrix.
+ */
+export function coords(index: number, size: number) {
+  return {
+    col: index % size,
+    mid: Math.floor(size / 2),
+    odd: size % 2 === 1,
+    row: Math.floor(index / size),
+  }
+}
+
+/**
  * Extract a layer of values.
  *
  * @param {T[]} target Matrix to extract values from.
@@ -145,10 +157,7 @@ export function rows<T>(arr: T[]): T[][] {
  * 0 = top-left, 1 = top-right, 2 = bottom-right, 3 = bottom-left.
  */
 export function quadrant(index: number, size: number): number {
-  const mid = Math.floor(size / 2)
-  const row = Math.floor(index / size)
-  const col = index % size
-  const odd = size % 2 === 1
+  const { mid, odd, row, col } = coords(index, size)
   const top = row < mid
   const left = col < mid
   if (top && (left || (odd && col === mid))) return 0
