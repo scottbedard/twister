@@ -10,12 +10,30 @@ import type {
 } from './types'
 
 export class Cube {
+  /**
+   * Rotation of center stickers.
+   */
+  readonly centers: Record<CubeFace, number>
+
+  /**
+   * Random number generator.
+   */
   readonly rand: () => number
 
+  /**
+   * Size of the cube.
+   */
   readonly size: number
 
+  /**
+   * State of the cube.
+   */
   readonly state: Record<CubeFace, CubeSticker[]>
 
+  /**
+   * Create a new cube.
+   * @param opts - The options for the cube.
+   */
   constructor(opts: number | CubeOptions) {
     const size = typeof opts === 'number' ? opts : opts.size
 
@@ -23,20 +41,34 @@ export class Cube {
       throw new Error('Cube size must be a positive integer')
     }
 
-    this.rand = typeof opts === 'number' ? Math.random : opts.rand
+    this.centers = {
+      b: 0,
+      d: 0,
+      f: 0,
+      l: 0,
+      r: 0,
+      u: 0,
+    }
+
+    this.rand = typeof opts === 'number' ? Math.random : opts.rand ?? Math.random
+
     this.size = size
+
     this.state = {
-      u: createFace(size, 'u'),
+      b: createFace(size, 'b'),
       d: createFace(size, 'd'),
+      f: createFace(size, 'f'),
       l: createFace(size, 'l'),
       r: createFace(size, 'r'),
-      f: createFace(size, 'f'),
-      b: createFace(size, 'b'),
+      u: createFace(size, 'u'),
     }
   }
 
+  /**
+   * Get the rotation of a sticker relative to it's starting position. This is
+   * primarily used for rendering super-cubes.
+   */
   getRotation(sticker: CubeSticker): number {
-    // find the current index of the sticker
     for (const face of ['u', 'd', 'l', 'r', 'f', 'b'] as const) {
       const index = this.state[face].findIndex(
         s => s.face === sticker.face && s.index === sticker.index,
@@ -52,16 +84,6 @@ export class Cube {
     }
 
     return 0
-  }
-
-  findSticker(sticker: CubeSticker): { face: CubeFace, index: number } | null {
-    for (const face of ['u', 'd', 'l', 'r', 'f', 'b'] as const) {
-      const index = this.state[face].findIndex(
-        s => s.face === sticker.face && s.index === sticker.index,
-      )
-      if (index !== -1) return { face, index }
-    }
-    return null
   }
 
   /**

@@ -3,7 +3,7 @@ export type CubeAxis = 'x' | 'y' | 'z'
 export type CubeFace = 'u' | 'd' | 'l' | 'r' | 'f' | 'b'
 
 export type CubeOptions = {
-  rand: () => number
+  rand?: () => number
   size: number
 }
 

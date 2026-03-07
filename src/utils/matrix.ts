@@ -142,7 +142,7 @@ export function rows<T>(arr: T[]): T[][] {
 
 /**
  * Return the quadrant (0–3) for an index in a square matrix of size NxN.
- * Quadrants: 0 = top-left, 1 = top-right, 2 = bottom-right, 3 = bottom-left.
+ * 0 = top-left, 1 = top-right, 2 = bottom-right, 3 = bottom-left.
  */
 export function quadrant(index: number, size: number): number {
   const mid = Math.floor(size / 2)
