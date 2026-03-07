@@ -1,3 +1,5 @@
+import { mod } from './math'
+
 /**
  * Chunk a matrix array into columns.
  *
@@ -113,7 +115,7 @@ export function injectMatrix<T>(arr: T[], target: T[], angle: number, depth: num
  * @return {T[]}
  */
 export function rotate<T>(matrix: T[], angle: number): T[] {
-  const rotation = (angle + 4) % 4
+  const rotation = mod(angle, 4)
 
   if (rotation === 1) {
     return flattenCols([...rows(matrix)].reverse())

@@ -1,4 +1,4 @@
-import { coords, extract, injectMatrix, rotate, quadrant } from '@/utils'
+import { coords, extract, injectMatrix, mod, rotate, quadrant } from '@/utils'
 import { cubeAxes, cubeNet, cubeOpposites } from './constants'
 import { createFace } from './utils'
 import type {
@@ -86,7 +86,7 @@ export class Cube {
 
       const current = quadrant(index, this.size)
       const original = quadrant(sticker.index, this.size)
-      return (current - original + 4) % 4
+      return mod(current - original, 4)
     }
 
     return 0
@@ -155,6 +155,10 @@ export class Cube {
 
     // rotate target face
     if (depth === 1 || wide) {
+      if (this.size % 2 === 1) {
+        this.centers[target] = mod(this.centers[target] + rotation, 4)
+      }
+
       this.state[target] = rotate(this.state[target], rotation)
     }
 
@@ -175,7 +179,7 @@ export class Cube {
         return extract(this.state[face], angle, i)
       }).forEach((slice, index) => {
         // inject slices into target faces
-        const [relatedFace, angle] = relatedFaces[(index + 4 + rotation) % 4]
+        const [relatedFace, angle] = relatedFaces[mod(index + 4 + rotation, 4)]
 
         this.state[relatedFace] = injectMatrix(slice, this.state[relatedFace], angle, i)
       })

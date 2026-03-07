@@ -20,7 +20,7 @@
           v-model="size"
           class="w-40"
           :max
-          :min="1" />
+          :min="2" />
 
         <div class="opacity-90 text-sm">
           {{ size }}x{{ size }}
@@ -32,24 +32,14 @@
       class="gap-2 grid grid-cols-4"
       :style="{
         '--cube-size': `repeat(${size}, 1fr)`,
-        '--sticker-border': `${Math.floor(width / 5 / size)}px`,
-        '--sticker-gap': size < 5 ? '5px' : size < 10 ? '3px' : '1px',
-        '--sticker-radius': size < 5 ? '8px' : size < 10 ? '4px' : '0',
+        '--sticker-gap': size < 3 ? '6px' : size < 5 ? '3px' : size < 7 ? '1px' : '0px',
+        '--sticker-radius': size < 4 ? '6px' : size < 6 ? '4px' : '2px',
       }">
-      <div ref="boxEl" />
-
       <DemoFace
         v-model="hoverSticker"
         class="col-start-2"
         face="u"
         :cube />
-
-      <div class="flex items-center px-2">
-        <pre class="text-sm">{{ {
-          face: hoverStickerDisplay?.face ?? null,
-          index: hoverStickerDisplay?.index ?? null,
-        } }}</pre>
-      </div>
 
       <DemoFace
         v-model="hoverSticker"
@@ -87,7 +77,7 @@
 <script setup lang="ts">
 import { Cube } from '@/index'
 import type { CubeSticker } from '@/index'
-import { refDebounced, useElementBounding, useEventListener, useUrlSearchParams } from '@vueuse/core'
+import { useEventListener, useUrlSearchParams } from '@vueuse/core'
 import Button from '~/components/Button.vue'
 import DemoFace from './CubeDemoFace.vue'
 import RangeInput from '~/components/RangeInput.vue'
@@ -109,12 +99,7 @@ const max = 10
 
 const cube = ref(new Cube(size.value))
 
-const boxEl = useTemplateRef('boxEl')
-
 const hoverSticker = shallowRef<CubeSticker | null>(null)
-const hoverStickerDisplay = refDebounced(hoverSticker, 50)
-
-const { width } = useElementBounding(boxEl)
 
 onMounted(() => {
   reset()

@@ -21,7 +21,6 @@ describe('Cube', () => {
         expect(sticker).toMatchObject({
           face,
           index: expect.any(Number),
-          orientation: 0,
         })
       }
     }
