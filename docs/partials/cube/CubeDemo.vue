@@ -89,7 +89,7 @@ import { Cube } from '@/index'
 import type { CubeSticker } from '@/index'
 import { refDebounced, useElementBounding, useEventListener, useUrlSearchParams } from '@vueuse/core'
 import Button from '~/components/Button.vue'
-import DemoFace from './DemoFace.vue'
+import DemoFace from './CubeDemoFace.vue'
 import RangeInput from '~/components/RangeInput.vue'
 
 const params = useUrlSearchParams('history', { initialValue: { size: '3' } })
@@ -117,7 +117,17 @@ const hoverStickerDisplay = refDebounced(hoverSticker, 50)
 const { width } = useElementBounding(boxEl)
 
 onMounted(() => {
+  reset()
+
+  document.querySelector('#cube-api')?.addEventListener('click', () => {
+    console.log(cube.value)
+  })
+
   useEventListener(window, 'keydown', onKeydown)
+})
+
+onUnmounted(() => {
+  delete (window as Window & { cube?: Cube }).cube
 })
 
 watch(size, reset)
@@ -130,6 +140,9 @@ function onKeydown(e: KeyboardEvent) {
   }
 
   const turn = {
+    '3': 'Lw-',
+    '4': 'Lw-',
+    '9': 'Rw',
     'i': 'R',
     'k': 'R-',
     'j': 'U',
@@ -152,19 +165,16 @@ function onKeydown(e: KeyboardEvent) {
     'K': '2R-',
     'E': '2L-',
     'D': '2L',
-    'J': '2U',
-    'F': '2U-',
+    'J': 'U',
+    'F': 'U-',
     'g': 'F-',
     'h': 'F',
     'G': 'Fw-',
     'H': 'Fw',
-    '9': 'Rw',
     ',': 'Rw-',
-    '4': 'Lw-',
     'x': 'Lw',
-    '3': 'Lw-',
-    'S': '2D',
-    'L': '2D-',
+    'p': 'Z',
+    'q': 'Z-',
   }[e.key]
 
   if (turn) {
@@ -174,5 +184,7 @@ function onKeydown(e: KeyboardEvent) {
 
 function reset() {
   cube.value = new Cube(size.value)
+
+  ;(window as Window & { cube?: Cube }).cube = cube.value
 }
 </script>
