@@ -277,6 +277,7 @@ describe('matrix utils', () => {
         0, 1,
         3, 2,
       ]
+
       for (let i = 0; i < size * size; i++) {
         expect(quadrant(i, size)).toBe(expected[i])
       }
@@ -286,9 +287,10 @@ describe('matrix utils', () => {
       const size = 3
       const expected = [
         0, 0, 1,
-        3, 1, 1,
+        3, 4, 1,
         3, 2, 2,
       ]
+
       for (let i = 0; i < size * size; i++) {
         expect(quadrant(i, size)).toBe(expected[i])
       }
@@ -302,6 +304,7 @@ describe('matrix utils', () => {
         3, 3, 2, 2,
         3, 3, 2, 2,
       ]
+
       for (let i = 0; i < size * size; i++) {
         expect(quadrant(i, size)).toBe(expected[i])
       }
@@ -312,10 +315,11 @@ describe('matrix utils', () => {
       const expected = [
         0, 0, 0, 1, 1,
         0, 0, 0, 1, 1,
-        3, 3, 1, 1, 1,
+        3, 3, 4, 1, 1,
         3, 3, 2, 2, 2,
         3, 3, 2, 2, 2,
       ]
+
       for (let i = 0; i < size * size; i++) {
         expect(quadrant(i, size)).toBe(expected[i])
       }
