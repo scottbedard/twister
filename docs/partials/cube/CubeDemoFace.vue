@@ -17,7 +17,7 @@
       ]"
       :style="{
         containerType: 'size',
-        transform: `rotate(${cube.getRotation(sticker) * 90}deg)`,
+        transform: `rotate(${sticker.rotation * 90}deg)`,
       }">
       <span
         v-text="'↑'"

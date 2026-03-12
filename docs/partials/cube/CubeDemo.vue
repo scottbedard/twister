@@ -35,37 +35,37 @@
         '--sticker-gap': size < 3 ? '6px' : size < 5 ? '3px' : size < 7 ? '1px' : '0px',
         '--sticker-radius': size < 4 ? '6px' : size < 6 ? '4px' : '2px',
       }">
-      <DemoFace
+      <CubeDemoFace
         v-model="hoverSticker"
         class="col-start-2"
         face="u"
         :cube />
 
-      <DemoFace
+      <CubeDemoFace
         v-model="hoverSticker"
         class="row-start-2"
         face="l"
         :cube />
 
-      <DemoFace
+      <CubeDemoFace
         v-model="hoverSticker"
         class="row-start-2"
         face="f"
         :cube />
 
-      <DemoFace
+      <CubeDemoFace
         v-model="hoverSticker"
         class="row-start-2"
         face="r"
         :cube />
 
-      <DemoFace
+      <CubeDemoFace
         v-model="hoverSticker"
         class="row-start-2"
         face="b"
         :cube />
 
-      <DemoFace
+      <CubeDemoFace
         v-model="hoverSticker"
         class="col-start-2"
         face="d"
@@ -79,7 +79,7 @@ import { Cube } from '@/index'
 import type { CubeSticker } from '@/index'
 import { useEventListener, useUrlSearchParams } from '@vueuse/core'
 import Button from '~/components/Button.vue'
-import DemoFace from './CubeDemoFace.vue'
+import CubeDemoFace from './CubeDemoFace.vue'
 import RangeInput from '~/components/RangeInput.vue'
 
 const params = useUrlSearchParams('history', { initialValue: { size: '3' } })
@@ -150,8 +150,8 @@ function onKeydown(e: KeyboardEvent) {
     'K': '2R-',
     'E': '2L-',
     'D': '2L',
-    'J': 'U',
-    'F': 'U-',
+    'J': '2U',
+    'F': '2U-',
     'g': 'F-',
     'h': 'F',
     'G': 'Fw-',
@@ -160,6 +160,10 @@ function onKeydown(e: KeyboardEvent) {
     'x': 'Lw',
     'p': 'Z',
     'q': 'Z-',
+    'L': '2D-',
+    'S': '2D',
+    'W': 'Bw',
+    'O': 'Bw-',
   }[e.key]
 
   if (turn) {
