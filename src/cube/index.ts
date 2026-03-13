@@ -89,7 +89,7 @@ export class Cube {
   /**
    * Apply a single turn to the cube
    */
-  turn(turn: CubeTurn | string): void {
+  turn(turn: CubeTurn | string): Cube {
     const normalized = typeof turn === 'string' ? this.parse(turn) : turn
 
     const {
@@ -101,14 +101,12 @@ export class Cube {
 
     // treat axis turns as maximally deep wide turns
     if (target === 'x' || target === 'y' || target === 'z') {
-      this.turn({
+      return this.turn({
         depth: this.size,
         rotation,
         target: cubeAxes[target],
         wide: true,
       })
-
-      return
     }
 
     // rotate target face
@@ -130,16 +128,15 @@ export class Cube {
     }
 
     // rotate adjacent slices
-    const relatedFaces = cubeNet[target]
+    const related = cubeNet[target]
     const normalizedRotation = mod(rotation, 4)
 
     for (let i = wide ? 0 : depth - 1; i < depth; i += 1) {
-      relatedFaces.map((_, index) => {
-        // extract slices from adjacent face
-        const [face, edge, cw, ccw, double] = relatedFaces[index]
+      related.map((_, index) => {
+        // extract slices from adjacent face, and rotate stickers
+        const [face, edge, cw, ccw, double] = related[index]
 
         return extract(this.state[face], edge, i).map((sticker) => {
-          // rotate stickers orientation
           if (normalizedRotation === 1) {
             sticker.rotation = mod(sticker.rotation + cw, 4)
           }
@@ -153,10 +150,12 @@ export class Cube {
         })
       }).forEach((slice, index) => {
         // inject slices into target faces
-        const [face, angle] = relatedFaces[(index + 4 + rotation) % 4]
+        const [face, angle] = related[(index + 4 + rotation) % 4]
 
         this.state[face] = injectMatrix(slice, this.state[face], angle, i)
       })
     }
+
+    return this
   }
 }
