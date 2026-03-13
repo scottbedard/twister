@@ -87,17 +87,21 @@ export class Cube {
   }
 
   /**
-   * Apply a single turn to the cube
+   * Execute a turn, or whitespace-separated sequence of turn notation
    */
   turn(turn: CubeTurn | string): Cube {
-    const normalized = typeof turn === 'string' ? this.parse(turn) : turn
+    if (typeof turn === 'string') {
+      turn.split(' ').forEach(t => this.turn(this.parse(t.trim())))
+
+      return this
+    }
 
     const {
       depth,
       rotation,
       target,
       wide,
-    } = normalized
+    } = turn
 
     // treat axis turns as maximally deep wide turns
     if (target === 'x' || target === 'y' || target === 'z') {
