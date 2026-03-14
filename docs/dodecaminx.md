@@ -1,4 +1,6 @@
 ---
+editLink: true
+lastUpdated: true
 layout: doc
 ---
 

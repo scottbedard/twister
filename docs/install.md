@@ -1,3 +1,9 @@
+---
+editLink: true
+lastUpdated: true
+layout: doc
+---
+
 # Installation
 
 Twister is a JavaScript / TypeScript library for twisty puzzle state management. To get started, install [`@bedard/twister`](https://npmx.dev/package/@bedard/twister)
