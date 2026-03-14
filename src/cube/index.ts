@@ -90,6 +90,10 @@ export class Cube {
 
     const wide = !!parts[3]
 
+    if (wide && parts[1] === '1') {
+      throw new Error(`Invalid turn: ${source}`)
+    }
+
     const rotation = parts[4] === '-' || parts[4] === '\''
       ? -1
       : parts[4] === '2'
@@ -116,6 +120,7 @@ export class Cube {
    */
   stringifyTurn(turn: CubeTurn): string {
     const { size } = this
+
     const wide = turn.wide && turn.depth > 1 && size > 2
       ? 'w'
       : ''
@@ -130,7 +135,35 @@ export class Cube {
         ? '2'
         : ''
 
-    return `${depth}${turn.target.toUpperCase()}${wide}${rotation}`
+    const target = turn.target.toUpperCase().trim() as Uppercase<CubeAxis | CubeFace>
+
+    // simple axis turns
+    if (target === 'X' || target === 'Y' || target === 'Z') {
+      return `${target}${rotation}`
+    }
+
+    // maximally-wide axis turns
+    // ex: 3Rw on a 3x3 -> X, Dw on 2x2 -> Y-
+    if (wide && turn.depth >= size) {
+      const axis: Uppercase<CubeAxis>
+        = (target === 'R' || target === 'L')
+          ? 'X'
+          : (target === 'U' || target === 'D')
+              ? 'Y'
+              : 'Z'
+
+      const inverted = target === 'L' || target === 'D' || target === 'B'
+
+      const axisRotation = turn.rotation === -1
+        ? (inverted ? '' : '-')
+        : turn.rotation === 2
+          ? '2'
+          : (inverted ? '-' : '')
+
+      return `${axis}${axisRotation}`
+    }
+
+    return `${depth}${target}${wide}${rotation}`
   }
 
   /**

@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest'
 import { Cube } from '@/index'
+import type { CubeTurn } from '@/cube/types'
 
-test('serialization', () => {
+test('unchanging serialization', () => {
   const cube = new Cube(4)
 
-  // simple notation is deserialized and serialized identically
   const simple = [
     'R',
     'R-',
@@ -25,15 +25,38 @@ test('serialization', () => {
   for (const notation of simple) {
     expect(cube.stringifyTurn(cube.parseTurn(notation))).toBe(notation)
   }
+})
 
-  // transforms change during serialization
+test('transforming serialization', () => {
+  const cube = new Cube(4)
+
   const transforms = [
     ['R\'', 'R-'],
-    ['5Rw', '4Rw'],
+    ['5Rw', 'X'],
+    ['4Rw-', 'X-'],
+    ['4Rw2', 'X2'],
+    ['4Uw', 'Y'],
+    ['4Uw-', 'Y-'],
+    ['4Uw2', 'Y2'],
+    ['4Fw', 'Z'],
+    ['4Fw-', 'Z-'],
+    ['4Fw2', 'Z2'],
+    ['4Lw', 'X-'],
+    ['4Lw-', 'X'],
+    ['4Lw2', 'X2'],
+    ['4Dw', 'Y-'],
+    ['4Dw-', 'Y'],
+    ['4Dw2', 'Y2'],
+    ['4Bw', 'Z-'],
+    ['4Bw-', 'Z'],
+    ['4Bw2', 'Z2'],
   ]
 
   for (const [source, target] of transforms) {
-    expect(cube.stringifyTurn(cube.parseTurn(source))).toBe(target)
+    expect(
+      cube.stringifyTurn(cube.parseTurn(source)),
+      `${source} → ${target}`,
+    ).toBe(target)
   }
 })
 
@@ -49,96 +72,30 @@ describe('invalid', () => {
   test('multiple wide characters', () => {
     expect(() => new Cube(3).parseTurn('Rww')).toThrow()
   })
+
+  test('1 deep with wide suffix', () => {
+    expect(() => new Cube(3).parseTurn('1Rw')).toThrow()
+  })
 })
 
-describe('stringifyTurn', () => {
+test('stringifyTurn', () => {
   const cube = new Cube(3)
 
-  test('R', () => {
-    expect(
-      cube.stringifyTurn({
-        depth: 1,
-        rotation: 1,
-        target: 'r',
-        wide: false,
-      }),
-    ).toBe('R')
-  })
+  const cases: Array<[string, CubeTurn]> = [
+    ['R', { depth: 1, rotation: 1, target: 'r', wide: false }],
+    ['R-', { depth: 1, rotation: -1, target: 'r', wide: false }],
+    ['2R', { depth: 2, rotation: 1, target: 'r', wide: false }],
+    ['Rw', { depth: 2, rotation: 1, target: 'r', wide: true }],
+    ['X2', { depth: 3, rotation: 2, target: 'r', wide: true }],
+    ['X', { depth: 1, rotation: 1, target: 'x', wide: false }],
+    ['Y', { depth: 1, rotation: 1, target: 'y', wide: false }],
+    ['Z', { depth: 1, rotation: 1, target: 'z', wide: false }],
+  ]
 
-  test('R-', () => {
+  for (const [expected, turn] of cases) {
     expect(
-      cube.stringifyTurn({
-        depth: 1,
-        rotation: -1,
-        target: 'r',
-        wide: false,
-      }),
-    ).toBe('R-')
-  })
-
-  test('2R', () => {
-    expect(
-      cube.stringifyTurn({
-        depth: 2,
-        rotation: 1,
-        target: 'r',
-        wide: false,
-      }),
-    ).toBe('2R')
-  })
-
-  test('Rw', () => {
-    expect(
-      cube.stringifyTurn({
-        depth: 2,
-        rotation: 1,
-        target: 'r',
-        wide: true,
-      }),
-    ).toBe('Rw')
-  })
-
-  test('3Rw2', () => {
-    expect(
-      cube.stringifyTurn({
-        depth: 3,
-        rotation: 2,
-        target: 'r',
-        wide: true,
-      }),
-    ).toBe('3Rw2')
-  })
-
-  test('X', () => {
-    expect(
-      cube.stringifyTurn({
-        depth: 1,
-        rotation: 1,
-        target: 'x',
-        wide: false,
-      }),
-    ).toBe('X')
-  })
-
-  test('Y', () => {
-    expect(
-      cube.stringifyTurn({
-        depth: 1,
-        rotation: 1,
-        target: 'y',
-        wide: false,
-      }),
-    ).toBe('Y')
-  })
-
-  test('Z', () => {
-    expect(
-      cube.stringifyTurn({
-        depth: 1,
-        rotation: 1,
-        target: 'z',
-        wide: false,
-      }),
-    ).toBe('Z')
-  })
+      cube.stringifyTurn(turn),
+      `${turn} → ${expected}`,
+    ).toBe(expected)
+  }
 })
