@@ -55,7 +55,7 @@
     </div>
 
     <div
-      class="gap-2 grid grid-cols-4 select-none"
+      class="gap-1 grid grid-cols-4 select-none"
       :style="{
         '--cube-size': `repeat(${size}, 1fr)`,
         '--sticker-gap': size < 3 ? '6px' : size < 5 ? '3px' : size < 7 ? '1px' : '0px',

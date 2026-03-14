@@ -1,4 +1,6 @@
 ---
+editLink: true
+lastUpdated: true
 title: Cube
 ---
 
@@ -22,10 +24,27 @@ import { Cube } from '@bedard/twister'
 const puzzle = new Cube(3)
 ```
 
-A custom randomizer may also be provided. This value must be a function that returns a floating-point number between 0 and 1. By default, [`Math.random`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) will be used.
+Use the following APIs to manipulate the puzzle's state.
 
 ```js
-new Cube({ size: 3, rand: customRandomFn })
+// generate a scramble, but do not execute it
+cube.generateScramble()
+
+// scramble the puzzle
+cube.scramble()
+
+// apply a whitespace separated sequence of turns
+cube.turn('R U R-')
+```
+
+Test the puzzle state using `solved`
+
+```js
+const cube = new Cube(3)
+
+cube.solved() // true
+
+cube.solved({ super: true }) // also tests orientation of pieces
 ```
 
 ## Notation
@@ -48,9 +67,32 @@ const turn = cube.parseTurn('R-') // { depth, target, rotation, wide }
 cube.stringifyTurn(turn) // 'R-'
 ```
 
-Be aware, when stringinfy a wide-syntax puzzle rotation, the output will be shortened to the turn axis.
+When stringifying a wide-syntax puzzle rotation, the output will be shortened to the turn axis.
 
 ```js
-cube.stringifyTurn({ depth: 3, target: 'r', rotation: 2, wide: true })
-// 'X2'
+cube.stringifyTurn({
+  depth: 3,
+  rotation: 2,
+  target: 'r',
+  wide: true
+}) // 'X2'
 ```
+
+## Advanced
+
+By default, scramble generation uses [`Math.random`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random), but alternate functions can be provided. For example, for better randomness you could use [`crypto.getRandomValues`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues).
+
+```js
+function rand() {
+  const arr = new Uint32Array(1)
+  crypto.getRandomValues(arr)
+  return arr[0] / 2 ** 32
+}
+
+const cube = new Cube({ size: 3, rand })
+```
+
+This feature can also be used for deterministic testing.
+
+> [!WARNING]
+> Do not use Twister for any WCA purposes. [Always use the official TNoodle software.](https://www.worldcubeassociation.org/regulations/scrambles/)
