@@ -55,7 +55,12 @@
     </div>
 
     <div
-      class="gap-1 grid grid-cols-4 select-none"
+      class="grid grid-cols-4 select-none"
+      :class="{
+        'gap-2': size < 3,
+        'gap-1': size >= 3 && size < 5,
+        'gap-0.5': size >= 5
+      }"
       :style="{
         '--cube-size': `repeat(${size}, 1fr)`,
         '--sticker-gap': size < 3 ? '6px' : size < 5 ? '3px' : size < 7 ? '1px' : '0px',
