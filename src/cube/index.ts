@@ -91,7 +91,11 @@ export class Cube {
    */
   turn(turn: CubeTurn | string): Cube {
     if (typeof turn === 'string') {
-      turn.split(' ').forEach(t => this.turn(this.parse(t.trim())))
+      turn
+        .split(' ')
+        .map(str => str.trim())
+        .filter(str => str.length)
+        .forEach(notation => this.turn(this.parse(notation)))
 
       return this
     }
