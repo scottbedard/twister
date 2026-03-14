@@ -76,6 +76,15 @@ describe('invalid', () => {
   test('1 deep with wide suffix', () => {
     expect(() => new Cube(3).parseTurn('1Rw')).toThrow()
   })
+
+  test('invalid depth', () => {
+    expect(() => new Cube(3).stringifyTurn({ depth: 0, rotation: 1, target: 'r', wide: false })).toThrow()
+    expect(() => new Cube(3).stringifyTurn({ depth: -1, rotation: 1, target: 'r', wide: false })).toThrow()
+    expect(() => new Cube(3).stringifyTurn({ depth: 1.5, rotation: 1, target: 'r', wide: false })).toThrow()
+    expect(() => new Cube(3).stringifyTurn({ depth: NaN, rotation: 1, target: 'r', wide: false })).toThrow()
+    expect(() => new Cube(3).stringifyTurn({ depth: Infinity, rotation: 1, target: 'r', wide: false })).toThrow()
+    expect(() => new Cube(3).stringifyTurn({ depth: -Infinity, rotation: 1, target: 'r', wide: false })).toThrow()
+  })
 })
 
 test('stringifyTurn', () => {

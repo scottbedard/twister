@@ -121,6 +121,10 @@ export class Cube {
   stringifyTurn(turn: CubeTurn): string {
     const { size } = this
 
+    if (!Number.isInteger(turn.depth) || turn.depth < 1) {
+      throw new Error(`Invalid turn: ${turn}`)
+    }
+
     const wide = turn.wide && turn.depth > 1 && size > 2
       ? 'w'
       : ''
