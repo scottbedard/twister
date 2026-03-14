@@ -6,7 +6,6 @@ import {
   flattenRows,
   flip,
   injectMatrix,
-  quadrant,
   rotate,
   rows,
 } from '@/utils/matrix'
@@ -268,61 +267,5 @@ describe('matrix utils', () => {
       [4, 5, 6],
       [7, 8, 9],
     ])
-  })
-
-  describe('quadrant', () => {
-    test('2x2', () => {
-      const size = 2
-      const expected = [
-        0, 1,
-        3, 2,
-      ]
-
-      for (let i = 0; i < size * size; i++) {
-        expect(quadrant(i, size)).toBe(expected[i])
-      }
-    })
-
-    test('3x3', () => {
-      const size = 3
-      const expected = [
-        0, 0, 1,
-        3, 4, 1,
-        3, 2, 2,
-      ]
-
-      for (let i = 0; i < size * size; i++) {
-        expect(quadrant(i, size)).toBe(expected[i])
-      }
-    })
-
-    test('4x4', () => {
-      const size = 4
-      const expected = [
-        0, 0, 1, 1,
-        0, 0, 1, 1,
-        3, 3, 2, 2,
-        3, 3, 2, 2,
-      ]
-
-      for (let i = 0; i < size * size; i++) {
-        expect(quadrant(i, size)).toBe(expected[i])
-      }
-    })
-
-    test('5x5', () => {
-      const size = 5
-      const expected = [
-        0, 0, 0, 1, 1,
-        0, 0, 0, 1, 1,
-        3, 3, 4, 1, 1,
-        3, 3, 2, 2, 2,
-        3, 3, 2, 2, 2,
-      ]
-
-      for (let i = 0; i < size * size; i++) {
-        expect(quadrant(i, size)).toBe(expected[i])
-      }
-    })
   })
 })

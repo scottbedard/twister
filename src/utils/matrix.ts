@@ -153,22 +153,3 @@ export function rows<T>(arr: T[]): T[][] {
     return arr.slice(start, start + size)
   })
 }
-
-/**
- * Return the quadrant (0–3) for an index in a square matrix of size NxN.
- * 0 = top-left, 1 = top-right, 2 = bottom-right, 3 = bottom-left
- * 4 = center (only in odd-sized matrices)
- */
-export function quadrant(index: number, size: number): number {
-  const { mid, odd, row, col } = coords(index, size)
-  if (odd && row === mid && col === mid) return 4
-  const top = row < mid
-  const left = col < mid
-  if (top && (left || (odd && col === mid))) return 0
-  const right = col >= mid
-  if ((top && right) || (odd && row === mid && right)) return 1
-  const bottom = row >= mid
-  if (bottom && right && (!odd || row > mid)) return 2
-  if (bottom && left) return 3
-  throw new Error('invalid quadrant index')
-}
