@@ -5,7 +5,7 @@ import {
   flattenCols,
   flattenRows,
   flip,
-  injectMatrix,
+  inject,
   rotate,
   rows,
 } from '@/utils/matrix'
@@ -151,7 +151,7 @@ describe('matrix utils', () => {
 
     // angle
     test('angle 0, depth 0', () => {
-      expect(injectMatrix(arr, matrix, 0, 0)).toEqual([
+      expect(inject(arr, matrix, 0, 0)).toEqual([
         A, B, C,
         4, 5, 6,
         7, 8, 9,
@@ -159,7 +159,7 @@ describe('matrix utils', () => {
     })
 
     test('angle 1, depth 0', () => {
-      expect(injectMatrix(arr, matrix, 1, 0)).toEqual([
+      expect(inject(arr, matrix, 1, 0)).toEqual([
         1, 2, A,
         4, 5, B,
         7, 8, C,
@@ -167,7 +167,7 @@ describe('matrix utils', () => {
     })
 
     test('angle 2, depth 0', () => {
-      expect(injectMatrix(arr, matrix, 2, 0)).toEqual([
+      expect(inject(arr, matrix, 2, 0)).toEqual([
         1, 2, 3,
         4, 5, 6,
         C, B, A,
@@ -175,7 +175,7 @@ describe('matrix utils', () => {
     })
 
     test('angle 3, depth 0', () => {
-      expect(injectMatrix(arr, matrix, 3, 0)).toEqual([
+      expect(inject(arr, matrix, 3, 0)).toEqual([
         C, 2, 3,
         B, 5, 6,
         A, 8, 9,
@@ -184,7 +184,7 @@ describe('matrix utils', () => {
 
     // depth
     test('angle 0, depth 1', () => {
-      expect(injectMatrix(arr, matrix, 0, 1)).toEqual([
+      expect(inject(arr, matrix, 0, 1)).toEqual([
         1, 2, 3,
         A, B, C,
         7, 8, 9,
@@ -192,7 +192,7 @@ describe('matrix utils', () => {
     })
 
     test('angle 0, depth 2', () => {
-      expect(injectMatrix(arr, matrix, 0, 2)).toEqual([
+      expect(inject(arr, matrix, 0, 2)).toEqual([
         1, 2, 3,
         4, 5, 6,
         A, B, C,
@@ -201,7 +201,7 @@ describe('matrix utils', () => {
 
     // angle & depth
     test('angle 1, depth 1', () => {
-      expect(injectMatrix(arr, matrix, 1, 1)).toEqual([
+      expect(inject(arr, matrix, 1, 1)).toEqual([
         1, A, 3,
         4, B, 6,
         7, C, 9,
@@ -209,7 +209,7 @@ describe('matrix utils', () => {
     })
 
     test('angle 2, depth 2', () => {
-      expect(injectMatrix(arr, matrix, 2, 2)).toEqual([
+      expect(inject(arr, matrix, 2, 2)).toEqual([
         C, B, A,
         4, 5, 6,
         7, 8, 9,
@@ -217,7 +217,7 @@ describe('matrix utils', () => {
     })
 
     test('angle 3, depth 2', () => {
-      expect(injectMatrix(arr, matrix, 3, 2)).toEqual([
+      expect(inject(arr, matrix, 3, 2)).toEqual([
         1, 2, C,
         4, 5, B,
         7, 8, A,

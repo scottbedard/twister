@@ -1,4 +1,4 @@
-import { extract, injectMatrix, mod, rotate } from '@/utils'
+import { extract, inject, mod, rotate } from '@/utils'
 import { cubeAxes, cubeNet, cubeOpposites } from './constants'
 import { createFace } from './utils'
 import type {
@@ -160,7 +160,7 @@ export class Cube {
         // inject slices into target faces
         const [face, angle] = related[(index + 4 + rotation) % 4]
 
-        this.state[face] = injectMatrix(slice, this.state[face], angle, i)
+        this.state[face] = inject(slice, this.state[face], angle, i)
       })
     }
 

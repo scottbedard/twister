@@ -99,7 +99,7 @@ export function flip<T>(arrs: T[][]): T[][] {
  *
  * @return {T[]}
  */
-export function injectMatrix<T>(arr: T[], target: T[], angle: number, depth: number) {
+export function inject<T>(arr: T[], target: T[], angle: number, depth: number) {
   const rotated = rotate(target, -angle)
   const targetRows = rows(rotated)
   const newRows = targetRows.map((row, i) => (i === depth ? [...arr] : row))
