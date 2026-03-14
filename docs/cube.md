@@ -35,6 +35,9 @@ cube.scramble()
 
 // apply a whitespace separated sequence of turns
 cube.turn('R U R-')
+
+// reset the puzzle to its original state
+cube.reset()
 ```
 
 Test the puzzle state using `solved`

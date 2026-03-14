@@ -5,6 +5,11 @@ export interface Puzzle<PuzzleTurn = unknown, PuzzleSolvedOptions = unknown> {
   generateScramble(depth?: number): string
 
   /**
+   * Parse turn notation.
+   */
+  parseTurn(source: string): PuzzleTurn
+
+  /**
    * Restore the puzzle to its initial solved state.
    */
   reset(): this
@@ -18,6 +23,11 @@ export interface Puzzle<PuzzleTurn = unknown, PuzzleSolvedOptions = unknown> {
    * Whether the puzzle is in a solved state.
    */
   solved(opts?: PuzzleSolvedOptions): boolean
+
+  /**
+   * Stringify a turn.
+   */
+  stringifyTurn(turn: PuzzleTurn): string
 
   /**
    * Apply a single turn or a sequence of turns (whitespace-separated notation).
