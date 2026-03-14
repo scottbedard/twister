@@ -1,4 +1,4 @@
-import { extract, inject, mod, rotate } from '@/utils'
+import { extract, inject, int, mod, rotate, sample } from '@/utils'
 import { cubeAxes, cubeNet, cubeOpposites } from './constants'
 import { createFace } from './utils'
 import type {
@@ -51,9 +51,32 @@ export class Cube {
   }
 
   /**
-   * Parse turn notation
+   * Generate a scramble
    */
-  parse(source: string): CubeTurn {
+  generateScramble(depth: number = Math.max(20, this.size ** 3)) {
+    const { rand, size } = this
+    const turns: CubeTurn[] = []
+
+    let face: CubeFace = sample(Object.keys(cubeNet) as CubeFace[], rand)
+
+    for (let i = 0; i < depth; i++) {
+      face = sample(cubeNet[face], rand)[0] // <- only sample adjacent faces
+
+      turns.push({
+        depth: int(1, size / 2, rand),
+        rotation: sample([-1, 1, 2], rand),
+        target: face,
+        wide: sample([true, false], rand),
+      })
+    }
+
+    return turns.map(turn => this.stringifyTurn(turn)).join(' ')
+  }
+
+  /**
+   * Parse turn notation against the current cube size
+   */
+  parseTurn(source: string): CubeTurn {
     const parts = source.match(/^(\d)*([ulfrbdxyz]){1}(w)?(['-2])?$/i)
 
     if (!parts) {
@@ -61,9 +84,16 @@ export class Cube {
     }
 
     const depth = Math.min(this.size, parts[1] ? parseInt(parts[1], 10) : 1)
+
     const target = parts[2].toLowerCase() as CubeFace | CubeAxis
+
     const wide = !!parts[3]
-    const rotation = '-\''.includes(parts[4]) ? -1 : parts[4] === '2' ? 2 : 1
+
+    const rotation = parts[4] === '-' || parts[4] === '\''
+      ? -1
+      : parts[4] === '2'
+        ? 2
+        : 1
 
     return {
       depth: wide ? Math.max(2, depth) : depth,
@@ -71,6 +101,28 @@ export class Cube {
       rotation,
       wide,
     }
+  }
+
+  /**
+   * Stringify a cube turn object
+   */
+  stringifyTurn(turn: CubeTurn): string {
+    const { size } = this
+    const wide = turn.wide && turn.depth > 1 && size > 2
+      ? 'w'
+      : ''
+
+    const depth = turn.depth > (wide ? 2 : 1)
+      ? turn.depth
+      : ''
+
+    const rotation = turn.rotation === -1
+      ? '-'
+      : turn.rotation === 2
+        ? '2'
+        : ''
+
+    return `${depth}${turn.target.toUpperCase()}${wide}${rotation}`
   }
 
   /**
@@ -95,7 +147,7 @@ export class Cube {
         .split(' ')
         .map(str => str.trim())
         .filter(str => str.length)
-        .forEach(notation => this.turn(this.parse(notation)))
+        .forEach(notation => this.turn(this.parseTurn(notation)))
 
       return this
     }

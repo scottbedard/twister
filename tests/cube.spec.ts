@@ -34,63 +34,63 @@ describe('Cube', () => {
   })
 
   test('parses', () => {
-    expect(new Cube(3).parse('R')).toMatchObject({
+    expect(new Cube(3).parseTurn('R')).toMatchObject({
       depth: 1,
       rotation: 1,
       target: 'r',
       wide: false,
     })
 
-    expect(new Cube(3).parse('R\'')).toMatchObject({
+    expect(new Cube(3).parseTurn('R\'')).toMatchObject({
       depth: 1,
       rotation: -1,
       target: 'r',
       wide: false,
     })
 
-    expect(new Cube(3).parse('R-')).toMatchObject({
+    expect(new Cube(3).parseTurn('R-')).toMatchObject({
       depth: 1,
       rotation: -1,
       target: 'r',
       wide: false,
     })
 
-    expect(new Cube(3).parse('2R')).toMatchObject({
+    expect(new Cube(3).parseTurn('2R')).toMatchObject({
       depth: 2,
       rotation: 1,
       target: 'r',
       wide: false,
     })
 
-    expect(new Cube(3).parse('Rw')).toMatchObject({
+    expect(new Cube(3).parseTurn('Rw')).toMatchObject({
       depth: 2,
       rotation: 1,
       target: 'r',
       wide: true,
     })
 
-    expect(new Cube(3).parse('3Rw2')).toMatchObject({
+    expect(new Cube(3).parseTurn('3Rw2')).toMatchObject({
       depth: 3,
       rotation: 2,
       target: 'r',
       wide: true,
     })
 
-    expect(new Cube(3).parse('X')).toMatchObject({
+    expect(new Cube(3).parseTurn('X')).toMatchObject({
       depth: 1,
       rotation: 1,
       target: 'x',
       wide: false,
     })
 
-    expect(new Cube(3).parse('Y')).toMatchObject({
+    expect(new Cube(3).parseTurn('Y')).toMatchObject({
       depth: 1,
       rotation: 1,
       target: 'y',
       wide: false,
     })
 
-    expect(new Cube(3).parse('Z')).toMatchObject({
+    expect(new Cube(3).parseTurn('Z')).toMatchObject({
       depth: 1,
       rotation: 1,
       target: 'z',
