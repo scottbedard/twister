@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="mb-6 inline-flex gap-x-6">
-      <div class="inline-flex items-center gap-x-3">
+    <div class="mb-6 grid gap-x-6 gap-y-3">
+      <div class="flex gap-x-4 w-full">
         <Button @click="reset">
           Reset
         </Button>
@@ -9,17 +9,47 @@
         <Button @click="scramble">
           Scramble
         </Button>
+
+        <div class="inline-flex items-center gap-x-2">
+          <RangeInput
+            v-model="size"
+            class="w-40"
+            :max
+            :min="2" />
+
+          <div class="opacity-90 text-sm">
+            {{ size }}x{{ size }}
+          </div>
+        </div>
       </div>
 
-      <div class="inline-flex items-center gap-x-1">
-        <RangeInput
-          v-model="size"
-          class="w-40"
-          :max
-          :min="2" />
+      <div class="inline-flex items-center gap-x-4 opacity-90 text-sm px-2">
+        <div class="inline-flex items-center gap-x-1">
+          <div>Solved:</div>
 
-        <div class="opacity-90 text-sm">
-          {{ size }}x{{ size }}
+          <div :class="solved ? 'text-green-500' : 'text-red-500'">
+            <Check
+              v-if="solved"
+              :size="18" />
+
+            <X
+              v-else
+              :size="18" />
+          </div>
+        </div>
+
+        <div class="inline-flex items-center gap-x-1">
+          <div>Super:</div>
+
+          <div :class="solvedSuper ? 'text-green-500' : 'text-red-500'">
+            <Check
+              v-if="solvedSuper"
+              :size="18" />
+
+            <X
+              v-else
+              :size="18" />
+          </div>
         </div>
       </div>
     </div>
@@ -71,6 +101,7 @@
 </template>
 
 <script setup lang="ts">
+import { Check, X } from 'lucide-vue-next'
 import { Cube } from '@/index'
 import type { CubeSticker } from '@/index'
 import { useEventListener, useUrlSearchParams } from '@vueuse/core'
@@ -94,6 +125,10 @@ const size = computed({
 const max = 10
 
 const cube = ref(new Cube(size.value))
+
+const solved = computed(() => cube.value.solved())
+
+const solvedSuper = computed(() => cube.value.solved({ super: true }))
 
 const hoverSticker = shallowRef<CubeSticker | null>(null)
 

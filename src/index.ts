@@ -1,2 +1,2 @@
 export { Cube } from './cube/index'
-export type { CubeFace, CubeSticker } from './cube/types'
+export type { CubeFace, CubeSticker, CubeSolvedOptions } from './cube/types'

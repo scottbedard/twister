@@ -1,5 +1,5 @@
 import { extract, inject, int, mod, rotate, sample } from '@/utils'
-import { cubeAxes, cubeNet, cubeOpposites } from './constants'
+import { cubeAxes, cubeFaces, cubeNet, cubeOpposites } from './constants'
 import { createFace } from './utils'
 import type {
   CubeAxis,
@@ -7,6 +7,7 @@ import type {
   CubeOptions,
   CubeSticker,
   CubeTurn,
+  CubeSolvedOptions,
 } from './types'
 
 export class Cube {
@@ -130,6 +131,36 @@ export class Cube {
         : ''
 
     return `${depth}${turn.target.toUpperCase()}${wide}${rotation}`
+  }
+
+  /**
+   * Test if the puzzle is solved.
+   * @param opts - When `super: true`, requires all indexes in order and all rotations 0.
+   */
+  solved(opts: CubeSolvedOptions = {}): boolean {
+    const { state } = this
+
+    for (const face of cubeFaces) {
+      const val = state[face]
+
+      for (const sticker of val) {
+        if (sticker.face !== face) {
+          return false
+        }
+      }
+
+      if (opts.super) {
+        let index = 0
+
+        for (const sticker of val) {
+          if (sticker.index !== index++ || sticker.rotation !== 0) {
+            return false
+          }
+        }
+      }
+    }
+
+    return true
   }
 
   /**

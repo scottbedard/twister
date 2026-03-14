@@ -10,6 +10,7 @@
     "eslint": "^10.0.2",
     "eslint-plugin-vue": "^10.8.0",
     "globals": "^17.4.0",
+    "lucide-vue-next": "^0.577.0",
     "oxc-minify": "^0.115.0",
     "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",

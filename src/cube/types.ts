@@ -9,6 +9,10 @@ export type CubeOptions = {
   size: number
 }
 
+export type CubeSolvedOptions = {
+  super?: boolean
+}
+
 export type CubeOpposite<T extends CubeFace>
   = T extends 'u' ? 'd'
     : T extends 'd' ? 'u'

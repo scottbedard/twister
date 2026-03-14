@@ -75,6 +75,18 @@ export const cubeNet: Record<CubeFace, [CubeFace, number, number, number, number
 }
 
 /**
+ * All cube faces.
+ */
+export const cubeFaces: CubeFace[] = [
+  'u',
+  'l',
+  'f',
+  'r',
+  'b',
+  'd',
+] as const
+
+/**
  * Faces that are opposite one another. This is used on turns where the depth
  * reaches the opposite side of the puzzle.
  */

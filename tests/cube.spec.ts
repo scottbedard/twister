@@ -128,4 +128,35 @@ describe('Cube', () => {
       }
     })
   })
+
+  describe('solved', () => {
+    test('fresh cube is solved (default and super)', () => {
+      const cube = new Cube(3)
+      expect(cube.solved()).toBe(true)
+      expect(cube.solved({ super: true })).toBe(true)
+    })
+
+    test('after a turn, cube is not solved', () => {
+      const cube = new Cube(3)
+      cube.turn('R')
+      expect(cube.solved()).toBe(false)
+      expect(cube.solved({ super: true })).toBe(false)
+    })
+
+    test('super: true requires indexes in order and rotations 0', () => {
+      const cube = new Cube(2)
+      // Swap two stickers on one face so indices are wrong order
+      const u = cube.state.u
+      ;[u[0], u[1]] = [u[1], u[0]]
+      expect(cube.solved()).toBe(true) // same face, correct set of indices
+      expect(cube.solved({ super: true })).toBe(false)
+    })
+
+    test('super: true fails when rotation is non-zero', () => {
+      const cube = new Cube(2)
+      cube.state.u[0].rotation = 1
+      expect(cube.solved()).toBe(true)
+      expect(cube.solved({ super: true })).toBe(false)
+    })
+  })
 })
