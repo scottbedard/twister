@@ -2,15 +2,11 @@
   <div>
     <div class="mb-6 inline-flex gap-x-6">
       <div class="inline-flex items-center gap-x-3">
-        <Button>
-          Clear
-        </Button>
-
         <Button @click="reset">
           Reset
         </Button>
 
-        <Button>
+        <Button @click="scramble">
           Scramble
         </Button>
       </div>
@@ -29,7 +25,7 @@
     </div>
 
     <div
-      class="gap-2 grid grid-cols-4"
+      class="gap-2 grid grid-cols-4 select-none"
       :style="{
         '--cube-size': `repeat(${size}, 1fr)`,
         '--sticker-gap': size < 3 ? '6px' : size < 5 ? '3px' : size < 7 ? '1px' : '0px',
@@ -175,5 +171,9 @@ function reset() {
   cube.value = new Cube(size.value)
 
   ;(window as Window & { cube?: Cube }).cube = cube.value
+}
+
+function scramble() {
+  cube.value.scramble()
 }
 </script>

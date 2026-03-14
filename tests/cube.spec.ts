@@ -97,4 +97,35 @@ describe('Cube', () => {
       wide: false,
     })
   })
+
+  describe('generateScramble', () => {
+    test('returns a string of space-separated turns', () => {
+      const cube = new Cube(3)
+      const scramble = cube.generateScramble(5)
+      expect(typeof scramble).toBe('string')
+      const tokens = scramble.split(' ').filter(Boolean)
+      expect(tokens).toHaveLength(5)
+    })
+
+    test('respects explicit depth', () => {
+      const cube = new Cube(3)
+      expect(cube.generateScramble(1).split(' ').filter(Boolean)).toHaveLength(1)
+      expect(cube.generateScramble(10).split(' ').filter(Boolean)).toHaveLength(10)
+    })
+
+    test('is deterministic with fixed rand', () => {
+      const rand = () => 0.5
+      const c1 = new Cube({ size: 3, rand })
+      const c2 = new Cube({ size: 3, rand })
+      expect(c1.generateScramble(5)).toBe(c2.generateScramble(5))
+    })
+
+    test('every token parses as a valid turn', () => {
+      const cube = new Cube(3)
+      const scramble = cube.generateScramble(8)
+      for (const token of scramble.split(' ').filter(Boolean)) {
+        expect(() => cube.parseTurn(token)).not.toThrow()
+      }
+    })
+  })
 })

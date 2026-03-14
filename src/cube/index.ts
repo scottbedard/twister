@@ -53,7 +53,7 @@ export class Cube {
   /**
    * Generate a scramble
    */
-  generateScramble(depth: number = Math.max(20, this.size ** 3)) {
+  generateScramble(depth: number = Math.max(20, this.size ** 3)): string {
     const { rand, size } = this
     const turns: CubeTurn[] = []
 
@@ -104,6 +104,13 @@ export class Cube {
   }
 
   /**
+   * Scramble the puzzle to a given depth
+   */
+  scramble(depth?: number): Cube {
+    return this.turn(this.generateScramble(depth))
+  }
+
+  /**
    * Stringify a cube turn object
    */
   stringifyTurn(turn: CubeTurn): string {
@@ -128,14 +135,15 @@ export class Cube {
   /**
    * Reset the puzzle to it's starting state
    */
-  reset() {
-    // @todo: add test for this
+  reset(): Cube {
     this.state.b = createFace(this.size, 'b')
     this.state.d = createFace(this.size, 'd')
     this.state.f = createFace(this.size, 'f')
     this.state.l = createFace(this.size, 'l')
     this.state.r = createFace(this.size, 'r')
     this.state.u = createFace(this.size, 'u')
+
+    return this
   }
 
   /**
