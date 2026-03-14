@@ -18,15 +18,21 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' },
     ],
 
     sidebar: [
       {
-        text: 'Examples',
+        text: 'Guide',
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' },
+          { text: 'Installation', link: '/install' },
+        ],
+      },
+
+      {
+        text: 'Puzzles',
+        items: [
+          { text: 'Cube', link: '/cube' },
+          { text: 'Dodecaminx', link: '/dodecaminx' },
         ],
       },
     ],

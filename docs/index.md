@@ -7,11 +7,11 @@ hero:
   tagline: A library for twisty puzzle state management
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Getting Started
+      link: /install
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: speedcube.site
+      link: https://speedcube.site
 
 features:
   - title: Cube
@@ -19,5 +19,6 @@ features:
     link: /cube
   - title: Dodecaminx
     details: A face turning dodecahedral puzzle
+    link: /dodecaminx
 ---
 
