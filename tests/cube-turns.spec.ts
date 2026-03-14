@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest'
-import { Cube, type CubeFace } from '@/index'
+import { Cube } from '@/cube'
+import type { CubeFace } from '@/cube/types'
 
 describe('cube turns', () => {
   const [y, o, b, r, g, w] = ['u', 'l', 'f', 'r', 'b', 'd'] as const

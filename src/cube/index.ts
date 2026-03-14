@@ -1,3 +1,4 @@
+import type { Puzzle } from '@/puzzle'
 import { extract, inject, int, mod, rotate, sample } from '@/utils'
 import { cubeAxes, cubeFaces, cubeNet, cubeOpposites } from './constants'
 import { createFace } from './utils'
@@ -10,7 +11,7 @@ import type {
   CubeSolvedOptions,
 } from './types'
 
-export class Cube {
+export class Cube implements Puzzle<CubeTurn, CubeSolvedOptions> {
   /**
    * Random number generator.
    */
@@ -111,7 +112,7 @@ export class Cube {
   /**
    * Scramble the puzzle to a given depth
    */
-  scramble(depth?: number): Cube {
+  scramble(depth?: number): this {
     return this.turn(this.generateScramble(depth))
   }
 
@@ -203,7 +204,7 @@ export class Cube {
   /**
    * Reset the puzzle to it's starting state
    */
-  reset(): Cube {
+  reset(): this {
     this.state.b = createFace(this.size, 'b')
     this.state.d = createFace(this.size, 'd')
     this.state.f = createFace(this.size, 'f')
@@ -217,7 +218,7 @@ export class Cube {
   /**
    * Execute a turn, or whitespace-separated sequence of turn notation
    */
-  turn(turn: CubeTurn | string): Cube {
+  turn(turn: CubeTurn | string): this {
     if (typeof turn === 'string') {
       turn
         .split(' ')
