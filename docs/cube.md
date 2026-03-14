@@ -49,13 +49,13 @@ cube.solved({ super: true }) // also tests orientation of pieces
 
 ## Notation
 
-Twister uses a slightly modified version [WCA cube notation](https://www.worldcubeassociation.org/regulations/#12a). Some ask why, and it's because Twister is the brains for [speedcube.site](https://speedcube.site), which is a platform for _solving_, not scrambling.
+Twister uses a slightly modified version [WCA cube notation](https://www.worldcubeassociation.org/regulations/#12a). It's different because Twister is the brains of [speedcube.site](https://speedcube.site), which is a platform for _solving_, not scrambling.
 
-Here is a summary of the differences in our notation.
+Here is a summary of the differences in our notation,
 
-- `-` or `'` indicates counter-clockwide turns
+- `-` and `'` indicate counter-clockwide turns
 - Omit the `w` suffix to annotate slice turns
-- Wide turns can indicate puzzle rotation, for example on a 3x3 `3Rw` is equivalent to `X`
+- Wide turns can denote puzzle rotation, for example on a 3x3 `3Rw` is equivalent to `X`
 
 Use `parseTurn` and `stringifyTurn` to serialize and deserialize turns.
 
@@ -92,7 +92,7 @@ function rand() {
 const cube = new Cube({ size: 3, rand })
 ```
 
-This feature can also be used for deterministic testing.
+This feature can also be used for deterministic unit testing.
 
 > [!WARNING]
 > Do not use Twister for any WCA purposes. [Always use the official TNoodle software.](https://www.worldcubeassociation.org/regulations/scrambles/)
