@@ -100,10 +100,6 @@ const hoverSticker = shallowRef<CubeSticker | null>(null)
 onMounted(() => {
   reset()
 
-  document.querySelector('#cube-api')?.addEventListener('click', () => {
-    console.log(cube.value)
-  })
-
   useEventListener(window, 'keydown', onKeydown)
 })
 

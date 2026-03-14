@@ -8,6 +8,6 @@ import CubeDemo from './partials/cube/CubeDemo.vue'
 
 # Cube
 
-A traditional six sided face turning puzzle. Use your keyboard for basic manipulation, or <button id="cube-api">`window.cube`</button> for manual API access.
+A traditional six sided face turning puzzle. Use your keyboard for basic manipulation, or <button onclick="console.log(window.cube)">`window.cube`</button> for direct access.
 
 <CubeDemo />
