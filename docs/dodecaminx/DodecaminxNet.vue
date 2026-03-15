@@ -56,8 +56,8 @@ import {
   toPathCoords,
   toSvgCoords,
   type Line,
-  type Vector,
-} from '@/utils/math'
+  type Point,
+} from '~/.vitepress/utils'
 import { floor, times } from '@/utils'
 import type { Dodecaminx } from '@/index'
 import type { DodecaminxFace, DodecaminxSticker } from '@/dodecaminx/types'
@@ -97,9 +97,9 @@ const isEven = (n: number) => n % 2 === 0
 const mapCols = (n: number) => times(n ** 2).map((_, i) => i % n)
 const mapRows = (n: number) => times(n ** 2).map((_, i) => Math.floor(i / n))
 
-const origin: Vector = [0, 0]
+const origin = [0, 0] as const satisfies Point
 
-const [p0, p1, p2, p3, p4]: Vector[] = [
+const [p0, p1, p2, p3, p4]: Point[] = [
   [0, 1],
   [Math.sin((Math.PI * 2) / 5), Math.cos((Math.PI * 2) / 5)],
   [Math.sin((Math.PI * 4) / 5), -Math.cos(Math.PI / 5)],
@@ -134,7 +134,7 @@ const dlOrigin = angleFrom(dOrigin, -54, innerRadius * 2)
 const dblOrigin = angleFrom(dOrigin, 18, innerRadius * 2)
 const drOrigin = angleFrom(dOrigin, -126, innerRadius * 2)
 
-const net: Record<DodecaminxFace, [Vector, number]> = {
+const net: Record<DodecaminxFace, [Point, number]> = {
   u: [origin, 0],
   l: [lOrigin, 36],
   f: [fOrigin, 36],
@@ -149,12 +149,12 @@ const net: Record<DodecaminxFace, [Vector, number]> = {
   dl: [dlOrigin, 0],
 }
 
-const centerPath: Vector[] = [
-  intersect(s4, s0) as Vector,
-  intersect(s1, s0) as Vector,
-  intersect(s1, s2) as Vector,
-  intersect(s2, s3) as Vector,
-  intersect(s4, s3) as Vector,
+const centerPath: Point[] = [
+  intersect(s4, s0)!, // <- safe to cast, all lines intersect
+  intersect(s1, s0)!,
+  intersect(s1, s2)!,
+  intersect(s2, s3)!,
+  intersect(s4, s3)!,
 ]
 
 const size = computed(() => props.dodecaminx.size)
@@ -196,14 +196,14 @@ const color = (sticker: DodecaminxSticker) => {
   return COLORS[i] ?? '#9CA3AF'
 }
 
-const center = (face: Face): { path: Vector[], sticker: DodecaminxSticker } | null => {
+const center = (face: Face): { path: Point[], sticker: DodecaminxSticker } | null => {
   if (isEven(size.value) || face.length < 3) return null
   const c = face[2]
   return c !== undefined ? { path: centerPath, sticker: c } : null
 }
 
-const corners = (face: Face): { path: Vector[], sticker: DodecaminxSticker }[] => {
-  const stickers: { path: Vector[], sticker: DodecaminxSticker }[] = []
+const corners = (face: Face): { path: Point[], sticker: DodecaminxSticker }[] => {
+  const stickers: { path: Point[], sticker: DodecaminxSticker }[] = []
   const cornerLayers = halfSize.value
   if (cornerLayers < 1) return stickers
   const n = cornerLayers
@@ -231,8 +231,8 @@ const corners = (face: Face): { path: Vector[], sticker: DodecaminxSticker }[] =
   return stickers
 }
 
-const middles = (face: Face): { path: Vector[], sticker: DodecaminxSticker }[] => {
-  const stickers: { path: Vector[], sticker: DodecaminxSticker }[] = []
+const middles = (face: Face): { path: Point[], sticker: DodecaminxSticker }[] => {
+  const stickers: { path: Point[], sticker: DodecaminxSticker }[] = []
   if (isEven(size.value) || face.length < 2 || !face[1]) return stickers
   const middleRows = face[1]
   middleRows.forEach((middle, middleIndex) => {
@@ -250,14 +250,14 @@ const middles = (face: Face): { path: Vector[], sticker: DodecaminxSticker }[] =
   return stickers
 }
 
-const pathD = (arr: Vector[]) => {
+const pathD = (arr: Point[]) => {
   if (arr.length === 0) return ''
   const [start, ...points] = toPathCoords(arr)
   return `M ${start.join(',')} L ${points.map(p => p.join(',')).join(' ')} Z`
 }
 
 const faces = computed(() =>
-  (Object.entries(net) as [DodecaminxFace, [Vector, number]][]).map(([key, [v, deg]]) => {
+  (Object.entries(net) as [DodecaminxFace, [Point, number]][]).map(([key, [v, deg]]) => {
     const face = props.dodecaminx.state[key] as Face
     const [x, y] = toSvgCoords(v)
     const centerSticker = center(face)
