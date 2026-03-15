@@ -24,7 +24,7 @@
           :min="2" />
 
         <div class="opacity-90 text-sm">
-          {{ size }}x{{ size }}
+          {{ size }}
         </div>
       </div>
     </div>
