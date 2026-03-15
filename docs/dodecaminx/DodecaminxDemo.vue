@@ -5,7 +5,8 @@
       class="mb-6"
       :max
       @reset="reset"
-      @scramble="scramble" />
+      @scramble="scramble"
+      @turn="turn" />
 
     <DodecaminxNet :dodecaminx />
   </div>
@@ -62,5 +63,9 @@ function reset() {
 
 function scramble() {
   dodecaminx.value.scramble()
+}
+
+function turn(turn: string) {
+  dodecaminx.value.turn(turn)
 }
 </script>
