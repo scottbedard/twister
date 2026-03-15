@@ -84,7 +84,7 @@ const COLORS = [
   'oklch(84.5% 0.143 164.978)', // br: light green
   'oklch(82.3% 0.12 346.018)', // dbr: pink
   'oklch(90.1% 0.076 70.697)', // d: creme
-  'oklch(55.4% 0.046 257.417)', // b: gray
+  'oklch(70.4% 0.04 256.788)', // b: gray
   'oklch(80.9% 0.105 251.813)', // dbl: light blue
   'oklch(64.5% 0.246 16.439)', // dr: red
   'oklch(59.6% 0.145 163.225)', // dl: dark green

@@ -1,12 +1,23 @@
 import { createDodecaminxFace } from './utils'
-import { dodecaminxFaces } from './constants'
-import { int, sample, without } from '@/utils'
+import { dodecaminxNet, dodecaminxOpposites, dodecaminxFaces } from './constants'
+import {
+  extractComposite,
+  injectComposite,
+  int,
+  floor,
+  min,
+  sample,
+  without,
+  rotateComposite,
+} from '@/utils'
+import type { CompositeMatrix } from '@/utils/composite-matrix'
 import type { Puzzle } from '@/puzzle'
 import type {
   DodecaminxTurn,
   DodecaminxSolvedOptions,
   DodecaminxOptions,
   DodecaminxFace,
+  DodecaminxSticker,
 } from './types'
 
 export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOptions> {
@@ -23,7 +34,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   /**
    * State of the cube.
    */
-  readonly state: Record<DodecaminxFace, unknown[]>
+  readonly state: Record<DodecaminxFace, CompositeMatrix<DodecaminxSticker>>
 
   constructor(opts: number | DodecaminxOptions) {
     const size = typeof opts === 'number' ? opts : opts.size
@@ -126,7 +137,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   scramble(depth?: number): this {
     const scramble = this.generateScramble(depth)
 
-    console.log({ scramble })
+    this.turn(scramble)
 
     return this
   }
@@ -164,7 +175,57 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   }
 
   turn(turn: DodecaminxTurn | string): this {
-    console.log('not implemented', turn)
+    if (typeof turn === 'string') {
+      turn
+        .split(' ')
+        .map(str => str.trim())
+        .filter(str => str.length)
+        .forEach(notation => this.turn(this.parseTurn(notation)))
+
+      return this
+    }
+
+    const t = typeof turn === 'string' ? this.parseTurn(turn) : turn
+    const relatedFaces = dodecaminxNet[t.target]
+    const oppositeTarget = dodecaminxOpposites[t.target]
+
+    // Rotate target face
+    if (t.depth === 1 || t.wide || t.whole) {
+      this.state[t.target] = rotateComposite(this.state[t.target], t.rotation)
+    }
+
+    if (t.whole) {
+      // Rotate opposite face
+      this.state[oppositeTarget] = rotateComposite(this.state[oppositeTarget], -t.rotation)
+
+      // Rotate faces adjacent to the target and opposite
+      const rotateAdjacent = (target: DodecaminxFace, rotation: number) => {
+        dodecaminxNet[target]
+          .map(([face, angle]) => rotateComposite(this.state[face], -angle))
+          .forEach((face, index) => {
+            const [relatedFace, angle] = dodecaminxNet[target][(index + 5 + rotation) % 5]
+            this.state[relatedFace] = rotateComposite(face, angle)
+          })
+      }
+
+      rotateAdjacent(t.target, t.rotation)
+      rotateAdjacent(oppositeTarget, -t.rotation)
+    }
+    else {
+      // Extract and inject layers from related faces
+      for (
+        let i = t.wide ? 0 : t.depth - 1;
+        i < min(t.depth, floor(this.size / 2));
+        i += 1
+      ) {
+        relatedFaces
+          .map(([face, angle]) => extractComposite(this.state[face], angle, i))
+          .forEach((layer, index) => {
+            const [relatedFace, angle] = relatedFaces[(index + 5 + t.rotation) % 5]
+            this.state[relatedFace] = injectComposite(this.state[relatedFace], layer, angle, i)
+          })
+      }
+    }
 
     return this
   }
