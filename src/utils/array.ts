@@ -25,3 +25,10 @@ export function sample<T>(arr: T[], rand: () => number): T {
 export function times<T>(length: number, value?: T): T[] {
   return new Array(length).fill(value)
 }
+
+/**
+ * Create an array excluding given values.
+ */
+export function without<T>(arr: T[], ...values: T[]): T[] {
+  return arr.filter(val => !values.includes(val))
+}

@@ -1,9 +1,11 @@
 export type DodecaminxFace = 'u' | 'l' | 'f' | 'r' | 'bl' | 'br' | 'd' | 'dl' | 'dr' | 'dbl' | 'dbr' | 'b'
 
 export interface DodecaminxTurn {
-  type: 'turn'
-  axis: 'x' | 'y' | 'z'
-  angle: number
+  depth: number
+  rotation: number
+  target: DodecaminxFace
+  whole: boolean
+  wide: boolean
 }
 
 export interface DodecaminxSolvedOptions {

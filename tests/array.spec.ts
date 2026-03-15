@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { roll, sample, times } from '@/utils'
+import { roll, sample, times, without } from '@/utils'
 
 test('roll', () => {
   const arr = [0, 1, 2]
@@ -41,4 +41,11 @@ test('times', () => {
   const arr = times(3, 'a')
 
   expect(arr).toEqual(['a', 'a', 'a'])
+})
+
+test('without', () => {
+  const arr = [1, 2, 3, 4, 5]
+  const result = without(arr, 3, 5)
+
+  expect(result).toEqual([1, 2, 4])
 })

@@ -58,7 +58,7 @@ export class Cube implements Puzzle<CubeTurn, CubeSolvedOptions> {
     const { rand, size } = this
     const turns: CubeTurn[] = []
 
-    let face: CubeFace = sample(Object.keys(cubeNet) as CubeFace[], rand)
+    let face: CubeFace = sample(cubeFaces, rand)
 
     for (let i = 0; i < depth; i++) {
       face = sample(cubeNet[face], rand)[0] // <- only sample adjacent faces

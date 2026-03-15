@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { int } from '@/utils/misc'
+import { int, keys } from '@/utils/misc'
 
 describe('int', () => {
   test('returns min when rand() is 0', () => {
@@ -36,5 +36,12 @@ describe('int', () => {
       expect(r).toBeLessThanOrEqual(max)
       expect(Number.isInteger(r)).toBe(true)
     }
+  })
+})
+
+describe('keys', () => {
+  test('returns the keys of an object', () => {
+    const obj = { a: 1, b: 2, c: 3 }
+    expect(keys(obj)).toEqual(['a', 'b', 'c'])
   })
 })

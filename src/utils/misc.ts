@@ -13,6 +13,13 @@ export function int(min: number, max: number, rand: () => number): number {
 }
 
 /**
+ * Get the keys of an object
+ */
+export function keys<T extends Record<string, unknown>>(obj: T) {
+  return Object.keys(obj) as (keyof T)[]
+}
+
+/**
  * Returns the larger of a set of supplied numeric expressions.
  */
 export function max(...values: number[]): number {
