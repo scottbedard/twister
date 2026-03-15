@@ -189,7 +189,7 @@ const middleOutlines = computed(() => {
   ]
 })
 
-const strokeWidth = 0.025
+const strokeWidth = computed(() => size.value < 5 ? 0.025 : size.value < 8 ? 0.015 : 0.01)
 
 const color = (sticker: DodecaminxSticker) => {
   const i = FACE_ORDER.indexOf(sticker.face)
