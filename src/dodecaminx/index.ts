@@ -1,5 +1,5 @@
 import type { Puzzle } from '@/puzzle'
-import { createCompositeMatrix } from '@/utils'
+import { createDodecaminxFace } from './utils'
 import type {
   DodecaminxTurn,
   DodecaminxSolvedOptions,
@@ -35,18 +35,18 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
     this.size = size
 
     this.state = {
-      b: createCompositeMatrix(5, size),
-      bl: createCompositeMatrix(5, size),
-      br: createCompositeMatrix(5, size),
-      d: createCompositeMatrix(5, size),
-      dbl: createCompositeMatrix(5, size),
-      dbr: createCompositeMatrix(5, size),
-      dl: createCompositeMatrix(5, size),
-      dr: createCompositeMatrix(5, size),
-      f: createCompositeMatrix(5, size),
-      l: createCompositeMatrix(5, size),
-      r: createCompositeMatrix(5, size),
-      u: createCompositeMatrix(5, size),
+      b: createDodecaminxFace('b', size),
+      bl: createDodecaminxFace('bl', size),
+      br: createDodecaminxFace('br', size),
+      d: createDodecaminxFace('d', size),
+      dbl: createDodecaminxFace('dbl', size),
+      dbr: createDodecaminxFace('dbr', size),
+      dl: createDodecaminxFace('dl', size),
+      dr: createDodecaminxFace('dr', size),
+      f: createDodecaminxFace('f', size),
+      l: createDodecaminxFace('l', size),
+      r: createDodecaminxFace('r', size),
+      u: createDodecaminxFace('u', size),
     }
   }
 
@@ -67,7 +67,20 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   }
 
   reset(): this {
-    console.log('not implemented')
+    const size = this.size
+
+    this.state.b = createDodecaminxFace('b', size)
+    this.state.bl = createDodecaminxFace('bl', size)
+    this.state.br = createDodecaminxFace('br', size)
+    this.state.d = createDodecaminxFace('d', size)
+    this.state.dbl = createDodecaminxFace('dbl', size)
+    this.state.dbr = createDodecaminxFace('dbr', size)
+    this.state.dl = createDodecaminxFace('dl', size)
+    this.state.dr = createDodecaminxFace('dr', size)
+    this.state.f = createDodecaminxFace('f', size)
+    this.state.l = createDodecaminxFace('l', size)
+    this.state.r = createDodecaminxFace('r', size)
+    this.state.u = createDodecaminxFace('u', size)
 
     return this
   }

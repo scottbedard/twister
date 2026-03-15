@@ -42,17 +42,17 @@ export type CompositeMatrix<T> = [T[][]] | [T[][], (T | undefined)[][], T]
 export function createCompositeMatrix<T>(
   sides: number,
   size: number,
-  valueFn: () => T = (() => null) as () => T,
+  valueFn: (index: number) => T = (() => undefined) as () => T,
 ): CompositeMatrix<T> {
   const halfSize = floor(size / 2)
   const matrixSize = halfSize ** 2
-  const corners = times(sides).map(() => times(matrixSize).map(valueFn))
+  const corners = times(sides).map(() => times(matrixSize).map((_, index: number) => valueFn(index)))
 
   if (odd(size)) {
     return [
       corners,
-      times(sides).map(() => times(halfSize).map(valueFn)),
-      valueFn(),
+      times(sides).map(() => times(halfSize).map((_, index: number) => valueFn(index))),
+      valueFn(0),
     ]
   }
 

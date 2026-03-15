@@ -1,29 +1,13 @@
 <template>
   <div>
-    <div class="mb-6 grid gap-x-6 gap-y-3">
-      <div class="flex gap-x-4 w-full">
-        <Button @click="reset">
-          Reset
-        </Button>
+    <div class="gap-2 grid">
+      <FaceTurningControls
+        v-model:size="size"
+        :max
+        @reset="reset"
+        @scramble="scramble" />
 
-        <Button @click="scramble">
-          Scramble
-        </Button>
-
-        <div class="inline-flex items-center gap-x-2">
-          <RangeInput
-            v-model="size"
-            class="w-40"
-            :max
-            :min="2" />
-
-          <div class="opacity-90 text-sm">
-            {{ size }}x{{ size }}
-          </div>
-        </div>
-      </div>
-
-      <div class="inline-flex items-center gap-x-4 opacity-90 text-sm px-2">
+      <div class="inline-flex items-center gap-x-4 opacity-90 text-sm px-2 tracking-wide">
         <div class="inline-flex items-center gap-x-1">
           <div>Solved:</div>
 
@@ -55,7 +39,7 @@
     </div>
 
     <div
-      class="grid grid-cols-4 select-none"
+      class="grid grid-cols-4 mt-6 select-none"
       :class="{
         'gap-2': size < 3,
         'gap-1': size >= 3 && size < 5,
@@ -108,11 +92,10 @@
 <script setup lang="ts">
 import { Check, X } from 'lucide-vue-next'
 import { Cube } from '@/index'
-import type { CubeSticker } from '@/index'
 import { useEventListener, useUrlSearchParams } from '@vueuse/core'
-import Button from '~/components/Button.vue'
 import CubeDemoFace from './CubeDemoFace.vue'
-import RangeInput from '~/components/RangeInput.vue'
+import FaceTurningControls from '~/components/FaceTurningControls.vue'
+import type { CubeSticker } from '@/cube/types'
 
 const params = useUrlSearchParams('history', { initialValue: { size: '3' } })
 

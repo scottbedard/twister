@@ -10,6 +10,12 @@ export interface DodecaminxSolvedOptions {
   size: number
 }
 
+export interface DodecaminxSticker {
+  face: DodecaminxFace
+  index: number
+  rotation: 0 | 1 | 2 | 3
+}
+
 export interface DodecaminxOptions {
   rand?: () => number
   size: number
