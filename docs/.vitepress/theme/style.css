@@ -2,3 +2,11 @@
 
 /* Match VitePress dark mode: html gets class="dark" */
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css */
+:root {
+  --vp-c-brand-1: oklch(64.5% 0.246 16.439);
+  --vp-c-brand-2: oklch(64.5% 0.246 16.439);
+  --vp-c-brand-3: oklch(71.2% 0.194 13.428);
+}
+
