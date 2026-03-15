@@ -5,7 +5,8 @@
         v-model:size="size"
         :max
         @reset="reset"
-        @scramble="scramble" />
+        @scramble="scramble"
+        @turn="turn" />
 
       <div class="inline-flex items-center gap-x-4 opacity-90 text-sm px-2 tracking-wide">
         <div class="inline-flex items-center gap-x-1">
@@ -194,5 +195,10 @@ function reset() {
 
 function scramble() {
   cube.value.scramble()
+}
+
+function turn(turn: string) {
+  console.log('turn', turn)
+  cube.value.turn(turn)
 }
 </script>

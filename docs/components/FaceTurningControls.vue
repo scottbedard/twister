@@ -9,6 +9,13 @@
         Scramble
       </Button>
 
+      <Input
+        v-model="turn"
+        class="w-20"
+        placeholder="Turn"
+        @keydown.enter="onTurn"
+        @keydown.stop />
+
       <div class="inline-flex items-center gap-x-2">
         <RangeInput
           v-model="size"
@@ -26,7 +33,10 @@
 
 <script setup lang="ts">
 import Button from './Button.vue'
+import Input from './Input.vue'
 import RangeInput from './RangeInput.vue'
+
+const turn = ref('')
 
 const size = defineModel<number>('size', { required: true })
 
@@ -34,8 +44,15 @@ defineProps<{
   max: number
 }>()
 
-defineEmits<{
+const emit = defineEmits<{
   reset: []
   scramble: []
+  turn: [turn: string]
 }>()
+
+function onTurn() {
+  emit('turn', turn.value)
+
+  turn.value = ''
+}
 </script>

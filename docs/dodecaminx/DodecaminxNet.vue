@@ -27,7 +27,6 @@
             <path
               v-for="(obj, index) in face.stickers"
               :key="`sticker-${index}`"
-              class="cursor-pointer hover:opacity-90"
               stroke="currentColor"
               :d="pathD(obj?.path ?? [])"
               :fill="color(obj?.sticker)"
