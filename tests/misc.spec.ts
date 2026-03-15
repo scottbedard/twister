@@ -1,32 +1,5 @@
-import { sample, int } from '@/utils/misc'
-
 import { describe, expect, test } from 'vitest'
-
-describe('sample', () => {
-  test('returns element at index from rand() * length', () => {
-    const arr = ['a', 'b', 'c']
-    expect(sample(arr, () => 0)).toBe('a')
-    expect(sample(arr, () => 0.33)).toBe('a')
-    expect(sample(arr, () => 0.334)).toBe('b')
-    expect(sample(arr, () => 0.666)).toBe('b')
-    expect(sample(arr, () => 0.999)).toBe('c')
-  })
-
-  test('single-element array always returns that element', () => {
-    const arr = [42]
-    expect(sample(arr, () => 0)).toBe(42)
-    expect(sample(arr, () => 0.5)).toBe(42)
-    expect(sample(arr, () => 0.999)).toBe(42)
-  })
-
-  test('result is always an element of the array', () => {
-    const arr = [1, 2, 3]
-    for (let i = 0; i < 100; i++) {
-      const r = sample(arr, () => i / 100)
-      expect(arr).toContain(r)
-    }
-  })
-})
+import { int } from '@/utils/misc'
 
 describe('int', () => {
   test('returns min when rand() is 0', () => {

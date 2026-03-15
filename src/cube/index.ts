@@ -1,14 +1,13 @@
 import type { Puzzle } from '@/puzzle'
-import { extract, inject, int, mod, rotate, sample } from '@/utils'
+import { createMatrix, extract, inject, int, mod, rotate, sample } from '@/utils'
 import { cubeAxes, cubeFaces, cubeNet, cubeOpposites } from './constants'
-import { createFace } from './utils'
 import type {
   CubeAxis,
   CubeFace,
   CubeOptions,
+  CubeSolvedOptions,
   CubeSticker,
   CubeTurn,
-  CubeSolvedOptions,
 } from './types'
 
 export class Cube implements Puzzle<CubeTurn, CubeSolvedOptions> {
@@ -43,12 +42,12 @@ export class Cube implements Puzzle<CubeTurn, CubeSolvedOptions> {
     this.size = size
 
     this.state = {
-      b: createFace(size, 'b'),
-      d: createFace(size, 'd'),
-      f: createFace(size, 'f'),
-      l: createFace(size, 'l'),
-      r: createFace(size, 'r'),
-      u: createFace(size, 'u'),
+      b: createMatrix(size, { face: 'b' as const, rotation: 0 as const }),
+      d: createMatrix(size, { face: 'd' as const, rotation: 0 as const }),
+      f: createMatrix(size, { face: 'f' as const, rotation: 0 as const }),
+      l: createMatrix(size, { face: 'l' as const, rotation: 0 as const }),
+      r: createMatrix(size, { face: 'r' as const, rotation: 0 as const }),
+      u: createMatrix(size, { face: 'u' as const, rotation: 0 as const }),
     }
   }
 
@@ -205,12 +204,12 @@ export class Cube implements Puzzle<CubeTurn, CubeSolvedOptions> {
    * Reset the puzzle to it's starting state
    */
   reset(): this {
-    this.state.b = createFace(this.size, 'b')
-    this.state.d = createFace(this.size, 'd')
-    this.state.f = createFace(this.size, 'f')
-    this.state.l = createFace(this.size, 'l')
-    this.state.r = createFace(this.size, 'r')
-    this.state.u = createFace(this.size, 'u')
+    this.state.b = createMatrix(this.size, { face: 'b' as const, rotation: 0 as const })
+    this.state.d = createMatrix(this.size, { face: 'd' as const, rotation: 0 as const })
+    this.state.f = createMatrix(this.size, { face: 'f' as const, rotation: 0 as const })
+    this.state.l = createMatrix(this.size, { face: 'l' as const, rotation: 0 as const })
+    this.state.r = createMatrix(this.size, { face: 'r' as const, rotation: 0 as const })
+    this.state.u = createMatrix(this.size, { face: 'u' as const, rotation: 0 as const })
 
     return this
   }

@@ -1,0 +1,27 @@
+/**
+ * Roll an array forwards or backwards.
+ *
+ * @param {T[]} arr Source array to roll.
+ * @param {number} n Number of elements to roll array. Positive values roll towards the end of the array, and negative values roll towards the start.
+ *
+ * @return {T[]}
+ */
+export function roll<T>(arr: T[], n: number): T[] {
+  const offset = ((-n % arr.length) + arr.length) % arr.length
+
+  return arr.slice(offset).concat(arr.slice(0, offset))
+}
+
+/**
+ * Sample an element from the array
+ */
+export function sample<T>(arr: T[], rand: () => number): T {
+  return arr[Math.floor(rand() * arr.length)]
+}
+
+/**
+ * Create an array of length length, filled with value.
+ */
+export function times<T>(length: number, value?: T): T[] {
+  return new Array(length).fill(value)
+}
