@@ -5,12 +5,12 @@ title: Cube
 ---
 
 <script setup>
-import CubeDemo from './partials/cube/CubeDemo.vue'
+import CubeDemo from './cube/CubeDemo.vue'
 </script>
 
 # Cube
 
-A traditional six sided face turning puzzle. Use your keyboard for basic manipulation, or <button onclick="console.log(window.cube)">`window.cube`</button> for direct access.
+A traditional six sided face turning puzzle. Use your keyboard to manipulate the puzzle, or use <button onclick="console.log(window.cube)">`window.cube`</button> for direct access.
 
 <CubeDemo />
 

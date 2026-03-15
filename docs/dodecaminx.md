@@ -4,6 +4,12 @@ lastUpdated: true
 layout: doc
 ---
 
+<script lang="ts" setup>
+import DodecaminxDemo from './dodecaminx/DodecaminxDemo.vue'
+</script>
+
 # Dodecaminx
 
-In progress
+A face turning dodecahedron. Use your keyboard to manipulate the puzzle, or use <button onclick="console.log(window.dodecaminx)">`window.dodecaminx`</button> for direct access.
+
+<DodecaminxDemo />
