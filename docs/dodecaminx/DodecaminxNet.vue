@@ -1,9 +1,9 @@
 <template>
   <div>
-    <DodecaminxNet />
+    DodecaminxNet
   </div>
 </template>
 
 <script lang="ts" setup>
-import DodecaminxNet from './DodecaminxNet.vue'
+// ...
 </script>
