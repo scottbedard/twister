@@ -1,7 +1,33 @@
-import type { DodecaminxFace, DodecaminxSticker } from './types'
+import type { DodecaminxFace, DodecaminxSticker, DodecaminxState } from './types'
 import type { CompositeMatrix } from '@/utils/composite-matrix'
 import { createCompositeMatrix } from '@/utils'
 
-export function createDodecaminxFace(face: DodecaminxFace, size: number): CompositeMatrix<DodecaminxSticker> {
-  return createCompositeMatrix(5, size, index => ({ face, index, rotation: 0 }))
+export function createDodecaminxFace(
+  face: DodecaminxFace,
+  matrix: number,
+  size: number,
+): CompositeMatrix<DodecaminxSticker> {
+  return createCompositeMatrix(5, size, index => ({
+    face,
+    index,
+    matrix,
+    rotation: 0,
+  }))
+}
+
+export function createDodecaminxState(size: number): DodecaminxState {
+  return {
+    b: createDodecaminxFace('b', 0, size),
+    bl: createDodecaminxFace('bl', 1, size),
+    br: createDodecaminxFace('br', 2, size),
+    d: createDodecaminxFace('d', 3, size),
+    dbl: createDodecaminxFace('dbl', 4, size),
+    dbr: createDodecaminxFace('dbr', 5, size),
+    dl: createDodecaminxFace('dl', 6, size),
+    dr: createDodecaminxFace('dr', 7, size),
+    f: createDodecaminxFace('f', 8, size),
+    l: createDodecaminxFace('l', 9, size),
+    r: createDodecaminxFace('r', 10, size),
+    u: createDodecaminxFace('u', 11, size),
+  }
 }

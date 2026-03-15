@@ -1,4 +1,4 @@
-import { createDodecaminxFace } from './utils'
+import { createDodecaminxState } from './utils'
 import { dodecaminxNet, dodecaminxOpposites, dodecaminxFaces } from './constants'
 import {
   extractComposite,
@@ -10,14 +10,13 @@ import {
   without,
   rotateComposite,
 } from '@/utils'
-import type { CompositeMatrix } from '@/utils/composite-matrix'
 import type { Puzzle } from '@/puzzle'
 import type {
   DodecaminxTurn,
   DodecaminxSolvedOptions,
   DodecaminxOptions,
   DodecaminxFace,
-  DodecaminxSticker,
+  DodecaminxState,
 } from './types'
 
 export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOptions> {
@@ -34,7 +33,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   /**
    * State of the cube.
    */
-  readonly state: Record<DodecaminxFace, CompositeMatrix<DodecaminxSticker>>
+  readonly state: DodecaminxState
 
   constructor(opts: number | DodecaminxOptions) {
     const size = typeof opts === 'number' ? opts : opts.size
@@ -47,20 +46,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
 
     this.size = size
 
-    this.state = {
-      b: createDodecaminxFace('b', size),
-      bl: createDodecaminxFace('bl', size),
-      br: createDodecaminxFace('br', size),
-      d: createDodecaminxFace('d', size),
-      dbl: createDodecaminxFace('dbl', size),
-      dbr: createDodecaminxFace('dbr', size),
-      dl: createDodecaminxFace('dl', size),
-      dr: createDodecaminxFace('dr', size),
-      f: createDodecaminxFace('f', size),
-      l: createDodecaminxFace('l', size),
-      r: createDodecaminxFace('r', size),
-      u: createDodecaminxFace('u', size),
-    }
+    this.state = createDodecaminxState(size)
   }
 
   generateScramble(depth: number = Math.max(30, this.size ** 3)): string {
@@ -116,30 +102,13 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   }
 
   reset(): this {
-    const size = this.size
-
-    this.state.b = createDodecaminxFace('b', size)
-    this.state.bl = createDodecaminxFace('bl', size)
-    this.state.br = createDodecaminxFace('br', size)
-    this.state.d = createDodecaminxFace('d', size)
-    this.state.dbl = createDodecaminxFace('dbl', size)
-    this.state.dbr = createDodecaminxFace('dbr', size)
-    this.state.dl = createDodecaminxFace('dl', size)
-    this.state.dr = createDodecaminxFace('dr', size)
-    this.state.f = createDodecaminxFace('f', size)
-    this.state.l = createDodecaminxFace('l', size)
-    this.state.r = createDodecaminxFace('r', size)
-    this.state.u = createDodecaminxFace('u', size)
+    Object.assign(this.state, createDodecaminxState(this.size))
 
     return this
   }
 
   scramble(depth?: number): this {
-    const scramble = this.generateScramble(depth)
-
-    this.turn(scramble)
-
-    return this
+    return this.turn(this.generateScramble(depth))
   }
 
   solved(opts?: DodecaminxSolvedOptions): boolean {

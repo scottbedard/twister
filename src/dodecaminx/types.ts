@@ -1,3 +1,5 @@
+import type { CompositeMatrix } from '@/utils/composite-matrix'
+
 export type DodecaminxFace = 'u' | 'l' | 'f' | 'r' | 'bl' | 'br' | 'd' | 'dl' | 'dr' | 'dbl' | 'dbr' | 'b'
 
 export interface DodecaminxTurn {
@@ -12,10 +14,13 @@ export interface DodecaminxSolvedOptions {
   size: number
 }
 
+export type DodecaminxState = Record<DodecaminxFace, CompositeMatrix<DodecaminxSticker>>
+
 export interface DodecaminxSticker {
   face: DodecaminxFace
   index: number
-  rotation: 0 | 1 | 2 | 3
+  matrix: number
+  rotation: 0 | 1 | 2 | 3 | 5
 }
 
 export interface DodecaminxOptions {
