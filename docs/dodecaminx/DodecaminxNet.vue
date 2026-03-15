@@ -1,22 +1,27 @@
 <template>
   <div>
     <svg
-      viewBox="0 0 9.8 4.9"
+      shape-rendering="geometricPrecision"
+      viewBox="0 0 9800 4900"
       xmlns="http://www.w3.org/2000/svg">
       <g
-        class="text-gray-900"
-        transform="translate(2.6, 2.2)">
+        class="text-gray-800"
+        transform="scale(1000) translate(2.6, 2.2)">
         <template
           v-for="face in faces"
           :key="`group-${face.key}`">
           <clipPath :id="`clip-${face.key}`">
             <path
               stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
               :d="pathD(outline)" />
           </clipPath>
 
           <path
             stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
             :d="pathD(outline)"
             :stroke-width
             :transform="face.transform" />
@@ -28,6 +33,8 @@
               v-for="(obj, index) in face.stickers"
               :key="`sticker-${index}`"
               stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
               :d="pathD(obj?.path ?? [])"
               :fill="color(obj?.sticker)"
               :stroke-width
@@ -60,15 +67,27 @@ const props = defineProps<{
   dodecaminx: Dodecaminx
 }>()
 
-defineEmits<{ 'click-sticker': [sticker: DodecaminxSticker] }>()
+defineEmits<{
+  'click-sticker': [sticker: DodecaminxSticker]
+}>()
 
 const FACE_ORDER: DodecaminxFace[] = [
   'u', 'l', 'f', 'r', 'bl', 'br', 'dbr', 'd', 'b', 'dbl', 'dr', 'dl',
 ]
 
 const COLORS = [
-  '#4B5563', '#ED8936', '#9AE6B4', '#FBD38D', '#90CDF4', '#F687B3',
-  '#2F855A', '#E53E3E', '#F3F4F6', '#9F7AEA', '#2B6CB0', '#F6E05E',
+  'oklch(90.5% 0.182 98.111)', // u: yellow
+  'oklch(70.2% 0.183 293.541)', // l: purple
+  'oklch(98.5% 0.002 247.839)', // f: white
+  'oklch(58.8% 0.158 241.966)', // r: dark blue
+  'oklch(76.9% 0.188 70.08)', // bl: orange
+  'oklch(84.5% 0.143 164.978)', // br: light green
+  'oklch(82.3% 0.12 346.018)', // dbr: pink
+  'oklch(90.1% 0.076 70.697)', // d: creme
+  'oklch(55.4% 0.046 257.417)', // b: gray
+  'oklch(80.9% 0.105 251.813)', // dbl: light blue
+  'oklch(64.5% 0.246 16.439)', // dr: red
+  'oklch(59.6% 0.145 163.225)', // dl: dark green
 ]
 
 type Face = CompositeMatrix<DodecaminxSticker>
@@ -170,9 +189,7 @@ const middleOutlines = computed(() => {
   ]
 })
 
-const strokeWidth = computed(() =>
-  size.value > 10 ? 0.01 : Math.max(0.02, (7 - size.value) / 100),
-)
+const strokeWidth = 0.025
 
 const color = (sticker: DodecaminxSticker) => {
   const i = FACE_ORDER.indexOf(sticker.face)
