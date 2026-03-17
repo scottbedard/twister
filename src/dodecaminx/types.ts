@@ -11,7 +11,7 @@ export interface DodecaminxTurn {
 }
 
 export interface DodecaminxSolvedOptions {
-  size: number
+  super?: boolean
 }
 
 export type DodecaminxState = Record<DodecaminxFace, CompositeMatrix<DodecaminxSticker>>

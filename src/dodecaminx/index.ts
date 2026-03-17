@@ -112,7 +112,19 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   }
 
   solved(opts?: DodecaminxSolvedOptions): boolean {
-    console.log('not implemented', opts)
+    // const { state } = this
+
+    // for (const face of state) {
+    //   const val = state[face]
+
+    //   for (const sticker of val) {
+    //     if (sticker.face !== face) {
+    //       return false
+    //     }
+    //   }
+
+    //   if (opts.super) {
+    // }
 
     return false
   }

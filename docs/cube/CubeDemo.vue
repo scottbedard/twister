@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="gap-2 grid">
+    <div class="gap-2 grid mb-6">
       <FaceTurningControls
         v-model:size="size"
         :max
@@ -8,34 +8,14 @@
         @scramble="scramble"
         @turn="turn" />
 
-      <div class="inline-flex items-center gap-x-4 opacity-90 text-sm px-2 tracking-wide">
-        <div class="inline-flex items-center gap-x-1">
-          <div>Solved:</div>
+      <div class="flex items-center gap-x-6 text-sm px-2">
+        <StatusText
+          label="Solved"
+          :status="solved" />
 
-          <div :class="solved ? 'text-green-500' : 'text-red-500'">
-            <Check
-              v-if="solved"
-              :size="18" />
-
-            <X
-              v-else
-              :size="18" />
-          </div>
-        </div>
-
-        <div class="inline-flex items-center gap-x-1">
-          <div>Super:</div>
-
-          <div :class="solvedSuper ? 'text-green-500' : 'text-red-500'">
-            <Check
-              v-if="solvedSuper"
-              :size="18" />
-
-            <X
-              v-else
-              :size="18" />
-          </div>
-        </div>
+        <StatusText
+          label="Super"
+          :status="solvedSuper" />
       </div>
     </div>
 
@@ -91,12 +71,13 @@
 </template>
 
 <script setup lang="ts">
-import { Check, X } from 'lucide-vue-next'
 import { Cube } from '@/index'
-import { useEventListener, useUrlSearchParams } from '@vueuse/core'
+import { useUrlSearchParams } from '@vueuse/core'
 import CubeDemoFace from './CubeDemoFace.vue'
+import StatusText from '~/components/StatusText.vue'
 import FaceTurningControls from '~/components/FaceTurningControls.vue'
 import type { CubeSticker } from '@/cube/types'
+import { useKeymap } from '~/.vitepress/composables/use-keymap'
 
 const params = useUrlSearchParams('history', { initialValue: { size: '3' } })
 
@@ -121,11 +102,7 @@ const solvedSuper = computed(() => cube.value.solved({ super: true }))
 
 const hoverSticker = shallowRef<CubeSticker | null>(null)
 
-onMounted(() => {
-  reset()
-
-  useEventListener(window, 'keydown', onKeydown)
-})
+onMounted(reset)
 
 onUnmounted(() => {
   delete (window as Window & { cube?: Cube }).cube
@@ -133,14 +110,9 @@ onUnmounted(() => {
 
 watch(size, reset)
 
-function onKeydown(e: KeyboardEvent) {
-  if (e.key === 'Escape') {
-    reset()
-
-    return
-  }
-
-  const turn = {
+useKeymap({
+  escape: reset,
+  keymap: {
     '3': 'Lw-',
     '4': 'Lw-',
     '9': 'Rw',
@@ -180,12 +152,11 @@ function onKeydown(e: KeyboardEvent) {
     'S': '2D',
     'W': 'Bw',
     'O': 'Bw-',
-  }[e.key]
-
-  if (turn) {
-    cube.value.turn(turn)
-  }
-}
+  },
+  onKey(notation: string) {
+    cube.value.turn(notation)
+  },
+})
 
 function reset() {
   cube.value = new Cube(size.value)
@@ -198,7 +169,6 @@ function scramble() {
 }
 
 function turn(turn: string) {
-  console.log('turn', turn)
   cube.value.turn(turn)
 }
 </script>

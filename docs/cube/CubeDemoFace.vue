@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import type { Cube } from '@/index'
-import type { CubeFace } from '@/index'
+import type { CubeFace } from '@/cube/types'
 
 defineProps<{
   cube: Cube
