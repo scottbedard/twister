@@ -5,8 +5,8 @@
 
 /* https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css */
 :root {
-  --vp-c-brand-1: oklch(64.5% 0.246 16.439);
-  --vp-c-brand-2: oklch(64.5% 0.246 16.439);
-  --vp-c-brand-3: oklch(71.2% 0.194 13.428);
+  --vp-c-brand-1: oklch(70.4% 0.191 22.216);
+  --vp-c-brand-2: oklch(63.7% 0.237 25.331);
+  --vp-c-brand-3: oklch(70.4% 0.191 22.216);
 }
 
