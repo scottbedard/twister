@@ -33,8 +33,8 @@
 
               <text
                 v-if="obj.center"
+                class="fill-gray-900/70"
                 dominant-baseline="middle"
-                fill="currentColor"
                 text-anchor="middle"
                 :font-size="lerp(0.5, 0.3, size / 10)"
                 :style="{
