@@ -10,14 +10,6 @@
         <template
           v-for="face in faces"
           :key="`group-${face.key}`">
-          <clipPath :id="`clip-${face.key}`">
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              :d="pathD(outline)" />
-          </clipPath>
-
           <path
             stroke="currentColor"
             stroke-linecap="round"
@@ -26,19 +18,33 @@
             :stroke-width
             :transform="face.transform" />
 
-          <g
-            :clip-path="`url(#clip-${face.key})`"
-            :transform="face.transform">
-            <path
+          <g :transform="face.transform">
+            <template
               v-for="(obj, index) in face.stickers"
-              :key="`sticker-${index}`"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              :d="pathD(obj?.path ?? [])"
-              :fill="color(obj?.sticker)"
-              :stroke-width
-              @click="$emit('click-sticker', obj!.sticker)" />
+              :key="`sticker-${index}`">
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                :d="pathD(obj?.path ?? [])"
+                :fill="color(obj?.sticker)"
+                :stroke-width
+                @click="$emit('click-sticker', obj!.sticker)" />
+
+              <text
+                v-if="obj.center"
+                dominant-baseline="middle"
+                fill="currentColor"
+                text-anchor="middle"
+                :font-size="lerp(0.5, 0.3, size / 10)"
+                :style="{
+                  transform: `rotate(${(dodecaminx.centers[obj.sticker.face] ?? 0) * (360 / 5)}deg)`,
+                }"
+                :x="stickerCenter(obj.path)?.[0]"
+                :y="stickerCenter(obj.path)?.[1]">
+                ↑
+              </text>
+            </template>
           </g>
         </template>
       </g>
@@ -51,7 +57,9 @@ import type { CompositeMatrix } from '@/utils/composite-matrix'
 import {
   angleFrom,
   bilerp,
+  centroid,
   intersect,
+  lerp,
   measure,
   toPathCoords,
   toSvgCoords,
@@ -256,15 +264,18 @@ const pathD = (arr: Point[]) => {
   return `M ${start.join(',')} L ${points.map(p => p.join(',')).join(' ')} Z`
 }
 
+const stickerCenter = (path: Point[] | undefined) =>
+  centroid(toPathCoords(path ?? []))
+
 const faces = computed(() =>
   (Object.entries(net) as [DodecaminxFace, [Point, number]][]).map(([key, [v, deg]]) => {
     const face = props.dodecaminx.state[key] as Face
     const [x, y] = toSvgCoords(v)
     const centerSticker = center(face)
     const stickerList = [
-      ...corners(face),
-      ...middles(face),
-      ...(centerSticker ? [centerSticker] : []),
+      ...corners(face).map(o => ({ ...o, center: false as const })),
+      ...middles(face).map(o => ({ ...o, center: false as const })),
+      ...(centerSticker ? [{ ...centerSticker, center: true as const }] : []),
     ]
     return {
       key,

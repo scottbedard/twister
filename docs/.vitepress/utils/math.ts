@@ -6,7 +6,103 @@ export type Line = [Point, Point]
  * Linear interpolation between two 2D points.
  */
 export function bilerp(a: Point, b: Point, t: number): Point {
-  return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]
+  return [lerp(a[0], b[0], t), lerp(a[1], b[1], t)]
+}
+
+/**
+ * Centroid of a polygon defined by a path of 2D points.
+ * Works whether the path is explicitly closed or not.
+ */
+export function centroid(points: Point[]) {
+  if (!Array.isArray(points) || points.length === 0) return null
+
+  // 1. filter invalid coordinates
+  const pts = []
+  for (const p of points) {
+    if (
+      p
+      && Number.isFinite(p[0])
+      && Number.isFinite(p[1])
+    ) {
+      pts.push([+p[0], +p[1]])
+    }
+  }
+
+  const n = pts.length
+  if (n === 0) return null
+
+  // 2. remove duplicate closing point
+  if (
+    n > 1
+    && pts[0][0] === pts[n - 1][0]
+    && pts[0][1] === pts[n - 1][1]
+  ) {
+    pts.pop()
+  }
+
+  const m = pts.length
+
+  // 3. small cases
+  if (m === 1) return pts[0]
+  if (m === 2) {
+    return [
+      (pts[0][0] + pts[1][0]) / 2,
+      (pts[0][1] + pts[1][1]) / 2,
+    ]
+  }
+
+  // 4. polygon centroid
+  let area = 0
+  let cx = 0
+  let cy = 0
+
+  for (let i = 0; i < m; i++) {
+    const [x0, y0] = pts[i]
+    const [x1, y1] = pts[(i + 1) % m]
+
+    const cross = x0 * y1 - x1 * y0
+
+    area += cross
+    cx += (x0 + x1) * cross
+    cy += (y0 + y1) * cross
+  }
+
+  area *= 0.5
+
+  if (Math.abs(area) > 1e-12) {
+    return [cx / (6 * area), cy / (6 * area)]
+  }
+
+  // 5. fallback: bounding box center
+  let minX = Infinity, minY = Infinity
+  let maxX = -Infinity, maxY = -Infinity
+
+  for (const [x, y] of pts) {
+    if (x < minX) minX = x
+    if (y < minY) minY = y
+    if (x > maxX) maxX = x
+    if (y > maxY) maxY = y
+  }
+
+  if (minX !== maxX || minY !== maxY) {
+    return [(minX + maxX) / 2, (minY + maxY) / 2]
+  }
+
+  // 6. final fallback: average of vertices
+  let sx = 0, sy = 0
+  for (const [x, y] of pts) {
+    sx += x
+    sy += y
+  }
+
+  return [sx / m, sy / m]
+}
+
+/**
+ * Linear interpolation between two numbers.
+ */
+export function lerp(a: number, b: number, t: number): number {
+  return a + (b - a) * t
 }
 
 /**

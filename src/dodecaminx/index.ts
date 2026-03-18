@@ -9,6 +9,7 @@ import {
   sample,
   without,
   rotateComposite,
+  mod,
 } from '@/utils'
 import type { Puzzle } from '@/puzzle'
 import type {
@@ -20,6 +21,11 @@ import type {
 } from './types'
 
 export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOptions> {
+  /**
+   * Center orientation of each face.
+   */
+  readonly centers: Record<DodecaminxFace, number>
+
   /**
    * Random number generator.
    */
@@ -40,6 +46,21 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
 
     if (size < 1 || !Number.isInteger(size)) {
       throw new Error('Dodecaminx size must be a positive integer')
+    }
+
+    this.centers = {
+      b: 0,
+      bl: 0,
+      br: 0,
+      d: 0,
+      dbl: 0,
+      dbr: 0,
+      dl: 0,
+      dr: 0,
+      f: 0,
+      l: 0,
+      r: 0,
+      u: 0,
     }
 
     this.rand = typeof opts === 'number' ? Math.random : opts.rand ?? Math.random
@@ -102,6 +123,21 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   }
 
   reset(): this {
+    Object.assign(this.centers, {
+      b: 0,
+      bl: 0,
+      br: 0,
+      d: 0,
+      dbl: 0,
+      dbr: 0,
+      dl: 0,
+      dr: 0,
+      f: 0,
+      l: 0,
+      r: 0,
+      u: 0,
+    })
+
     Object.assign(this.state, createDodecaminxState(this.size))
 
     return this
@@ -125,6 +161,10 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
 
     //   if (opts.super) {
     // }
+
+    if (opts?.super) {
+      // ...
+    }
 
     return false
   }
@@ -172,6 +212,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
 
     // Rotate target face
     if (t.depth === 1 || t.wide || t.whole) {
+      this.centers[t.target] = mod(this.centers[t.target] + t.rotation, 5)
       this.state[t.target] = rotateComposite(this.state[t.target], t.rotation)
     }
 

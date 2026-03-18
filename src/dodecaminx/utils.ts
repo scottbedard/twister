@@ -2,17 +2,12 @@ import type { DodecaminxFace, DodecaminxSticker, DodecaminxState } from './types
 import type { CompositeMatrix } from '@/utils/composite-matrix'
 import { createCompositeMatrix } from '@/utils'
 
-export function createDodecaminxFace(
+function createDodecaminxFace(
   face: DodecaminxFace,
   matrix: number,
   size: number,
 ): CompositeMatrix<DodecaminxSticker> {
-  return createCompositeMatrix(5, size, index => ({
-    face,
-    index,
-    matrix,
-    rotation: 0,
-  }))
+  return createCompositeMatrix(5, size, index => ({ face, index, matrix }))
 }
 
 export function createDodecaminxState(size: number): DodecaminxState {

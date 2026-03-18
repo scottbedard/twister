@@ -20,7 +20,8 @@ export interface DodecaminxSticker {
   face: DodecaminxFace
   index: number
   matrix: number
-  rotation: 0 | 1 | 2 | 3 | 5
+  /** Pentagon steps 0..4 (0 = identity) */
+  rotation?: 0 | 1 | 2 | 3 | 4
 }
 
 export interface DodecaminxOptions {
