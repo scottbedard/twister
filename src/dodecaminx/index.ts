@@ -218,6 +218,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
 
     if (t.whole) {
       // Rotate opposite face
+      this.centers[oppositeTarget] = mod(this.centers[oppositeTarget] - t.rotation, 5)
       this.state[oppositeTarget] = rotateComposite(this.state[oppositeTarget], -t.rotation)
 
       // Rotate faces adjacent to the target and opposite
@@ -226,6 +227,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
           .map(([face, angle]) => rotateComposite(this.state[face], -angle))
           .forEach((face, index) => {
             const [relatedFace, angle] = dodecaminxNet[target][(index + 5 + rotation) % 5]
+            this.centers[relatedFace] = mod(this.centers[relatedFace] + rotation, 5)
             this.state[relatedFace] = rotateComposite(face, angle)
           })
       }
