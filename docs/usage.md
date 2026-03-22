@@ -6,7 +6,7 @@ layout: doc
 
 # Basic Usage
 
-Create a puzzle instance using various constructors.
+All puzzles follow a common interface, but some may have unique APIs. To start, create a puzzle instance from one of the constructors.
 
 ```js
 import { Cube } from '@bedard/twister'
@@ -44,7 +44,7 @@ const obj = puzzle.parseTurn('R-') // { depth, target, rotation, wide }
 puzzle.stringifyTurn(obj) // 'R-'
 ```
 
-# Advanced
+## Advanced
 
 By default, puzzles use [`Math.random`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) for randomness. But custom functions can be provided, such as [`crypto.getRandomValues`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues) or [`vi.fn()` ](https://vitest.dev/api/vi.html#vi-fn).
 
