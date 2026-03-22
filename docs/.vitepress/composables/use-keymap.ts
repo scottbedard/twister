@@ -7,17 +7,19 @@ export function useKeymap<T>(options: {
 }) {
   const { escape, keymap, onKey } = options
 
-  useEventListener(window, 'keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Escape' && escape) {
-      escape()
+  onMounted(() => {
+    useEventListener(window, 'keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && escape) {
+        escape()
 
-      return
-    }
+        return
+      }
 
-    const value = keymap[e.key]
+      const value = keymap[e.key]
 
-    if (value !== undefined) {
-      onKey(value)
-    }
+      if (value !== undefined) {
+        onKey(value)
+      }
+    })
   })
 }
