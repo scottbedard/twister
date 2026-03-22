@@ -119,25 +119,20 @@ export function injectComposite<T>(
 }
 
 /**
- * Apply a function to each value in a composite matrix.
+ * Iterate over all members of a composite matrix.
  */
-export function mapComposite<T, U = T>(composite: CompositeMatrix<T>, fn: (val: T) => U): CompositeMatrix<U> {
+export function iterateComposite<T>(composite: CompositeMatrix<T>, fn: (val: T) => void): void {
   const [corners, middles, center] = composite
 
-  const values = (arr: T[]) => arr.map(fn)
-  const valuesOrUndefined = (arr: (T | undefined)[]) => arr.map(v => (v === undefined ? undefined : fn(v)))
+  corners.forEach(matrix => matrix.forEach(x => fn(x)))
 
-  if (middles && center) {
-    return [
-      corners.map(values),
-      middles.map(valuesOrUndefined),
-      fn(center),
-    ]
+  if (middles) {
+    middles.forEach(matrix => matrix.forEach(x => x && fn(x)))
   }
 
-  return [
-    corners.map(values),
-  ]
+  if (center) {
+    fn(center)
+  }
 }
 
 /**

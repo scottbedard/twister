@@ -129,19 +129,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   }
 
   solved(opts?: DodecaminxSolvedOptions): boolean {
-    // const { state } = this
-
-    // for (const face of state) {
-    //   const val = state[face]
-
-    //   for (const sticker of val) {
-    //     if (sticker.face !== face) {
-    //       return false
-    //     }
-    //   }
-
-    //   if (opts.super) {
-    // }
+    // ...
 
     if (opts?.super) {
       // ...
@@ -188,7 +176,6 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
     }
 
     const { depth, target, rotation, wide, whole } = turn
-    const notation = this.stringifyTurn(turn)
     const odd = this.size % 2 === 1
     const opposite = dodecaminxOpposites[target]
     const related = dodecaminxNet[target]

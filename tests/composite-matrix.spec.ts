@@ -3,7 +3,7 @@ import {
   createCompositeMatrix,
   extractComposite,
   injectComposite,
-  mapComposite,
+  iterateComposite,
   rotateComposite,
 } from '@/utils/composite-matrix'
 import type { CompositeLayer, CompositeMatrix } from '@/utils/composite-matrix'
@@ -168,39 +168,15 @@ describe('composite matrix', () => {
     })
   })
 
-  describe('mapComposite', () => {
-    const negative = (n: number) => -n
+  describe('iterateComposite', () => {
+    test('invokes the callback for every member (corners, middles, center)', () => {
+      const seen: number[] = []
+      iterateComposite(stub5x5, (val) => {
+        seen.push(val)
+      })
 
-    test('5x4', () => {
-      expect(mapComposite(stub5x4, negative)).toEqual([
-        [
-          [-1, -2, -3, -4],
-          [-5, -6, -7, -8],
-          [-9, -10, -11, -12],
-          [-13, -14, -15, -16],
-          [-17, -18, -19, -20],
-        ],
-      ])
-    })
-
-    test('5x5', () => {
-      expect(mapComposite(stub5x5, negative)).toEqual([
-        [
-          [-1, -2, -3, -4],
-          [-5, -6, -7, -8],
-          [-9, -10, -11, -12],
-          [-13, -14, -15, -16],
-          [-17, -18, -19, -20],
-        ],
-        [
-          [-21, -22],
-          [-23, -24],
-          [-25, -26],
-          [-27, -28],
-          [-29, -30],
-        ],
-        -31,
-      ])
+      const expected = Array.from({ length: 31 }, (_, i) => i + 1)
+      expect([...seen].sort((a, b) => a - b)).toEqual(expected)
     })
   })
 
