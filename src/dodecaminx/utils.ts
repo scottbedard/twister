@@ -2,6 +2,23 @@ import { createCompositeMatrix } from '@/utils'
 import type { CompositeMatrix } from '@/utils/composite-matrix'
 import type { DodecaminxFace, DodecaminxSticker, DodecaminxState } from './types'
 
+export function createDodecaminxCenters(): Record<DodecaminxFace, number> {
+  return {
+    b: 0,
+    bl: 0,
+    br: 0,
+    d: 0,
+    dbl: 0,
+    dbr: 0,
+    dl: 0,
+    dr: 0,
+    f: 4,
+    l: 0,
+    r: 0,
+    u: 2,
+  }
+}
+
 function createDodecaminxFace(
   face: DodecaminxFace,
   matrix: number,

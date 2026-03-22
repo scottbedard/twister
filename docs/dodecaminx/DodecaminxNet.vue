@@ -39,19 +39,19 @@
                 text-anchor="middle"
                 :font-size=".18"
                 :style="{
-                  transform: `rotate(${(dodecaminx.centers[face.key] ?? 0) * (360 / 5)}deg)`,
+                  transform: `rotate(${(dodecaminx.centers[face.key] ?? 0) * (360 / 5) + (72 / 2)}deg)`,
                 }"
                 :x="stickerCenter(obj.path)?.[0]"
                 :y="stickerCenter(obj.path)?.[1]">
                 <tspan
                   dy="-.6em"
-                  font-size="1em"
+                  font-size="1.1em"
                   :x="stickerCenter(obj.path)?.[0]">
-                  {{ false ? '↑' : dodecaminx.centers[obj.sticker.face] }}
+                  {{ true ? '↑' : dodecaminx.centers[face.key] }}
                 </tspan>
 
                 <tspan
-                  v-text="obj.sticker.face.toUpperCase()"
+                  v-text="face.key.toUpperCase()"
                   dy=".9em"
                   :x="stickerCenter(obj.path)?.[0]" />
               </text>

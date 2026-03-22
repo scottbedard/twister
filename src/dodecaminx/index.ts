@@ -1,7 +1,6 @@
-import { createDodecaminxState } from './utils'
+import { createDodecaminxCenters, createDodecaminxState } from './utils'
 
 import {
-  dodecaminxCenters,
   dodecaminxNet,
   dodecaminxOpposites,
   dodecaminxFaces,
@@ -57,20 +56,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
       throw new Error('Dodecaminx size must be a positive integer')
     }
 
-    this.centers = {
-      b: 0,
-      bl: 0,
-      br: 0,
-      d: 0,
-      dbl: 0,
-      dbr: 0,
-      dl: 0,
-      dr: 0,
-      f: 0,
-      l: 0,
-      r: 0,
-      u: 0,
-    }
+    this.centers = createDodecaminxCenters()
 
     this.rand = typeof opts === 'number' ? Math.random : opts.rand ?? Math.random
 
@@ -132,21 +118,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   }
 
   reset(): this {
-    Object.assign(this.centers, {
-      b: 0,
-      bl: 0,
-      br: 0,
-      d: 0,
-      dbl: 0,
-      dbr: 0,
-      dl: 0,
-      dr: 0,
-      f: 0,
-      l: 0,
-      r: 0,
-      u: 0,
-    })
-
+    Object.assign(this.centers, createDodecaminxCenters())
     Object.assign(this.state, createDodecaminxState(this.size))
 
     return this
@@ -216,6 +188,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
     }
 
     const { depth, target, rotation, wide, whole } = turn
+    const notation = this.stringifyTurn(turn)
     const odd = this.size % 2 === 1
     const opposite = dodecaminxOpposites[target]
     const related = dodecaminxNet[target]
@@ -261,34 +234,31 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
     // Track center orientation if necessary
     if (odd) {
       const centers = { ...this.centers }
+
       this.centers[target] = mod(centers[target] + rotation, 5)
 
       if (whole) {
         // rotate opposite center
         this.centers[opposite] = mod(centers[opposite] - rotation, 5)
 
-        // rotate equator faces
-        // -dbl = 0, -1 = ccw, 1 = cw, 2 = dbl
-        const angleIndex = (n: number) => {
-          return n === -2 ? 0 : n === -1 ? 1 : n === 1 ? 2 : 3
-        }
+        const slice = dodecaminxNet[target].map(obj => obj[0])
 
         for (let i = 0; i < 5; i++) {
-          const [from] = dodecaminxNet[target][i]
-          const [to] = dodecaminxNet[target][mod(i + 1, 5)]
-          const relation = dodecaminxCenters[target][to]!
-          const angle = relation[angleIndex(rotation)]
+          const from = slice[i]
+          const to = slice[mod(i + rotation, 5)]
+          const fromAngle = dodecaminxNet[target][i][1]
+          const toAngle = dodecaminxNet[target][mod(i + rotation, 5)][1]
 
-          this.centers[to] = mod(centers[from] + angle, 5)
-        }
+          this.centers[to] = mod(centers[from] + (toAngle - fromAngle), 5)
 
-        for (let i = 0; i < 5; i++) {
-          const [from] = dodecaminxNet[opposite][i]
-          const [to] = dodecaminxNet[opposite][mod(i + 1, 5)]
-          const relation = dodecaminxCenters[target][to]!
-          const angle = relation[angleIndex(rotation)]
-
-          this.centers[to] = mod(centers[from] + angle, 5)
+          console.log({
+            notation,
+            from,
+            to,
+            fromAngle,
+            toAngle,
+            rotation,
+          })
         }
       }
     }
