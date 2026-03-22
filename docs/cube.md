@@ -16,7 +16,7 @@ A traditional six sided face turning puzzle. Use your keyboard to manipulate the
 
 ## Basic Usage
 
-Create a cube instance using the `Cube` constructor.
+Create a puzzle instance using the `Cube` constructor.
 
 ```js
 import { Cube } from '@bedard/twister'
@@ -28,31 +28,27 @@ Use the following APIs to manipulate the puzzle's state.
 
 ```js
 // generate a scramble, but do not execute it
-cube.generateScramble()
+puzzle.generateScramble()
 
 // scramble the puzzle
-cube.scramble()
+puzzle.scramble()
 
 // apply a whitespace separated sequence of turns
-cube.turn('R U R-')
+puzzle.turn('R U R-')
 
 // reset the puzzle to its original state
-cube.reset()
-```
+puzzle.reset()
 
-Test the puzzle state using `solved`
+// test if puzzle is solved
+puzzle.solved()
 
-```js
-const cube = new Cube(3)
-
-cube.solved() // true
-
-cube.solved({ super: true }) // also tests orientation of pieces
+// test if super-solved with position and orientation
+puzzle.solved({ super: true })
 ```
 
 ## Notation
 
-Twister uses a slightly modified version [WCA cube notation](https://www.worldcubeassociation.org/regulations/#12a). It's different because Twister is the brains of [speedcube.site](https://speedcube.site), which is a platform for _solving_, not scrambling.
+Twister uses a slightly modified version [WCA cube notation](https://www.worldcubeassociation.org/regulations/#12a). It's different because Twister is the brains of [speedpuzzle.site](https://speedpuzzle.site), which is a platform for _solving_, not scrambling.
 
 Here is a summary of the differences in our notation,
 
@@ -63,17 +59,15 @@ Here is a summary of the differences in our notation,
 Use `parseTurn` and `stringifyTurn` to serialize and deserialize turns.
 
 ```js
-const cube = new Cube(3)
+const turn = puzzle.parseTurn('R-') // { depth, target, rotation, wide }
 
-const turn = cube.parseTurn('R-') // { depth, target, rotation, wide }
-
-cube.stringifyTurn(turn) // 'R-'
+puzzle.stringifyTurn(turn) // 'R-'
 ```
 
 When stringifying a wide-syntax puzzle rotation, the output will be shortened to the turn axis.
 
 ```js
-cube.stringifyTurn({
+puzzle.stringifyTurn({
   depth: 3,
   rotation: 2,
   target: 'r',
