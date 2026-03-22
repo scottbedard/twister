@@ -12,10 +12,10 @@ export function createDodecaminxCenters(): Record<DodecaminxFace, number> {
     dbr: 0,
     dl: 0,
     dr: 0,
-    f: 4,
+    f: 0,
     l: 0,
     r: 0,
-    u: 2,
+    u: 0,
   }
 }
 

@@ -241,6 +241,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
         // rotate opposite center
         this.centers[opposite] = mod(centers[opposite] - rotation, 5)
 
+        // rotate centers adjacent to the target face
         const slice = dodecaminxNet[target].map(obj => obj[0])
 
         for (let i = 0; i < 5; i++) {
@@ -250,15 +251,18 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
           const toAngle = dodecaminxNet[target][mod(i + rotation, 5)][1]
 
           this.centers[to] = mod(centers[from] + (toAngle - fromAngle), 5)
+        }
 
-          console.log({
-            notation,
-            from,
-            to,
-            fromAngle,
-            toAngle,
-            rotation,
-          })
+        // rotate centers adjacent to the opposite face
+        const oppositeSlice = dodecaminxNet[opposite].map(obj => obj[0])
+
+        for (let i = 0; i < 5; i++) {
+          const from = oppositeSlice[i]
+          const to = oppositeSlice[mod(i - rotation, 5)]
+          const fromAngle = dodecaminxNet[opposite][i][1]
+          const toAngle = dodecaminxNet[opposite][mod(i - rotation, 5)][1]
+
+          this.centers[to] = mod(centers[from] + (toAngle - fromAngle), 5)
         }
       }
     }
