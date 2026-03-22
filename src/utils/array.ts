@@ -1,3 +1,12 @@
+import { floor } from './misc'
+
+/**
+ * Shallow-flatten an array
+ */
+export function flatten<T>(arr: T[][]): T[] {
+  return arr.reduce((acc, curr) => acc.concat(curr), [])
+}
+
 /**
  * Roll an array forwards or backwards.
  *
@@ -15,8 +24,15 @@ export function roll<T>(arr: T[], n: number): T[] {
 /**
  * Sample an element from the array
  */
-export function sample<T>(arr: T[], rand: () => number): T {
-  return arr[Math.floor(rand() * arr.length)]
+export function sample<T>(arr: T[], rand: () => number = Math.random): T {
+  return arr[floor(rand() * arr.length)]
+}
+
+/**
+ * Shuffle an array
+ */
+export function shuffle<T>(arr: T[], rand: () => number = Math.random): T[] {
+  return arr.sort(() => rand() - 0.5)
 }
 
 /**

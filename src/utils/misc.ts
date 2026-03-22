@@ -8,8 +8,8 @@ export function floor(n: number): number {
 /**
  * Generate a random integer between min and max (inclusive)
  */
-export function int(min: number, max: number, rand: () => number): number {
-  return Math.floor(rand() * (max - min + 1)) + min
+export function int(min: number, max: number, rand: () => number = Math.random): number {
+  return floor(rand() * (max - min + 1)) + min
 }
 
 /**

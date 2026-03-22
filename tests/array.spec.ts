@@ -1,5 +1,11 @@
 import { describe, expect, test } from 'vitest'
-import { roll, sample, times, without } from '@/utils'
+import { flatten, roll, sample, times, without } from '@/utils'
+
+test('flatten', () => {
+  expect(flatten([])).toEqual([])
+  expect(flatten([[]])).toEqual([])
+  expect(flatten([[1, 2], [3], [4, 5, 6]])).toEqual([1, 2, 3, 4, 5, 6])
+})
 
 test('roll', () => {
   const arr = [0, 1, 2]
