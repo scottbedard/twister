@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { Dodecaminx } from '@/index'
-import type { CompositeMatrix } from '@/utils'
+import type { BlockMatrix } from '@/utils'
 import type { DodecaminxFace, DodecaminxSticker } from '@/dodecaminx/types'
 
 /** Face index order matching legacy state value assignment (keys order): b, bl, br, d, dbl, dbr, dl, dr, f, l, r, u */
@@ -32,7 +32,7 @@ const l = FACE_INDEX.l
 const r = FACE_INDEX.r
 const u = FACE_INDEX.u
 
-type SimpleState = Record<DodecaminxFace, CompositeMatrix<number>>
+type SimpleState = Record<DodecaminxFace, BlockMatrix<number>>
 
 function toSimpleState(model: Dodecaminx): SimpleState {
   const out = {} as SimpleState

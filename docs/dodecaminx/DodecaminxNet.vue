@@ -64,7 +64,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { CompositeMatrix } from '@/utils/composite-matrix'
+import type { BlockMatrix } from '@/utils/block-matrix'
 import {
   angleFrom,
   bilerp,
@@ -108,7 +108,7 @@ const COLORS = [
   'oklch(59.6% 0.145 163.225)', // dl: dark green
 ]
 
-type Face = CompositeMatrix<DodecaminxSticker>
+type Face = BlockMatrix<DodecaminxSticker>
 
 const isEven = (n: number) => n % 2 === 0
 

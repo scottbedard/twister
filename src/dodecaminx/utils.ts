@@ -1,5 +1,5 @@
-import { createCompositeMatrix } from '@/utils'
-import type { CompositeMatrix } from '@/utils/composite-matrix'
+import { createBlockMatrix } from '@/utils'
+import type { BlockMatrix } from '@/utils/block-matrix'
 import type { DodecaminxFace, DodecaminxSticker, DodecaminxState } from './types'
 
 export function createDodecaminxCenters(): Record<DodecaminxFace, number> {
@@ -22,8 +22,8 @@ export function createDodecaminxCenters(): Record<DodecaminxFace, number> {
 function createDodecaminxFace(
   face: DodecaminxFace,
   size: number,
-): CompositeMatrix<DodecaminxSticker> {
-  return createCompositeMatrix(5, size, ({ index, matrix }) => ({ index, matrix, face }))
+): BlockMatrix<DodecaminxSticker> {
+  return createBlockMatrix(5, size, ({ index, matrix }) => ({ index, matrix, face }))
 }
 
 export function createDodecaminxState(size: number): DodecaminxState {

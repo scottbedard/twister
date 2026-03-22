@@ -7,13 +7,13 @@ import {
 } from './constants'
 
 import {
-  extractComposite,
+  extractBlockLayer,
   floor,
-  injectComposite,
+  injectBlockLayer,
   int,
   min,
   mod,
-  rotateComposite,
+  rotateBlockMatrix,
   sample,
   without,
 } from '@/utils'
@@ -202,20 +202,20 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
 
     // Rotate target face
     if (depth === 1 || wide || whole) {
-      this.state[target] = rotateComposite(this.state[target], rotation)
+      this.state[target] = rotateBlockMatrix(this.state[target], rotation)
     }
 
     if (whole) {
       // Rotate opposite face
-      this.state[opposite] = rotateComposite(this.state[opposite], -rotation)
+      this.state[opposite] = rotateBlockMatrix(this.state[opposite], -rotation)
 
       // Rotate faces adjacent to the target and opposite
       const rotateAdjacent = (target: DodecaminxFace, rotation: number) => {
         dodecaminxNet[target]
-          .map(([face, angle]) => rotateComposite(this.state[face], -angle))
+          .map(([face, angle]) => rotateBlockMatrix(this.state[face], -angle))
           .forEach((face, index) => {
             const [related, angle] = dodecaminxNet[target][mod(index + rotation, 5)]
-            this.state[related] = rotateComposite(face, angle)
+            this.state[related] = rotateBlockMatrix(face, angle)
           })
       }
 
@@ -230,10 +230,10 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
         i += 1
       ) {
         related
-          .map(([face, angle]) => extractComposite(this.state[face], angle, i))
+          .map(([face, angle]) => extractBlockLayer(this.state[face], angle, i))
           .forEach((layer, index) => {
             const [relatedFace, angle] = related[(index + 5 + rotation) % 5]
-            this.state[relatedFace] = injectComposite(this.state[relatedFace], layer, angle, i)
+            this.state[relatedFace] = injectBlockLayer(this.state[relatedFace], layer, angle, i)
           })
       }
     }

@@ -1,4 +1,4 @@
-import type { CompositeMatrix } from '@/utils/composite-matrix'
+import type { BlockMatrix } from '@/utils/block-matrix'
 
 export type DodecaminxFace = 'u' | 'l' | 'f' | 'r' | 'bl' | 'br' | 'd' | 'dl' | 'dr' | 'dbl' | 'dbr' | 'b'
 
@@ -29,7 +29,7 @@ export interface DodecaminxSolvedOptions {
   super?: boolean
 }
 
-export type DodecaminxState = Record<DodecaminxFace, CompositeMatrix<DodecaminxSticker>>
+export type DodecaminxState = Record<DodecaminxFace, BlockMatrix<DodecaminxSticker>>
 
 export interface DodecaminxSticker {
   face: DodecaminxFace

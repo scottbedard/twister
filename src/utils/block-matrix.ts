@@ -2,11 +2,11 @@ import { extract, inject } from './matrix'
 import { floor, odd, roll, times } from '@/utils'
 
 /**
- * Composite matrices are used to represent faces with more than four
+ * Block matrices are used to represent faces with more than four
  * sides. Each corner section is stored as a normal matrix, followed
  * by rows of middle values, and a center value if necessary.
  *
- * To help visualize composite matrices, see the following representation
+ * To help visualize block matrices, see the following representation
  * of a teraminx, https://www.desmos.com/geometry/qxudy50gag
  *
  * [
@@ -28,24 +28,24 @@ import { floor, odd, roll, times } from '@/utils'
  * ]
  */
 
-export type CompositeLayer<T> = [T[], T | undefined, T[]]
+export type BlockLayer<T> = [T[], T | undefined, T[]]
 
-export type CompositeMatrix<T> = [T[][]] | [T[][], (T | undefined)[][], T]
+export type BlockMatrix<T> = [T[][]] | [T[][], (T | undefined)[][], T]
 
-export type CompositeMatrixObj = { index: number, matrix: number }
+export type BlockMatrixObj = { index: number, matrix: number }
 
 /**
- * Create a composite matrix.
+ * Create a block matrix.
  *
  * @param {number} polygon number of polygon sides, must be >= 5
- * @param {number} depth size of composite matrix. kilominx would be 2, megaminx would be 3, etc...
+ * @param {number} depth size of block matrix. kilominx would be 2, megaminx would be 3, etc...
  * @param {Function} fn function to set initial values
  */
-export function createCompositeMatrix<T>(
+export function createBlockMatrix<T>(
   polygon: number,
   depth: number,
-  fn: (obj: CompositeMatrixObj) => T,
-): CompositeMatrix<T> {
+  fn: (obj: BlockMatrixObj) => T,
+): BlockMatrix<T> {
   const half = floor(depth / 2)
   const size = half ** 2
   const corners = times(polygon).map((_, matrix) => times(size).map((_, index: number) => fn({ index, matrix })))
@@ -64,54 +64,54 @@ export function createCompositeMatrix<T>(
 }
 
 /**
- * Extract layer from composite matrix.
+ * Extract layer from block matrix.
  *
- * @param {CompositeMatrix<T>} composite
+ * @param {BlockMatrix<T>} block
  * @param {number} angle
  * @param {number} depth
  */
-export function extractComposite<T>(
-  composite: CompositeMatrix<T>,
+export function extractBlockLayer<T>(
+  block: BlockMatrix<T>,
   angle: number,
   depth: number,
-): CompositeLayer<T> {
-  const corners = roll(composite[0], -angle)
+): BlockLayer<T> {
+  const corners = roll(block[0], -angle)
 
   return [
     extract(corners[0], 0, depth),
-    roll(composite[1] ?? [], -angle)[0]?.[depth],
+    roll(block[1] ?? [], -angle)[0]?.[depth],
     extract(corners[1], -1, depth),
   ]
 }
 
 /**
- * Inject layer to composite matrix.
+ * Inject layer to block matrix.
  *
- * @param {CompositeMatrix<T>} composite
- * @param {CompositeLayer<T>} layer
+ * @param {BlockMatrix<T>} block
+ * @param {BlockLayer<T>} layer
  * @param {number} angle
  * @param {number} depth
  */
-export function injectComposite<T>(
-  composite: CompositeMatrix<T>,
-  layer: CompositeLayer<T>,
+export function injectBlockLayer<T>(
+  block: BlockMatrix<T>,
+  layer: BlockLayer<T>,
   angle: number,
   depth: number,
-): CompositeMatrix<T> {
-  const corners = roll(composite[0], -angle)
+): BlockMatrix<T> {
+  const corners = roll(block[0], -angle)
 
   corners[0] = inject(layer[0], corners[0], 0, depth)
   corners[1] = inject(layer[2], corners[1], -1, depth)
 
-  if (composite.length > 1) {
-    const middles = roll(composite[1] ?? [], -angle).map(arr => arr.slice()) as (T | undefined)[][]
+  if (block.length > 1) {
+    const middles = roll(block[1] ?? [], -angle).map(arr => arr.slice()) as (T | undefined)[][]
 
     middles[0][depth] = layer[1]
 
     return [
       roll(corners, angle),
       roll(middles, angle),
-      composite[2]!,
+      block[2]!,
     ]
   }
 
@@ -121,10 +121,10 @@ export function injectComposite<T>(
 }
 
 /**
- * Iterate over all members of a composite matrix.
+ * Iterate over all members of a block matrix.
  */
-export function iterateComposite<T>(composite: CompositeMatrix<T>, fn: (val: T) => void): void {
-  const [corners, middles, center] = composite
+export function iterateBlockMatrix<T>(block: BlockMatrix<T>, fn: (val: T) => void): void {
+  const [corners, middles, center] = block
 
   corners.forEach(matrix => matrix.forEach(x => fn(x)))
 
@@ -138,13 +138,13 @@ export function iterateComposite<T>(composite: CompositeMatrix<T>, fn: (val: T) 
 }
 
 /**
- * Rotate a composite matrix.
+ * Rotate a block matrix.
  *
- * @param {CompositeMatrix<T>} composite
+ * @param {BlockMatrix<T>} block
  * @param {number} rotation
  */
-export function rotateComposite<T>(composite: CompositeMatrix<T>, rotation: number): CompositeMatrix<T> {
-  return composite.length === 1
-    ? [roll(composite[0], rotation)]
-    : [roll(composite[0], rotation), roll(composite[1], rotation), composite[2]]
+export function rotateBlockMatrix<T>(block: BlockMatrix<T>, rotation: number): BlockMatrix<T> {
+  return block.length === 1
+    ? [roll(block[0], rotation)]
+    : [roll(block[0], rotation), roll(block[1], rotation), block[2]]
 }

@@ -69,7 +69,7 @@
 
 #### Breaking changes
 
-- Simplified how state for Dodecaminx faces, we now use "composite matrices". See the `src/utils/composite-matrix.ts` for more information.
+- Simplified how state for Dodecaminx faces, we now use "block matrices". See the `src/utils/block-matrix.ts` for more information.
 - Renamed `getStickersForTurn` to `stickers`.
 - Renamed `isSolved` to `test`.
 - `scramble` and `generateScramble` now return the resulting scramble.
