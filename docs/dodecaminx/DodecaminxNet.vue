@@ -39,7 +39,7 @@
                 text-anchor="middle"
                 :font-size=".18"
                 :style="{
-                  transform: `rotate(${(dodecaminx.centers[face.key] ?? 0) * (360 / 5) + (72 / 2)}deg)`,
+                  transform: `rotate(${(dodecaminx.centers[face.key] ?? 0) * (360 / 5)}deg)`,
                 }"
                 :x="stickerCenter(obj.path)?.[0]"
                 :y="stickerCenter(obj.path)?.[1]">
