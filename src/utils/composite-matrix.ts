@@ -32,27 +32,29 @@ export type CompositeLayer<T> = [T[], T | undefined, T[]]
 
 export type CompositeMatrix<T> = [T[][]] | [T[][], (T | undefined)[][], T]
 
+export type CompositeMatrixObj = { index: number, matrix: number }
+
 /**
  * Create a composite matrix.
  *
- * @param {number} sides number of polygon sides, must be >= 5
- * @param {number} size size of composite matrix. kilominx would be 2, megaminx would be 3, etc...
- * @param {Function} valueFn function to set initial values
+ * @param {number} polygon number of polygon sides, must be >= 5
+ * @param {number} depth size of composite matrix. kilominx would be 2, megaminx would be 3, etc...
+ * @param {Function} fn function to set initial values
  */
 export function createCompositeMatrix<T>(
-  sides: number,
-  size: number,
-  valueFn: (index: number) => T = (() => undefined) as () => T,
+  polygon: number,
+  depth: number,
+  fn: (obj: CompositeMatrixObj) => T,
 ): CompositeMatrix<T> {
-  const halfSize = floor(size / 2)
-  const matrixSize = halfSize ** 2
-  const corners = times(sides).map(() => times(matrixSize).map((_, index: number) => valueFn(index)))
+  const half = floor(depth / 2)
+  const size = half ** 2
+  const corners = times(polygon).map((_, matrix) => times(size).map((_, index: number) => fn({ index, matrix })))
 
-  if (odd(size)) {
+  if (odd(depth)) {
     return [
       corners,
-      times(sides).map(() => times(halfSize).map((_, index: number) => valueFn(index))),
-      valueFn(0),
+      times(polygon).map((_, m) => times(half).map((_, index: number) => fn({ index, matrix: m + 5 }))),
+      fn({ index: 0, matrix: 10 }),
     ]
   }
 

@@ -1953,6 +1953,17 @@ const tests: TurnTest[] = [
 ]
 
 describe('dodecaminx turns', () => {
+  it('rotates the target face', () => {
+    const d = new Dodecaminx(3).turn('u')
+    expect(d.centers.u).toBe(1)
+  })
+
+  it('rotates the opposite face', () => {
+    const d = new Dodecaminx(3).turn('u')
+    // u opposite is d; rotation -1 mod 5 = 4
+    expect(d.centers.d).toBe(4)
+  })
+
   tests.forEach((test, i) => {
     const run = test.only ? it.only : it
     run(`#${i + 1} ${test.turn} (size ${test.size})`, () => {

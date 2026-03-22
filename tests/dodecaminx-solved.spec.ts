@@ -4,16 +4,26 @@ import { flatten, sample, shuffle, times } from '@/utils/array'
 import { dodecaminxFaces } from '@/dodecaminx/constants'
 import { createDodecaminxCenters } from '@/dodecaminx/utils'
 
-describe('dodecaminx whole turn', () => {
-  it('rotates the target face', () => {
-    const d = new Dodecaminx(3).turn('u')
-    expect(d.centers.u).toBe(1)
-  })
+describe('dodecaminx solved', () => {
+  it('solved and super solved', () => {
+    const dodecaminx = new Dodecaminx(3)
+    expect(dodecaminx.solved()).toBe(true)
 
-  it('rotates the opposite face', () => {
-    const d = new Dodecaminx(3).turn('u')
-    // u opposite is d; rotation -1 mod 5 = 4
-    expect(d.centers.d).toBe(4)
+    // executing a t-perm once scrambles the puzzle
+    const tperm = 'R U R- U- R- F R2 U- R- U- R U R- F-'
+    dodecaminx.turn(tperm)
+    expect(dodecaminx.solved()).toBe(false)
+    expect(dodecaminx.solved({ super: true })).toBe(false)
+
+    // another restores general solved state
+    dodecaminx.turn(`${tperm} ${tperm}`)
+    expect(dodecaminx.solved()).toBe(true)
+    expect(dodecaminx.solved({ super: true })).toBe(false)
+
+    // and 12 more times return super solved state
+    dodecaminx.turn(times(12, tperm).join(' '))
+    expect(dodecaminx.solved()).toBe(true)
+    expect(dodecaminx.solved({ super: true })).toBe(true)
   })
 
   it('fuzz scramble and unscramble', () => {
@@ -32,7 +42,7 @@ describe('dodecaminx whole turn', () => {
       return t
     })
 
-    console.log(scramble.map(t => dodecaminx.stringifyTurn(t)).join('\n'))
+    // console.log(scramble.map(t => dodecaminx.stringifyTurn(t)).join('\n'))
 
     const unscramble = scramble
       .slice()

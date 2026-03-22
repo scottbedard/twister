@@ -1,9 +1,9 @@
 import { createDodecaminxCenters, createDodecaminxState } from './utils'
 
 import {
+  dodecaminxFaces,
   dodecaminxNet,
   dodecaminxOpposites,
-  dodecaminxFaces,
 } from './constants'
 
 import {
@@ -73,7 +73,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
 
     for (let i = 0; i < depth; i += 1) {
       turns.push({
-        depth: int(1, Math.floor(size / 2), rand),
+        depth: int(1, floor(size / 2), rand),
         rotation: sample([-2, -1, 1, 2], rand),
         target: sample(without(dodecaminxFaces, face), rand),
         whole: false,
@@ -129,13 +129,33 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   }
 
   solved(opts?: DodecaminxSolvedOptions): boolean {
-    // ...
+    for (const face of dodecaminxFaces) {
+      const block = this.state[face]
 
-    if (opts?.super) {
-      // ...
+      const val = block.length === 3
+        ? block[2].face
+        : block[0][0][0].face
+
+      for (const matrix of block[0]) {
+        let i = 0
+
+        for (const sticker of matrix) {
+          if (sticker.face !== val) {
+            return false
+          }
+
+          if (opts?.super && sticker.index !== i++) {
+            return false
+          }
+        }
+      }
+
+      if (opts?.super && this.centers[face] !== 0) {
+        return false
+      }
     }
 
-    return false
+    return true
   }
 
   stringifyTurn(turn: DodecaminxTurn): string {

@@ -21,25 +21,24 @@ export function createDodecaminxCenters(): Record<DodecaminxFace, number> {
 
 function createDodecaminxFace(
   face: DodecaminxFace,
-  matrix: number,
   size: number,
 ): CompositeMatrix<DodecaminxSticker> {
-  return createCompositeMatrix(5, size, index => ({ face, index, matrix }))
+  return createCompositeMatrix(5, size, ({ index, matrix }) => ({ index, matrix, face }))
 }
 
 export function createDodecaminxState(size: number): DodecaminxState {
   return {
-    b: createDodecaminxFace('b', 0, size),
-    bl: createDodecaminxFace('bl', 1, size),
-    br: createDodecaminxFace('br', 2, size),
-    d: createDodecaminxFace('d', 3, size),
-    dbl: createDodecaminxFace('dbl', 4, size),
-    dbr: createDodecaminxFace('dbr', 5, size),
-    dl: createDodecaminxFace('dl', 6, size),
-    dr: createDodecaminxFace('dr', 7, size),
-    f: createDodecaminxFace('f', 8, size),
-    l: createDodecaminxFace('l', 9, size),
-    r: createDodecaminxFace('r', 10, size),
-    u: createDodecaminxFace('u', 11, size),
+    b: createDodecaminxFace('b', size),
+    bl: createDodecaminxFace('bl', size),
+    br: createDodecaminxFace('br', size),
+    d: createDodecaminxFace('d', size),
+    dbl: createDodecaminxFace('dbl', size),
+    dbr: createDodecaminxFace('dbr', size),
+    dl: createDodecaminxFace('dl', size),
+    dr: createDodecaminxFace('dr', size),
+    f: createDodecaminxFace('f', size),
+    l: createDodecaminxFace('l', size),
+    r: createDodecaminxFace('r', size),
+    u: createDodecaminxFace('u', size),
   }
 }
