@@ -5,6 +5,10 @@ import { dodecaminxFaces } from '@/dodecaminx/constants'
 import { createDodecaminxCenters } from '@/dodecaminx/utils'
 
 describe('dodecaminx solved', () => {
+  it('scramble', () => {
+    expect(new Dodecaminx(3).scramble().solved()).toBe(false)
+  })
+
   it('solved and super solved', () => {
     const dodecaminx = new Dodecaminx(3)
     expect(dodecaminx.solved()).toBe(true)
