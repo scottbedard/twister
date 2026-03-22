@@ -52,7 +52,5 @@ const emit = defineEmits<{
 
 function onTurn() {
   emit('turn', turn.value)
-
-  turn.value = ''
 }
 </script>

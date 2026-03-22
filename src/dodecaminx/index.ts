@@ -1,17 +1,26 @@
 import { createDodecaminxState } from './utils'
-import { dodecaminxNet, dodecaminxOpposites, dodecaminxFaces } from './constants'
+
+import {
+  dodecaminxCenters,
+  dodecaminxNet,
+  dodecaminxOpposites,
+  dodecaminxFaces,
+} from './constants'
+
 import {
   extractComposite,
+  floor,
   injectComposite,
   int,
-  floor,
   min,
+  mod,
+  rotateComposite,
   sample,
   without,
-  rotateComposite,
-  mod,
 } from '@/utils'
+
 import type { Puzzle } from '@/puzzle'
+
 import type {
   DodecaminxTurn,
   DodecaminxSolvedOptions,
@@ -196,58 +205,91 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   }
 
   turn(turn: DodecaminxTurn | string): this {
+    // re-call strings with parsed turn objects
     if (typeof turn === 'string') {
       turn
         .split(' ')
         .map(str => str.trim())
-        .filter(str => str.length)
-        .forEach(notation => this.turn(this.parseTurn(notation)))
+        .forEach(n => n && this.turn(this.parseTurn(n)))
 
       return this
     }
 
-    const t = typeof turn === 'string' ? this.parseTurn(turn) : turn
-    const relatedFaces = dodecaminxNet[t.target]
-    const oppositeTarget = dodecaminxOpposites[t.target]
+    const { depth, target, rotation, wide, whole } = turn
+    const odd = this.size % 2 === 1
+    const opposite = dodecaminxOpposites[target]
+    const related = dodecaminxNet[target]
 
     // Rotate target face
-    if (t.depth === 1 || t.wide || t.whole) {
-      this.centers[t.target] = mod(this.centers[t.target] + t.rotation, 5)
-      this.state[t.target] = rotateComposite(this.state[t.target], t.rotation)
+    if (depth === 1 || wide || whole) {
+      this.state[target] = rotateComposite(this.state[target], rotation)
     }
 
-    if (t.whole) {
+    if (whole) {
       // Rotate opposite face
-      this.centers[oppositeTarget] = mod(this.centers[oppositeTarget] - t.rotation, 5)
-      this.state[oppositeTarget] = rotateComposite(this.state[oppositeTarget], -t.rotation)
+      this.state[opposite] = rotateComposite(this.state[opposite], -rotation)
 
       // Rotate faces adjacent to the target and opposite
       const rotateAdjacent = (target: DodecaminxFace, rotation: number) => {
         dodecaminxNet[target]
           .map(([face, angle]) => rotateComposite(this.state[face], -angle))
           .forEach((face, index) => {
-            const [relatedFace, angle] = dodecaminxNet[target][(index + 5 + rotation) % 5]
-            this.centers[relatedFace] = mod(this.centers[relatedFace] + rotation, 5)
-            this.state[relatedFace] = rotateComposite(face, angle)
+            const [related, angle] = dodecaminxNet[target][mod(index + rotation, 5)]
+            this.state[related] = rotateComposite(face, angle)
           })
       }
 
-      rotateAdjacent(t.target, t.rotation)
-      rotateAdjacent(oppositeTarget, -t.rotation)
+      rotateAdjacent(target, rotation)
+      rotateAdjacent(opposite, -rotation)
     }
     else {
       // Extract and inject layers from related faces
       for (
-        let i = t.wide ? 0 : t.depth - 1;
-        i < min(t.depth, floor(this.size / 2));
+        let i = wide ? 0 : depth - 1;
+        i < min(depth, floor(this.size / 2));
         i += 1
       ) {
-        relatedFaces
+        related
           .map(([face, angle]) => extractComposite(this.state[face], angle, i))
           .forEach((layer, index) => {
-            const [relatedFace, angle] = relatedFaces[(index + 5 + t.rotation) % 5]
+            const [relatedFace, angle] = related[(index + 5 + rotation) % 5]
             this.state[relatedFace] = injectComposite(this.state[relatedFace], layer, angle, i)
           })
+      }
+    }
+
+    // Track center orientation if necessary
+    if (odd) {
+      const centers = { ...this.centers }
+      this.centers[target] = mod(centers[target] + rotation, 5)
+
+      if (whole) {
+        // rotate opposite center
+        this.centers[opposite] = mod(centers[opposite] - rotation, 5)
+
+        // rotate equator faces
+        // -dbl = 0, -1 = ccw, 1 = cw, 2 = dbl
+        const angleIndex = (n: number) => {
+          return n === -2 ? 0 : n === -1 ? 1 : n === 1 ? 2 : 3
+        }
+
+        for (let i = 0; i < 5; i++) {
+          const [from] = dodecaminxNet[target][i]
+          const [to] = dodecaminxNet[target][mod(i + 1, 5)]
+          const relation = dodecaminxCenters[target][to]!
+          const angle = relation[angleIndex(rotation)]
+
+          this.centers[to] = mod(centers[from] + angle, 5)
+        }
+
+        for (let i = 0; i < 5; i++) {
+          const [from] = dodecaminxNet[opposite][i]
+          const [to] = dodecaminxNet[opposite][mod(i + 1, 5)]
+          const relation = dodecaminxCenters[target][to]!
+          const angle = relation[angleIndex(rotation)]
+
+          this.centers[to] = mod(centers[from] + angle, 5)
+        }
       }
     }
 

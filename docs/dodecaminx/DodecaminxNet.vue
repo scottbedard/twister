@@ -35,14 +35,25 @@
                 v-if="obj.center"
                 class="fill-gray-900/70"
                 dominant-baseline="middle"
+                font-weight="bold"
                 text-anchor="middle"
-                :font-size="lerp(0.5, 0.3, size / 10)"
+                :font-size=".18"
                 :style="{
-                  transform: `rotate(${(dodecaminx.centers[obj.sticker.face] ?? 0) * (360 / 5)}deg)`,
+                  transform: `rotate(${(dodecaminx.centers[face.key] ?? 0) * (360 / 5)}deg)`,
                 }"
                 :x="stickerCenter(obj.path)?.[0]"
                 :y="stickerCenter(obj.path)?.[1]">
-                ↑
+                <tspan
+                  dy="-.6em"
+                  font-size="1em"
+                  :x="stickerCenter(obj.path)?.[0]">
+                  {{ false ? '↑' : dodecaminx.centers[obj.sticker.face] }}
+                </tspan>
+
+                <tspan
+                  v-text="obj.sticker.face.toUpperCase()"
+                  dy=".9em"
+                  :x="stickerCenter(obj.path)?.[0]" />
               </text>
             </template>
           </g>
@@ -59,7 +70,6 @@ import {
   bilerp,
   centroid,
   intersect,
-  lerp,
   measure,
   toPathCoords,
   toSvgCoords,

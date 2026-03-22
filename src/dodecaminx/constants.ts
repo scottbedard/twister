@@ -1,5 +1,5 @@
 import type { Vec } from '@/utils/types'
-import type { DodecaminxFace } from './types'
+import type { DodecaminxFace, DodecaminxOpposite } from './types'
 
 export const dodecaminxFaces = [
   'u', 'l', 'f', 'r', 'bl', 'br', 'd', 'dl', 'dr', 'dbl', 'dbr', 'b',
@@ -12,16 +12,12 @@ export const dodecaminxFaces = [
  * https://www.desmos.com/geometry/o8kuskawcb
  *
  * The related faces go clockwise around each target face, starting from the
- * target face's primary corner. The number associated with each relationship
- * represents what edge of the related face borders the target face.
+ * target face's primary corner.
+ *
+ * The number associated with each relationship represents what edge of the
+ * related face borders the target face.
  */
-export const dodecaminxNet: Record<DodecaminxFace, [
-  [DodecaminxFace, number],
-  [DodecaminxFace, number],
-  [DodecaminxFace, number],
-  [DodecaminxFace, number],
-  [DodecaminxFace, number],
-]> = {
+export const dodecaminxNet = {
   b: [
     ['bl', 4],
     ['dbl', 4],
@@ -106,12 +102,173 @@ export const dodecaminxNet: Record<DodecaminxFace, [
     ['l', 0],
     ['bl', 1],
   ],
+} as const satisfies {
+  [T in DodecaminxFace]: Vec<5, [Exclude<DodecaminxFace, T | DodecaminxOpposite<T>>, number]>
+}
+
+const ccw = -1
+const cw = 1
+const dbl = 2
+
+export const dodecaminxCenters: Record<DodecaminxFace, Partial<Record<DodecaminxFace, Vec<4>>>> = {
+  /* eslint-disable @stylistic/key-spacing */
+  // /* eslint-disable @stylistic/no-multi-spaces */
+  b: {
+    bl:   [0, 0, 0, 0],
+    br:   [0, 0, 0, 0],
+    d:    [0, 0, 0, 0],
+    dbl:  [0, 0, 0, 0],
+    dbr:  [0, 0, 0, 0],
+    dl:   [0, 0, 0, 0],
+    dr:   [0, 0, 0, 0],
+    l:    [0, 0, 0, 0],
+    r:    [0, 0, 0, 0],
+    u:    [0, 0, 0, 0],
+  },
+  bl: {
+    b:    [0, 0, 0, 0],
+    br:   [0, 0, 0, 0],
+    d:    [0, 0, 0, 0],
+    dbl:  [0, 0, 0, 0],
+    dbr:  [0, 0, 0, 0],
+    dl:   [0, 0, 0, 0],
+    f:    [0, 0, 0, 0],
+    l:    [0, 0, 0, 0],
+    r:    [0, 0, 0, 0],
+    u:    [0, 0, 0, 0],
+  },
+  br: {
+    b:    [0, 0, 0, 0],
+    bl:   [0, 0, 0, 0],
+    d:    [0, 0, 0, 0],
+    dbl:  [0, 0, 0, 0],
+    dbr:  [0, 0, 0, 0],
+    dr:   [0, 0, 0, 0],
+    f:    [0, 0, 0, 0],
+    l:    [0, 0, 0, 0],
+    r:    [0, 0, 0, 0],
+    u:    [0, 0, 0, 0],
+  },
+  d: {
+    b:    [0, 0, 0, 0],
+    bl:   [0, 0, 0, 0],
+    br:   [0, 0, 0, 0],
+    dbl:  [0, 0, 0, 0],
+    dbr:  [0, 0, 0, 0],
+    dl:   [0, 0, 0, 0],
+    dr:   [0, 0, 0, 0],
+    f:    [0, 0, 0, 0],
+    l:    [0, 0, 0, 0],
+    r:    [0, 0, 0, 0],
+  },
+  dbl: {
+    b:    [0, 0, 0, 0],
+    bl:   [0, 0, 0, 0],
+    br:   [0, 0, 0, 0],
+    d:    [0, 0, 0, 0],
+    dbr:  [0, 0, 0, 0],
+    dl:   [0, 0, 0, 0],
+    dr:   [0, 0, 0, 0],
+    f:    [0, 0, 0, 0],
+    l:    [0, 0, 0, 0],
+    u:    [0, 0, 0, 0],
+  },
+  dbr: {
+    b:    [0, 0, 0, 0],
+    bl:   [0, 0, 0, 0],
+    br:   [0, 0, 0, 0],
+    d:    [0, 0, 0, 0],
+    dbl:  [0, 0, 0, 0],
+    dl:   [0, 0, 0, 0],
+    dr:   [0, 0, 0, 0],
+    f:    [0, 0, 0, 0],
+    r:    [0, 0, 0, 0],
+    u:    [0, 0, 0, 0],
+  },
+  dl: {
+    b:    [0, 0, 0, 0],
+    bl:   [0, 0, 0, 0],
+    d:    [0, 0, 0, 0],
+    dbl:  [0, 0, 0, 0],
+    dbr:  [0, 0, 0, 0],
+    dr:   [0, 0, 0, 0],
+    f:    [0, 0, 0, 0],
+    l:    [0, 0, 0, 0],
+    r:    [0, 0, 0, 0],
+    u:    [0, 0, 0, 0],
+  },
+  dr: {
+    b:    [0, 0, 0, 0],
+    br:   [0, 0, 0, 0],
+    d:    [0, 0, 0, 0],
+    dbl:  [0, 0, 0, 0],
+    dbr:  [0, 0, 0, 0],
+    dl:   [0, 0, 0, 0],
+    f:    [0, 0, 0, 0],
+    l:    [0, 0, 0, 0],
+    r:    [0, 0, 0, 0],
+    u:    [0, 0, 0, 0],
+  },
+  f: {
+    bl:   [0, 0, 0, 0],
+    br:   [0, 0, 0, 0],
+    d:    [0, 0, 0, 0],
+    dbl:  [0, 0, 0, 0],
+    dbr:  [0, 0, 0, 0],
+    dl:   [0, 0, 0, 0],
+    dr:   [0, 0, 0, 0],
+    l:    [0, 0, 0, 0],
+    r:    [0, 0, 0, 0],
+    u:    [0, 0, 0, 0],
+  },
+  l: {
+    b:    [0, 0, 0, 0],
+    bl:   [0, 0, 0, 0],
+    br:   [0, 0, 0, 0],
+    d:    [0, 0, 0, 0],
+    dbl:  [0, 0, 0, 0],
+    dl:   [0, 0, 0, 0],
+    dr:   [0, 0, 0, 0],
+    f:    [0, 0, 0, 0],
+    r:    [0, 0, 0, 0],
+    u:    [0, 0, 0, 0],
+  },
+  r: {
+    b:    [0, 0, 0, 0],
+    bl:   [0, 0, 0, 0],
+    br:   [0, 0, 0, 0],
+    d:    [0, 0, 0, 0],
+    dbr:  [0, 0, 0, 0],
+    dl:   [0, 0, 0, 0],
+    dr:   [0, 0, 0, 0],
+    f:    [0, 0, 0, 0],
+    l:    [0, 0, 0, 0],
+    u:    [0, 0, 0, 0],
+  },
+  u: {
+    b:    [dbl, cw, ccw, -dbl],
+    bl:   [-dbl, ccw, cw, dbl],
+    br:   [-dbl, ccw, cw, dbl],
+    dbl:  [dbl, cw, ccw, -dbl],
+    dbr:  [dbl, cw, ccw, -dbl],
+    dl:   [dbl, cw, ccw, -dbl],
+    dr:   [dbl, cw, ccw, -dbl],
+    f:    [-dbl, ccw, cw, dbl],
+    l:    [-dbl, ccw, cw, dbl],
+    r:    [-dbl, ccw, cw, dbl],
+  },
+  /* eslint-enable @stylistic/key-spacing */
+
+} as const satisfies {
+  [T in DodecaminxFace]: Record<Exclude<DodecaminxFace, T | DodecaminxOpposite<T>>, number[]>
 }
 
 /**
  * Dodecaminx faces that are opposite one another.
  */
-export const dodecaminxOpposites: Record<DodecaminxFace, DodecaminxFace> = {
+export const dodecaminxOpposites: {
+  [T in DodecaminxFace]: DodecaminxOpposite<T>
+} = {
   b: 'f',
   bl: 'dr',
   br: 'dl',

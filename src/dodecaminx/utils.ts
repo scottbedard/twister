@@ -1,6 +1,6 @@
-import type { DodecaminxFace, DodecaminxSticker, DodecaminxState } from './types'
-import type { CompositeMatrix } from '@/utils/composite-matrix'
 import { createCompositeMatrix } from '@/utils'
+import type { CompositeMatrix } from '@/utils/composite-matrix'
+import type { DodecaminxFace, DodecaminxSticker, DodecaminxState } from './types'
 
 function createDodecaminxFace(
   face: DodecaminxFace,
