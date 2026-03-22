@@ -33,6 +33,3 @@ Alternatively, use the CDN to expose `window.Twister` globally.
 ```js
 <script src="https://unpkg.com/@bedard/twister"></script>
 ```
-
-> [!WARNING]
-> Do not use Twister for any WCA purposes. [Always use the official TNoodle software.](https://www.worldcubeassociation.org/regulations/scrambles/)

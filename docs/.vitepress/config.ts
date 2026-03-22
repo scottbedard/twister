@@ -25,6 +25,7 @@ export default defineConfig({
         text: 'Guide',
         items: [
           { text: 'Installation', link: '/install' },
+          { text: 'Usage', link: '/usage' },
         ],
       },
 
