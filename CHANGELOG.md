@@ -1,5 +1,9 @@
 # Twister changelog
 
+## 2.0.1
+
+- Fix dodecaminx error where swapped pieces didn't always break super-solved position
+
 ## 2.0.0
 
 - Re-written puzzle logic to support super-cubes
