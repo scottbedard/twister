@@ -1,6 +1,10 @@
 # Twister changelog
 
-> **Warning:** This library is in beta. Breaking changes are no longer anticipated, but may still happen before 1.0 is tagged.
+## 2.0.0
+
+- Re-written puzzle logic to support super-cubes
+- New documentation website, [see here &rarr;](https://twister.speedcube.site/)
+- Improved tooling and developer experience
 
 ## 1.0.0-beta.19
 
