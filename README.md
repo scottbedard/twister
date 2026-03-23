@@ -1,4 +1,4 @@
-# `twister`
+# [`@bedard/twister`](https://npmx.dev/package/@bedard/twister)
 
 [![Build status](https://img.shields.io/github/actions/workflow/status/scottbedard/twister/test.yml?branch=main)](https://github.com/scottbedard/twister/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/scottbedard/twister)](https://codecov.io/gh/scottbedard/twister)
