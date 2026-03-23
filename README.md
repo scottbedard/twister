@@ -8,7 +8,7 @@
 
 Twister is a library for modeling the state of twisty puzzles, and is the brains of [speedcube.site](https://speedcube.site).
 
-[View Documentation &rarr;](https://twister.seedcube.site)
+[View Documentation &rarr;](https://twister.speedcube.site/)
 
 ## License
 
