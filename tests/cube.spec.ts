@@ -159,4 +159,11 @@ describe('Cube', () => {
       expect(cube.solved({ super: true })).toBe(false)
     })
   })
+
+  test('scramble / reset', () => {
+    const cube = new Cube(3).scramble()
+    expect(cube.solved()).toBe(false)
+    cube.reset()
+    expect(cube.solved()).toBe(true)
+  })
 })

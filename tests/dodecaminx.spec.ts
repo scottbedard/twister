@@ -65,3 +65,10 @@ describe('parseTurn', () => {
     expect(() => dodecaminx.parseTurn('bad turn')).toThrow()
   })
 })
+
+test('scramble / reset', () => {
+  const dodecaminx = new Dodecaminx(2).scramble()
+  expect(dodecaminx.solved()).toBe(false)
+  dodecaminx.reset()
+  expect(dodecaminx.solved()).toBe(true)
+})
