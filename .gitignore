@@ -1,23 +1,24 @@
 # Logs
 logs
 *.log
+lerna-debug.log*
 npm-debug.log*
+pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
+coverage
+dist
+dist-ssr
 docs/.vitepress/cache
 docs/.vitepress/dist
 node_modules
-dist
-dist-ssr
 *.local
 
 # Editor directories and files
 .DS_Store
-*.suo
-*.ntvs*
 *.njsproj
+*.ntvs*
 *.sln
+*.suo
 *.sw?

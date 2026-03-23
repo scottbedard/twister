@@ -32,7 +32,10 @@ jobs:
         run: pnpm lint
 
       - name: Test
-        run: pnpm test
+        run: pnpm test:coverage
+
+      - name: Report coverage
+        run: bash <(curl -s https://codecov.io/bash)
 
       - name: Build
         run: pnpm build

@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -22,6 +23,11 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       fileName: 'twister',
       name: 'Twister',
+    },
+  },
+  test: {
+    coverage: {
+      provider: 'v8',
     },
   },
 })
