@@ -1,34 +1,31 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
-    "declaration": true,
-    "declarationDir": "./dist",
-    "esModuleInterop": true,
-    "module": "es6",
-    "moduleResolution": "node",
-    "noImplicitAny": true,
-    "outDir": "./dist",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"],
+      "@/*": ["src/*"],
+      "~/*": ["docs/*"]
     },
-    "resolveJsonModule": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
     "skipLibCheck": true,
-    "sourceMap": true,
-    "target": "es2015",
-    "types": [
-      "jest",
-      "node"
-    ]
+    "target": "ES2022",
+    "types": ["vite/client"],
+    "useDefineForClassFields": true,
+
+    /* Bundler mode */
+    "allowImportingTsExtensions": true,
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "verbatimModuleSyntax": true,
+
+    /* Linting */
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true
   },
-  "exclude": [
-    "bin",
-    "dist",
-    "node_modules",
-    "scripts",
-  ],
-  "include": [
-    "rollup.config.ts",
-    "src/**/*.ts",
-    "tests/**/*.ts",
-  ],
+  "include": ["src", "tests", "docs", "docs/.vitepress/auto-imports.d.ts"]
 }

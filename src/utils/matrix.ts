@@ -1,4 +1,4 @@
-import { reverse, slice, splice, times } from './array'
+import { mod } from './math'
 
 /**
  * Chunk a matrix array into columns.
@@ -8,13 +8,31 @@ import { reverse, slice, splice, times } from './array'
  *   4, 5, 6,  ->   [2, 5, 8],
  *   7, 8, 9,       [3, 6, 9],
  * ]              ]
- *
- * @param {T[]} matrix Matrix array to chunk.
- *
- * @return {T[][]}
  */
 export function cols<T>(matrix: T[]): T[][] {
   return flip(rows(matrix))
+}
+
+/**
+ * Find the coordinates of an index inside a square matrix.
+ */
+export function coords(index: number, size: number) {
+  return {
+    col: index % size,
+    mid: Math.floor(size / 2),
+    odd: size % 2 === 1,
+    row: Math.floor(index / size),
+  }
+}
+
+/**
+ * Create a matrix with arbitrary data.
+ */
+export function createMatrix<T extends Record<string, unknown>>(size: number, data: T): (T & { index: number })[] {
+  return Array.from({ length: size * size }, (_, index) => ({
+    ...data,
+    index,
+  }))
 }
 
 /**
@@ -59,7 +77,7 @@ export function flattenCols<T>(arr: T[][]): T[] {
  * @return {T[]}
  */
 export function flattenRows<T>(arr: T[][]): T[] {
-  return arr.reduce((acc, row) => acc.concat(row), [])
+  return arr.slice().reduce((acc, row) => acc.concat(row), [])
 }
 
 /**
@@ -78,7 +96,7 @@ export function flattenRows<T>(arr: T[][]): T[] {
  * @return {T[][]}
  */
 export function flip<T>(arrs: T[][]): T[][] {
-  return arrs[0].map((x, i) => arrs.map(arr => arr[i]))
+  return arrs[0].map((_, i) => arrs.map(arr => arr[i]))
 }
 
 /**
@@ -92,11 +110,10 @@ export function flip<T>(arrs: T[][]): T[][] {
  * @return {T[]}
  */
 export function inject<T>(arr: T[], target: T[], angle: number, depth: number) {
-  const targetRows = rows(rotate(target, -angle))
-
-  splice(targetRows, depth, 1, arr)
-
-  return rotate(flattenRows(targetRows), angle)
+  const rotated = rotate(target, -angle)
+  const targetRows = rows(rotated)
+  const newRows = targetRows.map((row, i) => (i === depth ? [...arr] : row))
+  return rotate(flattenRows(newRows), angle)
 }
 
 /**
@@ -108,21 +125,21 @@ export function inject<T>(arr: T[], target: T[], angle: number, depth: number) {
  * @return {T[]}
  */
 export function rotate<T>(matrix: T[], angle: number): T[] {
-  const rotation = (angle + 4) % 4
+  const rotation = mod(angle, 4)
 
   if (rotation === 1) {
-    return flattenCols(reverse(rows(matrix)))
+    return flattenCols([...rows(matrix)].reverse())
   }
 
   if (rotation === 2) {
-    return reverse(matrix)
+    return [...matrix].reverse()
   }
 
   if (rotation === 3) {
-    return flattenRows(reverse(cols(matrix)))
+    return flattenRows([...cols(matrix)].reverse())
   }
 
-  return slice(matrix)
+  return [...matrix]
 }
 
 /**
@@ -141,9 +158,8 @@ export function rotate<T>(matrix: T[], angle: number): T[] {
 export function rows<T>(arr: T[]): T[][] {
   const size = Math.sqrt(arr.length)
 
-  return times(size).map((x, i) => {
+  return Array.from({ length: size }, (_, i) => {
     const start = i * size
-
-    return slice(arr, start, start + size)
+    return arr.slice(start, start + size)
   })
 }

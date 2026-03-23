@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Match VitePress dark mode: html gets class="dark" */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css */
+:root {
+  --vp-c-brand-1: oklch(70.4% 0.191 22.216);
+  --vp-c-brand-2: oklch(63.7% 0.237 25.331);
+  --vp-c-brand-3: oklch(70.4% 0.191 22.216);
+}
+
