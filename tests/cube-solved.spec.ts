@@ -1,9 +1,9 @@
 import { Cube } from '@/index'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { int } from '@/utils'
 
 describe('cube solved', () => {
-  test('fuzz scramble and unscramble', () => {
+  it('fuzz scramble and unscramble', () => {
     const cube = new Cube(5)
 
     const scramble = cube.generateScramble(int(2, 10))
@@ -25,7 +25,7 @@ describe('cube solved', () => {
     expect(cube.solved({ super: true })).toBe(true)
   })
 
-  test('3x3 super cube', () => {
+  it('3x3 super cube', () => {
     const cube = new Cube(3).turn(`
       D2 R- L B2 U2 F- U- D2 R U- L2 U2 R B U2 D B2 U- F2 R2 B- U- B- D2 B- R- L2
       F- U- F L2 B- F2 R- L2 F- R- U- F2 D2 U- R2 D2 R- L B D2 U- R2 D U2 R L- U-

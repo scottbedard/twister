@@ -10,10 +10,10 @@ import {
   rows,
 } from '@/utils/matrix'
 
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 describe('matrix utils', () => {
-  test('cols', () => {
+  it('cols', () => {
     expect(cols([
       1, 2, 3,
       4, 5, 6,
@@ -26,7 +26,7 @@ describe('matrix utils', () => {
   })
 
   describe('coords', () => {
-    test('3x3: row/col for each index', () => {
+    it('3x3: row/col for each index', () => {
       const size = 3
       expect(coords(0, size)).toEqual({ col: 0, mid: 1, odd: true, row: 0 })
       expect(coords(1, size)).toEqual({ col: 1, mid: 1, odd: true, row: 0 })
@@ -39,18 +39,18 @@ describe('matrix utils', () => {
       expect(coords(8, size)).toEqual({ col: 2, mid: 1, odd: true, row: 2 })
     })
 
-    test('2x2: mid and odd', () => {
+    it('2x2: mid and odd', () => {
       expect(coords(0, 2)).toEqual({ col: 0, mid: 1, odd: false, row: 0 })
       expect(coords(3, 2)).toEqual({ col: 1, mid: 1, odd: false, row: 1 })
     })
 
-    test('4x4: even size mid', () => {
+    it('4x4: even size mid', () => {
       expect(coords(0, 4)).toEqual({ col: 0, mid: 2, odd: false, row: 0 })
       expect(coords(5, 4)).toEqual({ col: 1, mid: 2, odd: false, row: 1 })
       expect(coords(15, 4)).toEqual({ col: 3, mid: 2, odd: false, row: 3 })
     })
 
-    test('5x5: odd size mid', () => {
+    it('5x5: odd size mid', () => {
       expect(coords(12, 5)).toEqual({ col: 2, mid: 2, odd: true, row: 2 })
     })
   })
@@ -63,46 +63,46 @@ describe('matrix utils', () => {
     ]
 
     // angle
-    test('angle 0, depth 0', () => {
+    it('angle 0, depth 0', () => {
       expect(extract(matrix, 0, 0)).toEqual([1, 2, 3])
     })
 
-    test('angle 1, depth 0', () => {
+    it('angle 1, depth 0', () => {
       expect(extract(matrix, 1, 0)).toEqual([3, 6, 9])
     })
 
-    test('angle 2, depth 0', () => {
+    it('angle 2, depth 0', () => {
       expect(extract(matrix, 2, 0)).toEqual([9, 8, 7])
     })
 
-    test('angle 3, depth 0', () => {
+    it('angle 3, depth 0', () => {
       expect(extract(matrix, 3, 0)).toEqual([7, 4, 1])
     })
 
     // depth
-    test('angle 0, depth 1', () => {
+    it('angle 0, depth 1', () => {
       expect(extract(matrix, 0, 1)).toEqual([4, 5, 6])
     })
 
-    test('angle 0, depth 2', () => {
+    it('angle 0, depth 2', () => {
       expect(extract(matrix, 0, 2)).toEqual([7, 8, 9])
     })
 
     // angle & depth
-    test('angle 1, depth 1', () => {
+    it('angle 1, depth 1', () => {
       expect(extract(matrix, 1, 1)).toEqual([2, 5, 8])
     })
 
-    test('angle 2, depth 2', () => {
+    it('angle 2, depth 2', () => {
       expect(extract(matrix, 2, 2)).toEqual([3, 2, 1])
     })
 
-    test('angle 3, depth 2', () => {
+    it('angle 3, depth 2', () => {
       expect(extract(matrix, 3, 2)).toEqual([9, 6, 3])
     })
   })
 
-  test('flattenCols', () => {
+  it('flattenCols', () => {
     expect(flattenCols([
       [1, 4, 7],
       [2, 5, 8],
@@ -114,7 +114,7 @@ describe('matrix utils', () => {
     ])
   })
 
-  test('flattenRows', () => {
+  it('flattenRows', () => {
     expect(flattenRows([
       [1, 2, 3],
       [4, 5, 6],
@@ -126,7 +126,7 @@ describe('matrix utils', () => {
     ])
   })
 
-  test('flip', () => {
+  it('flip', () => {
     expect(flip([
       [1, 2, 3],
       [4, 5, 6],
@@ -150,7 +150,7 @@ describe('matrix utils', () => {
     ]
 
     // angle
-    test('angle 0, depth 0', () => {
+    it('angle 0, depth 0', () => {
       expect(inject(arr, matrix, 0, 0)).toEqual([
         A, B, C,
         4, 5, 6,
@@ -158,7 +158,7 @@ describe('matrix utils', () => {
       ])
     })
 
-    test('angle 1, depth 0', () => {
+    it('angle 1, depth 0', () => {
       expect(inject(arr, matrix, 1, 0)).toEqual([
         1, 2, A,
         4, 5, B,
@@ -166,7 +166,7 @@ describe('matrix utils', () => {
       ])
     })
 
-    test('angle 2, depth 0', () => {
+    it('angle 2, depth 0', () => {
       expect(inject(arr, matrix, 2, 0)).toEqual([
         1, 2, 3,
         4, 5, 6,
@@ -174,7 +174,7 @@ describe('matrix utils', () => {
       ])
     })
 
-    test('angle 3, depth 0', () => {
+    it('angle 3, depth 0', () => {
       expect(inject(arr, matrix, 3, 0)).toEqual([
         C, 2, 3,
         B, 5, 6,
@@ -183,7 +183,7 @@ describe('matrix utils', () => {
     })
 
     // depth
-    test('angle 0, depth 1', () => {
+    it('angle 0, depth 1', () => {
       expect(inject(arr, matrix, 0, 1)).toEqual([
         1, 2, 3,
         A, B, C,
@@ -191,7 +191,7 @@ describe('matrix utils', () => {
       ])
     })
 
-    test('angle 0, depth 2', () => {
+    it('angle 0, depth 2', () => {
       expect(inject(arr, matrix, 0, 2)).toEqual([
         1, 2, 3,
         4, 5, 6,
@@ -200,7 +200,7 @@ describe('matrix utils', () => {
     })
 
     // angle & depth
-    test('angle 1, depth 1', () => {
+    it('angle 1, depth 1', () => {
       expect(inject(arr, matrix, 1, 1)).toEqual([
         1, A, 3,
         4, B, 6,
@@ -208,7 +208,7 @@ describe('matrix utils', () => {
       ])
     })
 
-    test('angle 2, depth 2', () => {
+    it('angle 2, depth 2', () => {
       expect(inject(arr, matrix, 2, 2)).toEqual([
         C, B, A,
         4, 5, 6,
@@ -216,7 +216,7 @@ describe('matrix utils', () => {
       ])
     })
 
-    test('angle 3, depth 2', () => {
+    it('angle 3, depth 2', () => {
       expect(inject(arr, matrix, 3, 2)).toEqual([
         1, 2, C,
         4, 5, B,
@@ -225,7 +225,7 @@ describe('matrix utils', () => {
     })
   })
 
-  test('rotate', () => {
+  it('rotate', () => {
     const matrix = [
       1, 2, 3,
       4, 5, 6,
@@ -257,7 +257,7 @@ describe('matrix utils', () => {
     ])
   })
 
-  test('rows', () => {
+  it('rows', () => {
     expect(rows([
       1, 2, 3,
       4, 5, 6,

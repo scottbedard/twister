@@ -1,14 +1,14 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { Cube } from '@/index'
 
 describe('Cube', () => {
-  test('new Cube(n)', () => {
+  it('new Cube(n)', () => {
     const cube = new Cube(2)
     expect(cube).toBeInstanceOf(Cube)
     expect(cube.size).toBe(2)
   })
 
-  test('new Cube(opts)', () => {
+  it('new Cube(opts)', () => {
     const cube = new Cube({ size: 2, rand: () => 0.5 })
     expect(cube).toBeInstanceOf(Cube)
     expect(cube.size).toBe(2)
@@ -26,14 +26,14 @@ describe('Cube', () => {
     }
   })
 
-  test('throws for invalid sizes', () => {
+  it('throws for invalid sizes', () => {
     expect(() => new Cube(0)).toThrow()
     expect(() => new Cube(-1)).toThrow()
     expect(() => new Cube(1.5)).toThrow()
     expect(() => new Cube(NaN)).toThrow()
   })
 
-  test('parses', () => {
+  it('parses', () => {
     expect(new Cube(3).parseTurn('R')).toMatchObject({
       depth: 1,
       rotation: 1,
@@ -99,7 +99,7 @@ describe('Cube', () => {
   })
 
   describe('generateScramble', () => {
-    test('returns a string of space-separated turns', () => {
+    it('returns a string of space-separated turns', () => {
       const cube = new Cube(3)
       const scramble = cube.generateScramble(5)
       expect(typeof scramble).toBe('string')
@@ -107,20 +107,20 @@ describe('Cube', () => {
       expect(tokens).toHaveLength(5)
     })
 
-    test('respects explicit depth', () => {
+    it('respects explicit depth', () => {
       const cube = new Cube(3)
       expect(cube.generateScramble(1).split(' ').filter(Boolean)).toHaveLength(1)
       expect(cube.generateScramble(10).split(' ').filter(Boolean)).toHaveLength(10)
     })
 
-    test('is deterministic with fixed rand', () => {
+    it('is deterministic with fixed rand', () => {
       const rand = () => 0.5
       const c1 = new Cube({ size: 3, rand })
       const c2 = new Cube({ size: 3, rand })
       expect(c1.generateScramble(5)).toBe(c2.generateScramble(5))
     })
 
-    test('every token parses as a valid turn', () => {
+    it('every token parses as a valid turn', () => {
       const cube = new Cube(3)
       const scramble = cube.generateScramble(8)
       for (const token of scramble.split(' ').filter(Boolean)) {
@@ -130,20 +130,20 @@ describe('Cube', () => {
   })
 
   describe('solved', () => {
-    test('fresh cube is solved (default and super)', () => {
+    it('fresh cube is solved (default and super)', () => {
       const cube = new Cube(3)
       expect(cube.solved()).toBe(true)
       expect(cube.solved({ super: true })).toBe(true)
     })
 
-    test('after a turn, cube is not solved', () => {
+    it('after a turn, cube is not solved', () => {
       const cube = new Cube(3)
       cube.turn('R')
       expect(cube.solved()).toBe(false)
       expect(cube.solved({ super: true })).toBe(false)
     })
 
-    test('super: true requires indexes in order and rotations 0', () => {
+    it('super: true requires indexes in order and rotations 0', () => {
       const cube = new Cube(2)
       // Swap two stickers on one face so indices are wrong order
       const u = cube.state.u
@@ -152,7 +152,7 @@ describe('Cube', () => {
       expect(cube.solved({ super: true })).toBe(false)
     })
 
-    test('super: true fails when rotation is non-zero', () => {
+    it('super: true fails when rotation is non-zero', () => {
       const cube = new Cube(2)
       cube.state.u[0].rotation = 1
       expect(cube.solved()).toBe(true)
@@ -160,7 +160,7 @@ describe('Cube', () => {
     })
   })
 
-  test('scramble / reset', () => {
+  it('scramble / reset', () => {
     const cube = new Cube(3).scramble()
     expect(cube.solved()).toBe(false)
     cube.reset()

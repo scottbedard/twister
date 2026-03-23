@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { Cube } from '@/cube'
 import type { CubeFace } from '@/cube/types'
 
@@ -18,7 +18,7 @@ describe('cube turns', () => {
     })
   }
 
-  test('U', () => {
+  it('U', () => {
     turn('U', {
       u: [
         y, y, y,
@@ -53,7 +53,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('U-', () => {
+  it('U-', () => {
     turn('U-', {
       u: [
         y, y, y,
@@ -88,7 +88,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('U2', () => {
+  it('U2', () => {
     turn('U2', {
       u: [
         y, y, y,
@@ -123,7 +123,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('3U', () => {
+  it('3U', () => {
     turn('3U', {
       u: [
         y, y, y,
@@ -158,7 +158,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('3U-', () => {
+  it('3U-', () => {
     turn('3U-', {
       u: [
         y, y, y,
@@ -193,7 +193,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('3U2', () => {
+  it('3U2', () => {
     turn('3U2', {
       u: [
         y, y, y,
@@ -228,7 +228,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('L', () => {
+  it('L', () => {
     turn('L', {
       u: [
         g, y, y,
@@ -263,7 +263,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('L-', () => {
+  it('L-', () => {
     turn('L-', {
       u: [
         b, y, y,
@@ -298,7 +298,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('L2', () => {
+  it('L2', () => {
     turn('L2', {
       u: [
         w, y, y,
@@ -333,7 +333,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('F', () => {
+  it('F', () => {
     turn('F', {
       u: [
         y, y, y,
@@ -368,7 +368,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('F-', () => {
+  it('F-', () => {
     turn('F-', {
       u: [
         y, y, y,
@@ -403,7 +403,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('F2', () => {
+  it('F2', () => {
     turn('F2', {
       u: [
         y, y, y,
@@ -438,7 +438,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('R', () => {
+  it('R', () => {
     turn('R', {
       u: [
         y, y, b,
@@ -473,7 +473,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('R-', () => {
+  it('R-', () => {
     turn('R-', {
       u: [
         y, y, g,
@@ -508,7 +508,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('R2', () => {
+  it('R2', () => {
     turn('R2', {
       u: [
         y, y, w,
@@ -543,7 +543,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('Rw', () => {
+  it('Rw', () => {
     turn('Rw', {
       u: [
         y, b, b,
@@ -578,7 +578,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('Rw-', () => {
+  it('Rw-', () => {
     turn('Rw-', {
       u: [
         y, g, g,
@@ -613,7 +613,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('Rw2', () => {
+  it('Rw2', () => {
     turn('Rw2', {
       u: [
         y, w, w,
@@ -648,7 +648,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('B', () => {
+  it('B', () => {
     turn('B', {
       u: [
         r, r, r,
@@ -683,7 +683,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('B-', () => {
+  it('B-', () => {
     turn('B-', {
       u: [
         o, o, o,
@@ -718,7 +718,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('B2', () => {
+  it('B2', () => {
     turn('B2', {
       u: [
         w, w, w,
@@ -753,7 +753,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('D', () => {
+  it('D', () => {
     turn('D', {
       u: [
         y, y, y,
@@ -788,7 +788,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('D-', () => {
+  it('D-', () => {
     turn('D-', {
       u: [
         y, y, y,
@@ -823,7 +823,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('D2', () => {
+  it('D2', () => {
     turn('D2', {
       u: [
         y, y, y,
@@ -858,7 +858,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('X', () => {
+  it('X', () => {
     turn('X', {
       u: [
         b, b, b,
@@ -893,7 +893,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('X-', () => {
+  it('X-', () => {
     turn('X-', {
       u: [
         g, g, g,
@@ -928,7 +928,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('X2', () => {
+  it('X2', () => {
     turn('X2', {
       u: [
         w, w, w,
@@ -963,7 +963,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('Y', () => {
+  it('Y', () => {
     turn('Y', {
       u: [
         y, y, y,
@@ -998,7 +998,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('Y-', () => {
+  it('Y-', () => {
     turn('Y-', {
       u: [
         y, y, y,
@@ -1033,7 +1033,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('Y2', () => {
+  it('Y2', () => {
     turn('Y2', {
       u: [
         y, y, y,
@@ -1068,7 +1068,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('Z', () => {
+  it('Z', () => {
     turn('Z', {
       u: [
         o, o, o,
@@ -1103,7 +1103,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('Z-', () => {
+  it('Z-', () => {
     turn('Z-', {
       u: [
         r, r, r,
@@ -1138,7 +1138,7 @@ describe('cube turns', () => {
     })
   })
 
-  test('Z2', () => {
+  it('Z2', () => {
     turn('Z2', {
       u: [
         w, w, w,

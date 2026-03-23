@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import {
   createBlockMatrix,
   extractBlockLayer,
@@ -56,17 +56,17 @@ const stub5x5: BlockMatrix<number> = [
 
 describe('block matrix', () => {
   describe('createBlockMatrix', () => {
-    test('5x3', () => {
+    it('5x3', () => {
       let i = 1
       expect(createBlockMatrix(5, 3, () => i++)).toEqual(stub5x3)
     })
 
-    test('5x4', () => {
+    it('5x4', () => {
       let i = 1
       expect(createBlockMatrix(5, 4, () => i++)).toEqual(stub5x4)
     })
 
-    test('5x5', () => {
+    it('5x5', () => {
       let i = 1
       expect(createBlockMatrix(5, 5, () => i++)).toEqual(stub5x5)
     })
@@ -74,37 +74,37 @@ describe('block matrix', () => {
 
   describe('extractBlockLayer', () => {
     describe('5x4', () => {
-      test('angle 0, depth 0', () => {
+      it('angle 0, depth 0', () => {
         expect(extractBlockLayer(stub5x4, 0, 0)).toEqual([[1, 2], undefined, [7, 5]])
       })
 
-      test('angle 0, depth 1', () => {
+      it('angle 0, depth 1', () => {
         expect(extractBlockLayer(stub5x4, 0, 1)).toEqual([[3, 4], undefined, [8, 6]])
       })
 
-      test('angle 1, depth 0', () => {
+      it('angle 1, depth 0', () => {
         expect(extractBlockLayer(stub5x4, 1, 0)).toEqual([[5, 6], undefined, [11, 9]])
       })
 
-      test('angle 1, depth 1', () => {
+      it('angle 1, depth 1', () => {
         expect(extractBlockLayer(stub5x4, 1, 1)).toEqual([[7, 8], undefined, [12, 10]])
       })
     })
 
     describe('5x5', () => {
-      test('angle 0, depth 0', () => {
+      it('angle 0, depth 0', () => {
         expect(extractBlockLayer(stub5x5, 0, 0)).toEqual([[1, 2], 21, [7, 5]])
       })
 
-      test('angle 0, depth 1', () => {
+      it('angle 0, depth 1', () => {
         expect(extractBlockLayer(stub5x5, 0, 1)).toEqual([[3, 4], 22, [8, 6]])
       })
 
-      test('angle 1, depth 0', () => {
+      it('angle 1, depth 0', () => {
         expect(extractBlockLayer(stub5x5, 1, 0)).toEqual([[5, 6], 23, [11, 9]])
       })
 
-      test('angle 1, depth 1', () => {
+      it('angle 1, depth 1', () => {
         expect(extractBlockLayer(stub5x5, 1, 1)).toEqual([[7, 8], 24, [12, 10]])
       })
     })
@@ -114,25 +114,25 @@ describe('block matrix', () => {
     describe('5x4', () => {
       const layer: BlockLayer<number> = [[-1, -2], undefined, [-3, -4]]
 
-      test('angle 0, depth 0', () => {
+      it('angle 0, depth 0', () => {
         const block = injectBlockLayer(stub5x4, layer, 0, 0)
 
         expect(extractBlockLayer(block, 0, 0)).toEqual(layer)
       })
 
-      test('angle 0, depth 1', () => {
+      it('angle 0, depth 1', () => {
         const block = injectBlockLayer(stub5x4, layer, 0, 1)
 
         expect(extractBlockLayer(block, 0, 1)).toEqual(layer)
       })
 
-      test('angle 1, depth 0', () => {
+      it('angle 1, depth 0', () => {
         const block = injectBlockLayer(stub5x4, layer, 1, 0)
 
         expect(extractBlockLayer(block, 1, 0)).toEqual(layer)
       })
 
-      test('angle 1, depth 1', () => {
+      it('angle 1, depth 1', () => {
         const block = injectBlockLayer(stub5x4, layer, 1, 1)
 
         expect(extractBlockLayer(block, 1, 1)).toEqual(layer)
@@ -142,25 +142,25 @@ describe('block matrix', () => {
     describe('5x5', () => {
       const layer: BlockLayer<number> = [[-1, -2], undefined, [-3, -4]]
 
-      test('angle 0, depth 0', () => {
+      it('angle 0, depth 0', () => {
         const block = injectBlockLayer(stub5x5, layer, 0, 0)
 
         expect(extractBlockLayer(block, 0, 0)).toEqual(layer)
       })
 
-      test('angle 0, depth 1', () => {
+      it('angle 0, depth 1', () => {
         const block = injectBlockLayer(stub5x5, layer, 0, 1)
 
         expect(extractBlockLayer(block, 0, 1)).toEqual(layer)
       })
 
-      test('angle 1, depth 0', () => {
+      it('angle 1, depth 0', () => {
         const block = injectBlockLayer(stub5x5, layer, 1, 0)
 
         expect(extractBlockLayer(block, 1, 0)).toEqual(layer)
       })
 
-      test('angle 1, depth 1', () => {
+      it('angle 1, depth 1', () => {
         const block = injectBlockLayer(stub5x5, layer, 1, 1)
 
         expect(extractBlockLayer(block, 1, 1)).toEqual(layer)
@@ -169,7 +169,7 @@ describe('block matrix', () => {
   })
 
   describe('iterateBlockMatrix', () => {
-    test('invokes the callback for every member (corners, middles, center)', () => {
+    it('invokes the callback for every member (corners, middles, center)', () => {
       const seen: number[] = []
       iterateBlockMatrix(stub5x5, (val) => {
         seen.push(val)
@@ -181,7 +181,7 @@ describe('block matrix', () => {
   })
 
   describe('rotateBlockMatrix', () => {
-    test('5x4, rotate 1', () => {
+    it('5x4, rotate 1', () => {
       expect(rotateBlockMatrix(stub5x4, 1)).toEqual([
         [
           [17, 18, 19, 20],
@@ -193,7 +193,7 @@ describe('block matrix', () => {
       ])
     })
 
-    test('5x5, rotate 1', () => {
+    it('5x5, rotate 1', () => {
       expect(rotateBlockMatrix(stub5x5, 1)).toEqual([
         [
           [17, 18, 19, 20],

@@ -1,8 +1,8 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { Cube } from '@/index'
 import type { CubeTurn } from '@/cube/types'
 
-test('unchanging serialization', () => {
+it('unchanging serialization', () => {
   const cube = new Cube(4)
 
   const simple = [
@@ -27,7 +27,7 @@ test('unchanging serialization', () => {
   }
 })
 
-test('transforming serialization', () => {
+it('transforming serialization', () => {
   const cube = new Cube(4)
 
   const transforms = [
@@ -61,23 +61,23 @@ test('transforming serialization', () => {
 })
 
 describe('invalid', () => {
-  test('invalid turn', () => {
+  it('invalid turn', () => {
     expect(() => new Cube(3).parseTurn('whoops')).toThrow()
   })
 
-  test('reverse double turn', () => {
+  it('reverse double turn', () => {
     expect(() => new Cube(3).parseTurn('R2-')).toThrow()
   })
 
-  test('multiple wide characters', () => {
+  it('multiple wide characters', () => {
     expect(() => new Cube(3).parseTurn('Rww')).toThrow()
   })
 
-  test('1 deep with wide suffix', () => {
+  it('1 deep with wide suffix', () => {
     expect(() => new Cube(3).parseTurn('1Rw')).toThrow()
   })
 
-  test('invalid depth', () => {
+  it('invalid depth', () => {
     expect(() => new Cube(3).stringifyTurn({ depth: 0, rotation: 1, target: 'r', wide: false })).toThrow()
     expect(() => new Cube(3).stringifyTurn({ depth: -1, rotation: 1, target: 'r', wide: false })).toThrow()
     expect(() => new Cube(3).stringifyTurn({ depth: 1.5, rotation: 1, target: 'r', wide: false })).toThrow()
@@ -87,7 +87,7 @@ describe('invalid', () => {
   })
 })
 
-test('stringifyTurn', () => {
+it('stringifyTurn', () => {
   const cube = new Cube(3)
 
   const cases: Array<[string, CubeTurn]> = [

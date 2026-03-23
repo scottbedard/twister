@@ -1,8 +1,8 @@
-import { describe, expect, test, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { Dodecaminx } from '@/index'
 
 describe('constructor', () => {
-  test('new Dodecaminx(n)', () => {
+  it('new Dodecaminx(n)', () => {
     const dodecaminx = new Dodecaminx(2)
     expect(dodecaminx).toBeInstanceOf(Dodecaminx)
     expect(dodecaminx.size).toBe(2)
@@ -10,7 +10,7 @@ describe('constructor', () => {
 })
 
 describe('generateScramble', () => {
-  test('generates a scramble', () => {
+  it('generates a scramble', () => {
     const dodecaminx = new Dodecaminx(2)
     const scramble = dodecaminx.generateScramble(5)
     expect(typeof scramble).toBe('string')
@@ -21,7 +21,7 @@ describe('generateScramble', () => {
     }
   })
 
-  test('doesnt turn same face twice in a row', () => {
+  it('doesnt turn same face twice in a row', () => {
     for (let i = 0; i < 100; i++) {
       const [one, two] = new Dodecaminx({ size: 2, rand: vi.fn(() => 0.5) })
         .generateScramble(2)
@@ -32,7 +32,7 @@ describe('generateScramble', () => {
   })
 })
 
-test('stringifyTurn / parseTurn', () => {
+it('stringifyTurn / parseTurn', () => {
   const dodecaminx = new Dodecaminx({ size: 4 })
 
   const turns = [
@@ -61,12 +61,12 @@ test('stringifyTurn / parseTurn', () => {
 describe('parseTurn', () => {
   const dodecaminx = new Dodecaminx({ size: 3 })
 
-  test('bad turn', () => {
+  it('bad turn', () => {
     expect(() => dodecaminx.parseTurn('bad turn')).toThrow()
   })
 })
 
-test('scramble / reset', () => {
+it('scramble / reset', () => {
   const dodecaminx = new Dodecaminx(2).scramble()
   expect(dodecaminx.solved()).toBe(false)
   dodecaminx.reset()

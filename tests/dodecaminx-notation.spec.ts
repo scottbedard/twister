@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { Dodecaminx } from '@/index'
 import type { DodecaminxTurn } from '@/dodecaminx/types'
 
@@ -79,7 +79,7 @@ describe('dodecaminx parseTurn', () => {
   const dodecaminx = new Dodecaminx(3)
 
   for (const [str, obj] of Object.entries(stringifyCases)) {
-    test(`parses: '${str}'`, () => {
+    it(`parses: '${str}'`, () => {
       expect(dodecaminx.parseTurn(str)).toEqual(obj)
     })
   }

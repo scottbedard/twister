@@ -1,5 +1,5 @@
 import { Cube } from '@/index'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import type { CubeFace } from '@/cube/types'
 
 describe('cube scrambles', () => {
@@ -19,7 +19,7 @@ describe('cube scrambles', () => {
     expect(cube.state.d.map(s => s.face)).toEqual(obj.result.d)
   }
 
-  test('2x2', () => {
+  it('2x2', () => {
     turn({
       size: 2,
       scramble: 'F2 U2 F2 U- F- R F2 U2 F- U2',
@@ -52,7 +52,7 @@ describe('cube scrambles', () => {
     })
   })
 
-  test('3x3', () => {
+  it('3x3', () => {
     turn({
       size: 3,
       scramble: 'R U- L- B2 F2 L- R- U2 R D- L R- D- L D B- L B D- B2 F- L R D2 B- R- F2 L B2 D2',
@@ -91,7 +91,7 @@ describe('cube scrambles', () => {
     })
   })
 
-  test('4x4', () => {
+  it('4x4', () => {
     turn({
       size: 4,
       scramble: 'Rw2 U- B2 Fw D- R2 D2 R- Uw- L2 Fw- L2 B- D- R- F Rw B- L- Rw2 B2 Uw2 L- Fw Uw2 F Uw Fw- F L2',
@@ -136,7 +136,7 @@ describe('cube scrambles', () => {
     })
   })
 
-  test('5x5', () => {
+  it('5x5', () => {
     turn({
       size: 5,
       scramble: 'R- Dw2 L- D- U2 B R2 B2 U- Bw- Lw2 Dw- Rw- U- R Dw- Uw- F Dw- B- L2 Lw- Rw- R2 Bw- Fw2 F R- B- D',
