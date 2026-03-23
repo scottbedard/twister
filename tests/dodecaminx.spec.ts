@@ -7,6 +7,10 @@ describe('constructor', () => {
     expect(dodecaminx).toBeInstanceOf(Dodecaminx)
     expect(dodecaminx.size).toBe(2)
   })
+
+  it('new Dodecaminx(n) with invalid size', () => {
+    expect(() => new Dodecaminx(0)).toThrow()
+  })
 })
 
 describe('generateScramble', () => {

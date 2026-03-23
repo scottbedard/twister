@@ -61,4 +61,20 @@ describe('dodecaminx solved', () => {
     unscramble.forEach(turn => dodecaminx.turn(turn))
     expect(dodecaminx.centers).toEqual(createDodecaminxCenters())
   })
+
+  it('not super-solved with swapped indices', () => {
+    const dodecaminx = new Dodecaminx(4)
+    dodecaminx.state.u[0][0][0].index = 1
+    dodecaminx.state.u[0][0][1].index = 0
+    expect(dodecaminx.solved()).toBe(true)
+    expect(dodecaminx.solved({ super: true })).toBe(false)
+  })
+
+  it('not super-solved with swapped matrixes', () => {
+    const dodecaminx = new Dodecaminx(4)
+    dodecaminx.state.u[0][0][0].matrix = 1
+    dodecaminx.state.u[0][1][0].matrix = 0
+    expect(dodecaminx.solved()).toBe(true)
+    expect(dodecaminx.solved({ super: true })).toBe(false)
+  })
 })

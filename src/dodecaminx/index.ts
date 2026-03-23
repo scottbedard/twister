@@ -136,15 +136,15 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
         ? block[2].face
         : block[0][0][0].face
 
-      for (const matrix of block[0]) {
+      for (let m = 0; m < block[0].length; m++) {
         let i = 0
 
-        for (const sticker of matrix) {
+        for (const sticker of block[0][m]) {
           if (sticker.face !== val) {
             return false
           }
 
-          if (opts?.super && sticker.index !== i++) {
+          if (opts?.super && (sticker.matrix !== m || sticker.index !== i++)) {
             return false
           }
         }
