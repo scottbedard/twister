@@ -27,11 +27,6 @@
   "main": "dist/twister.js",
   "name": "twister",
   "module": "dist/twister.js",
-  "pnpm": {
-    "overrides": {
-      "vite": "^8.0.0-beta.13"
-    }
-  },
   "scripts": {
     "build:docs": "vitepress build docs",
     "build:lib": "tsc && vite build",
