@@ -206,4 +206,11 @@ describe('Cube', () => {
 
     expect(safety).toBe(true)
   })
+
+  it('forEachSide walks one face in index order', () => {
+    const cube = new Cube(2)
+    const indices: number[] = []
+    cube.forEachSide('f', s => indices.push(s.index))
+    expect(indices).toEqual([0, 1, 2, 3])
+  })
 })

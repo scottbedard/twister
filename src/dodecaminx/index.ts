@@ -11,6 +11,7 @@ import {
   floor,
   injectBlockLayer,
   int,
+  iterateBlockMatrix,
   min,
   mod,
   rotateBlockMatrix,
@@ -26,6 +27,7 @@ import type {
   DodecaminxOptions,
   DodecaminxFace,
   DodecaminxState,
+  DodecaminxSticker,
 } from './types'
 
 export type {
@@ -77,6 +79,13 @@ export class Dodecaminx<T = null> implements Puzzle<DodecaminxTurn, DodecaminxSo
     this.size = size
 
     this.state = createDodecaminxState<T>(size, this.data)
+  }
+
+  /**
+   * Visit every sticker on the given face (block matrix order).
+   */
+  forEachSide(face: DodecaminxFace, fn: (sticker: DodecaminxSticker<T>) => void): void {
+    iterateBlockMatrix(this.state[face], fn)
   }
 
   generateScramble(depth: number = Math.max(30, this.size ** 3)): string {

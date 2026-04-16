@@ -98,6 +98,17 @@ it('default initial data is null', () => {
   expect(safety).toBe(true)
 })
 
+it('forEachSide matches iterateBlockMatrix on that face', () => {
+  const dodecaminx = new Dodecaminx(2)
+  const fromMethod: unknown[] = []
+  const fromUtil: unknown[] = []
+
+  dodecaminx.forEachSide('u', s => fromMethod.push(s))
+  iterateBlockMatrix(dodecaminx.state.u, s => fromUtil.push(s))
+
+  expect(fromMethod).toEqual(fromUtil)
+})
+
 it('initial data can be set', () => {
   const symbol = Symbol()
 

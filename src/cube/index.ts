@@ -67,6 +67,13 @@ export class Cube<T = null> implements Puzzle<CubeTurn, CubeSolvedOptions> {
   }
 
   /**
+   * Visit every sticker on the given face in order.
+   */
+  forEachSide(face: CubeFace, fn: (sticker: CubeSticker<T>) => void): void {
+    this.state[face].forEach(fn)
+  }
+
+  /**
    * Generate a scramble
    */
   generateScramble(depth: number = Math.max(20, this.size ** 3)): string {

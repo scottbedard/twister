@@ -15,3 +15,5 @@ export type {
 } from './dodecaminx/types'
 
 export type { Puzzle } from './puzzle'
+
+export { iterateBlockMatrix } from './utils'
