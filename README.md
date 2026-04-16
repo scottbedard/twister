@@ -9,7 +9,7 @@
 Twister is a TypeScript library for modeling the state of twisty puzzles, and is the brains of [speedcube.site](https://speedcube.site).
 
 <p align="center">
-  <a href="https://twister.speedcube.site"><img src="https://twister.speedcube.site/masterminx.svg" alt="Masterminx" width="800"></a>
+  <a href="https://twister.speedcube.site"><img src="https://twister.speedcube.site/masterminx.svg" alt="Masterminx" width="700"></a>
 </p>
 
 [View Documentation &rarr;](https://twister.speedcube.site/)
