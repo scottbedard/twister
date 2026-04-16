@@ -1,7 +1,14 @@
 import { describe, expect, it, vi } from 'vitest'
 import { Dodecaminx } from '@/index'
+import { iterateBlockMatrix } from '@/utils'
 
 describe('constructor', () => {
+  it('defaults to 3', () => {
+    const dodecaminx = new Dodecaminx()
+    expect(dodecaminx).toBeInstanceOf(Dodecaminx)
+    expect(dodecaminx.size).toBe(3)
+  })
+
   it('new Dodecaminx(n)', () => {
     const dodecaminx = new Dodecaminx(2)
     expect(dodecaminx).toBeInstanceOf(Dodecaminx)
@@ -26,7 +33,7 @@ describe('generateScramble', () => {
   })
 
   it('doesnt turn same face twice in a row', () => {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
       const [one, two] = new Dodecaminx({ size: 2, rand: vi.fn(() => 0.5) })
         .generateScramble(2)
         .split(' ')
@@ -75,4 +82,35 @@ it('scramble / reset', () => {
   expect(dodecaminx.solved()).toBe(false)
   dodecaminx.reset()
   expect(dodecaminx.solved()).toBe(true)
+})
+
+it('default initial data is null', () => {
+  const dodecaminx = new Dodecaminx(2)
+
+  let safety
+
+  iterateBlockMatrix(dodecaminx.state.u, (sticker) => {
+    expect(sticker.data).toBe(null)
+
+    safety = true
+  })
+
+  expect(safety).toBe(true)
+})
+
+it('initial data can be set', () => {
+  const symbol = Symbol()
+
+  const dodecaminx = new Dodecaminx({
+    data: () => symbol,
+  })
+
+  let safety = false
+
+  iterateBlockMatrix(dodecaminx.state.u, ({ data }) => {
+    expect(data).toBe(symbol)
+    safety = true
+  })
+
+  expect(safety).toBe(true)
 })

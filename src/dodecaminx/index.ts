@@ -28,11 +28,21 @@ import type {
   DodecaminxState,
 } from './types'
 
-export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOptions> {
+export type {
+  DodecaminxSticker,
+  DodecaminxFace,
+} from './types'
+
+export class Dodecaminx<T = null> implements Puzzle<DodecaminxTurn, DodecaminxSolvedOptions> {
   /**
    * Center orientation of each face.
    */
   readonly centers: Record<DodecaminxFace, number>
+
+  /**
+   * Data factory for stickers.
+   */
+  readonly data: () => T
 
   /**
    * Random number generator.
@@ -47,22 +57,26 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
   /**
    * State of the cube.
    */
-  readonly state: DodecaminxState
+  readonly state: DodecaminxState<T>
 
-  constructor(opts: number | DodecaminxOptions) {
-    const size = typeof opts === 'number' ? opts : opts.size
+  constructor(opts?: number | DodecaminxOptions<T>) {
+    const size = typeof opts === 'number' ? opts : opts?.size ?? 3
 
     if (size < 1 || !Number.isInteger(size)) {
       throw new Error('Dodecaminx size must be a positive integer')
     }
 
+    const dataFn = () => null as T
+
     this.centers = createDodecaminxCenters()
 
-    this.rand = typeof opts === 'number' ? Math.random : opts.rand ?? Math.random
+    this.data = typeof opts === 'number' ? dataFn : opts?.data ?? dataFn
+
+    this.rand = typeof opts === 'number' ? Math.random : opts?.rand ?? Math.random
 
     this.size = size
 
-    this.state = createDodecaminxState(size)
+    this.state = createDodecaminxState<T>(size, this.data)
   }
 
   generateScramble(depth: number = Math.max(30, this.size ** 3)): string {
@@ -119,7 +133,7 @@ export class Dodecaminx implements Puzzle<DodecaminxTurn, DodecaminxSolvedOption
 
   reset(): this {
     Object.assign(this.centers, createDodecaminxCenters())
-    Object.assign(this.state, createDodecaminxState(this.size))
+    Object.assign(this.state, createDodecaminxState<T>(this.size, this.data))
 
     return this
   }

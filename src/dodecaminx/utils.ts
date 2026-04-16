@@ -19,26 +19,32 @@ export function createDodecaminxCenters(): Record<DodecaminxFace, number> {
   }
 }
 
-function createDodecaminxFace(
+function createDodecaminxFace<T = null>(
   face: DodecaminxFace,
   size: number,
-): BlockMatrix<DodecaminxSticker> {
-  return createBlockMatrix(5, size, ({ index, matrix }) => ({ index, matrix, face }))
+  data: () => T,
+): BlockMatrix<DodecaminxSticker<T>> {
+  return createBlockMatrix(5, size, ({ index, matrix }) => ({
+    data: data(),
+    index,
+    matrix,
+    face,
+  }))
 }
 
-export function createDodecaminxState(size: number): DodecaminxState {
+export function createDodecaminxState<T = null>(size: number, data: () => T): DodecaminxState<T> {
   return {
-    b: createDodecaminxFace('b', size),
-    bl: createDodecaminxFace('bl', size),
-    br: createDodecaminxFace('br', size),
-    d: createDodecaminxFace('d', size),
-    dbl: createDodecaminxFace('dbl', size),
-    dbr: createDodecaminxFace('dbr', size),
-    dl: createDodecaminxFace('dl', size),
-    dr: createDodecaminxFace('dr', size),
-    f: createDodecaminxFace('f', size),
-    l: createDodecaminxFace('l', size),
-    r: createDodecaminxFace('r', size),
-    u: createDodecaminxFace('u', size),
+    b: createDodecaminxFace('b', size, data),
+    bl: createDodecaminxFace('bl', size, data),
+    br: createDodecaminxFace('br', size, data),
+    d: createDodecaminxFace('d', size, data),
+    dbl: createDodecaminxFace('dbl', size, data),
+    dbr: createDodecaminxFace('dbr', size, data),
+    dl: createDodecaminxFace('dl', size, data),
+    dr: createDodecaminxFace('dr', size, data),
+    f: createDodecaminxFace('f', size, data),
+    l: createDodecaminxFace('l', size, data),
+    r: createDodecaminxFace('r', size, data),
+    u: createDodecaminxFace('u', size, data),
   }
 }

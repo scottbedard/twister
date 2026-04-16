@@ -29,17 +29,17 @@ export interface DodecaminxSolvedOptions {
   super?: boolean
 }
 
-export type DodecaminxState = Record<DodecaminxFace, BlockMatrix<DodecaminxSticker>>
+export type DodecaminxState<T = null> = Record<DodecaminxFace, BlockMatrix<DodecaminxSticker<T>>>
 
-export interface DodecaminxSticker {
+export interface DodecaminxSticker<T = null> {
+  data: T
   face: DodecaminxFace
   index: number
   matrix: number
-  /** Pentagon steps 0..4 (0 = identity) */
-  rotation?: 0 | 1 | 2 | 3 | 4
 }
 
-export interface DodecaminxOptions {
+export interface DodecaminxOptions<T = null> {
+  data?: () => T
   rand?: () => number
-  size: number
+  size?: number
 }

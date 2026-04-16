@@ -29,10 +29,7 @@ export function coords(index: number, size: number) {
  * Create a matrix with arbitrary data.
  */
 export function createMatrix<T extends Record<string, unknown>>(size: number, data: T): (T & { index: number })[] {
-  return Array.from({ length: size * size }, (_, index) => ({
-    ...data,
-    index,
-  }))
+  return Array.from({ length: size * size }, (_, index) => ({ ...data, index }))
 }
 
 /**
