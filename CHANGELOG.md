@@ -1,5 +1,10 @@
 # Twister changelog
 
+## 2.1.0
+
+- Add `data` property to `Cube` and `Dodecaminx` stickers, and adds options to set initial values
+- Exposes more data types like `CubeSticker<T>` and `DodecaminxSticker<T>`
+
 ## 2.0.1
 
 - Fix dodecaminx error where swapped pieces didn't always break super-solved position
