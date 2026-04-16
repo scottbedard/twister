@@ -1,6 +1,7 @@
 import type { Puzzle } from '@/puzzle'
-import { createMatrix, extract, inject, int, mod, rotate, sample } from '@/utils'
+import { extract, inject, int, mod, rotate, sample } from '@/utils'
 import { cubeAxes, cubeFaces, cubeNet, cubeOpposites } from './constants'
+import { createFace } from './utils'
 import type {
   CubeAxis,
   CubeFace,
@@ -10,7 +11,17 @@ import type {
   CubeTurn,
 } from './types'
 
-export class Cube implements Puzzle<CubeTurn, CubeSolvedOptions> {
+export type {
+  CubeSticker,
+  CubeFace,
+} from './types'
+
+export class Cube<T = null> implements Puzzle<CubeTurn, CubeSolvedOptions> {
+  /**
+   * Data factory for stickers.
+   */
+  readonly data: () => T
+
   /**
    * Random number generator.
    */
@@ -24,30 +35,34 @@ export class Cube implements Puzzle<CubeTurn, CubeSolvedOptions> {
   /**
    * State of the cube.
    */
-  readonly state: Record<CubeFace, CubeSticker[]>
+  readonly state: Record<CubeFace, CubeSticker<T>[]>
 
   /**
    * Create a new cube.
    * @param opts - The options for the cube.
    */
-  constructor(opts: number | CubeOptions) {
-    const size = typeof opts === 'number' ? opts : opts.size
+  constructor(opts?: number | CubeOptions<T>) {
+    const size = typeof opts === 'number' ? opts : opts?.size ?? 3
 
     if (size < 1 || !Number.isInteger(size)) {
       throw new Error('Cube size must be a positive integer')
     }
 
-    this.rand = typeof opts === 'number' ? Math.random : opts.rand ?? Math.random
+    const dataFn = () => null as T
+
+    this.data = typeof opts === 'number' ? dataFn : opts?.data ?? dataFn
+
+    this.rand = typeof opts === 'number' ? Math.random : opts?.rand ?? Math.random
 
     this.size = size
 
     this.state = {
-      b: createMatrix(size, { face: 'b' as const, rotation: 0 as const }),
-      d: createMatrix(size, { face: 'd' as const, rotation: 0 as const }),
-      f: createMatrix(size, { face: 'f' as const, rotation: 0 as const }),
-      l: createMatrix(size, { face: 'l' as const, rotation: 0 as const }),
-      r: createMatrix(size, { face: 'r' as const, rotation: 0 as const }),
-      u: createMatrix(size, { face: 'u' as const, rotation: 0 as const }),
+      b: createFace<T>(size, 'b', this.data),
+      d: createFace<T>(size, 'd', this.data),
+      f: createFace<T>(size, 'f', this.data),
+      l: createFace<T>(size, 'l', this.data),
+      r: createFace<T>(size, 'r', this.data),
+      u: createFace<T>(size, 'u', this.data),
     }
   }
 
@@ -204,12 +219,12 @@ export class Cube implements Puzzle<CubeTurn, CubeSolvedOptions> {
    * Reset the puzzle to it's starting state
    */
   reset(): this {
-    this.state.b = createMatrix(this.size, { face: 'b' as const, rotation: 0 as const })
-    this.state.d = createMatrix(this.size, { face: 'd' as const, rotation: 0 as const })
-    this.state.f = createMatrix(this.size, { face: 'f' as const, rotation: 0 as const })
-    this.state.l = createMatrix(this.size, { face: 'l' as const, rotation: 0 as const })
-    this.state.r = createMatrix(this.size, { face: 'r' as const, rotation: 0 as const })
-    this.state.u = createMatrix(this.size, { face: 'u' as const, rotation: 0 as const })
+    this.state.b = createFace<T>(this.size, 'b', this.data)
+    this.state.d = createFace<T>(this.size, 'd', this.data)
+    this.state.f = createFace<T>(this.size, 'f', this.data)
+    this.state.l = createFace<T>(this.size, 'l', this.data)
+    this.state.r = createFace<T>(this.size, 'r', this.data)
+    this.state.u = createFace<T>(this.size, 'u', this.data)
 
     return this
   }

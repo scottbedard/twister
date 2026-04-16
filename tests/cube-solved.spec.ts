@@ -34,46 +34,55 @@ describe('cube solved', () => {
     expect(cube.state).toEqual({
       b: [
         {
+          data: null,
           face: 'l',
           index: 0,
           rotation: 0,
         },
         {
+          data: null,
           face: 'f',
           index: 7,
           rotation: 2,
         },
         {
+          data: null,
           face: 'b',
           index: 6,
           rotation: 2,
         },
         {
+          data: null,
           face: 'r',
           index: 1,
           rotation: 3,
         },
         {
+          data: null,
           face: 'b',
           index: 4,
           rotation: 2,
         },
         {
+          data: null,
           face: 'b',
           index: 7,
           rotation: 3,
         },
         {
+          data: null,
           face: 'f',
           index: 0,
           rotation: 3,
         },
         {
+          data: null,
           face: 'l',
           index: 5,
           rotation: 1,
         },
         {
+          data: null,
           face: 'd',
           index: 0,
           rotation: 2,
@@ -81,46 +90,55 @@ describe('cube solved', () => {
       ],
       d: [
         {
+          data: null,
           face: 'b',
           index: 8,
           rotation: 2,
         },
         {
+          data: null,
           face: 'd',
           index: 5,
           rotation: 3,
         },
         {
+          data: null,
           face: 'u',
           index: 2,
           rotation: 0,
         },
         {
+          data: null,
           face: 'l',
           index: 3,
           rotation: 0,
         },
         {
+          data: null,
           face: 'd',
           index: 4,
           rotation: 2,
         },
         {
+          data: null,
           face: 'l',
           index: 1,
           rotation: 1,
         },
         {
+          data: null,
           face: 'f',
           index: 6,
           rotation: 0,
         },
         {
+          data: null,
           face: 'f',
           index: 3,
           rotation: 3,
         },
         {
+          data: null,
           face: 'l',
           index: 2,
           rotation: 1,
@@ -128,46 +146,55 @@ describe('cube solved', () => {
       ],
       f: [
         {
+          data: null,
           face: 'u',
           index: 8,
           rotation: 2,
         },
         {
+          data: null,
           face: 'u',
           index: 7,
           rotation: 2,
         },
         {
+          data: null,
           face: 'f',
           index: 8,
           rotation: 3,
         },
         {
+          data: null,
           face: 'l',
           index: 7,
           rotation: 1,
         },
         {
+          data: null,
           face: 'f',
           index: 4,
           rotation: 0,
         },
         {
+          data: null,
           face: 'b',
           index: 1,
           rotation: 1,
         },
         {
+          data: null,
           face: 'd',
           index: 6,
           rotation: 0,
         },
         {
+          data: null,
           face: 'r',
           index: 7,
           rotation: 0,
         },
         {
+          data: null,
           face: 'b',
           index: 0,
           rotation: 2,
@@ -175,46 +202,55 @@ describe('cube solved', () => {
       ],
       l: [
         {
+          data: null,
           face: 'r',
           index: 8,
           rotation: 2,
         },
         {
+          data: null,
           face: 'r',
           index: 3,
           rotation: 1,
         },
         {
+          data: null,
           face: 'r',
           index: 0,
           rotation: 1,
         },
         {
+          data: null,
           face: 'd',
           index: 7,
           rotation: 1,
         },
         {
+          data: null,
           face: 'l',
           index: 4,
           rotation: 1,
         },
         {
+          data: null,
           face: 'd',
           index: 3,
           rotation: 2,
         },
         {
+          data: null,
           face: 'l',
           index: 8,
           rotation: 1,
         },
         {
+          data: null,
           face: 'b',
           index: 5,
           rotation: 1,
         },
         {
+          data: null,
           face: 'l',
           index: 6,
           rotation: 3,
@@ -222,46 +258,55 @@ describe('cube solved', () => {
       ],
       r: [
         {
+          data: null,
           face: 'd',
           index: 2,
           rotation: 3,
         },
         {
+          data: null,
           face: 'b',
           index: 3,
           rotation: 1,
         },
         {
+          data: null,
           face: 'b',
           index: 2,
           rotation: 0,
         },
         {
+          data: null,
           face: 'u',
           index: 1,
           rotation: 3,
         },
         {
+          data: null,
           face: 'r',
           index: 4,
           rotation: 0,
         },
         {
+          data: null,
           face: 'u',
           index: 5,
           rotation: 0,
         },
         {
+          data: null,
           face: 'r',
           index: 2,
           rotation: 2,
         },
         {
+          data: null,
           face: 'u',
           index: 3,
           rotation: 3,
         },
         {
+          data: null,
           face: 'u',
           index: 6,
           rotation: 3,
@@ -269,46 +314,55 @@ describe('cube solved', () => {
       ],
       u: [
         {
+          data: null,
           face: 'd',
           index: 8,
           rotation: 2,
         },
         {
+          data: null,
           face: 'd',
           index: 1,
           rotation: 0,
         },
         {
+          data: null,
           face: 'u',
           index: 0,
           rotation: 1,
         },
         {
+          data: null,
           face: 'f',
           index: 5,
           rotation: 2,
         },
         {
+          data: null,
           face: 'u',
           index: 4,
           rotation: 3,
         },
         {
+          data: null,
           face: 'r',
           index: 5,
           rotation: 0,
         },
         {
+          data: null,
           face: 'f',
           index: 2,
           rotation: 2,
         },
         {
+          data: null,
           face: 'f',
           index: 1,
           rotation: 2,
         },
         {
+          data: null,
           face: 'r',
           index: 6,
           rotation: 3,

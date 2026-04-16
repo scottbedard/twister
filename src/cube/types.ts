@@ -4,9 +4,10 @@ export type CubeAxis = 'x' | 'y' | 'z'
 
 export type CubeFace = 'u' | 'd' | 'l' | 'r' | 'f' | 'b'
 
-export type CubeOptions = {
+export type CubeOptions<T = null> = {
+  data?: () => T
   rand?: () => number
-  size: number
+  size?: number
 }
 
 export type CubeSolvedOptions = {
@@ -22,7 +23,8 @@ export type CubeOpposite<T extends CubeFace>
             : T extends 'b' ? 'f'
               : never
 
-export interface CubeSticker {
+export interface CubeSticker<T = null> {
+  data: T
   face: CubeFace
   index: number
   rotation: Range<4>

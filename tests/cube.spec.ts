@@ -2,6 +2,12 @@ import { describe, expect, it } from 'vitest'
 import { Cube } from '@/index'
 
 describe('Cube', () => {
+  it('defaults to 3', () => {
+    const cube = new Cube()
+    expect(cube).toBeInstanceOf(Cube)
+    expect(cube.size).toBe(3)
+  })
+
   it('new Cube(n)', () => {
     const cube = new Cube(2)
     expect(cube).toBeInstanceOf(Cube)
@@ -165,5 +171,39 @@ describe('Cube', () => {
     expect(cube.solved()).toBe(false)
     cube.reset()
     expect(cube.solved()).toBe(true)
+  })
+
+  it('default initial data is null', () => {
+    const cube = new Cube(2)
+
+    let safety = false
+
+    for (const face of ['u', 'd', 'l', 'r', 'f', 'b'] as const) {
+      for (const sticker of cube.state[face]) {
+        expect(sticker.data).toBe(null)
+        safety = true
+      }
+    }
+
+    expect(safety).toBe(true)
+  })
+
+  it('initial data can be set', () => {
+    const symbol = Symbol()
+
+    const cube = new Cube({
+      data: () => symbol,
+    })
+
+    let safety = false
+
+    for (const face of ['u', 'd', 'l', 'r', 'f', 'b'] as const) {
+      for (const sticker of cube.state[face]) {
+        expect(sticker.data).toBe(symbol)
+        safety = true
+      }
+    }
+
+    expect(safety).toBe(true)
   })
 })
